@@ -8,10 +8,8 @@
 <name>bosscat Webapp</name>
 <url>http://maven.apache.org</url>
 <properties>
-    <devtoolsPath>C:\projects\intro\bosscat\target\test-classes</devtoolsPath>
+    <devtoolsPath>${project.build.directory}\test-classes</devtoolsPath>
 </properties>
-
-
 <dependencies>
     <dependency>
         <groupId>junit</groupId>
@@ -78,7 +76,7 @@
                 </execution>
                 <execution>
                     <id>run_devtools</id>
-                    <phase>test</phase>
+                    <phase>install</phase>
                     <goals><goal>java</goal></goals>
                     <configuration>
                         <mainClass>disappointed.SoundPlayer</mainClass>
