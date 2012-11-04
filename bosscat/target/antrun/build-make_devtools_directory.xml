@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="make_devtools_directory"  >
+<target name="make_devtools_directory">
+  <mkdir dir="C:\projects\intro\bosscat\target\test-classes"/>
+</target>
+</project>

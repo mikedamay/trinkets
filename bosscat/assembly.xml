@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="us-ascii" ?>
+<assembly>
+    <id>mike</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <fileSets>
+        <fileSet>
+            <directory>src</directory>
+        </fileSet>
+    </fileSets>
+</assembly>
