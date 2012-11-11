@@ -8,7 +8,7 @@
 <name>bosscat Webapp</name>
 <url>http://maven.apache.org</url>
 <properties>
-    <devtoolsPath>${project.build.directory}\test-classes</devtoolsPath>
+    <devtoolsClassPath>${project.build.directory}\test-classes</devtoolsClassPath>
 </properties>
 <dependencies>
     <dependency>
@@ -38,7 +38,7 @@
                     </goals>
                     <configuration>
                         <target name="remove_devtools_directory">
-                            <delete dir="${devtoolsPath}"/>
+                            <delete dir="${devtoolsClassPath}"/>
                         </target>
                     </configuration>
                 </execution>
@@ -50,7 +50,7 @@
                     </goals>
                     <configuration>
                         <target name="make_devtools_directory">
-                            <mkdir dir="${devtoolsPath}"/>
+                            <mkdir dir="${devtoolsClassPath}"/>
                         </target>
                     </configuration>
                 </execution>
@@ -69,8 +69,8 @@
                         <executable>javac</executable>
                         <arguments>
                             <argument>-d</argument>
-                            <argument>${devtoolsPath}</argument>
-                            <argument>${basedir}\src\devtools\disappointed\*.java</argument>
+                            <argument>${devtoolsClassPath}</argument>
+                            <argument>${basedir}\devtools\disappointed\*.java</argument>
                         </arguments>
                     </configuration>
                 </execution>
