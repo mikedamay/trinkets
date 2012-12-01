@@ -1,0 +1,2028 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+    <p class="mc_body">Narative</p>
+    <p class="mc_body">Examples</p>
+    <p class="mc_body">Formal Exposition</p>
+    <p class="mc_body">Sources and links</p>
+    <p class="mc_body"></p>
+    <p class="mc_body"></p>
+    <p class="mc_tech">Style for quoted xml elements</p>
+    <p class="mc_body">Reference to conceptual terms.  How do we tell if the reference is to the concept or to the physical manifestation.</p>
+    <p class="mc_body">How to refer to executing plugins.</p>
+    <p class="mc_body">Maven’s principal goal is to facilitate a build operation resulting in the artefacts of the build being placed back in the maven repository ready for deployment or reuse in other builds.</p>
+    <p class="Heading 1">Introduction</p>
+    <p class="mc_body">It is striking how Maven can build complex apps with so few commands.  In the example that we examine here a fairly minimal pom (set of build instructions) compiles the application, runs unit tests and builds a jar.</p>
+    <p class="mc_body">There are 3 factors in play:</p>
+    <p class="mc_body">1) Command Line: mvn clean install</p>
+    <p class="mc_body">This is executed from the directory containing the project’s POM file (typically, pom.xml).</p>
+    <p class="mc_body">Install turns out not to be install and its brother deploy does not deploy except for those with a very maven-centric view of the world.</p>
+    <p class="mc_body">2) Minimal.pom:</p>
+    <p class="mc_tech" tables="1" row="1" col="1">project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"</p>
+    <p class="mc_tech" tables="1" row="1" col="1"> xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1"> &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1"></p>
+    <p class="mc_tech" tables="1" row="1" col="1"> &lt;groupId&gt;disappointed&lt;/groupId&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1"> &lt;artifactId&gt;minimal&lt;/artifactId&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1"> &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1"> &lt;packaging&gt;jar&lt;/packaging&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1"></p>
+    <p class="mc_tech" tables="1" row="1" col="1"> &lt;dependencies&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">   &lt;dependency&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">     &lt;groupId&gt;junit&lt;/groupId&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">     &lt;artifactId&gt;junit&lt;/artifactId&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">     &lt;version&gt;3.8.1&lt;/version&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">     &lt;scope&gt;test&lt;/scope&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">   &lt;/dependency&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1"> &lt;/dependencies&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">&lt;/project&gt;</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body">The first few lines are metadata setting up the file itself.  The lines from groupId to version identify the artefact being built.  </p>
+    <p class="mc_body">The packaging line is usually, rather anomalously, included with the identifiers.  It determines the predefined plugins that will be used during the build and is usually the file extension of the ultimate output.  The dependencies section specifies a library that needs to be included.</p>
+    <p class="mc_body">The economy of language promoted by maven is somewhat undermined by the use of XML whose verbosity tends to obfuscate the meaning a little.</p>
+    <p class="mc_tech">3) Directory Structure</p>
+    <p class="mc_body">Maven expects to see the files laid out as follows: (see dir.xml in google docs).</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\.idea</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\files.txt</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\install.txt</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\minimal.iml</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\pom.xml</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\src</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\target</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\.idea\.name</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\.idea\ant.xml</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\.idea\compiler.xml</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\.idea\copyright</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\.idea\encodings.xml</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\.idea\inspectionProfiles</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\.idea\libraries</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\.idea\misc.xml</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\.idea\modules.xml</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\.idea\projectCodeStyle.xml</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\.idea\scopes</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\.idea\uiDesigner.xml</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\.idea\vcs.xml</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\.idea\workspace.xml</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\.idea\copyright\profiles_settings.xml</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\.idea\libraries\Maven__junit_junit_3_8_1.xml</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\.idea\scopes\scope_settings.xml</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\src\main</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\src\test</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\src\main\java</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\src\main\java\disappointed</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\src\main\java\disappointed\App.java</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\src\test\java</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\src\test\java\disappointed</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\src\test\java\disappointed\AppTest.java</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\target\classes</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\target\maven-archiver</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\target\minimal-1.0-SNAPSHOT.jar</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\target\surefire</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\target\surefire-reports</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\target\test-classes</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\target\classes\disappointed</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\target\classes\disappointed\App.class</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\target\maven-archiver\pom.properties</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\target\surefire\surefire5238152605757349043tmp</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\target\surefire\surefire5547984483849284943tmp</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\target\surefire\surefirebooter4245046427534627574.jar</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\target\surefire-reports\disappointed.AppTest.txt</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\target\surefire-reports\TEST-disappointed.AppTest.xml</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\target\test-classes\disappointed</p>
+    <p class="mc_tech" tables="1" row="1" col="1">C:\projects\Intro\minimal\target\test-classes\disappointed\AppTest.class</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body">The command line tells maven to execute 2 sets of tasks, one to clean away existing output and the other to create up-to-date output.  In maven terms “clean” and “install” are “phases” of maven “life-cycles”.  “clean” runs the “clean” phase of the “clean” life-cycle together with all preceding phases and “install” runs the installation phase (copying a completed jar file to the local maven repository) and all preceding phases such as compilation of what is known as the “default” life-cycle but which might reasonably have been called the compile-test-deploy life-cycle.</p>
+    <p class="mc_body">Files are laid out according to the requirements of the plugins: the compiler, by convention, requires production source to be under src/main/java and test source under src/test/java; the jar packager requires classes to be at target/classes and resources to be at target/classes/resources (CHECK THIS).  All paths are specified relative the directory containing the POM.</p>
+    <p class="mc_body">The objective of this piece is to examine the less intuitive aspects of the POM, in particular the build section and provide some background for novices who are build out the default POM for a new project or need to interpret an existing POM or set of interrelated POMs.  The piece concentrates on the plugin architecture and the execution of the build as these are not always intuitive.</p>
+    <p class="mc_body">How does it achieve this?  Maven relies on 3 inter-related patterns:  </p>
+    <p class="mc_body">We return to the question of what it is about Maven that allows so much complexity in the build process to be abstracted away.  It comes down to 2 factors which combine to provide a foundation to the technology.</p>
+    <p class="mc_body">Firstly convention over configuration whereby the location of inputs to the build are specified by the tool’s rules rather than the user’s whim.  Not only does this mean that locations can be omitted but the tool is now free to omit the mention of the tools that rely on those locations.  i.e if it were not for convention over configuration the names of the tools would need to be specified at least so that their configuration could be detailed?</p>
+    <p class="mc_body">Secondly the most idiosyncratic feature which is the structure of the build instructions.  This architecture is covered in detail below.</p>
+    <p class="mc_body">Maven has a third feature which turns out to be probably the most convenient feature for the users although it does not contribute much to the issues addressed by this piece.  The feature is an automatic download of dependencies and build tools (plugins).  It is this feature that gives Maven projects a tremendous portability.</p>
+    <p class="mc_body">Concentrates on the build cycle for typical Java enterprise projects.  The site lifecycle is not considered in any detail.  The trivial clean lifecycle is considered in passing.  The principal consideration is the default lifecycle for jar and war packagings.</p>
+    <p class="Heading 1">Life-cycles, Phases and Plugins</p>
+    <p class="mc_body">We have talked so far in terms of plugins used / tasks executed as equivalent.  How does this work?</p>
+    <p class="mc_body">Instead of specifying steps as a set of tasks as in a batch file or having the execution order set by a dependency tree as in a traditional make configuration, the Maven build process is broken up into a number of phases, such as compile and test.   Zero, one or more tasks are allocated to each phase.  Instead of having a build step as the heading and the tasks listed underneath it the plugins which execute the tasks specify the phase in which they should be executed.  </p>
+    <p class="mc_body">Before we examine the phases in detail we need to talk about life-cycles.  There are 3 life-cycles, clean, site and default.  The phases of the clean life-cycle (pre-clean, clean, post-clean)  by default execute tasks that clean away output from a previous build and site phases (pre-site, site, post-site, site-deploy) execute tasks to build a website documenting the project.  We won’t consider the clean and site life-cycles further but be assured they follow the same pattern as the default life-cycle.</p>
+    <p class="mc_body">The default (build) life-cycle has twenty three phases.  Eight of these contain tasks by default (see the example POM above).  The project developer is free to use the other 17 or in fact to add tasks (in the form of plugin references) to the eight already occupied.  These tasks will be added to the default ones rather than overwriting them.  The execution order of the phases is fixed (which is rather the point of them) but the order of execution of tasks within a phase is not guaranteed.</p>
+    <p class="Heading 2">Default Phases for Jar Build</p>
+    <p class="mc_body">If you are building a jar (that is you set the project packaging element to jar and do not specify a build section in the POM then the following goals are executed by default for the default lifecycle.</p>
+    <p class="mc_body">mvn help:describe -Dcmd=deploy (or the name of any phase from the lifecycle in which you are interested.  This seems to pick up only the predefined plugins.</p>
+    <p class="mc_table_content" tables="1" row="1" col="1"></p>
+    <p class="mc_table_content" tables="1" row="1" col="1"></p>
+    <p class="mc_table_content" tables="1" row="1" col="1"></p>
+    <p class="mc_table_content" tables="1" row="1" col="1">Phase</p>
+    <p class="mc_table_content" tables="1" row="1" col="2"></p>
+    <p class="mc_table_content" tables="1" row="1" col="2">Plugin:goal</p>
+    <p class="mc_table_content" tables="1" row="1" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="lc_cellheading" tables="1" row="2" col="1"></p>
+    <p class="lc_cellheading" tables="1" row="2" col="1"></p>
+    <p class="mc_table_content" tables="1" row="2" col="1"></p>
+    <p class="mc_table_content" tables="1" row="2" col="2"></p>
+    <p class="mc_table_content" tables="1" row="2" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="lc_cellheading" tables="1" row="3" col="1">initialize</p>
+    <p class="mc_table_content" tables="1" row="3" col="1"></p>
+    <p class="mc_table_content" tables="1" row="3" col="2"></p>
+    <p class="mc_table_content" tables="1" row="3" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="lc_cellheading" tables="1" row="4" col="1">generate-sources</p>
+    <p class="mc_table_content" tables="1" row="4" col="1"></p>
+    <p class="mc_table_content" tables="1" row="4" col="2"></p>
+    <p class="mc_table_content" tables="1" row="4" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="lc_cellheading" tables="1" row="5" col="1">process-sources</p>
+    <p class="mc_table_content" tables="1" row="5" col="2"></p>
+    <p class="mc_table_content" tables="1" row="5" col="2"></p>
+    <p class="mc_table_content" tables="1" row="5" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="lc_cellheading" tables="1" row="6" col="1">generate-resources</p>
+    <p class="mc_table_content" tables="1" row="6" col="2"></p>
+    <p class="mc_table_content" tables="1" row="6" col="2"></p>
+    <p class="mc_table_content" tables="1" row="6" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="lc_cellheading" tables="1" row="7" col="1">process-resources </p>
+    <p class="mc_table_content" tables="1" row="7" col="1"></p>
+    <p class="mc_table_content" tables="1" row="7" col="1"></p>
+    <p class="mc_table_content" tables="1" row="7" col="1"></p>
+    <p class="mc_table_content" tables="1" row="7" col="2"></p>
+    <p class="mc_table_content" tables="1" row="7" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="lc_cellheading" tables="1" row="8" col="1">compile </p>
+    <p class="mc_table_content" tables="1" row="8" col="1"></p>
+    <p class="mc_table_content" tables="1" row="8" col="1"></p>
+    <p class="mc_table_content" tables="1" row="8" col="1"></p>
+    <p class="mc_table_content" tables="1" row="8" col="2"></p>
+    <p class="mc_table_content" tables="1" row="8" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="lc_cellheading" tables="1" row="9" col="1">process-classes</p>
+    <p class="mc_table_content" tables="1" row="9" col="1"></p>
+    <p class="mc_table_content" tables="1" row="9" col="2"></p>
+    <p class="mc_table_content" tables="1" row="9" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="lc_cellheading" tables="1" row="10" col="1">generate-test-sources</p>
+    <p class="lc_cellheading" tables="1" row="10" col="1"></p>
+    <p class="mc_table_content" tables="1" row="10" col="2"></p>
+    <p class="mc_table_content" tables="1" row="10" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="lc_cellheading" tables="1" row="11" col="1">process-test-sources</p>
+    <p class="lc_cellheading" tables="1" row="11" col="1"></p>
+    <p class="mc_table_content" tables="1" row="11" col="2"></p>
+    <p class="mc_table_content" tables="1" row="11" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="lc_cellheading" tables="1" row="12" col="1">generate-test-resources</p>
+    <p class="lc_cellheading" tables="1" row="12" col="1"></p>
+    <p class="mc_table_content" tables="1" row="12" col="2"></p>
+    <p class="mc_table_content" tables="1" row="12" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="lc_cellheading" tables="1" row="13" col="1">process-test-resources </p>
+    <p class="mc_table_content" tables="1" row="13" col="1"></p>
+    <p class="mc_table_content" tables="1" row="13" col="1"></p>
+    <p class="mc_table_content" tables="1" row="13" col="1"></p>
+    <p class="mc_table_content" tables="1" row="13" col="2"></p>
+    <p class="mc_table_content" tables="1" row="13" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="14" col="1">test-compile </p>
+    <p class="mc_table_content" tables="1" row="14" col="1"></p>
+    <p class="mc_table_content" tables="1" row="14" col="1"></p>
+    <p class="mc_table_content" tables="1" row="14" col="1"></p>
+    <p class="mc_table_content" tables="1" row="14" col="2"></p>
+    <p class="mc_table_content" tables="1" row="14" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="lc_cellheading" tables="1" row="15" col="1">process-test-classes</p>
+    <p class="lc_cellheading" tables="1" row="15" col="1"></p>
+    <p class="mc_table_content" tables="1" row="15" col="2"></p>
+    <p class="mc_table_content" tables="1" row="15" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="lc_cellheading" tables="1" row="16" col="1">test </p>
+    <p class="mc_table_content" tables="1" row="16" col="1"></p>
+    <p class="mc_table_content" tables="1" row="16" col="1"></p>
+    <p class="mc_table_content" tables="1" row="16" col="1"></p>
+    <p class="mc_table_content" tables="1" row="16" col="2"></p>
+    <p class="mc_table_content" tables="1" row="16" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="17" col="1">prepare-package</p>
+    <p class="mc_table_content" tables="1" row="17" col="1"></p>
+    <p class="mc_table_content" tables="1" row="17" col="2"></p>
+    <p class="mc_table_content" tables="1" row="17" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="lc_cellheading" tables="1" row="18" col="1">package </p>
+    <p class="mc_table_content" tables="1" row="18" col="1"></p>
+    <p class="mc_table_content" tables="1" row="18" col="1"></p>
+    <p class="mc_table_content" tables="1" row="18" col="1"></p>
+    <p class="mc_table_content" tables="1" row="18" col="2"></p>
+    <p class="mc_table_content" tables="1" row="18" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="lc_cellheading" tables="1" row="19" col="1">pre-integration-test</p>
+    <p class="mc_table_content" tables="1" row="19" col="2">         </p>
+    <p class="mc_table_content" tables="1" row="19" col="2"></p>
+    <p class="mc_table_content" tables="1" row="19" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="lc_cellheading" tables="1" row="20" col="1">integration-test</p>
+    <p class="mc_table_content" tables="1" row="20" col="1"></p>
+    <p class="mc_table_content" tables="1" row="20" col="2"></p>
+    <p class="mc_table_content" tables="1" row="20" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="lc_cellheading" tables="1" row="21" col="1">post-integration-test</p>
+    <p class="mc_table_content" tables="1" row="21" col="1"></p>
+    <p class="mc_table_content" tables="1" row="21" col="2"></p>
+    <p class="mc_table_content" tables="1" row="21" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="lc_cellheading" tables="1" row="22" col="1">verify</p>
+    <p class="mc_table_content" tables="1" row="22" col="1"></p>
+    <p class="mc_table_content" tables="1" row="22" col="2"></p>
+    <p class="mc_table_content" tables="1" row="22" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="lc_cellheading" tables="1" row="23" col="1">install</p>
+    <p class="mc_table_content" tables="1" row="23" col="1"></p>
+    <p class="mc_table_content" tables="1" row="23" col="1"></p>
+    <p class="mc_table_content" tables="1" row="23" col="1"></p>
+    <p class="mc_table_content" tables="1" row="23" col="1"></p>
+    <p class="mc_table_content" tables="1" row="23" col="1"></p>
+    <p class="mc_table_content" tables="1" row="23" col="1"></p>
+    <p class="mc_table_content" tables="1" row="23" col="2"></p>
+    <p class="mc_table_content" tables="1" row="23" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="lc_cellheading" tables="1" row="24" col="1">deploy</p>
+    <p class="mc_table_content" tables="1" row="24" col="1"></p>
+    <p class="mc_table_content" tables="1" row="24" col="1"></p>
+    <p class="mc_table_content" tables="1" row="24" col="1"></p>
+    <p class="mc_table_content" tables="1" row="24" col="2"></p>
+    <p class="mc_table_content" tables="1" row="24" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="Heading 2">Goals</p>
+    <p class="mc_body">In maven parlance the goals of no plugins are bound to these phases.</p>
+    <p class="mc_body">When we talked about the equivalence of plugins and tasks that was not the full story.  Plugins can perform a number of tasks.  Each capability (task type) is identified as a goal (sometimes referred to as mojo).</p>
+    <p class="mc_body">For instance the maven-compiler-plugin has two goals: the compile goal is executed in the compile phase and the testCompile goal is executed in the test-compile phase.  These two goals execute the same code but operate on distinct source directories and build into distinct target directories.</p>
+    <p class="Heading 2">More about Defaults</p>
+    <p class="mc_body">The particular plugins and goals to be executed by default during each phase of the build vary according the value of the project’s &lt;packaging&gt; element.  As well as the jar packaging, used in our examples so far there is a number of other predefined packaging types.  The war packaging changes only the plugin and goal associated with the package phase as do the ejb, ejb3, rar and par package types whereas for the ear is quite different having goals associated with only five phases and not surprisingly featuring the maven-ear-plugin in a couple of those.</p>
+    <p class="mc_body">List of predefined package types as of maven v3.0.4:</p>
+    <p class="mc_body">jar, war, ear, pom, ejb, ejb3, maven-plugin, rar, par</p>
+    <p class="mc_body">from C:\projects\Intro\maven\maven-core\target\classes\META-INF\plexus\components.xml</p>
+    <p class="Heading 1">The Build</p>
+    <p class="mc_body">We now have enough knowledge to add a line or ten to the build where we need some behaviour that is not predefined.  Let us say we need to add scripts that build a database so that we can run our application in our development environment.</p>
+    <p class="mc_body">If we search for Maven SQL on google we find sql-maven-plugin home page at the top of the results list.  You typically find an example of what to include in the build section on the usage page.  Copyright?</p>
+    <p class="mc_tech">&lt;project&gt;</p>
+    <p class="mc_tech"> [...]</p>
+    <p class="mc_tech"> &lt;build&gt;</p>
+    <p class="mc_tech">   [...]</p>
+    <p class="mc_tech">   &lt;plugins&gt;</p>
+    <p class="mc_tech">     [...]</p>
+    <p class="mc_tech">     &lt;plugin&gt;</p>
+    <p class="mc_tech">       &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;</p>
+    <p class="mc_tech">       &lt;artifactId&gt;sql-maven-plugin&lt;/artifactId&gt;</p>
+    <p class="mc_tech">       &lt;version&gt;1.5&lt;/version&gt;</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">       &lt;dependencies&gt;</p>
+    <p class="mc_tech">         &lt;!-- specify the dependent JDBC driver here --&gt;</p>
+    <p class="mc_tech">         &lt;dependency&gt;</p>
+    <p class="mc_tech">           &lt;groupId&gt;&lt;/groupId&gt;</p>
+    <p class="mc_tech">           &lt;artifactId&gt;&lt;/artifactId&gt;</p>
+    <p class="mc_tech">           &lt;version&gt;&lt;/version&gt;</p>
+    <p class="mc_tech">         &lt;/dependency&gt;</p>
+    <p class="mc_tech">       &lt;/dependencies&gt;</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">       &lt;!-- common configuration shared by all executions --&gt;</p>
+    <p class="mc_tech">       &lt;configuration&gt;</p>
+    <p class="mc_tech">         &lt;driver&gt;&lt;/driver&gt;</p>
+    <p class="mc_tech">         &lt;url&gt;&lt;/url&gt;</p>
+    <p class="mc_tech">         &lt;username&gt;&lt;/username&gt;</p>
+    <p class="mc_tech">         &lt;password&gt;&lt;/password&gt;</p>
+    <p class="mc_tech">         [...]</p>
+    <p class="mc_tech">       &lt;/configuration&gt;</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">       &lt;executions&gt;</p>
+    <p class="mc_tech">         &lt;execution&gt;</p>
+    <p class="mc_tech">           &lt;phase&gt;&lt;/phase&gt;</p>
+    <p class="mc_tech">           &lt;goals&gt;</p>
+    <p class="mc_tech">             &lt;goal&gt;execute&lt;/goal&gt;</p>
+    <p class="mc_tech">           &lt;/goals&gt;</p>
+    <p class="mc_tech">           &lt;!-- specific configuration for this execution --&gt;</p>
+    <p class="mc_tech">           &lt;configuration&gt;</p>
+    <p class="mc_tech">             &lt;!-- specify your SQL commands, can be all of the following configurations --&gt;</p>
+    <p class="mc_tech">             &lt;fileset&gt;&lt;/fileset&gt;</p>
+    <p class="mc_tech">             &lt;sqlCommand&gt;&lt;/sqlCommand&gt;</p>
+    <p class="mc_tech">             &lt;srcFiles&gt;</p>
+    <p class="mc_tech">               &lt;srcFile&gt;&lt;/srcFile&gt;</p>
+    <p class="mc_tech">               [...]</p>
+    <p class="mc_tech">             &lt;/srcFiles&gt;</p>
+    <p class="mc_tech">           &lt;/configuration&gt;</p>
+    <p class="mc_tech">         &lt;/execution&gt;</p>
+    <p class="mc_tech">         &lt;execution&gt;</p>
+    <p class="mc_tech">           [...]</p>
+    <p class="mc_tech">         &lt;/execution&gt;</p>
+    <p class="mc_tech">         [...]</p>
+    <p class="mc_tech">       &lt;/executions&gt;</p>
+    <p class="mc_tech">     &lt;/plugin&gt;</p>
+    <p class="mc_tech">     [...]</p>
+    <p class="mc_tech">   &lt;/plugins&gt;</p>
+    <p class="mc_tech">   [...]</p>
+    <p class="mc_tech"> &lt;/build&gt;</p>
+    <p class="mc_tech"> [...]</p>
+    <p class="mc_tech">&lt;/project&gt;</p>
+    <p class="mc_body">There are 3 main sections for the plugin: dependencies, configuration and executions.  In addition the groupid, artifactid and version are provided so that the correct component can be downloaded from the repository.</p>
+    <p class="mc_tech">&lt;project&gt;</p>
+    <p class="mc_tech">   &lt;!-- other project stuff --&gt;</p>
+    <p class="mc_tech">   &lt;build&gt;</p>
+    <p class="mc_tech">       &lt;!-- other build stuff, e.g. location info --&gt;</p>
+    <p class="mc_tech">       &lt;plugins&gt;</p>
+    <p class="mc_tech">       &lt;!-- other plugins --&gt;</p>
+    <p class="mc_tech">       &lt;plugin&gt;</p>
+    <p class="mc_tech">           &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;</p>
+    <p class="mc_tech">           &lt;artifactId&gt;sql-maven-plugin&lt;/artifactId&gt;</p>
+    <p class="mc_tech">           &lt;version&gt;1.5&lt;/version&gt;</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">           &lt;dependencies&gt;</p>
+    <p class="mc_tech">               &lt;dependency&gt;</p>
+    <p class="mc_tech">                   &lt;groupId&gt;mysql&lt;/groupId&gt;</p>
+    <p class="mc_tech">                   &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</p>
+    <p class="mc_tech">                   &lt;version&gt;5.1.6&lt;/version&gt;</p>
+    <p class="mc_tech">           &lt;/dependencies&gt;</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">           &lt;configuration&gt;</p>
+    <p class="mc_tech">               &lt;driver&gt;com.mysql.jdbc.Driver&lt;/driver&gt;</p>
+    <p class="mc_tech">               &lt;url&gt;myserver&lt;/url&gt;</p>
+    <p class="mc_tech">               &lt;username&gt;mike&lt;/username&gt;</p>
+    <p class="mc_tech">               &lt;password&gt;password1&lt;/password&gt;</p>
+    <p class="mc_tech">               &lt;delimiter&gt;/&lt;/delimiter&gt;</p>
+    <p class="mc_tech">               &lt;delimiterType&gt;row&lt;/delimiterType&gt;</p>
+    <p class="mc_tech">               &lt;srcFiles&gt;</p>
+    <p class="mc_tech">                   &lt;srcFile&gt;src/main/db/myscript.sql&lt;/srcFile&gt;</p>
+    <p class="mc_tech">               &lt;/srcFiles&gt;</p>
+    <p class="mc_tech">           &lt;/configuration&gt;</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">           &lt;executions&gt;</p>
+    <p class="mc_tech">               &lt;execution&gt;</p>
+    <p class="mc_tech">                   &lt;phase&gt;generate-test-sources&lt;/phase&gt;</p>
+    <p class="mc_tech">                   &lt;goals&gt;</p>
+    <p class="mc_tech">                       &lt;goal&gt;execute&lt;/goal&gt;</p>
+    <p class="mc_tech">                   &lt;/goals&gt;</p>
+    <p class="mc_tech">               &lt;/execution&gt;</p>
+    <p class="mc_tech">           &lt;/executions&gt;</p>
+    <p class="mc_tech">       &lt;/plugin&gt;</p>
+    <p class="mc_tech">       &lt;/plugins&gt;</p>
+    <p class="mc_tech">   &lt;/build&gt;</p>
+    <p class="mc_tech">&lt;/project&gt;</p>
+    <p class="Heading 2">Dependencies</p>
+    <p class="mc_body">Most dependencies required by the plugin are automatically downloaded.  However, in the case of the sql plugin it has no way of knowing, when it is built, what driver will be required for it to its job.  The app developer must add that dependency to the plugin section when using it.</p>
+    <p class="mc_body">There is a slightly different case where a plugin may cause dependencies to be added but in this latter case dependencies are added to the main project rather than to the plugin.  The case is where the plugin generates code.  For instance, when using   Axis a project dependency on axiom will be created as that library is required and build and run time.</p>
+    <p class="mc_body">The only documentation for such non-transitive dependencies tends to be the plugin’s homepage, if you’re lucky, or the web.</p>
+    <p class="mc_body">The plugin’s dependencies should be distinguished from the main project’s dependencies but see the para on axiom above.</p>
+    <p class="Heading 2">Configuration</p>
+    <p class="mc_body">The configuration section allows information to be passed between the project and the plugin.  The maven infrastructure has little interest in this.  </p>
+    <p class="mc_body">The most complete source for possible configuration parameters is the output from the Maven command mvn help:describe -Dplugin=&lt;groupid&gt;:&lt;artifactid&gt;:&lt;version&gt; -Dfull.    The output for mvn help:describe -Dplugin=org.codehaus.mojo:sql-maven-plugin:1.5 is:</p>
+    <p class="mc_tech">[INFO] Scanning for projects...</p>
+    <p class="mc_tech">[INFO]                                                                         </p>
+    <p class="mc_tech">[INFO] ------------------------------------------------------------------------</p>
+    <p class="mc_tech">[INFO] Building minimal 1.0-SNAPSHOT</p>
+    <p class="mc_tech">[INFO] ------------------------------------------------------------------------</p>
+    <p class="mc_tech">[INFO] </p>
+    <p class="mc_tech">[INFO] --- maven-help-plugin:2.1.1:describe (default-cli) @ minimal ---</p>
+    <p class="mc_tech">[INFO] org.codehaus.mojo:sql-maven-plugin:1.5</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">Name: SQL Maven Plugin</p>
+    <p class="mc_tech">Description: Execute SQL Statements</p>
+    <p class="mc_tech">Group Id: org.codehaus.mojo</p>
+    <p class="mc_tech">Artifact Id: sql-maven-plugin</p>
+    <p class="mc_tech">Version: 1.5</p>
+    <p class="mc_tech">Goal Prefix: sql</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">This plugin has 2 goals:</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">sql:execute</p>
+    <p class="mc_tech"> Description: Executes SQL against a database.</p>
+    <p class="mc_tech"> Implementation: org.codehaus.mojo.sql.SqlExecMojo</p>
+    <p class="mc_tech"> Language: java</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech"> Available parameters:</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   autocommit (Default: false)</p>
+    <p class="mc_tech">     Expression: ${autocommit}</p>
+    <p class="mc_tech">     Set to true to execute none-transactional SQL.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   delimiter (Default: ;)</p>
+    <p class="mc_tech">     Expression: ${delimiter}</p>
+    <p class="mc_tech">     Set the delimiter that separates SQL statements.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   delimiterType (Default: normal)</p>
+    <p class="mc_tech">     Expression: ${delimiterType}</p>
+    <p class="mc_tech">     The delimiter type takes two values - 'normal' and 'row'. Normal means</p>
+    <p class="mc_tech">     that any occurrence of the delimiter terminate the SQL command whereas</p>
+    <p class="mc_tech">     with row, only a line containing just the delimiter is recognized as the</p>
+    <p class="mc_tech">     end of the command.</p>
+    <p class="mc_tech">     </p>
+    <p class="mc_tech">     For example, set this to 'go' and delimiterType to 'row' for Sybase ASE</p>
+    <p class="mc_tech">     or MS SQL Server.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   driver</p>
+    <p class="mc_tech">     Expression: ${driver}</p>
+    <p class="mc_tech">     Database driver classname.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   driverProperties</p>
+    <p class="mc_tech">     Expression: ${driverProperties}</p>
+    <p class="mc_tech">     Additional key=value pairs separated by comma to be passed into JDBC</p>
+    <p class="mc_tech">     driver.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   enableAnonymousPassword (Default: false)</p>
+    <p class="mc_tech">     Ignore the password and use anonymous access. This may be useful for</p>
+    <p class="mc_tech">     databases like MySQL which do not allow empty password parameters in the</p>
+    <p class="mc_tech">     connection initialization.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   enableBlockMode</p>
+    <p class="mc_tech">     Expression: ${enableBlockMode}</p>
+    <p class="mc_tech">     When true, the whole SQL content in sqlCommand, srcFiles and fileset are</p>
+    <p class="mc_tech">     sent directly to JDBC in one SQL statement. This option is for executing</p>
+    <p class="mc_tech">     database stored procedures/functions.</p>
+    <p class="mc_tech">     Deprecated. Use {@link #delimiterType} instead.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   enableFiltering (Default: false)</p>
+    <p class="mc_tech">     Expression: ${enableFiltering}</p>
+    <p class="mc_tech">     Set to true if you want to filter the srcFiles using system-, user- and</p>
+    <p class="mc_tech">     project properties</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   encoding (Default: ${project.build.sourceEncoding})</p>
+    <p class="mc_tech">     Expression: ${encoding}</p>
+    <p class="mc_tech">     Encoding to use when reading SQL statements from a file.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   escapeProcessing (Default: true)</p>
+    <p class="mc_tech">     Expression: ${escapeProcessing}</p>
+    <p class="mc_tech">     Argument to Statement.setEscapeProcessing If you want the driver to use</p>
+    <p class="mc_tech">     regular SQL syntax then set this to false.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   fileset</p>
+    <p class="mc_tech">     File(s) containing SQL statements to load. Only use a Fileset if you want</p>
+    <p class="mc_tech">     to use ant-like filepatterns, otherwise use srcFiles. The order is based</p>
+    <p class="mc_tech">     on a matching occurrence while scanning the directory (not the order of</p>
+    <p class="mc_tech">     includes!).</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   forceMojoExecution (Default: false)</p>
+    <p class="mc_tech">     Expression: ${forceOpenJpaExecution}</p>
+    <p class="mc_tech">     Setting this parameter to true will force the execution of this mojo,</p>
+    <p class="mc_tech">     even if it would get skipped usually.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   keepFormat (Default: false)</p>
+    <p class="mc_tech">     Expression: ${keepFormat}</p>
+    <p class="mc_tech">     Keep the format of an SQL block.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   onError (Default: abort)</p>
+    <p class="mc_tech">     Expression: ${onError}</p>
+    <p class="mc_tech">     Action to perform if an error is found. Possible values are abort and</p>
+    <p class="mc_tech">     continue.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   orderFile</p>
+    <p class="mc_tech">     Expression: ${orderFile}</p>
+    <p class="mc_tech">     Set the order in which the SQL files will be executed. Possible values</p>
+    <p class="mc_tech">     are ascending and descending. Any other value means that no sorting will</p>
+    <p class="mc_tech">     be performed. Refers to fileset and srcFiles</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   outputDelimiter (Default: ,)</p>
+    <p class="mc_tech">     The delimiter used to separate fields in the output when using</p>
+    <p class="mc_tech">     printResultSet.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   outputFile</p>
+    <p class="mc_tech">     Dump the SQL execution's output to a file.</p>
+    <p class="mc_tech">     Default value is: System.out.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   password</p>
+    <p class="mc_tech">     Expression: ${password}</p>
+    <p class="mc_tech">     Database password. If not given, it will be looked up through</p>
+    <p class="mc_tech">     settings.xml's server with ${settingsKey} as key.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   printResultSet (Default: false)</p>
+    <p class="mc_tech">     Expression: ${printResultSet}</p>
+    <p class="mc_tech">     Print SQL results.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   settingsKey</p>
+    <p class="mc_tech">     Expression: ${settingsKey}</p>
+    <p class="mc_tech">     Server's id in settings.xml to look up username and password. Defaults to</p>
+    <p class="mc_tech">     ${url} if not given.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   skip (Default: false)</p>
+    <p class="mc_tech">     When true, skip the execution.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   skipOnConnectionError (Default: false)</p>
+    <p class="mc_tech">     Expression: ${skipOnConnectionError}</p>
+    <p class="mc_tech">     Skip execution when there is an error obtaining a connection. This is a</p>
+    <p class="mc_tech">     special case to support databases, such as embedded Derby, that can</p>
+    <p class="mc_tech">     shutdown the database via the URL (i.e. shutdown=true).</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   sqlCommand</p>
+    <p class="mc_tech">     Expression: ${sqlCommand}</p>
+    <p class="mc_tech">     SQL input commands separated by ${delimiter}.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   srcFiles</p>
+    <p class="mc_tech">     List of files containing SQL statements to load.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   url</p>
+    <p class="mc_tech">     Expression: ${url}</p>
+    <p class="mc_tech">     Database URL.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   username</p>
+    <p class="mc_tech">     Expression: ${username}</p>
+    <p class="mc_tech">     Database username. If not given, it will be looked up through</p>
+    <p class="mc_tech">     settings.xml's server with ${settingsKey} as key.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">sql:help</p>
+    <p class="mc_tech"> Description: Display help information on sql-maven-plugin.</p>
+    <p class="mc_tech">   Call</p>
+    <p class="mc_tech">     mvn sql:help -Ddetail=true -Dgoal=&lt;goal-name&gt;</p>
+    <p class="mc_tech">   to display parameter details.</p>
+    <p class="mc_tech"> Implementation: org.codehaus.mojo.sql.HelpMojo</p>
+    <p class="mc_tech"> Language: java</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech"> Available parameters:</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   detail (Default: false)</p>
+    <p class="mc_tech">     Expression: ${detail}</p>
+    <p class="mc_tech">     If true, display all settable properties for each goal.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   goal</p>
+    <p class="mc_tech">     Expression: ${goal}</p>
+    <p class="mc_tech">     The name of the goal for which to show help. If unspecified, all goals</p>
+    <p class="mc_tech">     will be displayed.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   indentSize (Default: 2)</p>
+    <p class="mc_tech">     Expression: ${indentSize}</p>
+    <p class="mc_tech">     The number of spaces per indentation level, should be positive.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">   lineLength (Default: 80)</p>
+    <p class="mc_tech">     Expression: ${lineLength}</p>
+    <p class="mc_tech">     The maximum length of a display line, should be positive.</p>
+    <p class="mc_body"></p>
+    <p class="mc_body"></p>
+    <p class="mc_tech">[INFO] ------------------------------------------------------------------------</p>
+    <p class="mc_tech">[INFO] BUILD SUCCESS</p>
+    <p class="mc_tech">[INFO] ------------------------------------------------------------------------</p>
+    <p class="mc_tech">[INFO] Total time: 8.344s</p>
+    <p class="mc_tech">[INFO] Finished at: Fri Sep 21 08:21:00 BST 2012</p>
+    <p class="mc_tech">[INFO] Final Memory: 4M/15M</p>
+    <p class="mc_tech">[INFO] ------------------------------------------------------------------------</p>
+    <p class="mc_tech">More or less the same output can also be produced with mvn sql:help -Ddetail=true -Dgoal=execute.  It is slightly more to the point.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">You can expect to see primitive data types and arrays (see sourcefiles, above).</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">Often configuration parameters can be specified by means of maven POM properties.  This plugin by plugin, parameter by parameter basis.  In the above example of sql, username, password and delimiter and many others can be specified as properties.</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">Instead of:</p>
+    <p class="mc_tech">     &lt;plugin&gt;</p>
+    <p class="mc_tech">       &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;</p>
+    <p class="mc_tech">       &lt;artifactId&gt;sql-maven-plugin&lt;/artifactId&gt;</p>
+    <p class="mc_tech">       &lt;version&gt;1.5&lt;/version&gt;</p>
+    <p class="mc_tech">&lt;configuration&gt;</p>
+    <p class="mc_tech">	&lt;delimiter&gt;/&lt;/delimiter&gt;</p>
+    <p class="mc_tech">&lt;/configuration&gt;</p>
+    <p class="mc_tech">&lt;!-- other stuff --&gt;</p>
+    <p class="mc_tech">&lt;/plugin&gt;</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">we can have:</p>
+    <p class="mc_tech">     &lt;plugin&gt;</p>
+    <p class="mc_tech">       &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;</p>
+    <p class="mc_tech">       &lt;artifactId&gt;sql-maven-plugin&lt;/artifactId&gt;</p>
+    <p class="mc_tech">       &lt;version&gt;1.5&lt;/version&gt;</p>
+    <p class="mc_tech">&lt;!-- other stuff --&gt;</p>
+    <p class="mc_tech">&lt;/plugin&gt;</p>
+    <p class="mc_tech">&lt;proprerties&gt;</p>
+    <p class="mc_tech">	&lt;delimiter&gt;/&lt;/delimiter&gt;</p>
+    <p class="mc_tech">&lt;/properties&gt;</p>
+    <p class="mc_body">The surefire test controller referenced by default in the test phase provides a better example where:the configuration parameter skip is equivalent to the maven.test.skip.</p>
+    <p class="mc_body">When trying to suppress unit tests instead of:</p>
+    <p class="mc_tech">     &lt;plugin&gt;</p>
+    <p class="mc_tech">       &lt;groupid&gt;org.apache.maven.plugins&lt;/groupid&gt;</p>
+    <p class="mc_tech">       &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;</p>
+    <p class="mc_tech">       &lt;version&gt;2.7.2&lt;/version&gt;</p>
+    <p class="mc_tech">       &lt;executions&gt;</p>
+    <p class="mc_tech">         &lt;execution&gt;</p>
+    <p class="mc_tech">           &lt;id&gt;default-test&lt;/id&gt;</p>
+    <p class="mc_tech">           &lt;phase&gt;test&lt;/phase&gt;</p>
+    <p class="mc_tech">           &lt;goals&gt;</p>
+    <p class="mc_tech">             &lt;goal&gt;test&lt;/goal&gt;</p>
+    <p class="mc_tech">           &lt;/goals&gt;</p>
+    <p class="mc_tech">         &lt;/execution&gt;</p>
+    <p class="mc_tech">       &lt;configuration&gt;</p>
+    <p class="mc_tech">         &lt;skip&gt;true&lt;/skip&gt;</p>
+    <p class="mc_tech">       &lt;/configuration&gt;</p>
+    <p class="mc_tech">       &lt;/executions&gt;</p>
+    <p class="mc_tech">     &lt;/plugin&gt;</p>
+    <p class="mc_body"></p>
+    <p class="mc_body">with:</p>
+    <p class="mc_body">&lt;properties&gt;&lt;maven.test.skip&gt;true&lt;/maven.test.skip&gt;&lt;/properties&gt;</p>
+    <p class="mc_body">or even just -Dmaven.skip.test on the command line.</p>
+    <p class="mc_body">This is another mechanism to promote economy of instructions.</p>
+    <p class="mc_body">Of course this is distinct from doing &lt;skip&gt;${db.skip}&lt;/skip&gt;</p>
+    <p class="mc_body">surefire documentation claims that skip will omit the build stage of tests.  How can this be?  build is done by compile.</p>
+    <p class="mc_body">For sql delimiter, username, password and many others can be specified using maven properties.</p>
+    <p class="mc_body">Which one takes precedence.</p>
+    <p class="mc_body">Configuration sections may be present for the plugin as a whole and / or the individual execution sections.  </p>
+    <p class="Heading 2">Executions</p>
+    <p class="mc_body">Typically if a plugin section is included in the build/plugins section then it will contain an &lt;executions&gt; section.  If it appears in the pluginManagement section then it may not have one in that context.</p>
+    <p class="mc_body">The execution section allows the phase to be specified, i.e. when it should occur in the build cycle.  In our example above we’ve chosen to run our database scripts in the generate-test-sources.  Arguably the plugin should be bound to the generate-test-resources phase as databases are more like resources than sources but from Maven’s point of view it makes no difference as long as the task gets executed before the test phase (or to be precise, whatever the first phase is, at which the database will be needed).  It does of course matter from a human readability point of view.</p>
+    <p class="mc_body">Whereas the phase is important to the Maven infrastructure and determines the point at which a task is executed,  the goal is important to the plugin and determines what is done.  Most plugins have at least two goals (one of which will typically be help) so it is necessary to specify the goal in the execution section.</p>
+    <p class="mc_body">The other possible attributes of an execution are id and configuration which are both relevant where multiple executions are involved.  (Actually there is an inherited attribute which is relevant to pluginManagement (does it apply to build sections within profiles - I should think not).</p>
+    <p class="Heading 2">Multiple Executions</p>
+    <p class="mc_body">Imagine we also have an sqlite database in play.  We may also need to execute scripts against that during the build process.</p>
+    <p class="mc_tech">&lt;project&gt;</p>
+    <p class="mc_tech">   &lt;!-- other project stuff --&gt;</p>
+    <p class="mc_tech">   &lt;build&gt;</p>
+    <p class="mc_tech">       &lt;!-- other build stuff, e.g. location info --&gt;</p>
+    <p class="mc_tech">       &lt;plugins&gt;</p>
+    <p class="mc_tech">           &lt;!-- other plugins --&gt;</p>
+    <p class="mc_tech">           &lt;plugin&gt;</p>
+    <p class="mc_tech">               &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;</p>
+    <p class="mc_tech">               &lt;artifactId&gt;sql-maven-plugin&lt;/artifactId&gt;</p>
+    <p class="mc_tech">               &lt;version&gt;1.5&lt;/version&gt;</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">               &lt;dependencies&gt;</p>
+    <p class="mc_tech">                   &lt;dependency&gt;</p>
+    <p class="mc_tech">                       &lt;groupId&gt;mysql&lt;/groupId&gt;</p>
+    <p class="mc_tech">                       &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</p>
+    <p class="mc_tech">                       &lt;version&gt;5.1.6&lt;/version&gt;</p>
+    <p class="mc_tech">                   &lt;/dependency&gt;</p>
+    <p class="mc_tech">                   &lt;dependency&gt;</p>
+    <p class="mc_tech">                       &lt;groupId&gt;org.xerial&lt;/groupId&gt;</p>
+    <p class="mc_tech">                       &lt;artifactId&gt;sqlite-jdbc&lt;/artifactId&gt;</p>
+    <p class="mc_tech">                       &lt;version&gt;3.7.2&lt;/version&gt;</p>
+    <p class="mc_tech">                   &lt;/dependency&gt;</p>
+    <p class="mc_tech">               &lt;/dependencies&gt;</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">               &lt;configuration&gt;</p>
+    <p class="mc_tech">                   &lt;username&gt;mike&lt;/username&gt;</p>
+    <p class="mc_tech">                   &lt;delimiter&gt;/&lt;/delimiter&gt;</p>
+    <p class="mc_tech">                   &lt;delimiterType&gt;row&lt;/delimiterType&gt;</p>
+    <p class="mc_tech">               &lt;/configuration&gt;</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">               &lt;executions&gt;</p>
+    <p class="mc_tech">                   &lt;execution&gt;</p>
+    <p class="mc_tech">                       &lt;id&gt;mysql_scripts&lt;/id&gt;</p>
+    <p class="mc_tech">                       &lt;phase&gt;generate-test-sources&lt;/phase&gt;</p>
+    <p class="mc_tech">                       &lt;goals&gt;</p>
+    <p class="mc_tech">                           &lt;goal&gt;execute&lt;/goal&gt;</p>
+    <p class="mc_tech">                       &lt;/goals&gt;</p>
+    <p class="mc_tech">                       &lt;configuration&gt;</p>
+    <p class="mc_tech">                           &lt;driver&gt;com.mysql.jdbc.Driver&lt;/driver&gt;</p>
+    <p class="mc_tech">                           &lt;url&gt;mymysqlserver&lt;/url&gt;</p>
+    <p class="mc_tech">                           &lt;password&gt;password1&lt;/password&gt;</p>
+    <p class="mc_tech">                           &lt;srcFiles&gt;</p>
+    <p class="mc_tech">                               &lt;srcFile&gt;src/main/db/myscript.sql&lt;/srcFile&gt;</p>
+    <p class="mc_tech">                           &lt;/srcFiles&gt;</p>
+    <p class="mc_tech">                       &lt;/configuration&gt;</p>
+    <p class="mc_tech">                   &lt;/execution&gt;</p>
+    <p class="mc_tech">                   &lt;execution&gt;</p>
+    <p class="mc_tech">                       &lt;id&gt;sqlite_scripts&lt;/id&gt;</p>
+    <p class="mc_tech">                       &lt;phase&gt;generate-test-sources&lt;/phase&gt;</p>
+    <p class="mc_tech">                       &lt;goals&gt;</p>
+    <p class="mc_tech">                           &lt;goal&gt;execute&lt;/goal&gt;</p>
+    <p class="mc_tech">                       &lt;/goals&gt;</p>
+    <p class="mc_tech">                       &lt;configuration&gt;</p>
+    <p class="mc_tech">                           &lt;driver&gt;sqlite (verify this)&lt;/driver&gt;</p>
+    <p class="mc_tech">                           &lt;url&gt;mysqliteserver&lt;/url&gt;</p>
+    <p class="mc_tech">                           &lt;password&gt;password2&lt;/password&gt;</p>
+    <p class="mc_tech">                           &lt;srcFiles&gt;</p>
+    <p class="mc_tech">                               &lt;srcFile&gt;src/main/db/mysqllite_script.sql&lt;/srcFile&gt;</p>
+    <p class="mc_tech">                           &lt;/srcFiles&gt;</p>
+    <p class="mc_tech">                       &lt;/configuration&gt;</p>
+    <p class="mc_tech">                   &lt;/execution&gt;</p>
+    <p class="mc_tech">               &lt;/executions&gt;</p>
+    <p class="mc_tech">               </p>
+    <p class="mc_tech">           &lt;/plugin&gt;</p>
+    <p class="mc_tech">       &lt;/plugins&gt;</p>
+    <p class="mc_tech">   &lt;/build&gt;</p>
+    <p class="mc_tech">&lt;/project&gt;</p>
+    <p class="mc_body">We have added a dependency for SQLite.  The sql plugin will rely on this for its second execution, the one agains the sqlite database.  We have added an extra execution given the executions distinct ids to aid debugging   Mandatory??  Finally we have shifted some of the configuration into the execution sections so that appropriate connection strings can be used and the correct source files.</p>
+    <p class="mc_body">It’s worth noting that one of the plugins used by default in the default lifecycle for the jar packaging, maven-resources-plugin, has multiple executions one for production resources and the other for test resources.</p>
+    <p class="mc_body">The above scenario can be contrasted with one where multiple goals are specified for the same execution.  Multiple goals would operate against the same configuration information, presumably, performing distinct tasks.</p>
+    <p class="mc_body">Where is the default goal defined?</p>
+    <p class="Heading 2">User Provided Libraries</p>
+    <p class="mc_body">Builds may need to incorporate libraries that are not available from the artefact repository in use.  There are two ways to address this issue: either install the library into the local copy of the repository (link to this) or the dependency can refer to an artefact outside of the maven ecosystem.</p>
+    <p class="Heading 3">Install Artefact Locally</p>
+    <p class="Normal">The command</p>
+    <p class="mc_sgl_cmd" tables="1" row="1" col="1">mvn install:install-file &lt;file path and name&gt;</p>
+    <p class="Normal" tables="1"></p>
+    <p class="Normal">can be used to add a dependency to the local repository</p>
+    <p class="Heading 3">Local Reference</p>
+    <p class="Normal">Alternatively you can configure the dependency to reference some arbitrary local file with the following:</p>
+    <p class="mc_tech" tables="1" row="1" col="1">&lt;project&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">  &lt;!—other project stuff --&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">  &lt;dependencies&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">  &lt;!—other dependencies --&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">    &lt;dependency&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">        &lt;groupId&gt;&lt;/groupId&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">        &lt;artefactId&gt;&lt;/artefactId&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">        &lt;version&gt;&lt;/version&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">        &lt;scope&gt;system&lt;/scope&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">        &lt;systemPath&gt;&lt;/systemPath&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">    &lt;/dependency&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">  &lt;/dependencies&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">  &lt;!—other project stuff --&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">&lt;/project&gt;</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body">Make up some suitable identifiers for groupId, artefactId and version to keep Maven and its plugins happy.  A scope of system indicates that the reference is found locally at the location and with the name specified by systemPath.</p>
+    <p class="mc_body">Will the ear packager pick up the system scoped dependencies?</p>
+    <p class="mc_body"></p>
+    <p class="Heading 2">Multiple Projects</p>
+    <p class="mc_body">Complex builds can be simplified by segregating parts of a solution into separate project files and by using inheritance to pick up settings from a parent POM.</p>
+    <p class="Heading 3">Multiple Modules</p>
+    <p class="mc_body">A common pattern that employs multiple modules is a solution to produce an ear file.  Typically you would have a POM for a war, a POM for the ear and a POM to control both. </p>
+    <p class="mc_body">Example of ear and war</p>
+    <p class="mc_body">Child projects in sub-directories or specified using a relative path http://maven.apache.org/guides/introduction/introduction-to-the-pom.html</p>
+    <p class="mc_body"></p>
+    <p class="Heading 3">Inheritance</p>
+    <p class="mc_body">What is inherited?</p>
+    <p class="mc_body">Elements in the POM that are merged are the following:</p>
+    <p class="mc_body"></p>
+    <p class="mc_body">dependencies</p>
+    <p class="mc_body">developers and contributors</p>
+    <p class="mc_body">plugin lists (including reports)</p>
+    <p class="mc_body">plugin executions with matching ids</p>
+    <p class="mc_body">plugin configuration</p>
+    <p class="mc_body">resources</p>
+    <p class="Heading 3">Ancillary Life-cycles</p>
+    <p class="mc_body">Subsidiary lifecycles</p>
+    <p class="mc_body"></p>
+    <p class="mc_body"></p>
+    <p class="Heading 1">Variety</p>
+    <p class="Heading 2">Executing Goals Directly</p>
+    <p class="mc_body">So far our command line has specified the phases of life-cycles, for instance “mvn clean install” instructs Maven to execute the plugins in (bound to) all phases up to and including the clean phase of the clean life-cycle followed by the plugins in all phases up to and including the install phase of the default lifecycle.</p>
+    <p class="mc_body">You can specify other phases on the command line, for instance whereas “mvn install” executes all phases except the deploy phase (the final phase), “mvn compile” will execute no further than the compile phase.  If we invoked Maven with “mvn compile” for the minimal configuration mentioned previously it would execute two plugins, firstly to copy resources and then to compile. </p>
+    <p class="mc_body">The issue is confused by the fact that you can specify goals directly on the command line.  For instance when creating a project you invoke Maven with “mvn archetype:generate”.  This directly executes the goal generate of the archetype plugin.</p>
+    <p class="mc_body">The tokens on the command line represent different Maven concepts.  In the case of “mvn clean install” or “mvn compile” the values refer to phases whereas in the case of “mvn archetype:generate” ignores phases altogether and concentrates on the plugins.</p>
+    <p class="mc_body">The command line specification can look very similar.  Compare “mvn install” with “mvn install:install-file…”.  In the first example “install” refers to a Maven lifecycle phase, in the second to the plugin maven-install-plugin.  Another way to express the second example is “mvn org.apache.maven.plugins:maven-install-plugin:install-file”.</p>
+    <p class="mc_body">Similarly for compile “mvn compile” can be contrasted with “mvn compile:compile”.  There is no requirement for the names of the plugins install and compile to be the same as the names of the phases.</p>
+    <p class="Heading 4">Shortcut</p>
+    <p class="mc_body">The names compile and install in the direct goal example are plugin goal prefixes. Goal prefixes are assigned from two sources.  If the name of the plugin artefact has the pattern &lt;name&gt;-maven-plugin or maven-&lt;name&gt;-plugin then the prefix will be &lt;name&gt;.  Alternatively, the prefix can be set in the file, maven-metadata-central.xml found in the root directory corresponding to the groupId.   These prefix assignments work fine for the predefined plugin groups of maven-plugins and codehaus-mojo.  If plugins are added from some other source and you want to use the prefix then there is one more piece of configuration.  You can add new prefixes by modifying settings.xml and adding the group id of the plugins to the pluginGroups section. </p>
+    <p class="mc_body">The final issue to consider is whether when goals are executed previous phases are executed.</p>
+    <p class="mc_body">Further complicated by goals that cause other phases to be executed.</p>
+    <p class="mc_body">Execution of dependencies and role of inheritance</p>
+    <p class="Heading 1">Summary</p>
+    <p class="mc_body">The build section of the POM file specifies the steps required to build the project.  You can think of maven as executing the build section of the POM.  </p>
+    <p class="mc_body">The information is not provided in the form of steps to be carried out by maven but rather specified by identifying the tools (plugins) to be used and the tasks (goals), supported by each plugin,  to be performed.  The selection of tasks from the POM to be executed is controlled by the parameters passed to the maven command line.</p>
+    <p class="mc_body">The order in which tasks are performed is determined from the phase associated with each goal.</p>
+    <p class="mc_body">The phases are executed in a fixed order according to a  lifecycle.</p>
+    <p class="mc_body">To summarise: a task to be performed and its timing in the build process are determined by the following five identifiers:</p>
+    <p class="mc_body" tables="1" row="1" col="1">Lifecycle</p>
+    <p class="mc_body" tables="1" row="1" col="1">	Phase</p>
+    <p class="mc_body" tables="1" row="1" col="1">		Plugin</p>
+    <p class="mc_body" tables="1" row="1" col="1">			Goal</p>
+    <p class="mc_body" tables="1" row="1" col="1">				Execution Id</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body"></p>
+    <p class="mc_body"></p>
+    <p class="mc_body">A goal can have multiple execution ids.  This feature allows the goal to be executed multiple times, each time with different configuration data.</p>
+    <p class="mc_body"></p>
+    <p class="Heading 1">Pre-defined Plugin Bindings</p>
+    <p class="mc_body">The following plugins are used in the default lifecycle for jar, war, ejb3, maven-plugin, rar and par packagings.  That is to say, these are the plugins and goals that get included if you generate a fairly standard POM and don’t make to many changes.</p>
+    <p class="Heading 2">Copy Resources</p>
+    <p class="mc_body">Group Id: org.apache.maven.plugins</p>
+    <p class="mc_body">Artefact Id: maven-resources-plugin</p>
+    <p class="mc_body">Current version: 2.3</p>
+    <p class="mc_body">Bound to phases: process-resources, process-test-resources</p>
+    <p class="mc_body">Interesting goals: resources, testResources</p>
+    <p class="mc_body">Home Page: http://maven.apache.org/plugins/maven-resources-plugin/</p>
+    <p class="mc_description_label">Description:</p>
+    <p class="mc_description_text">The usage page does not specify http://maven.apache.org/plugins/maven-resources-plugin much - needs some explanation</p>
+    <p class="mc_description_text">Two goals from the the resources plugin are executed in the pre-fefined default lifecycle for packagings such as jar and war.</p>
+    <p class="mc_description_text">The resources goal is executed in the process-resources phase; the testResources goal is executed in the process-test-resources phase.</p>
+    <p class="mc_description_text">In both cases the plugin copies all the data from a well-known source directory to a well-known target directory. </p>
+    <p class="mc_example_label">Example</p>
+    <p class="mc_example_text"></p>
+    <p class="mc_body">Commentary:</p>
+    <p class="mc_description_text"></p>
+    <p class="Heading 2">Compile</p>
+    <p class="mc_body">http://maven.apache.org/plugins/maven-compiler-plugin/</p>
+    <p class="mc_body"></p>
+    <p class="mc_body">Group Id: org.apache.maven.plugins</p>
+    <p class="mc_body">Artefact Id: maven-compiler-plugin</p>
+    <p class="mc_body">Current version: 2.3</p>
+    <p class="mc_body">Bound to phases: compile, test-compile</p>
+    <p class="mc_body">Interesting goals: compile, testCompile</p>
+    <p class="mc_body">Home Page: http://maven.apache.org/plugins/maven-compiler-plugin/</p>
+    <p class="mc_description_label">Description:</p>
+    <p class="mc_description_text"> </p>
+    <p class="mc_example_label">Example</p>
+    <p class="mc_example_text"></p>
+    <p class="mc_body">Commentary:</p>
+    <p class="mc_body">The compilerVersion parameter can be used to specify the version of the compiler that the plugin will use. However, you also need to set fork to true for this to work. For example:</p>
+    <p class="Heading 2">Testing</p>
+    <p class="mc_body">maven-surefire-plugin (runs tests)</p>
+    <p class="mc_body">http://maven.apache.org/plugins/maven-surefire-plugin/</p>
+    <p class="mc_body"></p>
+    <p class="mc_body">uses dependencies in POM to determine which provider to use</p>
+    <p class="Heading 2">Packaging</p>
+    <p class="mc_body">maven-jar-plugin</p>
+    <p class="mc_body">http://maven.apache.org/plugins/maven-jar-plugin/</p>
+    <p class="mc_body">What is it that it chooses to package?  Contents of target?</p>
+    <p class="Heading 2">Install and Deploy</p>
+    <p class="mc_body">maven-install-plugin</p>
+    <p class="mc_body">http://maven.apache.org/plugins/maven-install-plugin/</p>
+    <p class="mc_body">What is it that it chooses to install?  What about artefacts built using the assembly plugin?</p>
+    <p class="mc_body">maven-deploy-plugin</p>
+    <p class="mc_body">http://maven.apache.org/plugins/maven-deploy-plugin/</p>
+    <p class="mc_body"></p>
+    <p class="Heading 1">Useful Plugins</p>
+    <p class="mc_body">The following plugins differ from those involved in the predefined bindings discussed in the previous section.  In particular, the phase in which the plugins goals were executed were determined by maven (that’s what made them pre-defined.  The following plugins are not necessarily bound to a phase and where they are, it is the plugin that has made the choice rather than the maven infrastructure.</p>
+    <p class="Heading 2">Ant (antrun)</p>
+    <p class="mc_body">Group Id: org.apache.maven.plugins</p>
+    <p class="mc_body">Artefact Id: maven-antrun-plugin</p>
+    <p class="mc_body">Current version: 1.6</p>
+    <p class="mc_body">Bound to phase by default: none</p>
+    <p class="mc_body">Goal Prefix: antrun</p>
+    <p class="mc_body">Interesting goal: run</p>
+    <p class="mc_body">Home Page: http://maven.apache.org/plugins/maven-antrun-plugin/</p>
+    <p class="mc_description_label">Description:</p>
+    <p class="mc_description_text">The ant plugin can perform operations related to developmentwhich are not provided by other maven plugins.  These cover such areas as file manipulation, sending mail, dealing with archive (jar etc.) files.  See http://ant.apache.org/manual/tasksoverview.html#log for details.</p>
+    <p class="mc_description_text">To ensure that the build fails if an ant task fails you need to include &lt;failOnError/&gt; in the configuration of the plugin.</p>
+    <p class="mc_example_label">Example</p>
+    <p class="mc_example_text">Invoke maven with mvn install</p>
+    <p class="mc_example_text">&lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"</p>
+    <p class="mc_example_text">         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"&gt;</p>
+    <p class="mc_example_text">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</p>
+    <p class="mc_example_text">    &lt;groupId&gt;mdamay.com&lt;/groupId&gt;</p>
+    <p class="mc_example_text">    &lt;artifactId&gt;bosscat&lt;/artifactId&gt;</p>
+    <p class="mc_example_text">    &lt;packaging&gt;war&lt;/packaging&gt;</p>
+    <p class="mc_example_text">    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</p>
+    <p class="mc_example_text">    &lt;name&gt;bosscat Webapp&lt;/name&gt;</p>
+    <p class="mc_example_text">    &lt;url&gt;http://maven.apache.org&lt;/url&gt;</p>
+    <p class="mc_example_text">    &lt;properties&gt;</p>
+    <p class="mc_example_text">        &lt;ws.endpoint&gt;disappointedprogrammer.com/sad.wsdl&lt;/ws.endpoint&gt;</p>
+    <p class="mc_example_text">    &lt;/properties&gt;</p>
+    <p class="mc_example_text">    &lt;profiles&gt;</p>
+    <p class="mc_example_text">        &lt;profile&gt;</p>
+    <p class="mc_example_text">            &lt;id&gt;Mike&lt;/id&gt;</p>
+    <p class="mc_example_text">            &lt;activation&gt;</p>
+    <p class="mc_example_text">                &lt;property&gt;</p>
+    <p class="mc_example_text">                    &lt;name&gt;user.name&lt;/name&gt;</p>
+    <p class="mc_example_text">                    &lt;value&gt;Mike&lt;/value&gt;</p>
+    <p class="mc_example_text">                &lt;/property&gt;</p>
+    <p class="mc_example_text">            &lt;/activation&gt;</p>
+    <p class="mc_example_text">            &lt;properties&gt;</p>
+    <p class="mc_example_text">                &lt;ws.endpoint&gt;dev.disappointedprogrammer.com/sad.wsdl&lt;/ws.endpoint&gt;</p>
+    <p class="mc_example_text">            &lt;/properties&gt;</p>
+    <p class="mc_example_text">        &lt;/profile&gt;</p>
+    <p class="mc_example_text">    &lt;/profiles&gt;</p>
+    <p class="mc_example_text">    &lt;dependencies&gt;</p>
+    <p class="mc_example_text">        &lt;dependency&gt;</p>
+    <p class="mc_example_text">            &lt;groupId&gt;junit&lt;/groupId&gt;</p>
+    <p class="mc_example_text">            &lt;artifactId&gt;junit&lt;/artifactId&gt;</p>
+    <p class="mc_example_text">            &lt;version&gt;3.8.1&lt;/version&gt;</p>
+    <p class="mc_example_text">            &lt;scope&gt;test&lt;/scope&gt;</p>
+    <p class="mc_example_text">        &lt;/dependency&gt;</p>
+    <p class="mc_example_text">        &lt;dependency&gt;</p>
+    <p class="mc_example_text">            &lt;groupId&gt;javax.servlet&lt;/groupId&gt;</p>
+    <p class="mc_example_text">            &lt;artifactId&gt;servlet-api&lt;/artifactId&gt;</p>
+    <p class="mc_example_text">            &lt;version&gt;2.5&lt;/version&gt;</p>
+    <p class="mc_example_text">        &lt;/dependency&gt;</p>
+    <p class="mc_example_text">    &lt;/dependencies&gt;</p>
+    <p class="mc_example_text">    &lt;build&gt;</p>
+    <p class="mc_example_text">        &lt;finalName&gt;bosscat&lt;/finalName&gt;</p>
+    <p class="mc_example_text">        &lt;plugins&gt;</p>
+    <p class="mc_example_text">            &lt;plugin&gt;</p>
+    <p class="mc_example_text">                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</p>
+    <p class="mc_example_text">                &lt;artifactId&gt;maven-antrun-plugin&lt;/artifactId&gt;</p>
+    <p class="mc_example_text">                &lt;version&gt;1.6&lt;/version&gt;</p>
+    <p class="mc_example_text">                &lt;executions&gt;</p>
+    <p class="mc_example_text">                    &lt;execution&gt;</p>
+    <p class="mc_example_text">                        &lt;phase&gt;install&lt;/phase&gt;</p>
+    <p class="mc_example_text">                        &lt;goals&gt;</p>
+    <p class="mc_example_text">                            &lt;goal&gt;run&lt;/goal&gt;</p>
+    <p class="mc_example_text">                        &lt;/goals&gt;</p>
+    <p class="mc_example_text">                        &lt;configuration&gt;</p>
+    <p class="mc_example_text">                            &lt;target name="echo"&gt;</p>
+    <p class="mc_example_text">                                &lt;echo&gt;end point is set to ${ws.endpoint}&lt;/echo&gt;</p>
+    <p class="mc_example_text">                            &lt;/target&gt;</p>
+    <p class="mc_example_text">                        &lt;/configuration&gt;</p>
+    <p class="mc_example_text">                    &lt;/execution&gt;</p>
+    <p class="mc_example_text">                &lt;/executions&gt;</p>
+    <p class="mc_example_text">            &lt;/plugin&gt;</p>
+    <p class="mc_example_text">        &lt;/plugins&gt;</p>
+    <p class="mc_example_text">    &lt;/build&gt;</p>
+    <p class="mc_example_text">&lt;/project&gt;</p>
+    <p class="mc_body">Commentary:</p>
+    <p class="mc_commentary_text">The following example addresses the condition in a complex build comprising multiple modules and different profiles.  In the last stage of the build, the install phase, it prints out data that may vary according to who is doing the build and may not be easily discernable from an inspection of the POMS.  In our case the web-service end point (ws.endpoint) can be overridden by the user specific profile for the user Mike.  All users except Mike will be reassured by seeing “end point is set to disappointedprogrammer.com/sad.wsdl” at the end of the build whereas Mike may be conveniently reminded that in the artefacts built by him the “end point is set to disappointedprogrammer.com/sad.wsdl”.</p>
+    <p class="mc_commentary_text">Unlike Maven Ant requires the components on which it relies to be installed by the user (I think).</p>
+    <p class="mc_commentary_text">One of the experiments that we do later is to provide enforcer rules to attempt to check on the presence of the required Ant dependencies.</p>
+    <p class="mc_commentary_text">Alternatives to Ant tend to produce more expressive sets of commands.</p>
+    <p class="Heading 2">Enforcer</p>
+    <p class="mc_body">Group Id: org.apache.maven.plugins</p>
+    <p class="mc_body">Artefact Id: maven-enforcer-plugin</p>
+    <p class="mc_body">Current version: 1.1.1</p>
+    <p class="mc_body">Bound to phase by default: validate (doesn’t appear to be)</p>
+    <p class="mc_body">Interesting goal: enforce</p>
+    <p class="mc_body">Home Page: http://maven.apache.org/plugins/maven-enforcer-plugin/</p>
+    <p class="mc_description_label">Description:</p>
+    <p class="mc_description_text">The enforcer plugin allows you to make assertions about the project and the environment.  For instance you can ensure that maven is running under an appropriate version of the JDK (which may be demanded by plugins or required for the compilation).  If an assertion proves to be false the build can be stopped and the issue brought to the user’s attention.</p>
+    <p class="mc_description_text">This is particularly useful where you expect many users to access the project casually.  It enables them to come up to speed quickly on the pre-requisites for the project.  Watch out for &lt;prerequisites/&gt; tag.</p>
+    <p class="mc_example_label">Example:</p>
+    <p class="mc_body">Invoke maven with mvn validate</p>
+    <p class="mc_example_text">&lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" </p>
+    <p class="mc_example_text">  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"&gt;</p>
+    <p class="mc_example_text">  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</p>
+    <p class="mc_example_text">  &lt;groupId&gt;mdamay.com&lt;/groupId&gt;</p>
+    <p class="mc_example_text">  &lt;artifactId&gt;bosscat&lt;/artifactId&gt;</p>
+    <p class="mc_example_text">  &lt;packaging&gt;war&lt;/packaging&gt;</p>
+    <p class="mc_example_text">  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</p>
+    <p class="mc_example_text">  &lt;name&gt;bosscat Webapp&lt;/name&gt;</p>
+    <p class="mc_example_text">  &lt;url&gt;http://maven.apache.org&lt;/url&gt;</p>
+    <p class="mc_example_text">  &lt;dependencies&gt;</p>
+    <p class="mc_example_text">    &lt;dependency&gt;</p>
+    <p class="mc_example_text">      &lt;groupId&gt;junit&lt;/groupId&gt;</p>
+    <p class="mc_example_text">      &lt;artifactId&gt;junit&lt;/artifactId&gt;</p>
+    <p class="mc_example_text">      &lt;version&gt;3.8.1&lt;/version&gt;</p>
+    <p class="mc_example_text">      &lt;scope&gt;test&lt;/scope&gt;</p>
+    <p class="mc_example_text">    &lt;/dependency&gt;</p>
+    <p class="mc_example_text">    &lt;dependency&gt;</p>
+    <p class="mc_example_text">      &lt;groupId&gt;javax.servlet&lt;/groupId&gt;</p>
+    <p class="mc_example_text">      &lt;artifactId&gt;servlet-api&lt;/artifactId&gt;</p>
+    <p class="mc_example_text">      &lt;version&gt;2.5&lt;/version&gt;</p>
+    <p class="mc_example_text">    &lt;/dependency&gt;</p>
+    <p class="mc_example_text">  &lt;/dependencies&gt;</p>
+    <p class="mc_example_text">  &lt;build&gt;</p>
+    <p class="mc_example_text">    &lt;finalName&gt;bosscat&lt;/finalName&gt;</p>
+    <p class="mc_example_text">    &lt;plugins&gt;</p>
+    <p class="mc_example_text">        &lt;plugin&gt;</p>
+    <p class="mc_example_text">            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</p>
+    <p class="mc_example_text">            &lt;artifactId&gt;maven-enforcer-plugin&lt;/artifactId&gt;</p>
+    <p class="mc_example_text">            &lt;version&gt;1.1.1&lt;/version&gt;</p>
+    <p class="mc_example_text">            &lt;configuration&gt;</p>
+    <p class="mc_example_text">                &lt;fail&gt;true&lt;/fail&gt;</p>
+    <p class="mc_example_text">                &lt;rules&gt;</p>
+    <p class="mc_example_text">                    &lt;requireMavenVersion&gt;</p>
+    <p class="mc_example_text">                        &lt;message&gt;This POM will only run under Maven version 2.0.1&lt;/message&gt;</p>
+    <p class="mc_example_text">                        &lt;version&gt;[2.0.1]&lt;/version&gt;</p>
+    <p class="mc_example_text">                    &lt;/requireMavenVersion&gt;</p>
+    <p class="mc_example_text">                &lt;/rules&gt;</p>
+    <p class="mc_example_text">            &lt;/configuration&gt;</p>
+    <p class="mc_example_text">            &lt;executions&gt;</p>
+    <p class="mc_example_text">                &lt;execution&gt;</p>
+    <p class="mc_example_text">                    &lt;phase&gt;validate&lt;/phase&gt;</p>
+    <p class="mc_example_text">                    &lt;goals&gt;&lt;goal&gt;enforce&lt;/goal&gt;&lt;/goals&gt;</p>
+    <p class="mc_example_text">                &lt;/execution&gt;</p>
+    <p class="mc_example_text">            &lt;/executions&gt;</p>
+    <p class="mc_example_text">        &lt;/plugin&gt;</p>
+    <p class="mc_example_text">    &lt;/plugins&gt;</p>
+    <p class="mc_example_text">  &lt;/build&gt;</p>
+    <p class="mc_example_text">&lt;/project&gt;</p>
+    <p class="mc_commentary_label">Commentary:</p>
+    <p class="mc_commentary_text">The rules described at http://maven.apache.org/enforcer/enforcer-rules/index.html are not very comprehensive but it is fairly easy to add custom rules following the instructions at http://maven.apache.org/enforcer/enforcer-api/writing-a-custom-rule.html.</p>
+    <p class="Heading 2">Assembly</p>
+    <p class="mc_body">Group Id: org.apache.maven.plugins</p>
+    <p class="mc_body">Artefact Id: maven-assembly-plugin</p>
+    <p class="mc_body">Current version: 2.3</p>
+    <p class="mc_body">Bound to phase by default: none</p>
+    <p class="mc_body">Interesting goal: single</p>
+    <p class="mc_body">Home Page: https://maven.apache.org/plugins/maven-assembly-plugin/</p>
+    <p class="mc_description_label">Description:</p>
+    <p class="mc_description_text">The assembly plugin is quite a beast handling a variety of tasks relating to assembling the final artefacts of a build </p>
+    <p class="mc_example_label">Example</p>
+    <p class="mc_example_text">Command Line: mvn assembly:single</p>
+    <p class="mc_example_text">&lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"</p>
+    <p class="mc_example_text">         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"&gt;</p>
+    <p class="mc_example_text">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</p>
+    <p class="mc_example_text">    &lt;groupId&gt;mdamay.com&lt;/groupId&gt;</p>
+    <p class="mc_example_text">    &lt;artifactId&gt;bosscat&lt;/artifactId&gt;</p>
+    <p class="mc_example_text">    &lt;packaging&gt;war&lt;/packaging&gt;</p>
+    <p class="mc_example_text">    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</p>
+    <p class="mc_example_text">    &lt;name&gt;bosscat Webapp&lt;/name&gt;</p>
+    <p class="mc_example_text">    &lt;url&gt;http://maven.apache.org&lt;/url&gt;</p>
+    <p class="mc_example_text">    &lt;properties&gt;</p>
+    <p class="mc_example_text">        &lt;ws.endpoint&gt;disappointedprogrammer.com/sad.wsdl&lt;/ws.endpoint&gt;</p>
+    <p class="mc_example_text">    &lt;/properties&gt;</p>
+    <p class="mc_example_text">    &lt;profiles&gt;</p>
+    <p class="mc_example_text">        &lt;profile&gt;</p>
+    <p class="mc_example_text">            &lt;id&gt;Mike&lt;/id&gt;</p>
+    <p class="mc_example_text">            &lt;activation&gt;</p>
+    <p class="mc_example_text">                &lt;property&gt;</p>
+    <p class="mc_example_text">                    &lt;name&gt;user.name&lt;/name&gt;</p>
+    <p class="mc_example_text">                    &lt;value&gt;Mike&lt;/value&gt;</p>
+    <p class="mc_example_text">                &lt;/property&gt;</p>
+    <p class="mc_example_text">            &lt;/activation&gt;</p>
+    <p class="mc_example_text">            &lt;properties&gt;</p>
+    <p class="mc_example_text">                &lt;ws.endpoint&gt;dev.disappointedprogrammer.com/sad.wsdl&lt;/ws.endpoint&gt;</p>
+    <p class="mc_example_text">            &lt;/properties&gt;</p>
+    <p class="mc_example_text">        &lt;/profile&gt;</p>
+    <p class="mc_example_text">    &lt;/profiles&gt;</p>
+    <p class="mc_example_text">    &lt;dependencies&gt;</p>
+    <p class="mc_example_text">        &lt;dependency&gt;</p>
+    <p class="mc_example_text">            &lt;groupId&gt;junit&lt;/groupId&gt;</p>
+    <p class="mc_example_text">            &lt;artifactId&gt;junit&lt;/artifactId&gt;</p>
+    <p class="mc_example_text">            &lt;version&gt;3.8.1&lt;/version&gt;</p>
+    <p class="mc_example_text">            &lt;scope&gt;test&lt;/scope&gt;</p>
+    <p class="mc_example_text">        &lt;/dependency&gt;</p>
+    <p class="mc_example_text">        &lt;dependency&gt;</p>
+    <p class="mc_example_text">            &lt;groupId&gt;javax.servlet&lt;/groupId&gt;</p>
+    <p class="mc_example_text">            &lt;artifactId&gt;servlet-api&lt;/artifactId&gt;</p>
+    <p class="mc_example_text">            &lt;version&gt;2.5&lt;/version&gt;</p>
+    <p class="mc_example_text">        &lt;/dependency&gt;</p>
+    <p class="mc_example_text">    &lt;/dependencies&gt;</p>
+    <p class="mc_example_text">    &lt;build&gt;</p>
+    <p class="mc_example_text">        &lt;plugins&gt;</p>
+    <p class="mc_example_text">            &lt;plugin&gt;</p>
+    <p class="mc_example_text">                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</p>
+    <p class="mc_example_text">                &lt;artifactId&gt;maven-assembly-plugin&lt;/artifactId&gt;</p>
+    <p class="mc_example_text">                &lt;version&gt;2.3&lt;/version&gt;</p>
+    <p class="mc_example_text">                &lt;configuration&gt;</p>
+    <p class="mc_example_text">                    &lt;descriptor&gt;assembly.xml&lt;/descriptor&gt;</p>
+    <p class="mc_example_text">                &lt;/configuration&gt;</p>
+    <p class="mc_example_text">            &lt;/plugin&gt;</p>
+    <p class="mc_example_text">        &lt;/plugins&gt;</p>
+    <p class="mc_example_text">    &lt;/build&gt;</p>
+    <p class="mc_example_text">&lt;/project&gt;</p>
+    <p class="mc_example_text"></p>
+    <p class="mc_example_text">&lt;?xml version="1.0" encoding="us-ascii" ?&gt;</p>
+    <p class="mc_example_text">&lt;assembly&gt;</p>
+    <p class="mc_example_text">    &lt;id&gt;mike&lt;/id&gt;</p>
+    <p class="mc_example_text">    &lt;formats&gt;</p>
+    <p class="mc_example_text">        &lt;format&gt;zip&lt;/format&gt;</p>
+    <p class="mc_example_text">    &lt;/formats&gt;</p>
+    <p class="mc_example_text">    &lt;fileSets&gt;</p>
+    <p class="mc_example_text">        &lt;fileSet&gt;</p>
+    <p class="mc_example_text">            &lt;directory&gt;src&lt;/directory&gt;</p>
+    <p class="mc_example_text">        &lt;/fileSet&gt;</p>
+    <p class="mc_example_text">    &lt;/fileSets&gt;</p>
+    <p class="mc_example_text">&lt;/assembly&gt;</p>
+    <p class="mc_commentary_label">Commentary:</p>
+    <p class="mc_commentary_text">Configuration must sit outside execution. http://stackoverflow.com/questions/967779/maven-assemblyassembly</p>
+    <p class="mc_commentary_text">Requires an introduction of its own.  I can’t do justice to it.</p>
+    <p class="mc_commentary_text">We don’t attempt to bind this to a phase although we could add it in at pretty much any phase.</p>
+    <p class="Heading 2">Release</p>
+    <p class="mc_body">Group Id: org.apache.maven.plugins</p>
+    <p class="mc_body">Artefact Id: maven-release-plugin</p>
+    <p class="mc_body">Current version: 2.3.2</p>
+    <p class="mc_body">Bound to phase by default: none</p>
+    <p class="mc_body">Interesting goal: prepare, perform</p>
+    <p class="mc_body">Home Page: http://maven.apache.org/plugins/maven-release-plugin/</p>
+    <p class="mc_description_label">Description:</p>
+    <p class="mc_description_text">The release plugin performs housekeeping associated with making a release.  It does not deploy the artefacts to a server or build an installation package.</p>
+    <p class="mc_example_label">Example</p>
+    <p class="mc_example_text"></p>
+    <p class="mc_commentary_label">Commentary:</p>
+    <p class="mc_commentary_text"></p>
+    <p class="Heading 2">Exec</p>
+    <p class="mc_body">Group Id: org.mojo.codehaus</p>
+    <p class="mc_body">Artefact Id: exec-maven-plugin</p>
+    <p class="mc_body">Current version: 1.2.1</p>
+    <p class="mc_body">Bound to phase by default: none</p>
+    <p class="mc_body">Interesting goal: exec, java</p>
+    <p class="mc_body">Home Page: http://mojo.codehaus.org/exec-maven-plugin/</p>
+    <p class="mc_description_label">Description:</p>
+    <p class="mc_description_text">The exec plugin can execute external programs through its exec goal or java code through</p>
+    <p class="mc_description_text"></p>
+    <p class="mc_description_text">Handling errors!!</p>
+    <p class="mc_example_label">Esample</p>
+    <p class="mc_example_text">Command Line: mvn clean install</p>
+    <p class="mc_example_text">&lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"</p>
+    <p class="mc_example_text">         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"&gt;</p>
+    <p class="mc_example_text">&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</p>
+    <p class="mc_example_text">&lt;groupId&gt;mdamay.com&lt;/groupId&gt;</p>
+    <p class="mc_example_text">&lt;artifactId&gt;bosscat&lt;/artifactId&gt;</p>
+    <p class="mc_example_text">&lt;packaging&gt;war&lt;/packaging&gt;</p>
+    <p class="mc_example_text">&lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</p>
+    <p class="mc_example_text">&lt;name&gt;bosscat Webapp&lt;/name&gt;</p>
+    <p class="mc_example_text">&lt;url&gt;http://maven.apache.org&lt;/url&gt;</p>
+    <p class="mc_example_text">&lt;properties&gt;</p>
+    <p class="mc_example_text">    &lt;devtoolsPath&gt;${project.build.directory}\test-classes&lt;/devtoolsPath&gt;</p>
+    <p class="mc_example_text">&lt;/properties&gt;</p>
+    <p class="mc_example_text">&lt;dependencies&gt;</p>
+    <p class="mc_example_text">    &lt;dependency&gt;</p>
+    <p class="mc_example_text">        &lt;groupId&gt;junit&lt;/groupId&gt;</p>
+    <p class="mc_example_text">        &lt;artifactId&gt;junit&lt;/artifactId&gt;</p>
+    <p class="mc_example_text">        &lt;version&gt;3.8.1&lt;/version&gt;</p>
+    <p class="mc_example_text">        &lt;scope&gt;test&lt;/scope&gt;</p>
+    <p class="mc_example_text">    &lt;/dependency&gt;</p>
+    <p class="mc_example_text">    &lt;dependency&gt;</p>
+    <p class="mc_example_text">        &lt;groupId&gt;javax.servlet&lt;/groupId&gt;</p>
+    <p class="mc_example_text">        &lt;artifactId&gt;servlet-api&lt;/artifactId&gt;</p>
+    <p class="mc_example_text">        &lt;version&gt;2.5&lt;/version&gt;</p>
+    <p class="mc_example_text">    &lt;/dependency&gt;</p>
+    <p class="mc_example_text">&lt;/dependencies&gt;</p>
+    <p class="mc_example_text">&lt;build&gt;</p>
+    <p class="mc_example_text">    &lt;plugins&gt;</p>
+    <p class="mc_example_text">        &lt;plugin&gt;</p>
+    <p class="mc_example_text">            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</p>
+    <p class="mc_example_text">            &lt;artifactId&gt;maven-antrun-plugin&lt;/artifactId&gt;</p>
+    <p class="mc_example_text">            &lt;version&gt;1.6&lt;/version&gt;</p>
+    <p class="mc_example_text">            &lt;executions&gt;</p>
+    <p class="mc_example_text">                &lt;execution&gt;</p>
+    <p class="mc_example_text">                    &lt;id&gt;remove_devtools_directory&lt;/id&gt;</p>
+    <p class="mc_example_text">                    &lt;phase&gt;clean&lt;/phase&gt;</p>
+    <p class="mc_example_text">                    &lt;goals&gt;</p>
+    <p class="mc_example_text">                        &lt;goal&gt;run&lt;/goal&gt;</p>
+    <p class="mc_example_text">                    &lt;/goals&gt;</p>
+    <p class="mc_example_text">                    &lt;configuration&gt;</p>
+    <p class="mc_example_text">                        &lt;target name="remove_devtools_directory"&gt;</p>
+    <p class="mc_example_text">                            &lt;delete dir="${devtoolsPath}"/&gt;</p>
+    <p class="mc_example_text">                        &lt;/target&gt;</p>
+    <p class="mc_example_text">                    &lt;/configuration&gt;</p>
+    <p class="mc_example_text">                &lt;/execution&gt;</p>
+    <p class="mc_example_text">                &lt;execution&gt;</p>
+    <p class="mc_example_text">                    &lt;id&gt;make_devtools_directory&lt;/id&gt;</p>
+    <p class="mc_example_text">                    &lt;phase&gt;initialize&lt;/phase&gt;</p>
+    <p class="mc_example_text">                    &lt;goals&gt;</p>
+    <p class="mc_example_text">                        &lt;goal&gt;run&lt;/goal&gt;</p>
+    <p class="mc_example_text">                    &lt;/goals&gt;</p>
+    <p class="mc_example_text">                    &lt;configuration&gt;</p>
+    <p class="mc_example_text">                        &lt;target name="make_devtools_directory"&gt;</p>
+    <p class="mc_example_text">                            &lt;mkdir dir="${devtoolsPath}"/&gt;</p>
+    <p class="mc_example_text">                        &lt;/target&gt;</p>
+    <p class="mc_example_text">                    &lt;/configuration&gt;</p>
+    <p class="mc_example_text">                &lt;/execution&gt;</p>
+    <p class="mc_example_text">            &lt;/executions&gt;</p>
+    <p class="mc_example_text">        &lt;/plugin&gt;</p>
+    <p class="mc_example_text">        &lt;plugin&gt;</p>
+    <p class="mc_example_text">            &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;</p>
+    <p class="mc_example_text">            &lt;artifactId&gt;exec-maven-plugin&lt;/artifactId&gt;</p>
+    <p class="mc_example_text">            &lt;version&gt;1.2.1&lt;/version&gt;</p>
+    <p class="mc_example_text">            &lt;executions&gt;</p>
+    <p class="mc_example_text">                &lt;execution&gt;</p>
+    <p class="mc_example_text">                    &lt;id&gt;build_devtools&lt;/id&gt;</p>
+    <p class="mc_example_text">                    &lt;goals&gt;&lt;goal&gt;exec&lt;/goal&gt;&lt;/goals&gt;</p>
+    <p class="mc_example_text">                    &lt;phase&gt;generate-resources&lt;/phase&gt;</p>
+    <p class="mc_example_text">                    &lt;configuration&gt;</p>
+    <p class="mc_example_text">                        &lt;executable&gt;javac&lt;/executable&gt;</p>
+    <p class="mc_example_text">                        &lt;arguments&gt;</p>
+    <p class="mc_example_text">                            &lt;argument&gt;-d&lt;/argument&gt;</p>
+    <p class="mc_example_text">                            &lt;argument&gt;${devtoolsPath}&lt;/argument&gt;</p>
+    <p class="mc_example_text">                            &lt;argument&gt;${basedir}\src\devtools\disappointed\*.java&lt;/argument&gt;</p>
+    <p class="mc_example_text">                        &lt;/arguments&gt;</p>
+    <p class="mc_example_text">                    &lt;/configuration&gt;</p>
+    <p class="mc_example_text">                &lt;/execution&gt;</p>
+    <p class="mc_example_text">                &lt;execution&gt;</p>
+    <p class="mc_example_text">                    &lt;id&gt;run_devtools&lt;/id&gt;</p>
+    <p class="mc_example_text">                    &lt;phase&gt;install&lt;/phase&gt;</p>
+    <p class="mc_example_text">                    &lt;goals&gt;&lt;goal&gt;java&lt;/goal&gt;&lt;/goals&gt;</p>
+    <p class="mc_example_text">                    &lt;configuration&gt;</p>
+    <p class="mc_example_text">                        &lt;mainClass&gt;disappointed.SoundPlayer&lt;/mainClass&gt;</p>
+    <p class="mc_example_text">                        &lt;classpathScope&gt;test&lt;/classpathScope&gt;</p>
+    <p class="mc_example_text">                    &lt;/configuration&gt;</p>
+    <p class="mc_example_text">                &lt;/execution&gt;</p>
+    <p class="mc_example_text">            &lt;/executions&gt;</p>
+    <p class="mc_example_text">        &lt;/plugin&gt;</p>
+    <p class="mc_example_text">    &lt;/plugins&gt;</p>
+    <p class="mc_example_text">&lt;/build&gt;</p>
+    <p class="mc_example_text">&lt;/project&gt;</p>
+    <p class="mc_example_text"></p>
+    <p class="mc_example_text">https://github.com/mikedamay/maven_commentary/blob/master/bosscat/src/devtools/disappointed/SoundPlayer.java</p>
+    <p class="mc_commentary_label">Commentary:</p>
+    <p class="mc_commentary_text">The execution run_devtools invokes the sound player using the java goal in the install phase.  I have not attempted the more difficult task of running the sound player when maven completes irrespective of the phase of completion.</p>
+    <p class="mc_commentary_text">The build_devtools execution compiles the code.  It builds the code in src/devtools into test-classes.  The code has to be built into test-classes or classes in order to have it included in maven’s class path for the run_devtools invocation.  We could have included the code as test code and avoided a specific compile step but this utility code rightly belongs in a devtools folder and not in the project’s production or test code.</p>
+    <p class="mc_commentary_text">This pig-headed requirement to have a source directory away from the main project source also explains the remove_devtools_directory and make_devtools directory ant executions.  As we no tests in the project we cannot rely on the test-compile phase to create the directory.</p>
+    <p class="Heading 2">Archetype</p>
+    <p class="mc_body">Group Id: org.apache.maven.plugins</p>
+    <p class="mc_groupid_text">Artefact Id: maven-archetype-plugin</p>
+    <p class="mc_body">Current version: 2.2</p>
+    <p class="mc_body">Bound to phase by default: does not use POM</p>
+    <p class="mc_body">Interesting goal: generate</p>
+    <p class="mc_body">Home Page: http://maven.apache.org/archetype/maven-archetype-plugin/</p>
+    <p class="mc_description_label">Description:</p>
+    <p class="mc_description_text">This is a shortcut to create project directory trees and skeleton POM.</p>
+    <p class="mc_example_label">Esample</p>
+    <p class="mc_example_text">None is appropriate</p>
+    <p class="mc_commentary_label">Commentary</p>
+    <p class="mc_commentary_text">This is the first plugin that does not depend on an existing project to operate.</p>
+    <p class="Heading 2">Build Helper</p>
+    <p class="mc_body">Group Id: org.apache.maven.plugins</p>
+    <p class="mc_body">Artefact Id: maven-archetype-plugin</p>
+    <p class="mc_body">Current version: 2.2</p>
+    <p class="mc_body">Bound to phase by default: does not use POM</p>
+    <p class="mc_body">Interesting goal: generate</p>
+    <p class="mc_body">Home Page: http://mojo.codehaus.org/build-helper-maven-plugin </p>
+    <p class="mc_description_label">Description:</p>
+    <p class="mc_description_text"></p>
+    <p class="mc_example_label">Example</p>
+    <p class="mc_example_text">None is appropriate</p>
+    <p class="mc_commentary_label">Commentary</p>
+    <p class="mc_commentary_text">This plugin allows you to breach some of the constraints of maven.</p>
+    <p class="Heading 1">Experiments</p>
+    <p class="Normal">Show how plugins can optionally have a phase to which they are bound</p>
+    <p class="mc_body">All plugins other than the default ones mentioned previously must be referenced in the build section.  The reference there will ensure that the components are downloaded and that the goals are executed in the build cycle.</p>
+    <p class="mc_body">As a related point the instructions include the dependency </p>
+    <p class="mc_body">Custom rule to test if ant tomcat or something without a plugin (probably not ant) is present.</p>
+    <p class="mc_body">Often the best source of information is the plugin via mvn help:describe -Dorg.codehaus.mojo:sql-maven-plugin:1.5 -Dfull</p>
+    <p class="Heading 2">XSLT</p>
+    <p class="mc_body"></p>
+    <p class="mc_body"></p>
+    <p class="mc_body">link to group id, artifact id and version</p>
+    <p class="mc_body"></p>
+    <p class="mc_tech">           &lt;plugin&gt;</p>
+    <p class="mc_tech">               &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;</p>
+    <p class="mc_tech">               &lt;artifactId&gt;sql-maven-plugin&lt;/artifactId&gt;</p>
+    <p class="mc_tech">               &lt;version&gt;1.2&lt;/version&gt;</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">               &lt;dependencies&gt;</p>
+    <p class="mc_tech">                   &lt;dependency&gt;</p>
+    <p class="mc_tech">                       &lt;groupId&gt;com.oracle&lt;/groupId&gt;</p>
+    <p class="mc_tech">                       &lt;artifactId&gt;oracle&lt;/artifactId&gt;</p>
+    <p class="mc_tech">                       &lt;version&gt;${oracle.version}&lt;/version&gt;</p>
+    <p class="mc_tech">                       &lt;scope&gt;runtime&lt;/scope&gt;</p>
+    <p class="mc_tech">                   &lt;/dependency&gt;</p>
+    <p class="mc_tech">               &lt;/dependencies&gt;</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">               &lt;configuration&gt;</p>
+    <p class="mc_tech">                   &lt;driver&gt;oracle.jdbc.OracleDriver&lt;/driver&gt;</p>
+    <p class="mc_tech">                   &lt;url&gt;${db.url}&lt;/url&gt;</p>
+    <p class="mc_tech">                   &lt;username&gt;${db.dba.user}&lt;/username&gt;</p>
+    <p class="mc_tech">                   &lt;password&gt;${db.dba.password}&lt;/password&gt;</p>
+    <p class="mc_tech">                   &lt;delimiter&gt;/&lt;/delimiter&gt;</p>
+    <p class="mc_tech">                   &lt;delimiterType&gt;row&lt;/delimiterType&gt;</p>
+    <p class="mc_tech">               &lt;/configuration&gt;</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">               &lt;executions&gt;</p>
+    <p class="mc_tech">                   &lt;execution&gt;</p>
+    <p class="mc_tech">                       &lt;id&gt;drop-db&lt;/id&gt;</p>
+    <p class="mc_tech">                       &lt;phase&gt;generate-test-sources&lt;/phase&gt;</p>
+    <p class="mc_tech">                       &lt;goals&gt;</p>
+    <p class="mc_tech">                           &lt;goal&gt;execute&lt;/goal&gt;</p>
+    <p class="mc_tech">                       &lt;/goals&gt;</p>
+    <p class="mc_tech">                       &lt;configuration&gt;</p>
+    <p class="mc_tech">                           &lt;skip&gt;${db.skip}&lt;/skip&gt;</p>
+    <p class="mc_tech">                           &lt;autocommit&gt;true&lt;/autocommit&gt;</p>
+    <p class="mc_tech">                           &lt;onError&gt;continue&lt;/onError&gt;</p>
+    <p class="mc_tech">                           &lt;srcFiles&gt;</p>
+    <p class="mc_tech">                               &lt;srcFile&gt;target/db/drop_ddl.sql&lt;/srcFile&gt;</p>
+    <p class="mc_tech">                               &lt;srcFile&gt;target/db/${db.mviews.drop}&lt;/srcFile&gt;</p>
+    <p class="mc_tech">                               &lt;srcFile&gt;target/db/dbdeploy_drop.sql&lt;/srcFile&gt;</p>
+    <p class="mc_tech">                           &lt;/srcFiles&gt;</p>
+    <p class="mc_tech">                       &lt;/configuration&gt;</p>
+    <p class="mc_tech">                   &lt;/execution&gt;</p>
+    <p class="mc_tech">                   &lt;execution&gt;</p>
+    <p class="mc_tech">                       &lt;id&gt;create-db&lt;/id&gt;</p>
+    <p class="mc_tech">                       &lt;phase&gt;generate-test-sources&lt;/phase&gt;</p>
+    <p class="mc_tech">                       &lt;goals&gt;</p>
+    <p class="mc_tech">                           &lt;goal&gt;execute&lt;/goal&gt;</p>
+    <p class="mc_tech">                       &lt;/goals&gt;</p>
+    <p class="mc_tech">                       &lt;configuration&gt;</p>
+    <p class="mc_tech">                           &lt;skip&gt;${db.skip}&lt;/skip&gt;</p>
+    <p class="mc_tech">                           &lt;autocommit&gt;true&lt;/autocommit&gt;</p>
+    <p class="mc_tech">                           &lt;onError&gt;continue&lt;/onError&gt;</p>
+    <p class="mc_tech">                           &lt;srcFiles&gt;</p>
+    <p class="mc_tech">                               &lt;srcFile&gt;target/db/1_create_tables.sql&lt;/srcFile&gt;</p>
+    <p class="mc_tech">                               &lt;srcFile&gt;target/db/2_create_sequences.sql&lt;/srcFile&gt;</p>
+    <p class="mc_tech">                               &lt;srcFile&gt;target/db/3_insert_data.sql&lt;/srcFile&gt;</p>
+    <p class="mc_tech">                               &lt;srcFile&gt;target/db/${db.mviews.create}&lt;/srcFile&gt;</p>
+    <p class="mc_tech">                               &lt;srcFile&gt;target/db/5_create_views.sql&lt;/srcFile&gt;</p>
+    <p class="mc_tech">                               &lt;srcFile&gt;target/db/6_create_plsql_objs.sql&lt;/srcFile&gt;</p>
+    <p class="mc_tech">                               &lt;srcFile&gt;target/db/7_create_indexes.sql&lt;/srcFile&gt;</p>
+    <p class="mc_tech">                               &lt;srcFile&gt;target/db/${db.mviews.indexes}&lt;/srcFile&gt;</p>
+    <p class="mc_tech">                               &lt;srcFile&gt;target/db/9_create_fk_cons.sql&lt;/srcFile&gt;</p>
+    <p class="mc_tech">                               &lt;srcFile&gt;target/db/10_create_triggers.sql&lt;/srcFile&gt;</p>
+    <p class="mc_tech">                               &lt;srcFile&gt;target/db/11_grant_privs.sql&lt;/srcFile&gt;</p>
+    <p class="mc_tech">                               &lt;srcFile&gt;target/db/dbdeploy_changelog.sql&lt;/srcFile&gt;</p>
+    <p class="mc_tech">                           &lt;/srcFiles&gt;</p>
+    <p class="mc_tech">                       &lt;/configuration&gt;</p>
+    <p class="mc_tech">                   &lt;/execution&gt;</p>
+    <p class="mc_tech">                   &lt;execution&gt;</p>
+    <p class="mc_tech">                       &lt;id&gt;apply-delta-undo&lt;/id&gt;</p>
+    <p class="mc_tech">                       &lt;phase&gt;generate-test-resources&lt;/phase&gt;</p>
+    <p class="mc_tech">                       &lt;goals&gt;</p>
+    <p class="mc_tech">                           &lt;goal&gt;execute&lt;/goal&gt;</p>
+    <p class="mc_tech">                       &lt;/goals&gt;</p>
+    <p class="mc_tech">                       &lt;configuration&gt;</p>
+    <p class="mc_tech">                           &lt;skip&gt;${db.delta.skip}&lt;/skip&gt;</p>
+    <p class="mc_tech">                           &lt;autocommit&gt;true&lt;/autocommit&gt;</p>
+    <p class="mc_tech">                           &lt;onError&gt;continue&lt;/onError&gt;</p>
+    <p class="mc_tech">                           &lt;srcFiles&gt;</p>
+    <p class="mc_tech">                               &lt;srcFile&gt;target/db/delta-undo.sql&lt;/srcFile&gt;</p>
+    <p class="mc_tech">                           &lt;/srcFiles&gt;</p>
+    <p class="mc_tech">                       &lt;/configuration&gt;</p>
+    <p class="mc_tech">                   &lt;/execution&gt;</p>
+    <p class="mc_tech">                   &lt;execution&gt;</p>
+    <p class="mc_tech">                       &lt;id&gt;apply-delta&lt;/id&gt;</p>
+    <p class="mc_tech">                       &lt;phase&gt;process-test-resources&lt;/phase&gt;</p>
+    <p class="mc_tech">                       &lt;goals&gt;</p>
+    <p class="mc_tech">                           &lt;goal&gt;execute&lt;/goal&gt;</p>
+    <p class="mc_tech">                       &lt;/goals&gt;</p>
+    <p class="mc_tech">                       &lt;configuration&gt;</p>
+    <p class="mc_tech">                           &lt;skip&gt;${db.delta.skip}&lt;/skip&gt;</p>
+    <p class="mc_tech">                           &lt;autocommit&gt;true&lt;/autocommit&gt;</p>
+    <p class="mc_tech">                           &lt;onError&gt;continue&lt;/onError&gt;</p>
+    <p class="mc_tech">                           &lt;srcFiles&gt;</p>
+    <p class="mc_tech">                               &lt;srcFile&gt;target/db/delta.sql&lt;/srcFile&gt;</p>
+    <p class="mc_tech">                           &lt;/srcFiles&gt;</p>
+    <p class="mc_tech">                       &lt;/configuration&gt;</p>
+    <p class="mc_tech">                   &lt;/execution&gt;</p>
+    <p class="mc_tech">               &lt;/executions&gt;</p>
+    <p class="mc_tech">           &lt;/plugin&gt;</p>
+    <p class="mc_body"></p>
+    <p class="mc_body">A quick search for “axis 2 maven plugin” turns up a page with excellent instructions: http://axis.apache.org/axis2/java/core/tools/maven-plugins/maven-wsdl2code-plugin.html.</p>
+    <p class="mc_body"></p>
+    <p class="mc_body">XML beans required</p>
+    <p class="mc_body">http://mvnrepository.com/artifact/org.apache.xmlbeans/xmlbeans/2.4.0</p>
+    <p class="mc_body"></p>
+    <p class="mc_tech">  &lt;build&gt;</p>
+    <p class="mc_tech">       &lt;plugins&gt;</p>
+    <p class="mc_tech">           &lt;plugin&gt;</p>
+    <p class="mc_tech">               &lt;groupId&gt;org.apache.axis2&lt;/groupId&gt;</p>
+    <p class="mc_tech">               &lt;artifactId&gt;axis2-wsdl2code-maven-plugin&lt;/artifactId&gt;</p>
+    <p class="mc_tech">               &lt;version&gt;1.5.4&lt;/version&gt;</p>
+    <p class="mc_tech">               &lt;executions&gt;</p>
+    <p class="mc_tech">                   &lt;execution&gt;</p>
+    <p class="mc_tech">                       &lt;goals&gt;</p>
+    <p class="mc_tech">                           &lt;goal&gt;wsdl2code&lt;/goal&gt;</p>
+    <p class="mc_tech">                       &lt;/goals&gt;</p>
+    <p class="mc_tech">                       &lt;configuration&gt;</p>
+    <p class="mc_tech">                           &lt;packageName&gt;com.sandp.firace.agclient&lt;/packageName&gt;</p>
+    <p class="mc_tech">                           &lt;wsdlFile&gt;http://nj09mhf0270:21201/vfd/services/FinancialStatement.wsdl&lt;/wsdlFile&gt;</p>
+    <p class="mc_tech">                       &lt;/configuration&gt;</p>
+    <p class="mc_tech">                   &lt;/execution&gt;</p>
+    <p class="mc_tech">               &lt;/executions&gt;</p>
+    <p class="mc_tech">           &lt;/plugin&gt;</p>
+    <p class="mc_tech">       &lt;/plugins&gt;</p>
+    <p class="mc_tech">       </p>
+    <p class="mc_tech">       &lt;resources&gt;</p>
+    <p class="mc_tech">           &lt;resource&gt;</p>
+    <p class="mc_tech">               &lt;directory&gt;src/main/resources&lt;/directory&gt;</p>
+    <p class="mc_tech">               &lt;filtering&gt;true&lt;/filtering&gt;</p>
+    <p class="mc_tech">           &lt;/resource&gt;</p>
+    <p class="mc_tech">     		&lt;resource&gt;</p>
+    <p class="mc_tech">      			&lt;directory&gt;target/generated-sources/axis2/wsdl2code/resources&lt;/directory&gt;</p>
+    <p class="mc_tech">       		&lt;filtering&gt;true&lt;/filtering&gt;</p>
+    <p class="mc_tech">     		&lt;/resource&gt;</p>
+    <p class="mc_tech">   	&lt;/resources&gt;</p>
+    <p class="mc_tech">        &lt;testResources&gt;</p>
+    <p class="mc_tech">           &lt;testResource&gt;</p>
+    <p class="mc_tech">               &lt;directory&gt;src/test/resources&lt;/directory&gt;</p>
+    <p class="mc_tech">               &lt;filtering&gt;true&lt;/filtering&gt;</p>
+    <p class="mc_tech">           &lt;/testResource&gt;</p>
+    <p class="mc_tech">       &lt;/testResources&gt;</p>
+    <p class="mc_tech">   &lt;/build&gt;</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">  &lt;build&gt;</p>
+    <p class="mc_tech">       &lt;plugins&gt;</p>
+    <p class="mc_tech">           &lt;plugin&gt;</p>
+    <p class="mc_tech">               &lt;groupId&gt;org.apache.axis2&lt;/groupId&gt;</p>
+    <p class="mc_tech">               &lt;artifactId&gt;axis2-wsdl2code-maven-plugin&lt;/artifactId&gt;</p>
+    <p class="mc_tech">               &lt;version&gt;1.4&lt;/version&gt;</p>
+    <p class="mc_tech">               &lt;executions&gt;</p>
+    <p class="mc_tech">                   &lt;execution&gt;</p>
+    <p class="mc_tech">                       &lt;goals&gt;</p>
+    <p class="mc_tech">                           &lt;goal&gt;wsdl2code&lt;/goal&gt;</p>
+    <p class="mc_tech">                       &lt;/goals&gt;</p>
+    <p class="mc_tech">                       &lt;configuration&gt;</p>
+    <p class="mc_tech">                           &lt;packageName&gt;com.foo.myservice&lt;/packageName&gt;</p>
+    <p class="mc_tech">                           &lt;wsdlFile&gt;src/main/wsdl/myservice.wsdl&lt;/wsdlFile&gt;</p>
+    <p class="mc_tech">                           &lt;databindingName&gt;xmlbeans&lt;/databindingName&gt;</p>
+    <p class="mc_tech">                       &lt;/configuration&gt;</p>
+    <p class="mc_tech">                   &lt;/execution&gt;</p>
+    <p class="mc_tech">               &lt;/executions&gt;</p>
+    <p class="mc_tech">           &lt;/plugin&gt;</p>
+    <p class="mc_tech">       &lt;/plugins&gt;</p>
+    <p class="mc_tech">   &lt;/build&gt;</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">  &lt;dependency&gt;</p>
+    <p class="mc_tech">         &lt;groupId&gt;org.apache.axis2&lt;/groupId&gt;</p>
+    <p class="mc_tech">         &lt;artifactId&gt;axis2&lt;/artifactId&gt;</p>
+    <p class="mc_tech">         &lt;version&gt;1.4&lt;/version&gt;</p>
+    <p class="mc_tech">   &lt;/dependency&gt;</p>
+    <p class="mc_body"></p>
+    <p class="mc_body"></p>
+    <p class="mc_body">Configuration</p>
+    <p class="mc_body"></p>
+    <p class="mc_body">You might struggle to get the right version of things.</p>
+    <p class="mc_body"></p>
+    <p class="mc_body">I am frightened by magic and arbitrariness.</p>
+    <p class="mc_body"></p>
+    <p class="mc_body">How do you know what you need to include jar vs. war or ear..</p>
+    <p class="mc_body"></p>
+    <p class="mc_body">a) If you are setting out, how do you know what to include in the pom, how do you know how to lay out the files.</p>
+    <p class="mc_body">b) How to interpret an existing pom or set of poms?</p>
+    <p class="mc_body"></p>
+    <p class="mc_body"></p>
+    <p class="mc_body"></p>
+    <p class="mc_body">Two types of configuration variable.</p>
+    <p class="mc_body"></p>
+    <p class="mc_body">Based on maven v3</p>
+    <p class="mc_body"></p>
+    <p class="mc_body">provide example and then generalise.</p>
+    <p class="mc_body"></p>
+    <p class="mc_body">convention over configuration frees up the design so that defaulting can be used.</p>
+    <p class="mc_body"></p>
+    <p class="mc_body">Caught between two ways of thinking.  The procedural approach and the “descriptive template” approach.</p>
+    <p class="mc_body"></p>
+    <p class="mc_body"></p>
+    <p class="mc_body">We’ll use a hypothetical lifecycle which mimics an ETL (Extract Transform Load) process.  Our process acquires data, manipulates it in some way and then delivers it, e.g. a batch job to query a database and transform the results into XML files.  A lifecycle is associated with the POM’s packaging attribute.  In our case we will give packaging a value of “etl”.  Adding a packaging and lifecycle requires a custom plugin (a non-trivial task).  Our plugin is hypothetical and called org.hypo-plugins:lifecycle-provider-etl-plugin.</p>
+    <p class="mc_body"></p>
+    <p class="mc_body">Hypothetical Lifecyle Simple Example</p>
+    <p class="mc_body">We will give our lifecyle 7 phases: init, extract, pre-transform, transform, post-transform, load, terminate.  Initially we will uses only three of them.</p>
+    <p class="mc_body"></p>
+    <p class="mc_body">The phases and associated plugins and goals are summarised in the following table.  The implementation is in the form of a POM file, say etl-pom.xml, and they are executed through a command line such as mvn -f etl-pom.xml load. Obviously you’ll be relying upon a hypothetical organisation to provide the plugins that actually perform the processing, not necessarily a guarantee for success.</p>
+    <p class="mc_table_content" tables="1" row="1" col="1">phase</p>
+    <p class="mc_table_content" tables="1" row="1" col="2">plugin</p>
+    <p class="mc_table_content" tables="1" row="1" col="3">prefix</p>
+    <p class="mc_table_content" tables="1" row="1" col="4">goal</p>
+    <p class="mc_table_content" tables="1" row="1" col="5">execution id</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="2" col="1">init</p>
+    <p class="mc_table_content" tables="1" row="2" col="2"></p>
+    <p class="mc_table_content" tables="1" row="2" col="3"></p>
+    <p class="mc_table_content" tables="1" row="2" col="4"></p>
+    <p class="mc_table_content" tables="1" row="2" col="5"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="3" col="1">extract</p>
+    <p class="mc_table_content" tables="1" row="3" col="2">org.hypo-plugins:db-plugin</p>
+    <p class="mc_table_content" tables="1" row="3" col="3">db</p>
+    <p class="mc_table_content" tables="1" row="3" col="4">query</p>
+    <p class="mc_table_content" tables="1" row="3" col="5">default</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="4" col="1">pre-transform</p>
+    <p class="mc_table_content" tables="1" row="4" col="2"></p>
+    <p class="mc_table_content" tables="1" row="4" col="3"></p>
+    <p class="mc_table_content" tables="1" row="4" col="4"></p>
+    <p class="mc_table_content" tables="1" row="4" col="5"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="5" col="1">trasform</p>
+    <p class="mc_table_content" tables="1" row="5" col="2">org.hypo-plugins:xslt-plugin</p>
+    <p class="mc_table_content" tables="1" row="5" col="3">xslt</p>
+    <p class="mc_table_content" tables="1" row="5" col="4">process</p>
+    <p class="mc_table_content" tables="1" row="5" col="5">default</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="6" col="1">post-transform</p>
+    <p class="mc_table_content" tables="1" row="6" col="2"></p>
+    <p class="mc_table_content" tables="1" row="6" col="3"></p>
+    <p class="mc_table_content" tables="1" row="6" col="4"></p>
+    <p class="mc_table_content" tables="1" row="6" col="5"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="7" col="1">load</p>
+    <p class="mc_table_content" tables="1" row="7" col="2">org.hypo-plugins:ftp-plugin</p>
+    <p class="mc_table_content" tables="1" row="7" col="3">ftp</p>
+    <p class="mc_table_content" tables="1" row="7" col="4">put</p>
+    <p class="mc_table_content" tables="1" row="7" col="5">default</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="8" col="1">terminate</p>
+    <p class="mc_table_content" tables="1" row="8" col="2"></p>
+    <p class="mc_table_content" tables="1" row="8" col="3"></p>
+    <p class="mc_table_content" tables="1" row="8" col="4"></p>
+    <p class="mc_table_content" tables="1" row="8" col="5"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body">Note that goal prefixes, such as db, xslt and ftp, are attributes of the plugins, and effectively hard-coded by them, as aliases for the plugin identity, and not subject to configuration.</p>
+    <p class="mc_body">The first phase to be executed is init.  As no plugins have a goal bound to this phase, nothing happens.  Goals associated with the extract phase are then executed.  In our case a database plugin will execute some query which we will specify in the plugin’s configuration section of the POM.  There follows another empty phase and then transform which will pick up the data and process it by executing the process goal of the xslt plugin.  The data will be communicated between the phases via the file system (something that suits a build process but not really our hypothetical ETL process).  Format and location have to be agreed between the plugins.  The file system is the most obvious choice but anything that’s agreed between the plugins will work.  Finally after another blank phase, the put goal of the ftp plugin is invoked to upload the data to some configured location.  </p>
+    <p class="mc_body">The terminate phase is not executed as we specified load on the command line.  Maven executes the goals associated with all phases up to and including the phase specified on the command line.  See elsewhere for specifying goals rather than phases on the command line.</p>
+    <p class="mc_body">Below is the POM file for the hypothetical ETL process (etl-pom.xml):</p>
+    <p class="mc_tech" tables="1" row="1" col="1">&lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">	&lt;groupId&gt;org.hypo-plugins&lt;/groupId&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">	&lt;artifactId&gt;etl-payload&lt;/artifactId&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">	&lt;version&gt;1.0.1-SNAPSHOT&lt;/version&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">    &lt;packaging&gt;etl&lt;/packaging&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">	&lt;name&gt;ETL Payload&lt;/name&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">	&lt;description&gt;Delivers XML files from DB&lt;/description&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">&lt;/project&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body">Not only can a plugin can have multiple goals which can be executed at different stages of the build process but a goal can be repeated many times potentially in a different phase.  The execution id is used to distinguish one instance from another.  The primary purpose of the goal identifier is to determine what feature of the plugin is executed.  One purpose of the execution id identifier, associated as it is with a phase, is to determine when the feature will be executed during the build.  In addition, the execution id will most likely associate different configuration information with each instance of the goal.  For instance, the process-resources goal may be repeated each time with a different filter on which files are copied.</p>
+    <p class="mc_body">Fake packaging with differences between imperative and declarative.</p>
+    <p class="mc_body">A typical entry might look something like the following:</p>
+    <p class="mc_tech" tables="1" row="1" col="1">&lt;project&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">   ...</p>
+    <p class="mc_tech" tables="1" row="1" col="1">   &lt;build&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">       ...</p>
+    <p class="mc_tech" tables="1" row="1" col="1">       &lt;plugins&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">           &lt;plugin&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">               &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">               &lt;configuration&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">                   &lt;source&gt;1.5&lt;/source&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">                   &lt;target&gt;1.5&lt;/target&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">               &lt;/configuration&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">           &lt;/plugin&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">       &lt;/plugins&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">       ...</p>
+    <p class="mc_tech" tables="1" row="1" col="1">   &lt;/build&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">   ...</p>
+    <p class="mc_tech" tables="1" row="1" col="1">&lt;/project&gt;</p>
+    <p class="mc_body" tables="1" row="1" col="1">From SonaType’s Complete Reference: http://www.sonatype.com/books/mvnref-book/reference/lifecycle-sect-common-goals.html</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body">For the other two lifecyles provided by maven see ttp://www.avajava.com/tutorials/lessons/what-are-the-phases-of-the-maven-clean-lifecycle.html for a description of the clean lifecycle and http://www.avajava.com/tutorials/lessons/what-are-the-phases-of-the-maven-site-lifecycle.html for the site lifecycle.</p>
+    <p class="mc_body">Lifecycles and Phases - Bound and Unbound Goals</p>
+    <p class="mc_body">Maven plugins (software tools written to the maven extensibility specification) can have a number of goals (tasks to be executed by the software).  Some goals are a natural part of the software build process, for instance, the execution of tests.  Other tasks, still called goals, that can be performed by the plugin are not  a natural fit, for instance, most plugins provide a help goal to display information on the console about the plugin.</p>
+    <p class="mc_body">For a goal to be part of the build process it must be associated with a phase.  There are a dozen or so phases, such as compile, test, install, corresponding to traditional steps in the build process.  The phases are grouped into lifecycles.  Phases effectively determine the order in which goals are executed.  There are three lifecycles: default (or build), clean and site (which generates documentation.</p>
+    <p class="mc_body">Goals that have a phase specified for them are seen as being bound to a life cycle.  All other goals are unbound.  Because all phases within a lifecycle are named uniquely with respect to all three life cycles maven knows which life cycle a goal is bound to purely from the name of its associated phase.</p>
+    <p class="mc_body">To execute the build process maven is invoked with a specified phase.  For instance “mvn install” will cause maven to execute the goals associated with all phases from validate to test (inclusive).  It executes the specified phase and all phases in the lifecycle that precede it.</p>
+    <p class="mc_body">To execute an unbound goal you pass the name of the plugin, or its prefix (a shorthand identifier for the plugin) together with the goal to mvn.  For example mvn org.apache.maven.plugins:maven-archetype-plugin:generate or mvn archetype:generate will start the process of generating the structure of a new project.  In this example the archetype plugin has a goal prefix of archetype.  In this respect the archetype plugin follows the convention of using the word before “plugin” in the plugin name as its prefix  Bound goals behave like unbound goals when specified on the command line.  The phase is ignored and the behaviour associated with the goal alone and no preceding goals is executed .  </p>
+    <p class="mc_body">It is instructive to contrast mvn install with mvn install:install.  The latter fails.</p>
+    <p class="mc_body">Execution</p>
+    <p class="mc_body">Default Behaviour</p>
+    <p class="mc_body">The specification of exactly what build steps are executed is complicated by the default goals that are included irrespective of what is detailed by the developer in the build section of the POM.</p>
+    <p class="mc_body">Assuming that your java files are in the conventional location, &lt;project dir&gt;\src\main\java and &lt;project dir&gt;\src\est\java then executing the command mvn -f &lt;pom file&gt; install will cause code to be compiled to the &lt;project dir&gt;\target directory.</p>
+    <p class="mc_body">Note that most of the phases have no goals associated with them.  We can alter the build by adding goals to the unused phases or additional goals to the phases that have a goal, although there can be no execution order dependencies between goals in the same phase.  The behaviour of default goals can be varied by specifying in the build section.</p>
+    <p class="mc_body">Goal based approach gives maven two qualitiies, highlighting differences and inheritance.</p>
+    <p class="mc_body">Plugin Identification</p>
+    <p class="mc_body">Command Line</p>
+    <p class="mc_body">Install Maven from http://maven.apache.org/download.html.</p>
+    <p class="mc_body">proxy issue???</p>
+    <p class="mc_body">Generate your first project structure with the following command line:  This will layout a structure in the file system and will generate a project build file which will subsequently be used to build the project.  You will need to provide some source code in C:\projects\Intro\try-select-arch\src\main\java and your test in C:\projects\Intro\try-select-arch\src\test\java.</p>
+    <p class="mc_body">The command line is  “mvn archetype:generate -DarchetypeCatalog=remote -DarchetypeGroupId=org.apache.maven.archetypes -DarchetypeArtifactId=maven-archetype-quickstart -DgroupId=intro.duction -DartifactId=try-select-arch -Dpackaging=jar -Dversion=0.0.1 -DinteractiveMode=false”</p>
+    <p class="mc_body">If you have an existing project then copy over the sources into C:\projects\Intro\try-select-arch\src\main\java.</p>
+    <p class="mc_body">This will generate a directory tree as follows:</p>
+    <p class="mc_body">C:\projects\Intro&gt;dir /s /b try-select-arch</p>
+    <p class="mc_body">C:\projects\Intro\try-select-arch\pom.xml</p>
+    <p class="mc_body">C:\projects\Intro\try-select-arch\src</p>
+    <p class="mc_body">C:\projects\Intro\try-select-arch\src\main</p>
+    <p class="mc_body">C:\projects\Intro\try-select-arch\src\test</p>
+    <p class="mc_body">C:\projects\Intro\try-select-arch\src\main\java</p>
+    <p class="mc_body">C:\projects\Intro\try-select-arch\src\main\java\intro</p>
+    <p class="mc_body">C:\projects\Intro\try-select-arch\src\main\java\intro\duction</p>
+    <p class="mc_body">C:\projects\Intro\try-select-arch\src\main\java\intro\duction\App.java</p>
+    <p class="mc_body">C:\projects\Intro\try-select-arch\src\test\java</p>
+    <p class="mc_body">C:\projects\Intro\try-select-arch\src\test\java\intro</p>
+    <p class="mc_body">C:\projects\Intro\try-select-arch\src\test\java\intro\duction</p>
+    <p class="mc_body">C:\projects\Intro\try-select-arch\src\test\java\intro\duction\AppTest.java</p>
+    <p class="mc_body">and a project object model file (or pom but understood by Eclipse and  IntelliJ, as well as Maven, as follows: </p>
+    <p class="mc_tech" tables="1" row="1" col="1">&lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"</p>
+    <p class="mc_tech" tables="1" row="1" col="1"> xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1"> &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1"></p>
+    <p class="mc_tech" tables="1" row="1" col="1"> &lt;groupId&gt;intro.duction&lt;/groupId&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1"> &lt;artifactId&gt;try-select-arch&lt;/artifactId&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1"> &lt;version&gt;0.0.1&lt;/version&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1"> &lt;packaging&gt;jar&lt;/packaging&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1"></p>
+    <p class="mc_tech" tables="1" row="1" col="1"> &lt;name&gt;try-select-arch&lt;/name&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1"> &lt;url&gt;http://maven.apache.org&lt;/url&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1"></p>
+    <p class="mc_tech" tables="1" row="1" col="1"> &lt;properties&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">	&lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1"> &lt;/properties&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1"></p>
+    <p class="mc_tech" tables="1" row="1" col="1"> &lt;dependencies&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">	&lt;dependency&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1"> 	    &lt;groupId&gt;junit&lt;/groupId&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">     	    &lt;artifactId&gt;junit&lt;/artifactId&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1"> 	    &lt;version&gt;3.8.1&lt;/version&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1"> 	    &lt;scope&gt;test&lt;/scope&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">	   &lt;/dependency&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1"> &lt;/dependencies&gt;</p>
+    <p class="mc_tech" tables="1" row="1" col="1">&lt;/project&gt;</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body">All maven commands start with “mvn” to invoke the executable.</p>
+    <p class="mc_body"> “archetype” identifies, by means of a shortcut “prefix”, the plugiin that is to be executed.  A plugin is an added in component that is registered with maven to provide some feature.  In this case the full details of the plugin are: org.apache.maven.plugins:maven-archetype-plugin.  Such identities are understood by the maven infrastructure.</p>
+    <p class="mc_body">“generate” is a goal provided by the archetype plugin.</p>
+    <p class="mc_body">The arguments prefixed by -D are configuration parameters which are meaningful to the archetype plugin.  Use -X or help:describe.</p>
+    <p class="mc_body">The project file, pom.xml, enables the developer to  build a jar file from sources placed in the appropriate directories.</p>
+    <p class="mc_body">Below we will look at goals, plugins, dependencies, properties and co-ordinates.</p>
+    <p class="mc_body">A similar command “mvn  archetype:create -DgroupId=myorg.org -DartifactId=myapp -Dpackaging=jar -DVersion=0.0.1” has been deprecated.  It’s effectively the same but does </p>
+    <p class="mc_body">Phases of life cycle can be viewed by adding -X to command line.</p>
+    <p class="mc_body">Phase to which a plugin goal is bound is available by doing mvn help:describe -Dplugin= -Dfull</p>
+    <p class="mc_body">Many goals are unbound, e.g. help, archetype</p>
+    <p class="mc_body">Side bar on the naming of  life-cycle phases</p>
+    <p class="mc_body">from a conceptual standpoint the phases of the install life-cycle, validate, initialise, gnerate-sources...compile...deploy could easily have been called install-phase-1, install-phase-2, install-phase-3...install-phase-7...install-phase-23.  Maven imposes no requirement that you do the compilation in the compile phase although your colleagues may be keen for you to follow the convention.</p>
+    <p class="mc_table_content" tables="1" row="1" col="1">Phase</p>
+    <p class="mc_table_content" tables="1" row="1" col="2">plugin</p>
+    <p class="mc_table_content" tables="1" row="1" col="3">goal</p>
+    <p class="mc_table_content" tables="1" row="1" col="4">execution id</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="2" col="1">validate</p>
+    <p class="mc_table_content" tables="1" row="2" col="2">org.apache.maven.plugins:maven-resources-plugin</p>
+    <p class="mc_table_content" tables="1" row="2" col="3">resources</p>
+    <p class="mc_table_content" tables="1" row="2" col="4">default-resources</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="3" col="1">initialize</p>
+    <p class="mc_table_content" tables="1" row="3" col="2">org.apache.maven.plugins:maven-compiler-plugin</p>
+    <p class="mc_table_content" tables="1" row="3" col="3">compile</p>
+    <p class="mc_table_content" tables="1" row="3" col="4">default-compile</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="4" col="1">generate-sources</p>
+    <p class="mc_table_content" tables="1" row="4" col="2">org.apache.maven.plugins:maven-resources-plugin</p>
+    <p class="mc_table_content" tables="1" row="4" col="3">testResources</p>
+    <p class="mc_table_content" tables="1" row="4" col="4">default-testResources</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="5" col="1">process-sources</p>
+    <p class="mc_table_content" tables="1" row="5" col="2">org.apache.maven.plugins:maven-compiler-plugin</p>
+    <p class="mc_table_content" tables="1" row="5" col="3">testCompile</p>
+    <p class="mc_table_content" tables="1" row="5" col="4">default-testCompile</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="6" col="1">generate-resources</p>
+    <p class="mc_table_content" tables="1" row="6" col="2">org.apache.maven.plugins:maven-surefire-plugin</p>
+    <p class="mc_table_content" tables="1" row="6" col="3">test</p>
+    <p class="mc_table_content" tables="1" row="6" col="4">default-test</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="7" col="1">process-resources</p>
+    <p class="mc_table_content" tables="1" row="7" col="2">org.apache.maven.plugins:maven-jar-plugin</p>
+    <p class="mc_table_content" tables="1" row="7" col="3">jar</p>
+    <p class="mc_table_content" tables="1" row="7" col="4">default-jar</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="8" col="1">compile</p>
+    <p class="mc_table_content" tables="1" row="8" col="2">org.apache.maven.plugins:maven-install-plugin</p>
+    <p class="mc_table_content" tables="1" row="8" col="3">install</p>
+    <p class="mc_table_content" tables="1" row="8" col="4">default-install</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="9" col="1">process-classes</p>
+    <p class="mc_table_content" tables="1" row="9" col="2">org.apache.maven.plugins:maven-deploy-plugin</p>
+    <p class="mc_table_content" tables="1" row="9" col="3">deploy</p>
+    <p class="mc_table_content" tables="1" row="9" col="4">default-deploy</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="10" col="1">generate-test-sources</p>
+    <p class="mc_table_content" tables="1" row="10" col="2"></p>
+    <p class="mc_table_content" tables="1" row="10" col="3"></p>
+    <p class="mc_table_content" tables="1" row="10" col="4"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="11" col="1">process-test-sources</p>
+    <p class="mc_table_content" tables="1" row="11" col="2"></p>
+    <p class="mc_table_content" tables="1" row="11" col="3"></p>
+    <p class="mc_table_content" tables="1" row="11" col="4"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="12" col="1">generate-test-resources</p>
+    <p class="mc_table_content" tables="1" row="12" col="2"></p>
+    <p class="mc_table_content" tables="1" row="12" col="3"></p>
+    <p class="mc_table_content" tables="1" row="12" col="4"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="13" col="1">process-test-resources</p>
+    <p class="mc_table_content" tables="1" row="13" col="2"></p>
+    <p class="mc_table_content" tables="1" row="13" col="3"></p>
+    <p class="mc_table_content" tables="1" row="13" col="4"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="14" col="1">test-compile</p>
+    <p class="mc_table_content" tables="1" row="14" col="2"></p>
+    <p class="mc_table_content" tables="1" row="14" col="3"></p>
+    <p class="mc_table_content" tables="1" row="14" col="4"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="15" col="1">process-test-classes</p>
+    <p class="mc_table_content" tables="1" row="15" col="2"></p>
+    <p class="mc_table_content" tables="1" row="15" col="3"></p>
+    <p class="mc_table_content" tables="1" row="15" col="4"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="16" col="1">test</p>
+    <p class="mc_table_content" tables="1" row="16" col="2"></p>
+    <p class="mc_table_content" tables="1" row="16" col="3"></p>
+    <p class="mc_table_content" tables="1" row="16" col="4"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="17" col="1">prepare-package</p>
+    <p class="mc_table_content" tables="1" row="17" col="2"></p>
+    <p class="mc_table_content" tables="1" row="17" col="3"></p>
+    <p class="mc_table_content" tables="1" row="17" col="4"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="18" col="1">package</p>
+    <p class="mc_table_content" tables="1" row="18" col="2"></p>
+    <p class="mc_table_content" tables="1" row="18" col="3"></p>
+    <p class="mc_table_content" tables="1" row="18" col="4"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="19" col="1">pre-integration-test</p>
+    <p class="mc_table_content" tables="1" row="19" col="2"></p>
+    <p class="mc_table_content" tables="1" row="19" col="3"></p>
+    <p class="mc_table_content" tables="1" row="19" col="4"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="20" col="1">integration-test</p>
+    <p class="mc_table_content" tables="1" row="20" col="2"></p>
+    <p class="mc_table_content" tables="1" row="20" col="3"></p>
+    <p class="mc_table_content" tables="1" row="20" col="4"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="21" col="1">post-integration-test</p>
+    <p class="mc_table_content" tables="1" row="21" col="2"></p>
+    <p class="mc_table_content" tables="1" row="21" col="3"></p>
+    <p class="mc_table_content" tables="1" row="21" col="4"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="22" col="1">verify</p>
+    <p class="mc_table_content" tables="1" row="22" col="2"></p>
+    <p class="mc_table_content" tables="1" row="22" col="3"></p>
+    <p class="mc_table_content" tables="1" row="22" col="4"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="23" col="1">install</p>
+    <p class="mc_table_content" tables="1" row="23" col="2"></p>
+    <p class="mc_table_content" tables="1" row="23" col="3"></p>
+    <p class="mc_table_content" tables="1" row="23" col="4"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_table_content" tables="1" row="24" col="1">deploy</p>
+    <p class="mc_table_content" tables="1" row="24" col="2"></p>
+    <p class="mc_table_content" tables="1" row="24" col="3"></p>
+    <p class="mc_table_content" tables="1" row="24" col="4"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body">For a description of the site lifecycle try http://www.avajava.com/tutorials/lessons/what-are-the-phases-of-the-maven-site-lifecycle.html</p>
+    <p class="mc_body">For a description of the clean lifecycle try</p>
+    <p class="mc_body">http://www.avajava.com/tutorials/lessons/what-are-the-phases-of-the-maven-clean-lifecycle.html</p>
+    <p class="mc_body">document structure</p>
+    <p class="mc_body">intro showing steps</p>
+    <p class="mc_body">create lifecytle</p>
+    <p class="mc_body">map concepts to build lifecytle</p>
+    <p class="mc_body">show effect of defaults on pom.</p>
+    <p class="mc_body">alternative structure:</p>
+    <p class="mc_body">intro explaining mvn install in narrative form with reference to phases in parentheses.</p>
+    <p class="mc_body">Table of standard build corresponding to the above.</p>
+    <p class="mc_body">mention effective-pom and -X</p>
+    <p class="mc_body">---- new section</p>
+    <p class="mc_body">Examine architecture lifecyle-&gt;phase-&gt;plugin+goal-&gt;execution id.  Reference to packaging and adding new packaging.  Custom lifecycles and custom phases.</p>
+    <p class="mc_body">add some plugins and reshow default table.</p>
+    <p class="mc_body">clean and site lifecycles</p>
+    <p class="mc_body">How does mvn clean install work</p>
+    <p class="mc_body">Examine maven infrastructure</p>
+    <p class="mc_body">Show how default build uses the infrastructure</p>
+    <p class="mc_body">Show how the pervasive use of default values (convention over configuration) reduces the size of the pom.</p>
+    <p class="mc_body">Maven Technical FAQ: http://maven.apache.org/general.html</p>
+    <p class="mc_body">Intro</p>
+    <p class="mc_body">this piece is intended to demystify the build process and answer questions like why can I type mvn clean or mvn test or mvn archetype but not mvn test-resources or mvn dbdeploy? </p>
+    <p class="mc_body">What tools are executed, when are they executed and what do they do?</p>
+    <p class="mc_body">How can I add my own libraries?</p>
+    <p class="mc_body">why can I sometimes use a goal pefix and sometimes not.  Because some goal prefxes are registered or the artefact follows the naming convention to extract the prefix, I think.</p>
+    <p class="mc_body">Detail how plugins typically have a configuration key:value arrangement which can be short circuited by using a default property.  Typically specified on the plugin usage page or whatever it is called</p>
+    <p class="mc_body">ant 2 execution ids.</p>
+    <p class="mc_body">echo   &lt;executable&gt;${maven.compiler.executable}&lt;/executable&gt;</p>
+    <p class="mc_body">xml with multiple executions</p>
+    <p class="mc_body">exec-maven-plugin</p>
+    <p class="mc_body">http://mojo.codehaus.org/exec-maven-plugin/</p>
+    <p class="mc_body">not executed by mvn install</p>
+    <p class="mc_body">the POM stored with the artefact in the local repository is used to specify how it should be deployed.</p>
+    <p class="mc_body"></p>
+    <p class="mc_body">Assembly plugin</p>
+    <p class="mc_body"></p>
+    <p class="mc_body"></p>
+    <p class="mc_body">distributionManagement - purpose of deploy is not explained in the plugin documentation</p>
+    <p class="mc_body"></p>
+    <p class="mc_body"></p>
+    <p class="mc_body">List of plugins including PREFIXES.</p>
+    <p class="mc_body" tables="1" row="1" col="1">phase</p>
+    <p class="mc_body" tables="1" row="1" col="2">plugin</p>
+    <p class="mc_body" tables="1" row="1" col="3">prefix</p>
+    <p class="mc_body" tables="1" row="1" col="4">goal</p>
+    <p class="mc_body" tables="1" row="1" col="5">execution id</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="2" col="1">validate</p>
+    <p class="Normal" tables="1" row="2" col="2"></p>
+    <p class="Normal" tables="1" row="2" col="3"></p>
+    <p class="Normal" tables="1" row="2" col="4"></p>
+    <p class="Normal" tables="1" row="2" col="5"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="3" col="1">initialize</p>
+    <p class="Normal" tables="1" row="3" col="2"></p>
+    <p class="Normal" tables="1" row="3" col="3"></p>
+    <p class="Normal" tables="1" row="3" col="4"></p>
+    <p class="Normal" tables="1" row="3" col="5"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="4" col="1">generate-sources</p>
+    <p class="Normal" tables="1" row="4" col="2"></p>
+    <p class="Normal" tables="1" row="4" col="3"></p>
+    <p class="Normal" tables="1" row="4" col="4"></p>
+    <p class="Normal" tables="1" row="4" col="5"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="5" col="1">process-sources</p>
+    <p class="Normal" tables="1" row="5" col="2"></p>
+    <p class="Normal" tables="1" row="5" col="3"></p>
+    <p class="Normal" tables="1" row="5" col="4"></p>
+    <p class="Normal" tables="1" row="5" col="5"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="6" col="1">generate-resources</p>
+    <p class="Normal" tables="1" row="6" col="2"></p>
+    <p class="Normal" tables="1" row="6" col="3"></p>
+    <p class="Normal" tables="1" row="6" col="4"></p>
+    <p class="Normal" tables="1" row="6" col="5"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="7" col="1">process-resources</p>
+    <p class="mc_body" tables="1" row="7" col="2">org.apache.maven.plugins:maven-resources-plugin</p>
+    <p class="mc_body" tables="1" row="7" col="3">resources</p>
+    <p class="mc_body" tables="1" row="7" col="4">resources</p>
+    <p class="mc_body" tables="1" row="7" col="5">default-resources</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="8" col="1">compile</p>
+    <p class="mc_body" tables="1" row="8" col="2">org.apache.maven.plugins:maven-compiler-plugin</p>
+    <p class="mc_body" tables="1" row="8" col="3">compile</p>
+    <p class="mc_body" tables="1" row="8" col="4">compile</p>
+    <p class="mc_body" tables="1" row="8" col="5">default-compile</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="9" col="1">process-classes</p>
+    <p class="Normal" tables="1" row="9" col="2"></p>
+    <p class="Normal" tables="1" row="9" col="3"></p>
+    <p class="Normal" tables="1" row="9" col="4"></p>
+    <p class="Normal" tables="1" row="9" col="5"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="10" col="1">generate-test-sources</p>
+    <p class="Normal" tables="1" row="10" col="2"></p>
+    <p class="Normal" tables="1" row="10" col="3"></p>
+    <p class="Normal" tables="1" row="10" col="4"></p>
+    <p class="Normal" tables="1" row="10" col="5"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="11" col="1">process-test-sources</p>
+    <p class="Normal" tables="1" row="11" col="2"></p>
+    <p class="Normal" tables="1" row="11" col="3"></p>
+    <p class="Normal" tables="1" row="11" col="4"></p>
+    <p class="Normal" tables="1" row="11" col="5"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="12" col="1">generate-test-resources</p>
+    <p class="Normal" tables="1" row="12" col="2"></p>
+    <p class="Normal" tables="1" row="12" col="3"></p>
+    <p class="mc_body" tables="1" row="12" col="4"></p>
+    <p class="mc_body" tables="1" row="12" col="5"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="13" col="1">process-test-resources</p>
+    <p class="mc_body" tables="1" row="13" col="2">org.apache.maven.plugins:maven-resources-plugin</p>
+    <p class="Normal" tables="1" row="13" col="2"></p>
+    <p class="mc_body" tables="1" row="13" col="3">resources</p>
+    <p class="Normal" tables="1" row="13" col="3"></p>
+    <p class="Normal" tables="1" row="13" col="4">testResources</p>
+    <p class="Normal" tables="1" row="13" col="5">default-testResources</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="14" col="1">test-compile</p>
+    <p class="mc_body" tables="1" row="14" col="2">org.apache.maven.plugins:maven-compiler-plugin</p>
+    <p class="mc_body" tables="1" row="14" col="3">compile</p>
+    <p class="mc_body" tables="1" row="14" col="4">testCompile</p>
+    <p class="mc_body" tables="1" row="14" col="5">default-testCompile</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="15" col="1">process-test-classes</p>
+    <p class="Normal" tables="1" row="15" col="2"></p>
+    <p class="Normal" tables="1" row="15" col="3"></p>
+    <p class="Normal" tables="1" row="15" col="4"></p>
+    <p class="Normal" tables="1" row="15" col="5"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="16" col="1">test</p>
+    <p class="mc_body" tables="1" row="16" col="2">org.apache.maven.plugins:maven-surefire-plugin</p>
+    <p class="mc_body" tables="1" row="16" col="3">surefire</p>
+    <p class="mc_body" tables="1" row="16" col="4">test</p>
+    <p class="mc_body" tables="1" row="16" col="5">default-test</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="17" col="1">prepare-package</p>
+    <p class="Normal" tables="1" row="17" col="2"></p>
+    <p class="Normal" tables="1" row="17" col="3"></p>
+    <p class="Normal" tables="1" row="17" col="4"></p>
+    <p class="Normal" tables="1" row="17" col="5"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="18" col="1">package</p>
+    <p class="mc_body" tables="1" row="18" col="2">org.apache.maven.plugins:maven-jar-plugin</p>
+    <p class="mc_body" tables="1" row="18" col="3">jar</p>
+    <p class="mc_body" tables="1" row="18" col="4">jar</p>
+    <p class="mc_body" tables="1" row="18" col="5">default-jar</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="19" col="1">pre-integration-test</p>
+    <p class="Normal" tables="1" row="19" col="2"></p>
+    <p class="Normal" tables="1" row="19" col="3"></p>
+    <p class="Normal" tables="1" row="19" col="4"></p>
+    <p class="Normal" tables="1" row="19" col="5"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="20" col="1">integration-test</p>
+    <p class="Normal" tables="1" row="20" col="2"></p>
+    <p class="Normal" tables="1" row="20" col="3"></p>
+    <p class="Normal" tables="1" row="20" col="4"></p>
+    <p class="Normal" tables="1" row="20" col="5"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="21" col="1">post-integration-test</p>
+    <p class="Normal" tables="1" row="21" col="2"></p>
+    <p class="Normal" tables="1" row="21" col="3"></p>
+    <p class="Normal" tables="1" row="21" col="4"></p>
+    <p class="Normal" tables="1" row="21" col="5"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="22" col="1">verify</p>
+    <p class="Normal" tables="1" row="22" col="2"></p>
+    <p class="Normal" tables="1" row="22" col="3"></p>
+    <p class="Normal" tables="1" row="22" col="4"></p>
+    <p class="Normal" tables="1" row="22" col="5"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="23" col="1">install</p>
+    <p class="mc_body" tables="1" row="23" col="2">org.apache.maven.plugins:maven-install-plugin</p>
+    <p class="mc_body" tables="1" row="23" col="3">install</p>
+    <p class="mc_body" tables="1" row="23" col="4">install</p>
+    <p class="mc_body" tables="1" row="23" col="5">default-install</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="24" col="1">deploy</p>
+    <p class="mc_body" tables="1" row="24" col="2">org.apache.maven.plugins:maven-deploy-plugin</p>
+    <p class="mc_body" tables="1" row="24" col="3">deploy</p>
+    <p class="mc_body" tables="1" row="24" col="4">deploy</p>
+    <p class="mc_body" tables="1" row="24" col="5">default-deploy</p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body"></p>
+    <p class="mc_body"></p>
+    <p class="mc_body">Very pale blue and not underlined for links.</p>
+    <p class="mc_body"></p>
+    <p class="mc_body">A plugin must be placed in the plugins section of the build seciton or of the profiles section or the pluginManager</p>
+    <p class="mc_body"></p>
+    <p class="mc_body">Trying to avoid contrived examples.</p>
+    <p class="mc_body"></p>
+    <p class="mc_body"></p>
+    <p class="mc_body"></p>
+    <p class="Heading 1">Afterthought</p>
+    <p class="mc_body" tables="1" row="1" col="1">parent</p>
+    <p class="mc_body" tables="1" row="1" col="2">The location of the parent project, if one exists. Values from the parent project will be the default for this project if they are left unspecified. The location is given as a group ID, artifact ID and version.</p>
+    <p class="Normal" tables="1" row="1" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="2" col="1">modelVersion</p>
+    <p class="mc_body" tables="1" row="2" col="2">Declares to which version of project descriptor this POM conforms.</p>
+    <p class="Normal" tables="1" row="2" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="3" col="1">groupId</p>
+    <p class="mc_body" tables="1" row="3" col="2">A universally unique identifier for a project. It is normal to use a fully-qualified package name to distinguish it from other projects with a similar name (eg. &lt;code&gt;org.apache.maven&lt;/code&gt;).</p>
+    <p class="Normal" tables="1" row="3" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="4" col="1">artifactId</p>
+    <p class="mc_body" tables="1" row="4" col="2">The identifier for this artifact that is unique within the group given by the group ID. An artifact is something that is either produced or used by a project. Examples of artifacts produced by Maven for a project include: JARs, source and binary distributions, and WARs.</p>
+    <p class="Normal" tables="1" row="4" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="5" col="1">packaging</p>
+    <p class="mc_body" tables="1" row="5" col="2">The type of artifact this project produces, for example &lt;code&gt;jar&lt;/code&gt; &lt;code&gt;war&lt;/code&gt; &lt;code&gt;ear&lt;/code&gt; &lt;code&gt;pom&lt;/code&gt;. Plugins can create their own packaging, and therefore their own packaging types, so this list does not contain all possible types.</p>
+    <p class="Normal" tables="1" row="5" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="6" col="1">name</p>
+    <p class="mc_body" tables="1" row="6" col="2">The full name of the project.</p>
+    <p class="Normal" tables="1" row="6" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="7" col="1">version</p>
+    <p class="mc_body" tables="1" row="7" col="2">The current version of the artifact produced by this project.</p>
+    <p class="Normal" tables="1" row="7" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="8" col="1">description</p>
+    <p class="mc_body" tables="1" row="8" col="2">A detailed description of the project, used by Maven whenever it needs to describe the project, such as on the web site. While this element can be specified as CDATA to enable the use of HTML tags within the description, it is discouraged to allow plain text representation. If you need to modify the index page of the generated web site, you are able to specify your own instead of adjusting this text.</p>
+    <p class="Normal" tables="1" row="8" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="9" col="1">url</p>
+    <p class="mc_body" tables="1" row="9" col="2">The URL to the project's homepage.</p>
+    <p class="Normal" tables="1" row="9" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="10" col="1">prerequisites</p>
+    <p class="mc_body" tables="1" row="10" col="2">Describes the prerequisites in the build environment for this project.</p>
+    <p class="Normal" tables="1" row="10" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="11" col="1">issueManagement</p>
+    <p class="mc_body" tables="1" row="11" col="2">The project's issue management system information.</p>
+    <p class="Normal" tables="1" row="11" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="12" col="1">ciManagement</p>
+    <p class="mc_body" tables="1" row="12" col="2">The project's continuous integration information.</p>
+    <p class="Normal" tables="1" row="12" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="13" col="1">inceptionYear</p>
+    <p class="mc_body" tables="1" row="13" col="2">The year of the project's inception, specified with 4 digits. This value is used when generating copyright notices as well as being informational.</p>
+    <p class="Normal" tables="1" row="13" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="14" col="1">mailingLists</p>
+    <p class="mc_body" tables="1" row="14" col="2">The year of the project's inception, specified with 4 digits. This value is used when generating copyright notices as well as being informational.</p>
+    <p class="Normal" tables="1" row="14" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="15" col="1">developers</p>
+    <p class="mc_body" tables="1" row="15" col="2">Describes the committers of a project.</p>
+    <p class="Normal" tables="1" row="15" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="16" col="1">contributors</p>
+    <p class="mc_body" tables="1" row="16" col="2">Describes the committers of a project.</p>
+    <p class="Normal" tables="1" row="16" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="17" col="1">licenses</p>
+    <p class="mc_body" tables="1" row="17" col="2">This element describes all of the licenses for this project. Each license is described by a &lt;code&gt;license&lt;/code&gt; element, which is then described by additional elements. Projects should only list the license(s) that applies to the project and not the licenses that apply to dependencies. If multiple licenses are listed, it is assumed that the user can select any of them, not that they must accept all.</p>
+    <p class="Normal" tables="1" row="17" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="18" col="1">scm</p>
+    <p class="mc_body" tables="1" row="18" col="2">Specification for the SCM used by the project, such as CVS, Subversion, etc.a</p>
+    <p class="Normal" tables="1" row="18" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="19" col="1">organization</p>
+    <p class="mc_body" tables="1" row="19" col="2">This element describes various attributes of the organization to which the project belongs. These attributes are utilized when documentation is created (for copyright notices and links).</p>
+    <p class="Normal" tables="1" row="19" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="20" col="1">build</p>
+    <p class="mc_body" tables="1" row="20" col="2">Information required to build the project.</p>
+    <p class="Normal" tables="1" row="20" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="21" col="1">profiles</p>
+    <p class="mc_body" tables="1" row="21" col="2">A listing of project-local build profiles which will modify the build process when activated.</p>
+    <p class="Normal" tables="1" row="21" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="22" col="1">modules</p>
+    <p class="mc_body" tables="1" row="22" col="2">The modules (sometimes called subprojects) to build as a part of this project. Each module listed is a relative path to the directory containing the module.</p>
+    <p class="Normal" tables="1" row="22" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="23" col="1">repositories</p>
+    <p class="mc_body" tables="1" row="23" col="2">The lists of the remote repositories for discovering dependencies and extensions.</p>
+    <p class="Normal" tables="1" row="23" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="24" col="1">pluginRepositories</p>
+    <p class="mc_body" tables="1" row="24" col="2">The lists of the remote repositories for discovering plugins for builds and reports.</p>
+    <p class="Normal" tables="1" row="24" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="25" col="1">dependencies</p>
+    <p class="mc_body" tables="1" row="25" col="2">This element describes all of the dependencies associated with a project. These dependencies are used to construct a classpath for your project during the build process. They are automatically downloaded from the repositories defined in this project. See &lt;a href="http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html"&gt;the dependency mechanism&lt;/a&gt; for more information.</p>
+    <p class="Normal" tables="1" row="25" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="26" col="1">reports</p>
+    <p class="mc_body" tables="1" row="26" col="2">Deprecated. Now ignored by Maven.</p>
+    <p class="Normal" tables="1" row="26" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="27" col="1">reporting</p>
+    <p class="mc_body" tables="1" row="27" col="2">This element includes the specification of report plugins to use to generate the reports on the Maven-generated site. These reports will be run when a user executes &lt;code&gt;mvn site&lt;/code&gt;. All of the reports will be included in the navigation bar for browsing.</p>
+    <p class="Normal" tables="1" row="27" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="28" col="1">dependencyManagement</p>
+    <p class="mc_body" tables="1" row="28" col="2">Default dependency information for projects that inherit from this one. The dependencies in this section are not immediately resolved. Instead, when a POM derived from this one declares a dependency described by a matching groupId and artifactId, the version and other values from this section are used for that dependency if they were not already specified.</p>
+    <p class="Normal" tables="1" row="28" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="29" col="1">distributionManagement</p>
+    <p class="mc_body" tables="1" row="29" col="2">Distribution information for a project that enables deployment of the site and artifacts to remote web servers and repositories respectively.</p>
+    <p class="Normal" tables="1" row="29" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body" tables="1" row="30" col="1">properties</p>
+    <p class="mc_body" tables="1" row="30" col="2">Properties that can be used throughout the POM as a substitution, and are used as filters in resources if enabled. The format is &lt;code&gt;&amp;lt;name&amp;gt;value&amp;lt;/name&amp;gt;&lt;/code&gt;.a</p>
+    <p class="Normal" tables="1" row="30" col="3"></p>
+    <p class="Normal" tables="1"></p>
+    <p class="mc_body"></p>
+    <p class="mc_body"></p>
+    <p class="mc_body">Sections not considered:</p>
+    <p class="mc_body"></p>
+    <p class="mc_body">Use case is a large set of files that need to be subjected to a set of tasks with intermediate stages.</p>
+    <p class="mc_body"></p>
+    <p class="mc_body"></p>
+    <p class="mc_tech">Class loaders</p>
+    <p class="mc_tech">intteraction with IDEs</p>
+    <p class="mc_tech"></p>
+    <p class="mc_tech">It does not have much to say about:</p>
+    <p class="mc_tech">profiles</p>
+    <p class="mc_tech">scm</p>
+    <p class="mc_tech">distribution management / deployment management</p>
+    <p class="mc_tech"></p>
+    <p class="mc_body">profiles.xml alongside pre-defined phase obfuscate POM.</p>
+    <p class="mc_body"></p>
+    <p class="mc_body"></p>
+    <p class="mc_body"></p>
+    <p class="Heading 1">Resources</p>
+    <p class="mc_body">http://www.ibm.com/developerworks/java/library/j-5things13/</p>
+    <p class="mc_body"></p>
+    <p class="mc_body">Mention that org.apache.maven.plugins is the default groupId and does not need to be specified in the plugin section although presumably it does in other contexts.</p>
+</doc>
