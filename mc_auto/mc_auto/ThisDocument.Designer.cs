@@ -27,6 +27,8 @@ namespace mc_auto {
         
         internal Microsoft.Office.Tools.Word.Controls.Button button1;
         
+        internal Microsoft.Office.Tools.Word.Controls.Button button2;
+        
         /// 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
@@ -142,6 +144,7 @@ namespace mc_auto {
         private void InitializeControls() {
             this.ActionsPane = Globals.Factory.CreateActionsPane(null, null, "ActionsPane", "ActionsPane", this);
             this.button1 = new Microsoft.Office.Tools.Word.Controls.Button(Globals.Factory, this.ItemProvider, this.HostContext, "0CF74404F0EE9104A330858E06F657CD5F3EF0", "0CF74404F0EE9104A330858E06F657CD5F3EF0", this, "button1");
+            this.button2 = new Microsoft.Office.Tools.Word.Controls.Button(Globals.Factory, this.ItemProvider, this.HostContext, "1173BAF8E128B61489419ED81BB995E002D2C1", "1173BAF8E128B61489419ED81BB995E002D2C1", this, "button2");
         }
         
         /// 
@@ -149,11 +152,6 @@ namespace mc_auto {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Tools.Office.ProgrammingModel.dll", "11.0.0.0")]
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         private void InitializeComponents() {
-            // 
-            // ActionsPane
-            // 
-            this.ActionsPane.AutoSize = false;
-            this.ActionsPane.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             // 
             // button1
             // 
@@ -163,9 +161,23 @@ namespace mc_auto {
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = false;
             // 
+            // ActionsPane
+            // 
+            this.ActionsPane.AutoSize = false;
+            this.ActionsPane.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.SystemColors.Control;
+            this.button2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.button2.Name = "button2";
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = false;
+            // 
             // ThisDocument
             // 
             this.button1.BindingContext = this.BindingContext;
+            this.button2.BindingContext = this.BindingContext;
         }
         
         /// 

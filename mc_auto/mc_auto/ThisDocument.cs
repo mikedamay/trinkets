@@ -14,9 +14,13 @@ namespace mc_auto
 {
     public partial class ThisDocument
     {
+        private string INPUT_FILE_NAME = "mvn_commentary.docm";
         private string OUTPUT_FILE_EXTENSION = "xml";
         private const string EL_PARA = "p";
         private const string EL_DOC = "doc";
+        private const string EL_HTML = "html";
+        private const string EL_BODY = "body";
+        private const string EL_CLASS = "class";
         private void ThisDocument_Startup(object sender, System.EventArgs e)
         {
         }
@@ -45,9 +49,11 @@ namespace mc_auto
         private void button1_Click(object sender, EventArgs e)
         {
             string location = this.Path;
-            string pathAndFile = System.IO.Path.ChangeExtension(System.IO.Path.Combine(location
-              , this.Name), OUTPUT_FILE_EXTENSION);
-            WriteDocumentAsXMLFile(this.StoryRanges[Word.WdStoryType.wdMainTextStory], pathAndFile);
+            string docPathAndFile = System.IO.Path.Combine(location, INPUT_FILE_NAME);
+            string xmlPathAndFile = System.IO.Path.ChangeExtension(docPathAndFile, OUTPUT_FILE_EXTENSION);
+            Word.Document doc = this.Application.Documents.Open(docPathAndFile);
+            WriteDocumentAsXMLFile(doc.StoryRanges[Word.WdStoryType.wdMainTextStory], xmlPathAndFile);
+            (doc as Microsoft.Office.Interop.Word._Document).Close(null, null, null);
         }
         private void WriteDocumentAsXMLFile(Word.Range doc, string pathAndFile)
         {
@@ -58,23 +64,38 @@ namespace mc_auto
                 xw = System.Xml.XmlWriter.Create(fs
                   , new System.Xml.XmlWriterSettings { Indent = true, CloseOutput = true });
                 xw.WriteStartDocument();
-                int ctr = 1, failed = 0;
-                xw.WriteStartElement(EL_DOC);
+                int ctr = 1;
+                WriteStartElement(xw, EL_DOC);
                 foreach (Word.Paragraph para in doc.Paragraphs)
                 {
                     string text = para.Range.Text;
                     string styleName = para.Range.ParagraphStyle.NameLocal;
-                    xw.WriteStartElement(EL_PARA);
-                    xw.WriteAttributeString("style", styleName);
-                    xw.WriteAttributeString("tables", para.Range.Tables.Count.ToString());
-                    xw.WriteAttributeString("bookmarks", para.Range.Bookmarks.Count.ToString());
-                    xw.WriteString(MassageXMLString(text));
-                    xw.WriteEndElement();
+                    WriteStartElement(xw,EL_PARA);
+                    WriteAttributeString(xw, EL_CLASS, styleName);
+                    if (para.Range.Tables.Count > 0)
+                    {
+                        WriteAttributeString(xw, "tables", para.Range.Tables.Count.ToString());
+                    }
+                    if (para.Range.Tables.Count > 0 && para.Range.Cells.Count > 0)
+                    {
+                        int? row = default(int);
+                        int? col = default(int);
+                        row = para.Range.Cells[1].Row.Index;
+                        col = para.Range.Cells[1].Column.Index;
+                        WriteAttributeString(xw, "row", row.ToString());
+                        WriteAttributeString(xw, "col", col.ToString());
+                    }
+                    if (para.Range.Bookmarks.Count > 0)
+                    {
+                        WriteAttributeString(xw, "bookmark", para.Range.Bookmarks[1].Name);
+                    }
+                    WriteString(xw,MassageXMLString(text));
+                    WriteEndElement(xw);
                     ctr++;
                 }
-                xw.WriteEndElement();
+                WriteEndElement(xw);
                 xw.WriteEndDocument();
-                MessageBox.Show("Found " + ctr + " paragraphs.  " + failed + " to convert to XML");
+                MessageBox.Show("Found " + ctr + " paragraphs to convert to XML");
             }
             finally
             {
@@ -105,5 +126,42 @@ namespace mc_auto
             }
             return text.Substring(0, text.Length - reduceBy);
         }
+        private void WriteStartElement(System.Xml.XmlWriter xw, string elementName)
+        {
+            xw.WriteStartElement(elementName);
+        }
+        private void WriteString(System.Xml.XmlWriter xw, string str)
+        {
+            xw.WriteString(str);
+        }
+        private void WriteAttributeString(System.Xml.XmlWriter xw, string attributeName, object attributeValue)
+        {
+            xw.WriteAttributeString(attributeName, attributeValue.ToString());
+        }
+        private void WriteEndElement(System.Xml.XmlWriter xw)
+        {
+            xw.WriteEndElement();
+        }
+        private static void WriteEndElementS(System.Xml.XmlWriter xw)
+        {
+            xw.WriteEndElement();
+        }
+#if comment
+        delegate void XmlAction(System.Xml.XmlWriter xw);
+        private class XmlActions
+        {
+            public XmlAction Start;
+        }
+        XmlAction action = xw => WriteEndElementS(xw);
+        private void Create()
+        {
+            IDictionary<string, XmlActions> actionsMap = new Dictionary<string, XmlActions>()
+            {{"any", new XmlActions
+            {
+                Start = xw => WriteEndElement(xw)
+            }}};
+            //actionsMap.Add("any", st);
+        }
+#endif
     }
 }
