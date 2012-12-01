@@ -8,9 +8,9 @@ C:\Users\Mike\Documents\GitHub\maven_commentary\mc_auto\mc_auto\bin\Debug\Micros
 C:\Users\Mike\Documents\GitHub\maven_commentary\mc_auto\mc_auto\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.xml
 C:\Users\Mike\Documents\GitHub\maven_commentary\mc_auto\mc_auto\bin\Debug\Microsoft.Office.Tools.Word.v4.0.Utilities.xml
 C:\Users\Mike\Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\mc_auto.csprojResolveAssemblyReference.cache
-C:\Users\Mike\Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\mc_auto.ThisDocument.resources
 C:\Users\Mike\Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\mc_auto.ActionsPaneControl1.resources
 C:\Users\Mike\Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\mc_auto.Properties.Resources.resources
 C:\Users\Mike\Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\mc_auto.csproj.GenerateResource.Cache
 C:\Users\Mike\Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\mc_auto.dll
 C:\Users\Mike\Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\mc_auto.pdb
+C:\Users\Mike\Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\ExtensionMethods.MyExtensions.resources

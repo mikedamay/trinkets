@@ -10,10 +10,37 @@ using Microsoft.VisualStudio.Tools.Applications.Runtime;
 using Office = Microsoft.Office.Core;
 using Word = Microsoft.Office.Interop.Word;
 
+namespace ExtensionMethods
+{
+    public static class MyExtensions
+    {
+        public static TVALUE GetValueOrDefault<TKEY, TVALUE>(this IDictionary<TKEY, TVALUE> map
+          ,TKEY key, TVALUE defaultval)
+        {
+            TVALUE gotval;
+            if (!map.TryGetValue(key, out gotval))
+            {
+                gotval = defaultval;
+            }
+            return gotval;
+        }
+    }
+}
+
 namespace mc_auto
 {
+    using ExtensionMethods;
     public partial class ThisDocument
     {
+        private class ParagraphInfo
+        {
+            public int? Level = null;
+        }
+        private IDictionary<string, ParagraphInfo> paragraphInfos = new Dictionary<string, ParagraphInfo>()
+        {
+            {"mc_tech", new ParagraphInfo {Level = 8}}
+            ,{"mc_example_text", new ParagraphInfo {Level = 8}}
+        };
         private string INPUT_FILE_NAME = "mvn_commentary.docm";
         private string OUTPUT_FILE_EXTENSION = "xml";
         private const string EL_PARA = "p";
@@ -89,6 +116,7 @@ namespace mc_auto
                     {
                         WriteAttributeString(xw, "bookmark", para.Range.Bookmarks[1].Name);
                     }
+                    WriteAttributeString(xw, "level", GetParagraphLevel(para).ToString());
                     WriteString(xw,MassageXMLString(text));
                     WriteEndElement(xw);
                     ctr++;
@@ -104,6 +132,27 @@ namespace mc_auto
                     xw.Close();
                 }
             }
+        }
+        /// <summary>
+        /// see callee
+        /// </summary>
+        private int GetParagraphLevel(Word.Paragraph para)
+        {
+            return GetParagraphLevel(para.OutlineLevel, (string)para.Range.ParagraphStyle.NameLocal);
+        }
+        /// <summary>
+        /// if the paragraph does not specify a level then use the outline level.  styles
+        /// such as mc_text have a fake outline level so that they can be put in a div in the
+        /// html hierarchy when it is generated
+        /// </summary>
+        /// <param name="wdOutlineLevel">from the word document</param>
+        /// <param name="paragraphStyleName">style as specified in the word document</param>
+        /// <returns>level between 1 (heading 1) and 10 (body text)</returns>
+        private int GetParagraphLevel(Word.WdOutlineLevel wdOutlineLevel, string paragraphStyleName)
+        {
+            return paragraphInfos.GetValueOrDefault(paragraphStyleName
+              , new ParagraphInfo{Level = null}).Level 
+              ?? (int)wdOutlineLevel; 
         }
         /// <summary>
         /// strips unsightly control characters off the end of paragraphs
