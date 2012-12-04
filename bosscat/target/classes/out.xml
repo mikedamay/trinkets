@@ -1,0 +1,596 @@
+"C:\Program Files\Java\jdk1.7.0_07\bin\java" -Dxslt.file=C:\Users\Mike\Documents\GitHub\maven_commentary\bosscat\src\main\java\mvnc2html.xsl -Dxslt.input=C:\Users\Mike\Documents\GitHub\maven_commentary\mc_auto\mc_auto\bin\Debug\mvn_commentary.xml -Dxslt.smart-error-handling=true -Dfile.encoding=windows-1252 -classpath "C:\Program Files\Java\jdk1.7.0_07\jre\lib\alt-rt.jar;C:\Program Files\Java\jdk1.7.0_07\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.7.0_07\jre\lib\deploy.jar;C:\Program Files\Java\jdk1.7.0_07\jre\lib\javaws.jar;C:\Program Files\Java\jdk1.7.0_07\jre\lib\jce.jar;C:\Program Files\Java\jdk1.7.0_07\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.7.0_07\jre\lib\jfxrt.jar;C:\Program Files\Java\jdk1.7.0_07\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.7.0_07\jre\lib\management-agent.jar;C:\Program Files\Java\jdk1.7.0_07\jre\lib\plugin.jar;C:\Program Files\Java\jdk1.7.0_07\jre\lib\resources.jar;C:\Program Files\Java\jdk1.7.0_07\jre\lib\rt.jar;C:\Program Files\Java\jdk1.7.0_07\jre\lib\ext\access-bridge.jar;C:\Program Files\Java\jdk1.7.0_07\jre\lib\ext\dnsns.jar;C:\Program Files\Java\jdk1.7.0_07\jre\lib\ext\jaccess.jar;C:\Program Files\Java\jdk1.7.0_07\jre\lib\ext\localedata.jar;C:\Program Files\Java\jdk1.7.0_07\jre\lib\ext\sunec.jar;C:\Program Files\Java\jdk1.7.0_07\jre\lib\ext\sunjce_provider.jar;C:\Program Files\Java\jdk1.7.0_07\jre\lib\ext\sunmscapi.jar;C:\Program Files\Java\jdk1.7.0_07\jre\lib\ext\sunpkcs11.jar;C:\Program Files\Java\jdk1.7.0_07\jre\lib\ext\zipfs.jar;C:\Users\Mike\Documents\GitHub\maven_commentary\bosscat\target\classes;C:\Users\Mike\.m2\repository\javax\servlet\servlet-api\2.5\servlet-api-2.5.jar;C:\Program Files\JetBrains\IntelliJ IDEA 11.0.2\plugins\xpath\lib\rt\xslt-rt.jar" org.intellij.plugins.xslt.run.rt.XSLTRunner
+<html>
+    <head>
+        <meta charset="utf-8"/>
+    </head>
+    <body>
+        <div class="level1" myy="1" num-sub-paras="88">
+            <div class="Heading 1">Introduction</div>
+            <div class="mc_body">It is striking how Maven can build complex apps with so few commands.  In the example that we examine here a fairly minimal pom (set of build instructions) compiles the application, runs unit tests and builds a jar.</div>
+            <div class="mc_body">There are 3 factors in play:</div>
+            <div class="mc_body">1) Command Line: mvn clean install</div>
+            <div class="mc_body">This is executed from the directory containing the project’s POM file (typically, pom.xml).</div>
+            <div class="mc_body">Install turns out not to be install and its brother deploy does not deploy except for those with a very maven-centric view of the world.</div>
+            <div class="mc_body">2) Minimal.pom:</div>
+        </div>
+        <div class="level1" myy="1" num-sub-paras="159">
+            <div class="Heading 1">Life-cycles, Phases and Plugins</div>
+            <div class="mc_body">We have talked so far in terms of plugins used / tasks executed as equivalent.  How does this work?</div>
+            <div class="mc_body">Instead of specifying steps as a set of tasks as in a batch file or having the execution order set by a dependency tree as in a traditional make configuration, the Maven build process is broken up into a number of phases, such as compile and test.   Zero, one or more tasks are allocated to each phase.  Instead of having a build step as the heading and the tasks listed underneath it the plugins which execute the tasks specify the phase in which they should be executed.  </div>
+            <div class="mc_body">Before we examine the phases in detail we need to talk about life-cycles.  There are 3 life-cycles, clean, site and default.  The phases of the clean life-cycle (pre-clean, clean, post-clean)  by default execute tasks that clean away output from a previous build and site phases (pre-site, site, post-site, site-deploy) execute tasks to build a website documenting the project.  We won’t consider the clean and site life-cycles further but be assured they follow the same pattern as the default life-cycle.</div>
+            <div class="mc_body">The default (build) life-cycle has twenty three phases.  Eight of these contain tasks by default (see the example POM above).  The project developer is free to use the other 17 or in fact to add tasks (in the form of plugin references) to the eight already occupied.  These tasks will be added to the default ones rather than overwriting them.  The execution order of the phases is fixed (which is rather the point of them) but the order of execution of tasks within a phase is not guaranteed.</div>
+            <div class="level2" myy="2" num-sub-paras="145">
+                <div class="Heading 2">Default Phases for Jar Build</div>
+                <div class="mc_body">If you are building a jar (that is you set the project packaging element to jar and do not specify a build section in the POM then the following goals are executed by default for the default lifecycle.</div>
+                <div class="mc_body">mvn help:describe -Dcmd=deploy (or the name of any phase from the lifecycle in which you are interested.  This seems to pick up only the predefined plugins.</div>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content">Phase</div>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content">Plugin:goal</div>
+                <div class="mc_table_content"/>
+                <div class="Normal"/>
+                <div class="lc_cellheading"/>
+                <div class="lc_cellheading"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="Normal"/>
+                <div class="lc_cellheading">initialize</div>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="Normal"/>
+                <div class="lc_cellheading">generate-sources</div>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="Normal"/>
+                <div class="lc_cellheading">process-sources</div>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="Normal"/>
+                <div class="lc_cellheading">generate-resources</div>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="Normal"/>
+                <div class="lc_cellheading">process-resources </div>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="Normal"/>
+                <div class="lc_cellheading">compile </div>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="Normal"/>
+                <div class="lc_cellheading">process-classes</div>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="Normal"/>
+                <div class="lc_cellheading">generate-test-sources</div>
+                <div class="lc_cellheading"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="Normal"/>
+                <div class="lc_cellheading">process-test-sources</div>
+                <div class="lc_cellheading"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="Normal"/>
+                <div class="lc_cellheading">generate-test-resources</div>
+                <div class="lc_cellheading"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="Normal"/>
+                <div class="lc_cellheading">process-test-resources </div>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="Normal"/>
+                <div class="mc_table_content">test-compile </div>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="Normal"/>
+                <div class="lc_cellheading">process-test-classes</div>
+                <div class="lc_cellheading"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="Normal"/>
+                <div class="lc_cellheading">test </div>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="Normal"/>
+                <div class="mc_table_content">prepare-package</div>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="Normal"/>
+                <div class="lc_cellheading">package </div>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="Normal"/>
+                <div class="lc_cellheading">pre-integration-test</div>
+                <div class="mc_table_content">         </div>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="Normal"/>
+                <div class="lc_cellheading">integration-test</div>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="Normal"/>
+                <div class="lc_cellheading">post-integration-test</div>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="Normal"/>
+                <div class="lc_cellheading">verify</div>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="Normal"/>
+                <div class="lc_cellheading">install</div>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="Normal"/>
+                <div class="lc_cellheading">deploy</div>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="mc_table_content"/>
+                <div class="Normal"/>
+            </div>
+            <div class="level2" myy="2" num-sub-paras="3">
+                <div class="Heading 2">Goals</div>
+                <div class="mc_body">In maven parlance the goals of no plugins are bound to these phases.</div>
+                <div class="mc_body">When we talked about the equivalence of plugins and tasks that was not the full story.  Plugins can perform a number of tasks.  Each capability (task type) is identified as a goal (sometimes referred to as mojo).</div>
+                <div class="mc_body">For instance the maven-compiler-plugin has two goals: the compile goal is executed in the compile phase and the testCompile goal is executed in the test-compile phase.  These two goals execute the same code but operate on distinct source directories and build into distinct target directories.</div>
+            </div>
+            <div class="level2" myy="2" num-sub-paras="107">
+                <div class="Heading 2">More about Defaults</div>
+                <div class="mc_body">The particular plugins and goals to be executed by default during each phase of the build vary according the value of the project’s &lt;packaging&gt; element.  As well as the jar packaging, used in our examples so far there is a number of other predefined packaging types.  The war packaging changes only the plugin and goal associated with the package phase as do the ejb, ejb3, rar and par package types whereas for the ear is quite different having goals associated with only five phases and not surprisingly featuring the maven-ear-plugin in a couple of those.</div>
+                <div class="mc_body">List of predefined package types as of maven v3.0.4:</div>
+                <div class="mc_body">jar, war, ear, pom, ejb, ejb3, maven-plugin, rar, par</div>
+                <div class="mc_body">from C:\projects\Intro\maven\maven-core\target\classes\META-INF\plexus\components.xml</div>
+            </div>
+        </div>
+        <div class="level1" myy="1" num-sub-paras="479">
+            <div class="Heading 1">The Build</div>
+            <div class="mc_body">We now have enough knowledge to add a line or ten to the build where we need some behaviour that is not predefined.  Let us say we need to add scripts that build a database so that we can run our application in our development environment.</div>
+            <div class="mc_body">If we search for Maven SQL on google we find sql-maven-plugin home page at the top of the results list.  You typically find an example of what to include in the build section on the usage page.  Copyright?</div>
+            <div class="level2" myy="2" num-sub-paras="4">
+                <div class="Heading 2">Dependencies</div>
+                <div class="mc_body">Most dependencies required by the plugin are automatically downloaded.  However, in the case of the sql plugin it has no way of knowing, when it is built, what driver will be required for it to its job.  The app developer must add that dependency to the plugin section when using it.</div>
+                <div class="mc_body">There is a slightly different case where a plugin may cause dependencies to be added but in this latter case dependencies are added to the main project rather than to the plugin.  The case is where the plugin generates code.  For instance, when using   Axis a project dependency on axiom will be created as that library is required and build and run time.</div>
+                <div class="mc_body">The only documentation for such non-transitive dependencies tends to be the plugin’s homepage, if you’re lucky, or the web.</div>
+                <div class="mc_body">The plugin’s dependencies should be distinguished from the main project’s dependencies but see the para on axiom above.</div>
+            </div>
+            <div class="level2" myy="2" num-sub-paras="244">
+                <div class="Heading 2">Configuration</div>
+                <div class="mc_body">The configuration section allows information to be passed between the project and the plugin.  The maven infrastructure has little interest in this.  </div>
+                <div class="mc_body">The most complete source for possible configuration parameters is the output from the Maven command mvn help:describe -Dplugin=&lt;groupid&gt;:&lt;artifactid&gt;:&lt;version&gt; -Dfull.    The output for mvn help:describe -Dplugin=org.codehaus.mojo:sql-maven-plugin:1.5 is:</div>
+            </div>
+            <div class="level2" myy="2" num-sub-paras="4">
+                <div class="Heading 2">Executions</div>
+                <div class="mc_body">Typically if a plugin section is included in the build/plugins section then it will contain an &lt;executions&gt; section.  If it appears in the pluginManagement section then it may not have one in that context.</div>
+                <div class="mc_body">The execution section allows the phase to be specified, i.e. when it should occur in the build cycle.  In our example above we’ve chosen to run our database scripts in the generate-test-sources.  Arguably the plugin should be bound to the generate-test-resources phase as databases are more like resources than sources but from Maven’s point of view it makes no difference as long as the task gets executed before the test phase (or to be precise, whatever the first phase is, at which the database will be needed).  It does of course matter from a human readability point of view.</div>
+                <div class="mc_body">Whereas the phase is important to the Maven infrastructure and determines the point at which a task is executed,  the goal is important to the plugin and determines what is done.  Most plugins have at least two goals (one of which will typically be help) so it is necessary to specify the goal in the execution section.</div>
+                <div class="mc_body">The other possible attributes of an execution are id and configuration which are both relevant where multiple executions are involved.  (Actually there is an inherited attribute which is relevant to pluginManagement (does it apply to build sections within profiles - I should think not).</div>
+            </div>
+            <div class="level2" myy="2" num-sub-paras="72">
+                <div class="Heading 2">Multiple Executions</div>
+                <div class="mc_body">Imagine we also have an sqlite database in play.  We may also need to execute scripts against that during the build process.</div>
+            </div>
+            <div class="level2" myy="2" num-sub-paras="26">
+                <div class="Heading 2">User Provided Libraries</div>
+                <div class="mc_body">Builds may need to incorporate libraries that are not available from the artefact repository in use.  There are two ways to address this issue: either install the library into the local copy of the repository (link to this) or the dependency can refer to an artefact outside of the maven ecosystem.</div>
+                <div class="level3" myy="3" num-sub-paras="4">
+                    <div class="Heading 3">Install Artefact Locally</div>
+                    <div class="Normal">The command</div>
+                    <div class="mc_sgl_cmd">mvn install:install-file &lt;file path and name&gt;</div>
+                    <div class="Normal"/>
+                    <div class="Normal">can be used to add a dependency to the local repository</div>
+                </div>
+                <div class="level3" myy="3" num-sub-paras="20">
+                    <div class="Heading 3">Local Reference</div>
+                    <div class="Normal">Alternatively you can configure the dependency to reference some arbitrary local file with the following:</div>
+                </div>
+            </div>
+            <div class="level2" myy="2" num-sub-paras="20">
+                <div class="Heading 2">Multiple Projects</div>
+                <div class="mc_body">Complex builds can be simplified by segregating parts of a solution into separate project files and by using inheritance to pick up settings from a parent POM.</div>
+                <div class="level3" myy="3" num-sub-paras="4">
+                    <div class="Heading 3">Multiple Modules</div>
+                    <div class="mc_body">A common pattern that employs multiple modules is a solution to produce an ear file.  Typically you would have a POM for a war, a POM for the ear and a POM to control both. </div>
+                    <div class="mc_body">Example of ear and war</div>
+                    <div class="mc_body">Child projects in sub-directories or specified using a relative path http://maven.apache.org/guides/introduction/introduction-to-the-pom.html</div>
+                    <div class="mc_body"/>
+                </div>
+                <div class="level3" myy="3" num-sub-paras="9">
+                    <div class="Heading 3">Inheritance</div>
+                    <div class="mc_body">What is inherited?</div>
+                    <div class="mc_body">Elements in the POM that are merged are the following:</div>
+                    <div class="mc_body"/>
+                    <div class="mc_body">dependencies</div>
+                    <div class="mc_body">developers and contributors</div>
+                    <div class="mc_body">plugin lists (including reports)</div>
+                    <div class="mc_body">plugin executions with matching ids</div>
+                    <div class="mc_body">plugin configuration</div>
+                    <div class="mc_body">resources</div>
+                </div>
+                <div class="level3" myy="3" num-sub-paras="1268">
+                    <div class="Heading 3">Ancillary Life-cycles</div>
+                    <div class="mc_body">Subsidiary lifecycles</div>
+                    <div class="mc_body"/>
+                    <div class="mc_body"/>
+                    <div class="level4" myy="4" num-sub-paras="1258">
+                        <div class="Heading 4">Shortcut</div>
+                        <div class="mc_body">The names compile and install in the direct goal example are plugin goal prefixes. Goal prefixes are assigned from two sources.  If the name of the plugin artefact has the pattern &lt;name&gt;-maven-plugin or maven-&lt;name&gt;-plugin then the prefix will be &lt;name&gt;.  Alternatively, the prefix can be set in the file, maven-metadata-central.xml found in the root directory corresponding to the groupId.   These prefix assignments work fine for the predefined plugin groups of maven-plugins and codehaus-mojo.  If plugins are added from some other source and you want to use the prefix then there is one more piece of configuration.  You can add new prefixes by modifying settings.xml and adding the group id of the plugins to the pluginGroups section. </div>
+                        <div class="mc_body">The final issue to consider is whether when goals are executed previous phases are executed.</div>
+                        <div class="mc_body">Further complicated by goals that cause other phases to be executed.</div>
+                        <div class="mc_body">Execution of dependencies and role of inheritance</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="level1" myy="1" num-sub-paras="12">
+            <div class="Heading 1">Variety</div>
+            <div class="level2" myy="2" num-sub-paras="27">
+                <div class="Heading 2">Executing Goals Directly</div>
+                <div class="mc_body">So far our command line has specified the phases of life-cycles, for instance “mvn clean install” instructs Maven to execute the plugins in (bound to) all phases up to and including the clean phase of the clean life-cycle followed by the plugins in all phases up to and including the install phase of the default lifecycle.</div>
+                <div class="mc_body">You can specify other phases on the command line, for instance whereas “mvn install” executes all phases except the deploy phase (the final phase), “mvn compile” will execute no further than the compile phase.  If we invoked Maven with “mvn compile” for the minimal configuration mentioned previously it would execute two plugins, firstly to copy resources and then to compile. </div>
+                <div class="mc_body">The issue is confused by the fact that you can specify goals directly on the command line.  For instance when creating a project you invoke Maven with “mvn archetype:generate”.  This directly executes the goal generate of the archetype plugin.</div>
+                <div class="mc_body">The tokens on the command line represent different Maven concepts.  In the case of “mvn clean install” or “mvn compile” the values refer to phases whereas in the case of “mvn archetype:generate” ignores phases altogether and concentrates on the plugins.</div>
+                <div class="mc_body">The command line specification can look very similar.  Compare “mvn install” with “mvn install:install-file…”.  In the first example “install” refers to a Maven lifecycle phase, in the second to the plugin maven-install-plugin.  Another way to express the second example is “mvn org.apache.maven.plugins:maven-install-plugin:install-file”.</div>
+                <div class="mc_body">Similarly for compile “mvn compile” can be contrasted with “mvn compile:compile”.  There is no requirement for the names of the plugins install and compile to be the same as the names of the phases.</div>
+            </div>
+        </div>
+        <div class="level1" myy="1" num-sub-paras="15">
+            <div class="Heading 1">Summary</div>
+            <div class="mc_body">The build section of the POM file specifies the steps required to build the project.  You can think of maven as executing the build section of the POM.  </div>
+            <div class="mc_body">The information is not provided in the form of steps to be carried out by maven but rather specified by identifying the tools (plugins) to be used and the tasks (goals), supported by each plugin,  to be performed.  The selection of tasks from the POM to be executed is controlled by the parameters passed to the maven command line.</div>
+            <div class="mc_body">The order in which tasks are performed is determined from the phase associated with each goal.</div>
+            <div class="mc_body">The phases are executed in a fixed order according to a  lifecycle.</div>
+            <div class="mc_body">To summarise: a task to be performed and its timing in the build process are determined by the following five identifiers:</div>
+            <div class="mc_body">Lifecycle</div>
+            <div class="mc_body">	Phase</div>
+            <div class="mc_body">		Plugin</div>
+            <div class="mc_body">			Goal</div>
+            <div class="mc_body">				Execution Id</div>
+            <div class="Normal"/>
+            <div class="mc_body"/>
+            <div class="mc_body"/>
+            <div class="mc_body">A goal can have multiple execution ids.  This feature allows the goal to be executed multiple times, each time with different configuration data.</div>
+            <div class="mc_body"/>
+        </div>
+        <div class="level1" myy="1" num-sub-paras="48">
+            <div class="Heading 1">Pre-defined Plugin Bindings</div>
+            <div class="mc_body">The following plugins are used in the default lifecycle for jar, war, ejb3, maven-plugin, rar and par packagings.  That is to say, these are the plugins and goals that get included if you generate a fairly standard POM and don’t make to many changes.</div>
+            <div class="level2" myy="2" num-sub-paras="15">
+                <div class="Heading 2">Copy Resources</div>
+                <div class="mc_body">Group Id: org.apache.maven.plugins</div>
+                <div class="mc_body">Artefact Id: maven-resources-plugin</div>
+                <div class="mc_body">Current version: 2.3</div>
+                <div class="mc_body">Bound to phases: process-resources, process-test-resources</div>
+                <div class="mc_body">Interesting goals: resources, testResources</div>
+                <div class="mc_body">Home Page: http://maven.apache.org/plugins/maven-resources-plugin/</div>
+                <div class="mc_description_label">Description:</div>
+                <div class="mc_description_text">The usage page does not specify http://maven.apache.org/plugins/maven-resources-plugin much - needs some explanation</div>
+                <div class="mc_description_text">Two goals from the the resources plugin are executed in the pre-fefined default lifecycle for packagings such as jar and war.</div>
+                <div class="mc_description_text">The resources goal is executed in the process-resources phase; the testResources goal is executed in the process-test-resources phase.</div>
+                <div class="mc_description_text">In both cases the plugin copies all the data from a well-known source directory to a well-known target directory. </div>
+                <div class="mc_example_label">Example</div>
+            </div>
+            <div class="level2" myy="2" num-sub-paras="14">
+                <div class="Heading 2">Compile</div>
+                <div class="mc_body">http://maven.apache.org/plugins/maven-compiler-plugin/</div>
+                <div class="mc_body"/>
+                <div class="mc_body">Group Id: org.apache.maven.plugins</div>
+                <div class="mc_body">Artefact Id: maven-compiler-plugin</div>
+                <div class="mc_body">Current version: 2.3</div>
+                <div class="mc_body">Bound to phases: compile, test-compile</div>
+                <div class="mc_body">Interesting goals: compile, testCompile</div>
+                <div class="mc_body">Home Page: http://maven.apache.org/plugins/maven-compiler-plugin/</div>
+                <div class="mc_description_label">Description:</div>
+                <div class="mc_description_text"> </div>
+                <div class="mc_example_label">Example</div>
+            </div>
+            <div class="level2" myy="2" num-sub-paras="4">
+                <div class="Heading 2">Testing</div>
+                <div class="mc_body">maven-surefire-plugin (runs tests)</div>
+                <div class="mc_body">http://maven.apache.org/plugins/maven-surefire-plugin/</div>
+                <div class="mc_body"/>
+                <div class="mc_body">uses dependencies in POM to determine which provider to use</div>
+            </div>
+            <div class="level2" myy="2" num-sub-paras="3">
+                <div class="Heading 2">Packaging</div>
+                <div class="mc_body">maven-jar-plugin</div>
+                <div class="mc_body">http://maven.apache.org/plugins/maven-jar-plugin/</div>
+                <div class="mc_body">What is it that it chooses to package?  Contents of target?</div>
+            </div>
+            <div class="level2" myy="2" num-sub-paras="7">
+                <div class="Heading 2">Install and Deploy</div>
+                <div class="mc_body">maven-install-plugin</div>
+                <div class="mc_body">http://maven.apache.org/plugins/maven-install-plugin/</div>
+                <div class="mc_body">What is it that it chooses to install?  What about artefacts built using the assembly plugin?</div>
+                <div class="mc_body">maven-deploy-plugin</div>
+                <div class="mc_body">http://maven.apache.org/plugins/maven-deploy-plugin/</div>
+                <div class="mc_body"/>
+            </div>
+        </div>
+        <div class="level1" myy="1" num-sub-paras="372">
+            <div class="Heading 1">Useful Plugins</div>
+            <div class="mc_body">The following plugins differ from those involved in the predefined bindings discussed in the previous section.  In particular, the phase in which the plugins goals were executed were determined by maven (that’s what made them pre-defined.  The following plugins are not necessarily bound to a phase and where they are, it is the plugin that has made the choice rather than the maven infrastructure.</div>
+            <div class="level2" myy="2" num-sub-paras="80">
+                <div class="Heading 2">Ant (antrun)</div>
+                <div class="mc_body">Group Id: org.apache.maven.plugins</div>
+                <div class="mc_body">Artefact Id: maven-antrun-plugin</div>
+                <div class="mc_body">Current version: 1.6</div>
+                <div class="mc_body">Bound to phase by default: none</div>
+                <div class="mc_body">Goal Prefix: antrun</div>
+                <div class="mc_body">Interesting goal: run</div>
+                <div class="mc_body">Home Page: http://maven.apache.org/plugins/maven-antrun-plugin/</div>
+                <div class="mc_description_label">Description:</div>
+                <div class="mc_description_text">The ant plugin can perform operations related to developmentwhich are not provided by other maven plugins.  These cover such areas as file manipulation, sending mail, dealing with archive (jar etc.) files.  See http://ant.apache.org/manual/tasksoverview.html#log for details.</div>
+                <div class="mc_description_text">To ensure that the build fails if an ant task fails you need to include &lt;failOnError/&gt; in the configuration of the plugin.</div>
+                <div class="mc_example_label">Example</div>
+            </div>
+            <div class="level2" myy="2" num-sub-paras="61">
+                <div class="Heading 2">Enforcer</div>
+                <div class="mc_body">Group Id: org.apache.maven.plugins</div>
+                <div class="mc_body">Artefact Id: maven-enforcer-plugin</div>
+                <div class="mc_body">Current version: 1.1.1</div>
+                <div class="mc_body">Bound to phase by default: validate (doesn’t appear to be)</div>
+                <div class="mc_body">Interesting goal: enforce</div>
+                <div class="mc_body">Home Page: http://maven.apache.org/plugins/maven-enforcer-plugin/</div>
+                <div class="mc_description_label">Description:</div>
+                <div class="mc_description_text">The enforcer plugin allows you to make assertions about the project and the environment.  For instance you can ensure that maven is running under an appropriate version of the JDK (which may be demanded by plugins or required for the compilation).  If an assertion proves to be false the build can be stopped and the issue brought to the user’s attention.</div>
+                <div class="mc_description_text">This is particularly useful where you expect many users to access the project casually.  It enables them to come up to speed quickly on the pre-requisites for the project.  Watch out for &lt;prerequisites/&gt; tag.</div>
+                <div class="mc_example_label">Example:</div>
+                <div class="mc_body">Invoke maven with mvn validate</div>
+            </div>
+            <div class="level2" myy="2" num-sub-paras="79">
+                <div class="Heading 2">Assembly</div>
+                <div class="mc_body">Group Id: org.apache.maven.plugins</div>
+                <div class="mc_body">Artefact Id: maven-assembly-plugin</div>
+                <div class="mc_body">Current version: 2.3</div>
+                <div class="mc_body">Bound to phase by default: none</div>
+                <div class="mc_body">Interesting goal: single</div>
+                <div class="mc_body">Home Page: https://maven.apache.org/plugins/maven-assembly-plugin/</div>
+                <div class="mc_description_label">Description:</div>
+                <div class="mc_description_text">The assembly plugin is quite a beast handling a variety of tasks relating to assembling the final artefacts of a build </div>
+                <div class="mc_example_label">Example</div>
+            </div>
+            <div class="level2" myy="2" num-sub-paras="12">
+                <div class="Heading 2">Release</div>
+                <div class="mc_body">Group Id: org.apache.maven.plugins</div>
+                <div class="mc_body">Artefact Id: maven-release-plugin</div>
+                <div class="mc_body">Current version: 2.3.2</div>
+                <div class="mc_body">Bound to phase by default: none</div>
+                <div class="mc_body">Interesting goal: prepare, perform</div>
+                <div class="mc_body">Home Page: http://maven.apache.org/plugins/maven-release-plugin/</div>
+                <div class="mc_description_label">Description:</div>
+                <div class="mc_description_text">The release plugin performs housekeeping associated with making a release.  It does not deploy the artefacts to a server or build an installation package.</div>
+                <div class="mc_example_label">Example</div>
+            </div>
+            <div class="level2" myy="2" num-sub-paras="108">
+                <div class="Heading 2">Exec</div>
+                <div class="mc_body">Group Id: org.mojo.codehaus</div>
+                <div class="mc_body">Artefact Id: exec-maven-plugin</div>
+                <div class="mc_body">Current version: 1.2.1</div>
+                <div class="mc_body">Bound to phase by default: none</div>
+                <div class="mc_body">Interesting goal: exec, java</div>
+                <div class="mc_body">Home Page: http://mojo.codehaus.org/exec-maven-plugin/</div>
+                <div class="mc_description_label">Description:</div>
+                <div class="mc_description_text">The exec plugin can execute external programs through its exec goal or java code through</div>
+                <div class="mc_description_text"/>
+                <div class="mc_description_text">Handling errors!!</div>
+                <div class="mc_example_label">Esample</div>
+            </div>
+            <div class="level2" myy="2" num-sub-paras="12">
+                <div class="Heading 2">Archetype</div>
+                <div class="mc_body">Group Id: org.apache.maven.plugins</div>
+                <div class="mc_groupid_text">Artefact Id: maven-archetype-plugin</div>
+                <div class="mc_body">Current version: 2.2</div>
+                <div class="mc_body">Bound to phase by default: does not use POM</div>
+                <div class="mc_body">Interesting goal: generate</div>
+                <div class="mc_body">Home Page: http://maven.apache.org/archetype/maven-archetype-plugin/</div>
+                <div class="mc_description_label">Description:</div>
+                <div class="mc_description_text">This is a shortcut to create project directory trees and skeleton POM.</div>
+                <div class="mc_example_label">Esample</div>
+            </div>
+            <div class="level2" myy="2" num-sub-paras="17">
+                <div class="Heading 2">Build Helper</div>
+                <div class="mc_body">Group Id: org.apache.maven.plugins</div>
+                <div class="mc_body">Artefact Id: maven-archetype-plugin</div>
+                <div class="mc_body">Current version: 2.2</div>
+                <div class="mc_body">Bound to phase by default: does not use POM</div>
+                <div class="mc_body">Interesting goal: generate</div>
+                <div class="mc_body">Home Page: http://mojo.codehaus.org/build-helper-maven-plugin </div>
+                <div class="mc_description_label">Description:</div>
+                <div class="mc_description_text"/>
+                <div class="mc_example_label">Example</div>
+            </div>
+        </div>
+        <div class="level1" myy="1" num-sub-paras="690">
+            <div class="Heading 1">Experiments</div>
+            <div class="Normal">Show how plugins can optionally have a phase to which they are bound</div>
+            <div class="mc_body">All plugins other than the default ones mentioned previously must be referenced in the build section.  The reference there will ensure that the components are downloaded and that the goals are executed in the build cycle.</div>
+            <div class="mc_body">As a related point the instructions include the dependency </div>
+            <div class="mc_body">Custom rule to test if ant tomcat or something without a plugin (probably not ant) is present.</div>
+            <div class="mc_body">Often the best source of information is the plugin via mvn help:describe -Dorg.codehaus.mojo:sql-maven-plugin:1.5 -Dfull</div>
+            <div class="level2" myy="2" num-sub-paras="826">
+                <div class="Heading 2">XSLT</div>
+                <div class="mc_body"/>
+                <div class="mc_body"/>
+                <div class="mc_body">link to group id, artifact id and version</div>
+                <div class="mc_body"/>
+            </div>
+        </div>
+        <div class="level1" myy="1" num-sub-paras="139">
+            <div class="Heading 1">Afterthought</div>
+            <div class="mc_body">parent</div>
+            <div class="mc_body">The location of the parent project, if one exists. Values from the parent project will be the default for this project if they are left unspecified. The location is given as a group ID, artifact ID and version.</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">modelVersion</div>
+            <div class="mc_body">Declares to which version of project descriptor this POM conforms.</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">groupId</div>
+            <div class="mc_body">A universally unique identifier for a project. It is normal to use a fully-qualified package name to distinguish it from other projects with a similar name (eg. &lt;code&gt;org.apache.maven&lt;/code&gt;).</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">artifactId</div>
+            <div class="mc_body">The identifier for this artifact that is unique within the group given by the group ID. An artifact is something that is either produced or used by a project. Examples of artifacts produced by Maven for a project include: JARs, source and binary distributions, and WARs.</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">packaging</div>
+            <div class="mc_body">The type of artifact this project produces, for example &lt;code&gt;jar&lt;/code&gt; &lt;code&gt;war&lt;/code&gt; &lt;code&gt;ear&lt;/code&gt; &lt;code&gt;pom&lt;/code&gt;. Plugins can create their own packaging, and therefore their own packaging types, so this list does not contain all possible types.</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">name</div>
+            <div class="mc_body">The full name of the project.</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">version</div>
+            <div class="mc_body">The current version of the artifact produced by this project.</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">description</div>
+            <div class="mc_body">A detailed description of the project, used by Maven whenever it needs to describe the project, such as on the web site. While this element can be specified as CDATA to enable the use of HTML tags within the description, it is discouraged to allow plain text representation. If you need to modify the index page of the generated web site, you are able to specify your own instead of adjusting this text.</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">url</div>
+            <div class="mc_body">The URL to the project's homepage.</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">prerequisites</div>
+            <div class="mc_body">Describes the prerequisites in the build environment for this project.</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">issueManagement</div>
+            <div class="mc_body">The project's issue management system information.</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">ciManagement</div>
+            <div class="mc_body">The project's continuous integration information.</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">inceptionYear</div>
+            <div class="mc_body">The year of the project's inception, specified with 4 digits. This value is used when generating copyright notices as well as being informational.</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">mailingLists</div>
+            <div class="mc_body">The year of the project's inception, specified with 4 digits. This value is used when generating copyright notices as well as being informational.</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">developers</div>
+            <div class="mc_body">Describes the committers of a project.</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">contributors</div>
+            <div class="mc_body">Describes the committers of a project.</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">licenses</div>
+            <div class="mc_body">This element describes all of the licenses for this project. Each license is described by a &lt;code&gt;license&lt;/code&gt; element, which is then described by additional elements. Projects should only list the license(s) that applies to the project and not the licenses that apply to dependencies. If multiple licenses are listed, it is assumed that the user can select any of them, not that they must accept all.</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">scm</div>
+            <div class="mc_body">Specification for the SCM used by the project, such as CVS, Subversion, etc.a</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">organization</div>
+            <div class="mc_body">This element describes various attributes of the organization to which the project belongs. These attributes are utilized when documentation is created (for copyright notices and links).</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">build</div>
+            <div class="mc_body">Information required to build the project.</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">profiles</div>
+            <div class="mc_body">A listing of project-local build profiles which will modify the build process when activated.</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">modules</div>
+            <div class="mc_body">The modules (sometimes called subprojects) to build as a part of this project. Each module listed is a relative path to the directory containing the module.</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">repositories</div>
+            <div class="mc_body">The lists of the remote repositories for discovering dependencies and extensions.</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">pluginRepositories</div>
+            <div class="mc_body">The lists of the remote repositories for discovering plugins for builds and reports.</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">dependencies</div>
+            <div class="mc_body">This element describes all of the dependencies associated with a project. These dependencies are used to construct a classpath for your project during the build process. They are automatically downloaded from the repositories defined in this project. See &lt;a href="http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html"&gt;the dependency mechanism&lt;/a&gt; for more information.</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">reports</div>
+            <div class="mc_body">Deprecated. Now ignored by Maven.</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">reporting</div>
+            <div class="mc_body">This element includes the specification of report plugins to use to generate the reports on the Maven-generated site. These reports will be run when a user executes &lt;code&gt;mvn site&lt;/code&gt;. All of the reports will be included in the navigation bar for browsing.</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">dependencyManagement</div>
+            <div class="mc_body">Default dependency information for projects that inherit from this one. The dependencies in this section are not immediately resolved. Instead, when a POM derived from this one declares a dependency described by a matching groupId and artifactId, the version and other values from this section are used for that dependency if they were not already specified.</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">distributionManagement</div>
+            <div class="mc_body">Distribution information for a project that enables deployment of the site and artifacts to remote web servers and repositories respectively.</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body">properties</div>
+            <div class="mc_body">Properties that can be used throughout the POM as a substitution, and are used as filters in resources if enabled. The format is &lt;code&gt;&amp;lt;name&amp;gt;value&amp;lt;/name&amp;gt;&lt;/code&gt;.a</div>
+            <div class="Normal"/>
+            <div class="Normal"/>
+            <div class="mc_body"/>
+            <div class="mc_body"/>
+            <div class="mc_body">Sections not considered:</div>
+            <div class="mc_body"/>
+            <div class="mc_body">Use case is a large set of files that need to be subjected to a set of tasks with intermediate stages.</div>
+            <div class="mc_body"/>
+            <div class="mc_body"/>
+        </div>
+        <div class="level1" myy="1" num-sub-paras="3">
+            <div class="Heading 1">Resources</div>
+            <div class="mc_body">http://www.ibm.com/developerworks/java/library/j-5things13/</div>
+            <div class="mc_body"/>
+            <div class="mc_body">Mention that org.apache.maven.plugins is the default groupId and does not need to be specified in the plugin section although presumably it does in other contexts.</div>
+        </div>
+    </body>
+</html>
+
+        Process finished with exit code 0
