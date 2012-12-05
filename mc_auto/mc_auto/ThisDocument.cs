@@ -34,13 +34,32 @@ namespace mc_auto
     {
         private class ParagraphInfo
         {
-            public int? Level = null;
+            public AttributeDefinition AttributeDef {get; private set;}
+            public ParagraphInfo()
+            {
+                AttributeDef = null;
+            }
+            public ParagraphInfo(AttributeDefinition ad)
+            {
+                AttributeDef = ad;
+            }
+        }
+        private class AttributeDefinition
+        {
+            public string Name {get; private set;}
+            public object Value {get; private set;}
+            public AttributeDefinition(string nm, object vl)
+            {
+                Name = nm;
+                Value = vl;
+            }
         }
         private IDictionary<string, ParagraphInfo> paragraphInfos = new Dictionary<string, ParagraphInfo>()
         {
-            {"mc_tech", new ParagraphInfo {Level = 8}}
-            ,{"mc_example_text", new ParagraphInfo {Level = 8}}
+            {"mc_tech", new ParagraphInfo(new AttributeDefinition("group", true ))}
+            ,{"mc_example_text", new ParagraphInfo(new AttributeDefinition("group", true ))}
         };
+
         private string INPUT_FILE_NAME = "mvn_commentary.docm";
         private string OUTPUT_FILE_EXTENSION = "xml";
         private const string EL_PARA = "p";
@@ -116,8 +135,13 @@ namespace mc_auto
                     {
                         WriteAttributeString(xw, "bookmark", para.Range.Bookmarks[1].Name);
                     }
-                    WriteAttributeString(xw, "level", GetParagraphLevel(para).ToString());
-                    WriteString(xw,MassageXMLString(text));
+                    WriteAttributeString(xw, "level", ((int)para.OutlineLevel).ToString());
+                    AttributeDefinition ad = GetParagraphInfo(para).AttributeDef;
+                    if (ad != null)
+                    {
+                        WriteAttributeString(xw, ad.Name, ad.Value.ToString());
+                    }
+                    WriteString(xw, MassageXMLString(text));
                     WriteEndElement(xw);
                     ctr++;
                 }
@@ -136,9 +160,9 @@ namespace mc_auto
         /// <summary>
         /// see callee
         /// </summary>
-        private int GetParagraphLevel(Word.Paragraph para)
+        private ParagraphInfo GetParagraphInfo(Word.Paragraph para)
         {
-            return GetParagraphLevel(para.OutlineLevel, (string)para.Range.ParagraphStyle.NameLocal);
+            return GetParagraphInfo(para.OutlineLevel, (string)para.Range.ParagraphStyle.NameLocal);
         }
         /// <summary>
         /// if the paragraph does not specify a level then use the outline level.  styles
@@ -148,11 +172,9 @@ namespace mc_auto
         /// <param name="wdOutlineLevel">from the word document</param>
         /// <param name="paragraphStyleName">style as specified in the word document</param>
         /// <returns>level between 1 (heading 1) and 10 (body text)</returns>
-        private int GetParagraphLevel(Word.WdOutlineLevel wdOutlineLevel, string paragraphStyleName)
+        private ParagraphInfo GetParagraphInfo(Word.WdOutlineLevel wdOutlineLevel, string paragraphStyleName)
         {
-            return paragraphInfos.GetValueOrDefault(paragraphStyleName
-              , new ParagraphInfo{Level = null}).Level 
-              ?? (int)wdOutlineLevel; 
+            return paragraphInfos.GetValueOrDefault(paragraphStyleName, new ParagraphInfo());
         }
         /// <summary>
         /// strips unsightly control characters off the end of paragraphs
