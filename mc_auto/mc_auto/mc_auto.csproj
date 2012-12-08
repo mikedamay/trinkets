@@ -107,6 +107,8 @@
     <Compile Include="ActionsPaneControl1.Designer.cs">
       <DependentUpon>ActionsPaneControl1.cs</DependentUpon>
     </Compile>
+    <Compile Include="DomIter.cs" />
+    <Compile Include="DomProcessor.cs" />
     <Compile Include="ThisDocument.cs">
       <DependentUpon>mc_auto.docm</DependentUpon>
     </Compile>

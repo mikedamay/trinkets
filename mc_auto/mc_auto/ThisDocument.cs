@@ -14,6 +14,10 @@ namespace ExtensionMethods
 {
     public static class MyExtensions
     {
+        /// <summary>
+        /// pass in a default parameter to a Dictionary Get operation.
+        /// </summary>
+        /// <returns>The value in the dictionary, if any.  If none, then the defaultval passed in.</returns>
         public static TVALUE GetValueOrDefault<TKEY, TVALUE>(this IDictionary<TKEY, TVALUE> map
           ,TKEY key, TVALUE defaultval)
         {
@@ -30,30 +34,100 @@ namespace ExtensionMethods
 namespace mc_auto
 {
     using ExtensionMethods;
+    internal class ParagraphInfo
+    {
+        enum Grouped
+        {
+            NotGrouped
+            ,FirstInGroup
+            ,GroupSibling
+        }
+        private static IDictionary<string, bool> paragraphInfos = new Dictionary<string, bool>()
+        {
+            {"mc_tech", true}
+            ,{"mc_example_text", true}
+        };
+        private  bool _endMarker = false;
+
+        public AttributeDefinition AttributeDef { 
+            get
+            {
+                if (paragraphInfos.GetValueOrDefault((string)Paragraph.Range.ParagraphStyle.LocalName, false))
+                {
+                   return new AttributeDefinition("group", true);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        public bool IsEndMarker
+        {
+            get { return _endMarker; }
+        }
+
+        public Word.Paragraph Paragraph { get; private set; }
+        public ParagraphInfo()
+        {
+        }
+        public ParagraphInfo(AttributeDefinition ad)
+        {
+        }
+        public ParagraphInfo(Word.Paragraph para)
+        {
+            _endMarker = para != null;
+            Paragraph = para;
+        }
+        public void Start(System.Xml.XmlWriter xw)
+        {
+            xw.WriteStartElement("p");
+            xw.WriteString(MassageXMLString(Paragraph.Range.Text));
+        }
+        public void End(System.Xml.XmlWriter xw)
+        {
+            xw.WriteEndElement();
+        }
+
+        internal bool IsChild(ParagraphInfo child)
+        {
+            return false;
+        }
+        /// <summary>
+        /// strips unsightly control characters off the end of paragraphs
+        /// </summary>
+        /// <param name="text">typically Paragraph.Text from Word</param>
+        /// <returns>text minus trailing control characters</returns>
+        private static string MassageXMLString(string text)
+        {
+            int reduceBy = 0;
+            for (int ii = text.Length - 1; ii >= 0; ii--)
+            {
+                if (System.Char.IsControl(text[ii]))
+                {
+                    reduceBy++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return text.Substring(0, text.Length - reduceBy);
+        }
+    }
+    internal class AttributeDefinition
+    {
+        public string Name { get; private set; }
+        public object Value { get; private set; }
+        public AttributeDefinition(string nm, object vl)
+        {
+            Name = nm;
+            Value = vl;
+        }
+    }
     public partial class ThisDocument
     {
-        private class ParagraphInfo
-        {
-            public AttributeDefinition AttributeDef {get; private set;}
-            public ParagraphInfo()
-            {
-                AttributeDef = null;
-            }
-            public ParagraphInfo(AttributeDefinition ad)
-            {
-                AttributeDef = ad;
-            }
-        }
-        private class AttributeDefinition
-        {
-            public string Name {get; private set;}
-            public object Value {get; private set;}
-            public AttributeDefinition(string nm, object vl)
-            {
-                Name = nm;
-                Value = vl;
-            }
-        }
         private IDictionary<string, ParagraphInfo> paragraphInfos = new Dictionary<string, ParagraphInfo>()
         {
             {"mc_tech", new ParagraphInfo(new AttributeDefinition("group", true ))}
@@ -112,11 +186,36 @@ namespace mc_auto
                 xw.WriteStartDocument();
                 int ctr = 1;
                 WriteStartElement(xw, EL_DOC);
+                DomProcessor dp = new DomProcessor(doc, xw);
+                dp.Process();
+                WriteEndElement(xw);
+                xw.WriteEndDocument();
+                MessageBox.Show("Found " + ctr + " paragraphs to convert to XML");
+            }
+            finally
+            {
+                if (xw != null)
+                {
+                    xw.Close();
+                }
+            }
+        }
+        private void WriteDocumentAsXMLFileOld(Word.Range doc, string pathAndFile)
+        {
+            System.Xml.XmlWriter xw = null;
+            try
+            {
+                System.IO.FileStream fs = System.IO.File.OpenWrite(pathAndFile);
+                xw = System.Xml.XmlWriter.Create(fs
+                  , new System.Xml.XmlWriterSettings { Indent = true, CloseOutput = true });
+                xw.WriteStartDocument();
+                int ctr = 1;
+                WriteStartElement(xw, EL_DOC);
                 foreach (Word.Paragraph para in doc.Paragraphs)
                 {
                     string text = para.Range.Text;
                     string styleName = para.Range.ParagraphStyle.NameLocal;
-                    WriteStartElement(xw,EL_PARA);
+                    WriteStartElement(xw, EL_PARA);
                     WriteAttributeString(xw, EL_CLASS, styleName);
                     if (para.Range.Tables.Count > 0)
                     {
@@ -161,7 +260,7 @@ namespace mc_auto
         /// see callee
         /// </summary>
         private ParagraphInfo GetParagraphInfo(Word.Paragraph para)
-        {
+        {            
             return GetParagraphInfo(para.OutlineLevel, (string)para.Range.ParagraphStyle.NameLocal);
         }
         /// <summary>
