@@ -14,20 +14,18 @@ namespace mc_auto
         }
         public void Process()
         {
-            ProcessPara();
+            ProcessPara( new ParagraphInfo(ParagraphInfo.WrapperType.Root));
         }
 
-        private void ProcessPara()
+        private void ProcessPara(ParagraphInfo parent)
         {
-            ParagraphInfo pi = _domIter.Current;
-            _domIter.Current.Start(_xmlWriter);
+            parent.Start(_xmlWriter);
             _domIter.MoveNext();
-            while (IsChild(pi, _domIter.Current))
+            while (IsChild(parent, _domIter.Current))
             {
-                _domIter.MoveNext();
-                Process();
+                ProcessPara(_domIter.Current);
             }
-            _domIter.Current.End(_xmlWriter);
+            parent.End(_xmlWriter);
         }
 
         private bool IsChild(ParagraphInfo parent, ParagraphInfo child)

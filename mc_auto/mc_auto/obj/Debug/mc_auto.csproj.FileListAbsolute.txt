@@ -13,4 +13,4 @@ C:\Users\Mike\Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\mc_aut
 C:\Users\Mike\Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\mc_auto.csproj.GenerateResource.Cache
 C:\Users\Mike\Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\mc_auto.dll
 C:\Users\Mike\Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\mc_auto.pdb
-C:\Users\Mike\Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\ExtensionMethods.MyExtensions.resources
+C:\Users\Mike\Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\mc_auto.ThisDocument.resources
