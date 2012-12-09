@@ -40,7 +40,7 @@ namespace mc_auto
         public void MoveNext()
         {
             _index++;
-            if (_index > _count + 1)
+            if (_index > _count + 2)
             {
                 throw new InvalidOperationException("Attempt to move iterator after end of document is invalid");
             }
@@ -63,8 +63,12 @@ namespace mc_auto
                       ,string.Format( "DomIter.Current outside bounds: _index = {0}, _count = {1}"
                       ,_index, _count));
                 }
+                if (_index > _count)
+                {
+                    return ParagraphInfo.Create(ParagraphInfo.WrapperType.EndMarker);
+                }
                 Word.Paragraph para = _index == _count + 1 ? null : _document.Paragraphs[_index];
-                var pi = new ParagraphInfo(para);
+                var pi = ParagraphInfo.Create(para);
                 return pi;
             }
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ExtensionMethods;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace mc_auto
 {
@@ -22,28 +22,21 @@ namespace mc_auto
             ,FirstInGroup
             , GroupSibling
         }
-        
+        public static ParagraphInfo Create(Word.Paragraph para)
+        {
+            return new ParagraphInfo(para);
+        }
+        public static ParagraphInfo Create(WrapperType wt)
+        {
+            return new ParagraphInfo(wt);
+        }
         private static IDictionary<string, bool> paragraphInfos = new Dictionary<string, bool>()
         {
             {"mc_tech", true}
             ,{"mc_example_text", true}
         };
-        private readonly bool _endMarker;
+
         private readonly WrapperType _wrapperType = default(WrapperType);
-        public AttributeDefinition AttributeDef
-        {
-            get
-            {
-                if (paragraphInfos.GetValueOrDefault((string)Paragraph.Range.ParagraphStyle.LocalName, false))
-                {
-                    return new AttributeDefinition("group", true);
-                }
-                else
-                {
-                    return null;
-                }
-            }
-        }
 
         public bool IsEndMarker
         {
@@ -53,27 +46,16 @@ namespace mc_auto
         {
             get { return _wrapperType == WrapperType.Root; }
         }
-        public Microsoft.Office.Interop.Word.Paragraph Paragraph { get; private set; }
-        public ParagraphInfo()
+        public int Level {get { return GetLevel(); }}
+        public Word.Paragraph Paragraph { get; private set; }
+
+        private ParagraphInfo(Word.Paragraph para)
+          : this(para, WrapperType.None )
         {
         }
-        public ParagraphInfo(AttributeDefinition ad)
+        private ParagraphInfo(WrapperType wrapperType)
+          : this(null, wrapperType)
         {
-        }
-        public ParagraphInfo(Microsoft.Office.Interop.Word.Paragraph para)
-        {
-            Start = StartFunc;
-            End = EndFunc;
-            IsChild = IsChildFunc;
-            _endMarker = para != null;
-            Paragraph = para;
-        }
-        public ParagraphInfo(WrapperType wrapperType)
-        {
-            Start = StartFunc;
-            End = EndFunc;
-            IsChild = IsChildFunc;
-            _wrapperType = wrapperType;
         }
         public delegate void Starter(System.Xml.XmlWriter xw);
         public readonly Starter Start;
@@ -82,28 +64,55 @@ namespace mc_auto
         public delegate bool IsChilder(ParagraphInfo pi);
         public readonly IsChilder IsChild;
 
-        public void StartFunc(System.Xml.XmlWriter xw)
-        {
-            if (IsRoot) return;
-            xw.WriteStartElement("p");
-            xw.WriteString(MassageXMLString(Paragraph.Range.Text));
-        }
-        public void EndFunc(System.Xml.XmlWriter xw)
-        {
-            if (IsRoot) return;
-            xw.WriteEndElement();
-        }
+        private delegate int GetLeveler();
+        private readonly GetLeveler GetLevel;
 
-        public bool IsChildFunc(ParagraphInfo child)
+        private const int BODY_LEVEL = 10;
+
+        private ParagraphInfo(Word.Paragraph para, WrapperType wt)
         {
-            if (IsRoot)
+            Paragraph = para;
+            _wrapperType = wt;
+            if (wt == WrapperType.EndMarker || wt == WrapperType.Root)
             {
-                return true;
+                Start = (xw) => { };
+                End = (xw) => { };
+                if (wt == WrapperType.Root)
+                {
+                    IsChild = pi => true;
+                    GetLevel = () => int.MinValue;
+                }
+                if (wt == WrapperType.EndMarker)
+                {
+                    IsChild = pi => false;
+                    GetLevel = () => int.MinValue;
+                }
+                return;
+            }
+            var parentLevel = (int) para.OutlineLevel;
+            if (parentLevel < BODY_LEVEL)
+            {
+                Start = (xw) =>
+                {
+                    xw.WriteStartElement("p");
+                    xw.WriteStartElement("p");
+                    xw.WriteAttributeString("level", this.Level.ToString());
+                    xw.WriteString(MassageXMLString(para.Range.Text));
+                    xw.WriteEndElement();
+                };
             }
             else
             {
-                return false;
+                Start = (xw) =>
+                {
+                    xw.WriteStartElement("p");
+                    xw.WriteAttributeString("level", this.Level.ToString());
+                    xw.WriteString(MassageXMLString(para.Range.Text));
+                };
             }
+            End = xw => xw.WriteEndElement();
+            GetLevel = () => (int)para.OutlineLevel;
+            IsChild = child => parentLevel < (int)child.Level;
         }
         /// <summary>
         /// strips unsightly control characters off the end of paragraphs
@@ -115,7 +124,7 @@ namespace mc_auto
             int reduceBy = 0;
             for (int ii = text.Length - 1; ii >= 0; ii--)
             {
-                if (System.Char.IsControl(text[ii]))
+                if (Char.IsControl(text[ii]))
                 {
                     reduceBy++;
                 }
@@ -125,16 +134,6 @@ namespace mc_auto
                 }
             }
             return text.Substring(0, text.Length - reduceBy);
-        }
-    }
-    internal class AttributeDefinition
-    {
-        public string Name { get; private set; }
-        public object Value { get; private set; }
-        public AttributeDefinition(string nm, object vl)
-        {
-            Name = nm;
-            Value = vl;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace mc_auto
         }
         public void Process()
         {
-            ProcessPara( new ParagraphInfo(ParagraphInfo.WrapperType.Root));
+            ProcessPara( ParagraphInfo.Create(ParagraphInfo.WrapperType.Root));
         }
 
         private void ProcessPara(ParagraphInfo parent)
