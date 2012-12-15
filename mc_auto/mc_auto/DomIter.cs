@@ -67,8 +67,7 @@ namespace mc_auto
                 {
                     return ParagraphInfo.Create(ParagraphInfo.WrapperType.EndMarker);
                 }
-                Word.Paragraph para = _index == _count + 1 ? null : _document.Paragraphs[_index];
-                var pi = ParagraphInfo.Create(para);
+                var pi = ParagraphInfo.Create(_document.Paragraphs[_index], _index > 1 ? _document.Paragraphs[_index - 1] : null);
                 return pi;
             }
         }
