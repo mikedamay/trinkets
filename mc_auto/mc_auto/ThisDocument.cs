@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Timers;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using Microsoft.Office.Tools.Word;
@@ -58,6 +60,8 @@ namespace mc_auto
             System.Xml.XmlWriter xw = null;
             try
             {
+                System.Diagnostics.Stopwatch sw = new Stopwatch();
+                sw.Start();
                 System.IO.FileStream fs = System.IO.File.OpenWrite(pathAndFile);
                 xw = System.Xml.XmlWriter.Create(fs
                   , new System.Xml.XmlWriterSettings { Indent = true, CloseOutput = true });
@@ -68,7 +72,8 @@ namespace mc_auto
                 dp.Process();
                 xw.WriteEndElement();
                 xw.WriteEndDocument();
-                MessageBox.Show("Found " + ctr + " paragraphs to convert to XML");
+                sw.Stop();
+                MessageBox.Show("Elapsed time: " + sw.Elapsed.ToString() );
             }
             finally
             {

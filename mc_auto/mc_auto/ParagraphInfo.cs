@@ -10,6 +10,7 @@ namespace mc_auto
 {
     internal class ParagraphInfo
     {
+        private const string MC_TECH_STYLE = "mc_tech";
         private class Strategy
         {
             internal static readonly Strategy Default = new Strategy(
@@ -24,23 +25,23 @@ namespace mc_auto
                     , isc: (child,parent) => (int)parent.Paragraph.OutlineLevel < (int)child.Level
                     , gl: (pi) => (int)pi.Paragraph.OutlineLevel
             );
-            public Strategy(Starter2 st, Ender2 en, IsChilder2 isc, GetLeveler2 gl)
+            public Strategy(Starter st, Ender en, IsChilder isc, GetLeveler gl)
             {
                 DoStart = st;
                 DoEnd = en;
                 DoIsChild = isc;
                 DoGetLevel = gl;
             }
-            internal readonly Starter2 DoStart;
-            internal readonly Ender2 DoEnd;
-            internal readonly IsChilder2 DoIsChild;
-            internal readonly GetLeveler2 DoGetLevel;
+            internal readonly Starter DoStart;
+            internal readonly Ender DoEnd;
+            internal readonly IsChilder DoIsChild;
+            internal readonly GetLeveler DoGetLevel;
         }
         private class StrategyKey
         {
             private static readonly IDictionary<string, bool> paragraphInfos = new Dictionary<string, bool>()
             {
-                {"mc_tech", true}
+                {MC_TECH_STYLE, true}
                 ,{"mc_example_text", true}
             };
 
@@ -75,7 +76,7 @@ namespace mc_auto
 
             private int Hash(int outlineLevel)
             {
-                return (outlineLevel < BODY_LEVEL ? 0x1 : 0x0) << 2;
+                return (outlineLevel < BODY_LEVEL && outlineLevel > 0 ? 0x1 : 0x0) << 2;
             }
 
             private int Hash(WrapperType wt)
@@ -99,19 +100,28 @@ namespace mc_auto
                 return hash;
             }
         }
-        private delegate void Starter2(System.Xml.XmlWriter xw, ParagraphInfo pi);
-        private delegate void Ender2(System.Xml.XmlWriter xw, ParagraphInfo pi);
-        private delegate bool IsChilder2(ParagraphInfo pi, ParagraphInfo piParent);
-        private delegate int GetLeveler2(ParagraphInfo pi);
+        private delegate void Starter(System.Xml.XmlWriter xw, ParagraphInfo pi);
+        private delegate void Ender(System.Xml.XmlWriter xw, ParagraphInfo pi);
+        private delegate bool IsChilder(ParagraphInfo pi, ParagraphInfo piParent);
+        private delegate int GetLeveler(ParagraphInfo pi);
+
+        private static Starter NoopStart = (xw, pi) => { };
+        private static Ender NoopEnd = (xw, pi) => { };
+        private static IsChilder TrueIsChild = (p, pp) => true;
+        private static IsChilder FalseIsChild = (p, pp) => false;
+        private static GetLeveler SuperParent = pi => int.MinValue;
+        private static Ender StdEnd = (xw, pi) => xw.WriteEndElement();
+        private static IsChilder StdIsChild = (child, parent) => (int)parent.Paragraph.OutlineLevel < (int)child.Level;
+        private static GetLeveler StdGetLevel = (pi) => (int) pi.Paragraph.OutlineLevel;
 
         private static IDictionary<StrategyKey, Strategy> _strategyMap 
           = new Dictionary<StrategyKey, Strategy>()
             {
                 {new StrategyKey(WrapperType.Root)
-                  , new Strategy(st: (xw,pi) => { }, en: (xw,pi) => { }, isc: (p,pp) => true, gl: pi => int.MinValue )
+                  , new Strategy(st: NoopStart, en: NoopEnd, isc: TrueIsChild, gl: SuperParent )
                 }
                 ,{new StrategyKey(WrapperType.EndMarker)
-                  , new Strategy(st: (xw,pi) => { }, en: (xw,pi) => { }, isc: (p,pp) => false, gl: (pi) => int.MinValue )
+                  , new Strategy(st: NoopStart, en: NoopEnd, isc: FalseIsChild, gl: SuperParent )
                 }
                 ,{new StrategyKey(HEADING_1_LEVEL)
                   , new Strategy(
@@ -123,9 +133,9 @@ namespace mc_auto
                             xw.WriteString(MassageXMLString(pi.Paragraph.Range.Text));
                             xw.WriteEndElement();
                         }
-                      , en: (xw,pi) => xw.WriteEndElement()
-                      , isc: (child,parent) => (int)parent.Paragraph.OutlineLevel < (int)child.Level
-                      , gl: (pi) => (int)pi.Paragraph.OutlineLevel )
+                      , en: StdEnd
+                      , isc: StdIsChild
+                      , gl: StdGetLevel )
                 }
                 ,{new StrategyKey(BODY_LEVEL)
                   , new Strategy(
@@ -136,9 +146,23 @@ namespace mc_auto
                             xw.WriteString(MassageXMLString(pi.Paragraph.Range.Text));
                         }
 
-                      , en: (xw,pi) => xw.WriteEndElement()
-                      , isc: (child,parent) => (int)parent.Paragraph.OutlineLevel < (int)child.Level
-                      , gl: (pi) => (int)pi.Paragraph.OutlineLevel )
+                      , en: StdEnd
+                      , isc: StdIsChild
+                      , gl: StdGetLevel )
+                }
+                ,{new StrategyKey(MC_TECH_STYLE, string.Empty)
+                  , new Strategy(
+                      st: (xw, pi) =>
+                        {
+                            xw.WriteStartElement("p");
+                            xw.WriteStartElement("p");
+                            xw.WriteAttributeString("level", pi.Level.ToString());
+                            xw.WriteString(MassageXMLString(pi.Paragraph.Range.Text));
+                            xw.WriteEndElement();
+                        }
+                      , en: StdEnd
+                      , isc: (child, parent) => (int)parent.Paragraph.Range.ParagraphStyle == child.Paragraph.Range.ParagraphStyle
+                      , gl: StdGetLevel )
                 }
             };
         public enum WrapperType
@@ -146,12 +170,6 @@ namespace mc_auto
             None
             ,EndMarker
             ,Root
-        }
-        private enum Grouped
-        {
-            NotGrouped
-            ,FirstInGroup
-            , GroupSibling
         }
         public static ParagraphInfo Create(Word.Paragraph para, Word.Paragraph previousPara)
         {
@@ -162,7 +180,7 @@ namespace mc_auto
             return new ParagraphInfo(wt);
         }
 
-        private readonly WrapperType _wrapperType = default(WrapperType);
+        private readonly WrapperType _wrapperType;
 
         public bool IsEndMarker
         {
@@ -184,24 +202,16 @@ namespace mc_auto
           : this(null, null, wrapperType)
         {
         }
-/*
-        public delegate void Starter(System.Xml.XmlWriter xw);
-        public readonly Starter Start;
-        public delegate void Ender(System.Xml.XmlWriter xw);
-        public readonly Ender End;
-        public delegate bool IsChilder(ParagraphInfo pi);
-        public readonly IsChilder IsChild;
-
-        private delegate int GetLeveler();
-        private readonly GetLeveler GetLevel;
-*/
 
         public void Start(System.Xml.XmlWriter xw)
         {
+            if (Paragraph != null) System.Diagnostics.Debug.Print("start: " + Paragraph.OutlineLevel.ToString() + " " + MassageXMLString(this.Paragraph.Range.Text));
             _strategy.DoStart(xw, this);
         }
         public void End(System.Xml.XmlWriter xw)
         {
+
+            if ( Paragraph != null ) System.Diagnostics.Debug.Print("end: " + Paragraph.OutlineLevel.ToString() + " " + MassageXMLString(this.Paragraph.Range.Text));
             _strategy.DoEnd(xw, this);
         }
         public bool IsChild(ParagraphInfo child)
@@ -216,58 +226,19 @@ namespace mc_auto
         private const int HEADING_1_LEVEL = 1;
         private const int BODY_LEVEL = 10;
 
-        private ParagraphInfo(Word.Paragraph para, Word.Paragraph previousPara, WrapperType wt)
+        private ParagraphInfo() // allows to configure as struct
+        {
+            
+        }
+        private ParagraphInfo(Word.Paragraph para, Word.Paragraph previousPara, WrapperType wt) :this()
         {
             _strategy = _strategyMap.GetValueOrDefault(
               new StrategyKey(wt
               , para == null ? 0 : (int)para.OutlineLevel
               , para == null ? string.Empty : para.Range.ParagraphStyle.NameLocal.ToString()
               , previousPara == null ? string.Empty : previousPara.Range.ParagraphStyle.NameLocal.ToString()), Strategy.Default);
-            Paragraph = para;
             _wrapperType = wt;
-            return;
-#if comment
-            if (wt == WrapperType.EndMarker || wt == WrapperType.Root)
-            {
-                Start = (xw) => { };
-                End = (xw) => { };
-                if (wt == WrapperType.Root)
-                {
-                    IsChild = pi => true;
-                    GetLevel = () => int.MinValue;
-                }
-                if (wt == WrapperType.EndMarker)
-                {
-                    IsChild = pi => false;
-                    GetLevel = () => int.MinValue;
-                }
-                return;
-            }
-            var parentLevel = (int) para.OutlineLevel;
-            if (parentLevel < BODY_LEVEL)
-            {
-                Start = (xw) =>
-                {
-                    xw.WriteStartElement("p");
-                    xw.WriteStartElement("p");
-                    xw.WriteAttributeString("level", this.Level.ToString());
-                    xw.WriteString(MassageXMLString(para.Range.Text));
-                    xw.WriteEndElement();
-                };
-            }
-            else
-            {
-                Start = (xw) =>
-                {
-                    xw.WriteStartElement("p");
-                    xw.WriteAttributeString("level", this.Level.ToString());
-                    xw.WriteString(MassageXMLString(para.Range.Text));
-                };
-            }
-            End = xw => xw.WriteEndElement();
-            GetLevel = () => (int)para.OutlineLevel;
-            IsChild = child => parentLevel < (int)child.Level;
-#endif
+            Paragraph = para;
         }
         /// <summary>
         /// strips unsightly control characters off the end of paragraphs
