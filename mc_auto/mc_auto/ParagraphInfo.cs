@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,8 @@ namespace mc_auto
         private delegate bool IsChilder(ParagraphInfo pi, ParagraphInfo piParent);
         private delegate int GetLeveler(ParagraphInfo pi);
 
+        private delegate void AttributeWriter(System.Xml.XmlWriter xw);
+
         private static readonly Starter NoopStart = (xw, pi) => { };
         private static readonly Ender NoopEnd = (xw, pi) => { };
         private static readonly IsChilder TrueIsChild = (p, pp) => true;
@@ -29,9 +32,9 @@ namespace mc_auto
             xw.WriteStartElement("p");
             xw.WriteAttributeString("level", pi.Level.ToString());
             xw.WriteAttributeString("class", pi.Paragraph.Range.ParagraphStyle.NameLocal.ToString());
-            xw.WriteAttributeString("tables", pi.Paragraph.Range.Tables.Count.ToString());
-            xw.WriteAttributeString("row", pi.Paragraph.Range..ToString());
-
+            GetTableCountAttributeWriter(pi.Paragraph.Range)(xw);
+            GetRowAttributeWriter(pi.Paragraph.Range)(xw);
+            GetColumnAttributeWriter(pi.Paragraph.Range)(xw);
             xw.WriteString(MassageXMLString(pi.Paragraph.Range.Text));
         };
         private static readonly Starter ParentStart = (xw, pi) =>
@@ -150,6 +153,24 @@ namespace mc_auto
                 }
             }
             return text.Substring(0, text.Length - reduceBy);
+        }
+        private static AttributeWriter GetTableCountAttributeWriter(Word.Range rng)
+        {
+            return rng.Tables.Count > 0
+                ? (AttributeWriter)((xw) => xw.WriteAttributeString("tables", rng.Tables.Count.ToString()))
+                : (xw) => { };
+        }
+        private static AttributeWriter GetRowAttributeWriter(Word.Range rng)
+        {
+            return rng.Tables.Count > 0 && rng.Cells.Count > 0
+                ? (AttributeWriter)((xw) => xw.WriteAttributeString("row", rng.Cells[1].Row.Index.ToString()))
+                : (xw) => { };
+        }
+        private static AttributeWriter GetColumnAttributeWriter(Word.Range rng)
+        {
+            return rng.Tables.Count > 0 && rng.Cells.Count > 0
+                ? (AttributeWriter)((xw) => xw.WriteAttributeString("column", rng.Cells[1].Column.Index.ToString()))
+                : (xw) => { };
         }
     }
 }
