@@ -63,10 +63,10 @@ namespace mc_auto
                 System.Diagnostics.Stopwatch sw = new Stopwatch();
                 sw.Start();
                 System.IO.FileStream fs = System.IO.File.OpenWrite(pathAndFile);
+                fs.SetLength(0);
                 xw = System.Xml.XmlWriter.Create(fs
                   , new System.Xml.XmlWriterSettings { Indent = true, CloseOutput = true });
                 xw.WriteStartDocument();
-                int ctr = 1;
                 xw.WriteStartElement( EL_DOC);
                 DomProcessor dp = new DomProcessor(doc, xw);
                 dp.Process();

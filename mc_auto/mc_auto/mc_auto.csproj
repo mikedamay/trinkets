@@ -111,6 +111,7 @@
     <Compile Include="DomIter.cs" />
     <Compile Include="DomProcessor.cs" />
     <Compile Include="ParagraphInfo.cs" />
+    <Compile Include="ParagraphInfoHelpers.cs" />
     <Compile Include="ThisDocument.cs">
       <DependentUpon>mc_auto.docm</DependentUpon>
     </Compile>
