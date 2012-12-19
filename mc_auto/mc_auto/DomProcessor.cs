@@ -4,19 +4,12 @@ using Word = Microsoft.Office.Interop.Word;
 
 namespace mc_auto
 {
+    /// <summary>
+    /// call domProcessor.Process() to iterate through the range from a word document and write as XML
+    /// </summary>
     internal class DomProcessor
     {
-        private class ProcessorState
-        {
-            public ProcessorState(ParagraphInfo parent, ParagraphInfo current)
-            {
-                this.Parent = parent;
-                this.Current = current;
-            }
-            public readonly ParagraphInfo Parent;
-            public readonly ParagraphInfo Current;
-        }
-        private Stack<ProcessorState> stack = new Stack<ProcessorState>();
+        private readonly Stack<ParagraphInfo> _stack = new Stack<ParagraphInfo>();
         private readonly DomIter _domIter;
         private readonly System.Xml.XmlWriter _xmlWriter;
         public DomProcessor(Word.Range document, System.Xml.XmlWriter writer)
@@ -39,7 +32,7 @@ namespace mc_auto
                 if (IsChild(parent, current))
                 {
                     current.Start(_xmlWriter);
-                    stack.Push(new ProcessorState(parent, null));
+                    _stack.Push(parent);
                     parent = current;
                     _domIter.MoveNext();
                     current = _domIter.Current;
@@ -47,15 +40,17 @@ namespace mc_auto
                 else
                 {
                     parent.End(_xmlWriter);
-                    if (stack.Count == 0)
+                    if (_stack.Count == 0)
+                    {
+                        System.Diagnostics.Debug.Assert(current.IsEndMarker);
                         break;
-                    ProcessorState ps = stack.Pop();
-                    parent = ps.Parent;
+                    }
+                    parent = _stack.Pop();
                 }
             }
         }
 
-        // recursive version takes 13/8 times as long
+        // recursive version takes 13/8 times as long as stack version above
         private void ProcessParaRecursive(ParagraphInfo parent)
         {
             ParagraphInfo current;

@@ -9,9 +9,24 @@ using ExtensionMethods;
 
 namespace mc_auto
 {
+    /// <summary>
+    /// Each paragraph from the word document is wrapped in a ParagraphInfo object as it is read in.
+    /// 
+    /// The behaviour of the paragraph and its public methods Start(), End() and IsChild() are determined by
+    /// the configuration of its _strategy member to which they are delegated.
+    /// When the paragraphInfo object is created its Strategy is
+    /// looked up on the _strategeyMap based on the contents such as style and outline level.
+    /// </summary>
     internal partial class ParagraphInfo
     {
         private const string MC_TECH_STYLE = "mc_tech";
+        private const string STR_PARAGRAPH = "p";
+        private const string STR_LEVEL = "level";
+        private const string STR_CLASS = "class";
+        private const string STR_TABLES = "tables";
+        private const string STR_ROW = "row";
+        private const string STR_COLUMN = "column";
+
         private delegate void Starter(System.Xml.XmlWriter xw, ParagraphInfo pi);
         private delegate void Ender(System.Xml.XmlWriter xw, ParagraphInfo pi);
         private delegate bool IsChilder(ParagraphInfo pi, ParagraphInfo piParent);
@@ -29,9 +44,9 @@ namespace mc_auto
         private static readonly GetLeveler StdGetLevel = (pi) => (int)pi.Paragraph.OutlineLevel;
         private static readonly Starter StdStart = (xw, pi) =>
         {
-            xw.WriteStartElement("p");
-            xw.WriteAttributeString("level", pi.Level.ToString());
-            xw.WriteAttributeString("class", pi.Paragraph.Range.ParagraphStyle.NameLocal.ToString());
+            xw.WriteStartElement(STR_PARAGRAPH);
+            xw.WriteAttributeString(STR_LEVEL, pi.Level.ToString());
+            xw.WriteAttributeString(STR_CLASS, pi.Paragraph.Range.ParagraphStyle.NameLocal.ToString());
             GetTableCountAttributeWriter(pi.Paragraph.Range)(xw);
             GetRowAttributeWriter(pi.Paragraph.Range)(xw);
             GetColumnAttributeWriter(pi.Paragraph.Range)(xw);
@@ -39,7 +54,7 @@ namespace mc_auto
         };
         private static readonly Starter ParentStart = (xw, pi) =>
         {
-            xw.WriteStartElement("p");
+            xw.WriteStartElement(STR_PARAGRAPH);
             StdStart(xw, pi);
             xw.WriteEndElement();
         };
@@ -50,8 +65,10 @@ namespace mc_auto
                 {new StrategyKey(WrapperType.Root), new Strategy(st: NoopStart, en: NoopEnd, isc: TrueIsChild, gl: SuperParent )}
                 ,{new StrategyKey(WrapperType.EndMarker), new Strategy(st: NoopStart, en: NoopEnd, isc: FalseIsChild, gl: SuperParent )}
                 ,{new StrategyKey(HEADING_1_LEVEL), new Strategy(st: ParentStart, en: StdEnd, isc: StdIsChild, gl: StdGetLevel )}
-                ,{new StrategyKey(BODY_LEVEL), new Strategy(st: StdStart, en: StdEnd, isc: StdIsChild, gl: StdGetLevel )}
+                        // this will be used for paragraphs with a outline level other than 1
+                //,{new StrategyKey(BODY_LEVEL), new Strategy(st: StdStart, en: StdEnd, isc: StdIsChild, gl: StdGetLevel )}
                 ,{new StrategyKey(MC_TECH_STYLE, string.Empty)
+                        // this will be used for all other paragraphs
                   , new Strategy(st: ParentStart, en: StdEnd
                       , isc: (child, parent) => parent.Paragraph.Range.ParagraphStyle.NameLocal == child.Paragraph.Range.ParagraphStyle.NameLocal
                       , gl: StdGetLevel 
@@ -83,8 +100,8 @@ namespace mc_auto
         {
             get { return _wrapperType == WrapperType.Root; }
         }
-        public int Level {get { return GetLevel(); }}
-        public Word.Paragraph Paragraph { get; private set; }
+        private int Level {get { return GetLevel(); }}
+        private Word.Paragraph Paragraph { get; set; }
         private readonly Strategy _strategy;
 
         private ParagraphInfo(Word.Paragraph para, Word.Paragraph previousPara)
@@ -103,7 +120,6 @@ namespace mc_auto
         }
         public void End(System.Xml.XmlWriter xw)
         {
-
             if ( Paragraph != null ) System.Diagnostics.Debug.Print("end: " + Paragraph.OutlineLevel.ToString() + " " + MassageXMLString(this.Paragraph.Range.Text));
             _strategy.DoEnd(xw, this);
         }
@@ -111,6 +127,7 @@ namespace mc_auto
         {
             return _strategy.DoIsChild(child, this);
         }
+
         private int GetLevel()
         {
             return _strategy.DoGetLevel(this);
@@ -157,19 +174,19 @@ namespace mc_auto
         private static AttributeWriter GetTableCountAttributeWriter(Word.Range rng)
         {
             return rng.Tables.Count > 0
-                ? (AttributeWriter)((xw) => xw.WriteAttributeString("tables", rng.Tables.Count.ToString()))
+                ? (AttributeWriter)((xw) => xw.WriteAttributeString(STR_TABLES, rng.Tables.Count.ToString()))
                 : (xw) => { };
         }
         private static AttributeWriter GetRowAttributeWriter(Word.Range rng)
         {
             return rng.Tables.Count > 0 && rng.Cells.Count > 0
-                ? (AttributeWriter)((xw) => xw.WriteAttributeString("row", rng.Cells[1].Row.Index.ToString()))
+                ? (AttributeWriter)((xw) => xw.WriteAttributeString(STR_ROW, rng.Cells[1].Row.Index.ToString()))
                 : (xw) => { };
         }
         private static AttributeWriter GetColumnAttributeWriter(Word.Range rng)
         {
             return rng.Tables.Count > 0 && rng.Cells.Count > 0
-                ? (AttributeWriter)((xw) => xw.WriteAttributeString("column", rng.Cells[1].Column.Index.ToString()))
+                ? (AttributeWriter)((xw) => xw.WriteAttributeString(STR_COLUMN, rng.Cells[1].Column.Index.ToString()))
                 : (xw) => { };
         }
     }

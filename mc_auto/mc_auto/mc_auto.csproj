@@ -107,6 +107,7 @@
     <Compile Include="ActionsPaneControl1.Designer.cs">
       <DependentUpon>ActionsPaneControl1.cs</DependentUpon>
     </Compile>
+    <Compile Include="DocumentController.cs" />
     <Compile Include="MyExtensions.cs" />
     <Compile Include="DomIter.cs" />
     <Compile Include="DomProcessor.cs" />

@@ -1,58 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Timers;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Linq;
-using Microsoft.Office.Tools.Word;
-using Microsoft.VisualStudio.Tools.Applications.Runtime;
 using Office = Microsoft.Office.Core;
 using Word = Microsoft.Office.Interop.Word;
-using ExtensionMethods;
-
+using System.Diagnostics;
 
 namespace mc_auto
 {
-    public partial class ThisDocument
+    public class DocumentController
     {
         private string INPUT_FILE_NAME = "mvn_commentary.docm";
         private string OUTPUT_FILE_EXTENSION = "xml";
         private const string EL_DOC = "doc";
-        private void ThisDocument_Startup(object sender, System.EventArgs e)
+        public void Doc2Xml()
         {
-        }
-
-        private void ThisDocument_Shutdown(object sender, System.EventArgs e)
-        {
-        }
-
-
-        #region VSTO Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InternalStartup()
-        {
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            this.Startup += new System.EventHandler(this.ThisDocument_Startup);
-            this.Shutdown += new System.EventHandler(this.ThisDocument_Shutdown);
-
-        }
-
-        #endregion
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //new DocumentController().Doc2Xml();
-            string location = this.Path;
+            string location = @"C:\Users\Mike\Documents\GitHub\maven_commentary\mc_auto\mc_auto\bin\Debug";
+            //string location = this.GetType().Assembly.Location;
             string docPathAndFile = System.IO.Path.Combine(location, INPUT_FILE_NAME);
             string xmlPathAndFile = System.IO.Path.ChangeExtension(docPathAndFile, OUTPUT_FILE_EXTENSION);
-            Word.Document doc = this.Application.Documents.Open(docPathAndFile);
+            Word.Application app = new Word.Application();
+            Word.Document doc = app.Documents.Open(docPathAndFile);
             WriteDocumentAsXMLFile(doc.StoryRanges[Word.WdStoryType.wdMainTextStory], xmlPathAndFile);
             (doc as Microsoft.Office.Interop.Word._Document).Close(null, null, null);
         }
