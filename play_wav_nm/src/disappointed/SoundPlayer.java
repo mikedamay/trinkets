@@ -7,7 +7,7 @@ public class SoundPlayer {
 
     public static void main(String[] args) {
         try {
-            byte[] wav = base64ToBinary(getWaveLiteral().toCharArray(), 0, WAV_SIZE);
+            byte[] wav = Base64Coder.base64ToBinary(getWaveLiteral().toCharArray(), 0, WAV_SIZE);
             InputStream is = new ByteArrayInputStream(wav);
             AudioFormat fmt = AudioSystem.getAudioFileFormat(is).getFormat();
             AudioInputStream sound = AudioSystem.getAudioInputStream(is);
@@ -29,59 +29,6 @@ public class SoundPlayer {
         addWaveLines(sb);
         return sb.toString();
     }
-    // decoder based on code by Christian d'Heureuse, Inventec Informatik AG, Zurich, Switzerland
-    // www.source-code.biz, www.inventec.ch/chdh
-
-    private static final char[] map1 = new char[64];
-
-    static {
-        int i = 0;
-        for (char c = 'A'; c <= 'Z'; c++) map1[i++] = c;
-        for (char c = 'a'; c <= 'z'; c++) map1[i++] = c;
-        for (char c = '0'; c <= '9'; c++) map1[i++] = c;
-        map1[i++] = '+';
-        map1[i] = '/';
-    }
-
-    private static final byte[] map2 = new byte[128];
-
-    static {
-        for (int i = 0; i < map2.length; i++) map2[i] = -1;
-        for (int i = 0; i < 64; i++) map2[map1[i]] = (byte) i;
-    }
-
-    private static byte[] base64ToBinary(char[] in, int iOff, int iLen) {
-        if (iLen % 4 != 0)
-            throw new IllegalArgumentException("Length of Base64 encoded input string is not a multiple of 4.");
-        while (iLen > 0 && in[iOff + iLen - 1] == '=') iLen--;
-        int oLen = (iLen * 3) / 4;
-        byte[] out = new byte[oLen];
-        int ip = iOff;
-        int iEnd = iOff + iLen;
-        int op = 0;
-        while (ip < iEnd) {
-            int i0 = in[ip++];
-            int i1 = in[ip++];
-            int i2 = ip < iEnd ? in[ip++] : 'A';
-            int i3 = ip < iEnd ? in[ip++] : 'A';
-            if (i0 > 127 || i1 > 127 || i2 > 127 || i3 > 127)
-                throw new IllegalArgumentException("Illegal character in Base64 encoded data.");
-            int b0 = map2[i0];
-            int b1 = map2[i1];
-            int b2 = map2[i2];
-            int b3 = map2[i3];
-            if (b0 < 0 || b1 < 0 || b2 < 0 || b3 < 0)
-                throw new IllegalArgumentException("Illegal character in Base64 encoded data.");
-            int o0 = (b0 << 2) | (b1 >>> 4);
-            int o1 = ((b1 & 0xf) << 4) | (b2 >>> 2);
-            int o2 = ((b2 & 3) << 6) | b3;
-            out[op++] = (byte) o0;
-            if (op < oLen) out[op++] = (byte) o1;
-            if (op < oLen) out[op++] = (byte) o2;
-        }
-        return out;
-    }
-
 
     private static void addWaveLines(StringBuilder sb ) {
         sb.append("UklGRqJtAABXQVZFZm10IBIAAAABAAEAQB8AAEAfAAABAAgAAABmYWN0BAAAAG9tAABkYXRhb20AAH98fH2AgYKDhIOCgYGCg4KBgYGBgIGCgoB+fn+AgYSE");
@@ -396,6 +343,61 @@ public class SoundPlayer {
         sb.append("gH9+gIGAf39+gIGBgH5+f4CAf39/gYB/foCAf4CAgYB+f4B/foCAgH+AgH9+fn+AgH9+f4CAgYCAf4CAf35/f39/gYF/f3+AgYB/fn+AgYB/gH9/f35/gICB");
         sb.append("gH9/gICBgYCAf35/gIB/f35+gIGBgH9/gH9/gICAf4CAf3+AgH9/gICAf35/f3+AgIB/f3+AgICAgIB/f39/gICAf39/gICAgICAgH+AgIB/f39/f3+AgICA");
         sb.append("f3+AgH9/gICAgH9/f3+AgH+Af3+AgIB/gIB/f3+Af4CAf3+AgIB/f3+AgH9/f4B/f39/gICAgH9/f39/gIB/gH+Af4CAgIB/f3+AgH9/f39/gIAA");
+    }
+    private static class Base64Coder {
+
+        private static byte[] base64ToBinary(char[] in, int iOff, int iLen) {
+            if (iLen % 4 != 0)
+                throw new IllegalArgumentException("Length of Base64 encoded input string is not a multiple of 4.");
+            while (iLen > 0 && in[iOff + iLen - 1] == '=') iLen--;
+            int oLen = (iLen * 3) / 4;
+            byte[] out = new byte[oLen];
+            int ip = iOff;
+            int iEnd = iOff + iLen;
+            int op = 0;
+            while (ip < iEnd) {
+                int i0 = in[ip++];
+                int i1 = in[ip++];
+                int i2 = ip < iEnd ? in[ip++] : 'A';
+                int i3 = ip < iEnd ? in[ip++] : 'A';
+                if (i0 > 127 || i1 > 127 || i2 > 127 || i3 > 127)
+                    throw new IllegalArgumentException("Illegal character in Base64 encoded data.");
+                int b0 = map2[i0];
+                int b1 = map2[i1];
+                int b2 = map2[i2];
+                int b3 = map2[i3];
+                if (b0 < 0 || b1 < 0 || b2 < 0 || b3 < 0)
+                    throw new IllegalArgumentException("Illegal character in Base64 encoded data.");
+                int o0 = (b0 << 2) | (b1 >>> 4);
+                int o1 = ((b1 & 0xf) << 4) | (b2 >>> 2);
+                int o2 = ((b2 & 3) << 6) | b3;
+                out[op++] = (byte) o0;
+                if (op < oLen) out[op++] = (byte) o1;
+                if (op < oLen) out[op++] = (byte) o2;
+            }
+            return out;
+        }
+        // decoder based on code by Christian d'Heureuse, Inventec Informatik AG, Zurich, Switzerland
+        // www.source-code.biz, www.inventec.ch/chdh
+
+        private static final char[] map1 = new char[64];
+
+        static {
+            int i = 0;
+            for (char c = 'A'; c <= 'Z'; c++) map1[i++] = c;
+            for (char c = 'a'; c <= 'z'; c++) map1[i++] = c;
+            for (char c = '0'; c <= '9'; c++) map1[i++] = c;
+            map1[i++] = '+';
+            map1[i] = '/';
+        }
+
+        private static final byte[] map2 = new byte[128];
+
+        static {
+            for (int i = 0; i < map2.length; i++) map2[i] = -1;
+            for (int i = 0; i < 64; i++) map2[map1[i]] = (byte) i;
+        }
+
     }
 
 }
