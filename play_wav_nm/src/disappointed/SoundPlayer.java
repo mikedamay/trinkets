@@ -7,7 +7,7 @@ public class SoundPlayer {
 
     public static void main(String[] args) {
         try {
-            byte[] wav = base64ToBinary(getWave().toCharArray(), 0, WAV_SIZE);
+            byte[] wav = base64ToBinary(getWaveLiteral().toCharArray(), 0, WAV_SIZE);
             InputStream is = new ByteArrayInputStream(wav);
             AudioFormat fmt = AudioSystem.getAudioFileFormat(is).getFormat();
             AudioInputStream sound = AudioSystem.getAudioInputStream(is);
@@ -24,7 +24,7 @@ public class SoundPlayer {
 
     // get wav and convert from base64
     private static final int WAV_SIZE = 37432;
-    private static String getWave() {
+    private static String getWaveLiteral() {
         StringBuilder sb = new StringBuilder(WAV_SIZE);
         addWaveLines(sb);
         return sb.toString();
@@ -40,7 +40,7 @@ public class SoundPlayer {
         for (char c = 'a'; c <= 'z'; c++) map1[i++] = c;
         for (char c = '0'; c <= '9'; c++) map1[i++] = c;
         map1[i++] = '+';
-        map1[i++] = '/';
+        map1[i] = '/';
     }
 
     private static final byte[] map2 = new byte[128];
