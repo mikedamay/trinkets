@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="echo"  >
+<target name="echo">
+  <echo>end point is set to test.prop from properties from pluginManagement</echo>
+  <echo>${test.prop2}</echo>
+</target>
+</project>
