@@ -15,10 +15,7 @@
     <option name="historyRevisionsNumber" value="4" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac9d243f-05a9-48ed-9420-b82bd13cf595" name="Default" comment="Testing GIT">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../mc_auto/mvn_narrative.doc" afterPath="$PROJECT_DIR$/../mc_auto/mvn_narrative.doc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="ac9d243f-05a9-48ed-9420-b82bd13cf595" name="Default" comment="Testing GIT" />
     <ignored path="quickstart.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1360996707156" ignored="false" />
@@ -348,7 +345,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1292" height="1000" extended-state="1" />
+    <frame x="-8" y="-8" width="1292" height="1000" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298611" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
