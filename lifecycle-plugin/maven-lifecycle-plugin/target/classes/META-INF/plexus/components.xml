@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<component-set>
+  <components>
+      <component>
+        <role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
+        <role-hint>util</role-hint>
+        <implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping</implementation>
+        <configuration>
+          <lifecycles>
+            <lifecycle>
+              <id>defaultx</id>
+              <!-- START SNIPPET: util-lifecycle -->
+              <phases>
+                  <compilex>org.apache.maven.plugins:maven-compiler-plugin:compile</compilex>
+                  <!--<abc>org.apache.maven.plugins:maven-compiler-plugin:compile</abc>-->
+              </phases>
+              <!-- END SNIPPET: util-lifecycle -->
+            </lifecycle>
+          </lifecycles>
+        </configuration>
+      </component>
+  </components>
+</component-set>

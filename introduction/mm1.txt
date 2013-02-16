@@ -1,0 +1,157 @@
+Apache Maven 3.0.3 (r1075438; 2011-02-28 17:31:09+0000)
+Maven home: c:\apache-maven-3.0.3
+Java version: 1.6.0_24, vendor: Sun Microsystems Inc.
+Java home: C:\Program Files\Java\jdk1.6.0_24\jre
+Default locale: en_GB, platform encoding: Cp1252
+OS name: "windows xp", version: "5.1", arch: "x86", family: "windows"
+[INFO] Error stacktraces are turned on.
+[DEBUG] Reading global settings from c:\apache-maven-3.0.3\conf\settings.xml
+[DEBUG] Reading user settings from C:\Documents and Settings\Mike May\.m2\settings.xml
+[DEBUG] Using local repository at C:\Documents and Settings\Mike May\.m2\repository
+[DEBUG] Using manager EnhancedLocalRepositoryManager with priority 10 for C:\Documents and Settings\Mike May\.m2\repository
+[INFO] Scanning for projects...
+[DEBUG] org.hypo-plugins:maven-lifecycle-plugin:jar:1.0-SNAPSHOT:
+[DEBUG]    org.apache.maven:maven-plugin-api:jar:2.0:compile
+[DEBUG]    org.codehaus.plexus:plexus-utils:jar:1.1:runtime
+[DEBUG] Created new class realm maven.api
+[DEBUG] Importing foreign packages into class realm maven.api
+[DEBUG]   Imported: org.apache.maven.wagon.events < plexus.core
+[DEBUG]   Imported: org.sonatype.aether.transfer < plexus.core
+[DEBUG]   Imported: org.apache.maven.exception < plexus.core
+[DEBUG]   Imported: org.sonatype.aether.metadata < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.util.xml.Xpp3Dom < plexus.core
+[DEBUG]   Imported: org.sonatype.aether.collection < plexus.core
+[DEBUG]   Imported: org.sonatype.aether.version < plexus.core
+[DEBUG]   Imported: org.apache.maven.monitor < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.repository < plexus.core
+[DEBUG]   Imported: org.apache.maven.repository < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.resource < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.logging < plexus.core
+[DEBUG]   Imported: org.apache.maven.profiles < plexus.core
+[DEBUG]   Imported: org.sonatype.aether.repository < plexus.core
+[DEBUG]   Imported: org.apache.maven.classrealm < plexus.core
+[DEBUG]   Imported: org.apache.maven.execution < plexus.core
+[DEBUG]   Imported: org.sonatype.aether.artifact < plexus.core
+[DEBUG]   Imported: org.sonatype.aether.spi < plexus.core
+[DEBUG]   Imported: org.apache.maven.reporting < plexus.core
+[DEBUG]   Imported: org.apache.maven.usability < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.container < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.component < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.util.xml.pull.XmlSerializer < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.authentication < plexus.core
+[DEBUG]   Imported: org.apache.maven.lifecycle < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.classworlds < plexus.core
+[DEBUG]   Imported: org.sonatype.aether.graph < plexus.core
+[DEBUG]   Imported: org.sonatype.aether.* < plexus.core
+[DEBUG]   Imported: org.apache.maven.settings < plexus.core
+[DEBUG]   Imported: org.codehaus.classworlds < plexus.core
+[DEBUG]   Imported: org.sonatype.aether.impl < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.* < plexus.core
+[DEBUG]   Imported: org.apache.maven.toolchain < plexus.core
+[DEBUG]   Imported: org.sonatype.aether.deployment < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.observers < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.util.xml.pull.XmlPullParserException < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.util.xml.pull.XmlPullParser < plexus.core
+[DEBUG]   Imported: org.apache.maven.configuration < plexus.core
+[DEBUG]   Imported: org.apache.maven.cli < plexus.core
+[DEBUG]   Imported: org.sonatype.aether.installation < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.context < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.authorization < plexus.core
+[DEBUG]   Imported: org.apache.maven.project < plexus.core
+[DEBUG]   Imported: org.apache.maven.rtinfo < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.lifecycle < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.configuration < plexus.core
+[DEBUG]   Imported: org.apache.maven.artifact < plexus.core
+[DEBUG]   Imported: org.apache.maven.model < plexus.core
+[DEBUG]   Imported: org.apache.maven.* < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.proxy < plexus.core
+[DEBUG]   Imported: org.sonatype.aether.resolution < plexus.core
+[DEBUG]   Imported: org.apache.maven.plugin < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.* < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.personality < plexus.core
+[DEBUG] Populating class realm maven.api
+[DEBUG] Created new class realm extension>org.hypo-plugins:maven-lifecycle-plugin:1.0-SNAPSHOT
+[DEBUG] Importing foreign packages into class realm extension>org.hypo-plugins:maven-lifecycle-plugin:1.0-SNAPSHOT
+[DEBUG]   Imported:  < maven.api
+[DEBUG] Populating class realm extension>org.hypo-plugins:maven-lifecycle-plugin:1.0-SNAPSHOT
+[DEBUG]   Included: org.hypo-plugins:maven-lifecycle-plugin:jar:1.0-SNAPSHOT
+[DEBUG]   Included: org.codehaus.plexus:plexus-utils:jar:1.1
+[DEBUG] Extension realms for project intro.duction:introduction:util:0.0.1: [ClassRealm[extension>org.hypo-plugins:maven-lifecycle-plugin:1.0-SNAPSHOT, parent: sun.misc.Launcher$AppClassLoader@11b86e7]]
+[DEBUG] Created new class realm project>intro.duction:introduction:0.0.1
+[DEBUG] Populating class realm project>intro.duction:introduction:0.0.1
+[DEBUG]   Included: org.hypo-plugins:maven-lifecycle-plugin:jar:1.0-SNAPSHOT
+[DEBUG] Looking up lifecyle mappings for packaging util from ClassRealm[project>intro.duction:introduction:0.0.1, parent: ClassRealm[maven.api, parent: null]]
+[DEBUG] === REACTOR BUILD PLAN ================================================
+[DEBUG] Project: intro.duction:introduction:util:0.0.1
+[DEBUG] Tasks:   [clean, compile]
+[DEBUG] Style:   Regular
+[DEBUG] =======================================================================
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building introduction 0.0.1
+[INFO] ------------------------------------------------------------------------
+[DEBUG] Lifecycle default -> [validate, initialize, generate-sources, process-sources, generate-resources, process-resources, compile, process-classes, generate-test-sources, process-test-sources, generate-test-resources, process-test-resources, test-compile, process-test-classes, test, prepare-package, package, pre-integration-test, integration-test, post-integration-test, verify, install, deploy]
+[DEBUG] Lifecycle clean -> [pre-clean, clean, post-clean]
+[DEBUG] Lifecycle site -> [pre-site, site, post-site, site-deploy]
+[DEBUG] Lifecycle default -> [validate, initialize, generate-sources, process-sources, generate-resources, process-resources, compile, process-classes, generate-test-sources, process-test-sources, generate-test-resources, process-test-resources, test-compile, process-test-classes, test, prepare-package, package, pre-integration-test, integration-test, post-integration-test, verify, install, deploy]
+[DEBUG] Lifecycle clean -> [pre-clean, clean, post-clean]
+[DEBUG] Lifecycle site -> [pre-site, site, post-site, site-deploy]
+[DEBUG] Lifecycle default -> [validate, initialize, generate-sources, process-sources, generate-resources, process-resources, compile, process-classes, generate-test-sources, process-test-sources, generate-test-resources, process-test-resources, test-compile, process-test-classes, test, prepare-package, package, pre-integration-test, integration-test, post-integration-test, verify, install, deploy]
+[DEBUG] Lifecycle clean -> [pre-clean, clean, post-clean]
+[DEBUG] Lifecycle site -> [pre-site, site, post-site, site-deploy]
+[DEBUG] === PROJECT BUILD PLAN ================================================
+[DEBUG] Project:       intro.duction:introduction:0.0.1
+[DEBUG] Dependencies (collect): []
+[DEBUG] Dependencies (resolve): []
+[DEBUG] Repositories (dependencies): [central (http://repo1.maven.org/maven2, releases)]
+[DEBUG] Repositories (plugins)     : [central (http://repo1.maven.org/maven2, releases)]
+[DEBUG] -----------------------------------------------------------------------
+[DEBUG] Goal:          org.apache.maven.plugins:maven-clean-plugin:2.4.1:clean (default-clean)
+[DEBUG] Style:         Regular
+[DEBUG] Configuration: <?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <directory default-value="${project.build.directory}"/>
+  <excludeDefaultDirectories default-value="false">${clean.excludeDefaultDirectories}</excludeDefaultDirectories>
+  <failOnError default-value="true">${maven.clean.failOnError}</failOnError>
+  <followSymLinks default-value="false">${clean.followSymLinks}</followSymLinks>
+  <outputDirectory default-value="${project.build.outputDirectory}"/>
+  <reportDirectory default-value="${project.reporting.outputDirectory}"/>
+  <skip default-value="false">${clean.skip}</skip>
+  <testOutputDirectory default-value="${project.build.testOutputDirectory}"/>
+  <verbose>${clean.verbose}</verbose>
+</configuration>
+[DEBUG] =======================================================================
+[INFO] 
+[INFO] --- maven-clean-plugin:2.4.1:clean (default-clean) @ introduction ---
+[DEBUG] org.apache.maven.plugins:maven-clean-plugin:jar:2.4.1:
+[DEBUG]    org.apache.maven:maven-plugin-api:jar:2.0.6:compile
+[DEBUG]    org.codehaus.plexus:plexus-utils:jar:2.0.5:compile
+[DEBUG] Created new class realm plugin>org.apache.maven.plugins:maven-clean-plugin:2.4.1
+[DEBUG] Importing foreign packages into class realm plugin>org.apache.maven.plugins:maven-clean-plugin:2.4.1
+[DEBUG]   Imported:  < project>intro.duction:introduction:0.0.1
+[DEBUG] Populating class realm plugin>org.apache.maven.plugins:maven-clean-plugin:2.4.1
+[DEBUG]   Included: org.apache.maven.plugins:maven-clean-plugin:jar:2.4.1
+[DEBUG]   Included: org.codehaus.plexus:plexus-utils:jar:2.0.5
+[DEBUG]   Excluded: org.apache.maven:maven-plugin-api:jar:2.0.6
+[DEBUG] Configuring mojo org.apache.maven.plugins:maven-clean-plugin:2.4.1:clean from plugin realm ClassRealm[plugin>org.apache.maven.plugins:maven-clean-plugin:2.4.1, parent: sun.misc.Launcher$AppClassLoader@11b86e7]
+[DEBUG] Configuring mojo 'org.apache.maven.plugins:maven-clean-plugin:2.4.1:clean' with basic configurator -->
+[DEBUG]   (f) directory = C:\projects\Intro\introduction\target
+[DEBUG]   (f) excludeDefaultDirectories = false
+[DEBUG]   (f) failOnError = true
+[DEBUG]   (f) followSymLinks = false
+[DEBUG]   (f) outputDirectory = C:\projects\Intro\introduction\target\classes
+[DEBUG]   (f) reportDirectory = C:\projects\Intro\introduction\target\site
+[DEBUG]   (f) skip = false
+[DEBUG]   (f) testOutputDirectory = C:\projects\Intro\introduction\target\test-classes
+[DEBUG] -- end configuration --
+[DEBUG] Skipping non-existing directory C:\projects\Intro\introduction\target
+[DEBUG] Skipping non-existing directory C:\projects\Intro\introduction\target\classes
+[DEBUG] Skipping non-existing directory C:\projects\Intro\introduction\target\test-classes
+[DEBUG] Skipping non-existing directory C:\projects\Intro\introduction\target\site
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 1.156s
+[INFO] Finished at: Sat Mar 17 16:55:28 GMT 2012
+[INFO] Final Memory: 2M/15M
+[INFO] ------------------------------------------------------------------------

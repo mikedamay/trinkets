@@ -1,0 +1,309 @@
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building introduction 0.0.1
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-help-plugin:2.1.1:describe (default-cli) @ introduction ---
+[INFO] org.apache.maven.plugins:maven-resources-plugin:2.5
+
+Name: Maven Resources Plugin
+Description: The Resources Plugin handles the copying of project resources to
+  the output directory. There are two different kinds of resources: main
+  resources and test resources. The difference is that the main resources are
+  the resources associated to the main source code while the test resources are
+  associated to the test source code. Thus, this allows the separation of
+  resources for the main source code and its unit tests.
+Group Id: org.apache.maven.plugins
+Artifact Id: maven-resources-plugin
+Version: 2.5
+Goal Prefix: resources
+
+This plugin has 4 goals:
+
+resources:copy-resources
+  Description: Copy resources of the configured plugin attribute resources
+  Implementation: org.apache.maven.plugin.resources.CopyResourcesMojo
+  Language: java
+
+  Available parameters:
+
+    delimiters
+      Set of delimiters for expressions to filter within the resources. These
+      delimiters are specified in the form 'beginToken*endToken'. If no '*' is
+      given, the delimiter is assumed to be the same for start and end.
+      
+      So, the default filtering delimiters might be specified as:
+      
+      <delimiters>
+        <delimiter>${*}</delimiter>
+        <delimiter>@</delimiter>
+      </delimiters>
+      
+      Since the '@' delimiter is the same on both ends, we don't need to
+      specify '@*@' (though we can).
+
+    encoding (Default: ${project.build.sourceEncoding})
+      Expression: ${encoding}
+      The character encoding scheme to be applied when filtering resources.
+
+    escapeString
+      Expression: ${maven.resources.escapeString}
+      Expression preceded with the String won't be interpolated \${foo} will be
+      replaced with ${foo}
+
+    escapeWindowsPaths (Default: true)
+      Expression: ${maven.resources.escapeWindowsPaths}
+      Whether to escape backslashes and colons in windows-style paths.
+
+    filters
+      The list of extra filter properties files to be used along with System
+      properties, project properties, and filter properties files specified in
+      the POM build/filters section, which should be used for the filtering
+      during the current mojo execution.
+      Normally, these will be configured from a plugin's execution section, to
+      provide a different set of filters for a particular execution. For
+      instance, starting in Maven 2.2.0, you have the option of configuring
+      executions with the id's default-resources and default-testResources to
+      supply different configurations for the two different types of resources.
+      By supplying extraFilters configurations, you can separate which filters
+      are used for which type of resource.
+
+    includeEmptyDirs (Default: false)
+      Expression: ${maven.resources.includeEmptyDirs}
+      Copy any empty directories included in the Ressources.
+
+    mavenFilteringHints
+      List of plexus components hint which implements
+      MavenResourcesFiltering.filterResources(). They will be executed after
+      the resources copying/filtering.
+
+    nonFilteredFileExtensions
+      Additional file extensions to not apply filtering (already defined are :
+      jpg, jpeg, gif, bmp, png)
+
+    outputDirectory
+      The output directory into which to copy the resources.
+
+    overwrite (Default: false)
+      Expression: ${maven.resources.overwrite}
+      Overwrite existing files even if the destination files are newer.
+
+    resources
+      The list of resources we want to transfer. See the Maven Model for a
+      description of how to code the resources element.
+
+    supportMultiLineFiltering (Default: false)
+      Expression: ${maven.resources.supportMultiLineFiltering}
+      stop searching endToken at the end of line
+
+    useBuildFilters (Default: true)
+      If false, don't use the filters specified in the build/filters section of
+      the POM when processing resources in this mojo execution.
+      See also: ResourcesMojo.buildFilters and ResourcesMojo.filters
+
+    useDefaultDelimiters (Default: true)
+      (no description available)
+
+resources:help
+  Description: Display help information on maven-resources-plugin.
+    Call
+      mvn resources:help -Ddetail=true -Dgoal=<goal-name>
+    to display parameter details.
+  Implementation: org.apache.maven.plugin.resources.HelpMojo
+  Language: java
+
+  Available parameters:
+
+    detail (Default: false)
+      Expression: ${detail}
+      If true, display all settable properties for each goal.
+
+    goal
+      Expression: ${goal}
+      The name of the goal for which to show help. If unspecified, all goals
+      will be displayed.
+
+    indentSize (Default: 2)
+      Expression: ${indentSize}
+      The number of spaces per indentation level, should be positive.
+
+    lineLength (Default: 80)
+      Expression: ${lineLength}
+      The maximum length of a display line, should be positive.
+
+resources:resources
+  Description: Copy resources for the main source code to the main output
+    directory. Always uses the project.build.resources element to specify the
+    resources to copy.
+  Implementation: org.apache.maven.plugin.resources.ResourcesMojo
+  Language: java
+  Bound to phase: process-resources
+
+  Available parameters:
+
+    delimiters
+      Set of delimiters for expressions to filter within the resources. These
+      delimiters are specified in the form 'beginToken*endToken'. If no '*' is
+      given, the delimiter is assumed to be the same for start and end.
+      
+      So, the default filtering delimiters might be specified as:
+      
+      <delimiters>
+        <delimiter>${*}</delimiter>
+        <delimiter>@</delimiter>
+      </delimiters>
+      
+      Since the '@' delimiter is the same on both ends, we don't need to
+      specify '@*@' (though we can).
+
+    encoding (Default: ${project.build.sourceEncoding})
+      Expression: ${encoding}
+      The character encoding scheme to be applied when filtering resources.
+
+    escapeString
+      Expression: ${maven.resources.escapeString}
+      Expression preceded with the String won't be interpolated \${foo} will be
+      replaced with ${foo}
+
+    escapeWindowsPaths (Default: true)
+      Expression: ${maven.resources.escapeWindowsPaths}
+      Whether to escape backslashes and colons in windows-style paths.
+
+    filters
+      The list of extra filter properties files to be used along with System
+      properties, project properties, and filter properties files specified in
+      the POM build/filters section, which should be used for the filtering
+      during the current mojo execution.
+      Normally, these will be configured from a plugin's execution section, to
+      provide a different set of filters for a particular execution. For
+      instance, starting in Maven 2.2.0, you have the option of configuring
+      executions with the id's default-resources and default-testResources to
+      supply different configurations for the two different types of resources.
+      By supplying extraFilters configurations, you can separate which filters
+      are used for which type of resource.
+
+    includeEmptyDirs (Default: false)
+      Expression: ${maven.resources.includeEmptyDirs}
+      Copy any empty directories included in the Ressources.
+
+    mavenFilteringHints
+      List of plexus components hint which implements
+      MavenResourcesFiltering.filterResources(). They will be executed after
+      the resources copying/filtering.
+
+    nonFilteredFileExtensions
+      Additional file extensions to not apply filtering (already defined are :
+      jpg, jpeg, gif, bmp, png)
+
+    outputDirectory (Default: ${project.build.outputDirectory})
+      The output directory into which to copy the resources.
+
+    overwrite (Default: false)
+      Expression: ${maven.resources.overwrite}
+      Overwrite existing files even if the destination files are newer.
+
+    supportMultiLineFiltering (Default: false)
+      Expression: ${maven.resources.supportMultiLineFiltering}
+      stop searching endToken at the end of line
+
+    useBuildFilters (Default: true)
+      If false, don't use the filters specified in the build/filters section of
+      the POM when processing resources in this mojo execution.
+      See also: ResourcesMojo.buildFilters and ResourcesMojo.filters
+
+    useDefaultDelimiters (Default: true)
+      (no description available)
+
+resources:testResources
+  Description: Copy resources for the test source code to the test output
+    directory. Always uses the project.build.testResources element to specify
+    the resources to copy.
+  Implementation: org.apache.maven.plugin.resources.TestResourcesMojo
+  Language: java
+  Bound to phase: process-test-resources
+
+  Available parameters:
+
+    delimiters
+      Set of delimiters for expressions to filter within the resources. These
+      delimiters are specified in the form 'beginToken*endToken'. If no '*' is
+      given, the delimiter is assumed to be the same for start and end.
+      
+      So, the default filtering delimiters might be specified as:
+      
+      <delimiters>
+        <delimiter>${*}</delimiter>
+        <delimiter>@</delimiter>
+      </delimiters>
+      
+      Since the '@' delimiter is the same on both ends, we don't need to
+      specify '@*@' (though we can).
+
+    encoding (Default: ${project.build.sourceEncoding})
+      Expression: ${encoding}
+      The character encoding scheme to be applied when filtering resources.
+
+    escapeString
+      Expression: ${maven.resources.escapeString}
+      Expression preceded with the String won't be interpolated \${foo} will be
+      replaced with ${foo}
+
+    escapeWindowsPaths (Default: true)
+      Expression: ${maven.resources.escapeWindowsPaths}
+      Whether to escape backslashes and colons in windows-style paths.
+
+    filters
+      The list of extra filter properties files to be used along with System
+      properties, project properties, and filter properties files specified in
+      the POM build/filters section, which should be used for the filtering
+      during the current mojo execution.
+      Normally, these will be configured from a plugin's execution section, to
+      provide a different set of filters for a particular execution. For
+      instance, starting in Maven 2.2.0, you have the option of configuring
+      executions with the id's default-resources and default-testResources to
+      supply different configurations for the two different types of resources.
+      By supplying extraFilters configurations, you can separate which filters
+      are used for which type of resource.
+
+    includeEmptyDirs (Default: false)
+      Expression: ${maven.resources.includeEmptyDirs}
+      Copy any empty directories included in the Ressources.
+
+    mavenFilteringHints
+      List of plexus components hint which implements
+      MavenResourcesFiltering.filterResources(). They will be executed after
+      the resources copying/filtering.
+
+    nonFilteredFileExtensions
+      Additional file extensions to not apply filtering (already defined are :
+      jpg, jpeg, gif, bmp, png)
+
+    outputDirectory
+      Expression: ${project.build.testOutputDirectory}
+      The output directory into which to copy the resources.
+
+    overwrite (Default: false)
+      Expression: ${maven.resources.overwrite}
+      Overwrite existing files even if the destination files are newer.
+
+    supportMultiLineFiltering (Default: false)
+      Expression: ${maven.resources.supportMultiLineFiltering}
+      stop searching endToken at the end of line
+
+    useBuildFilters (Default: true)
+      If false, don't use the filters specified in the build/filters section of
+      the POM when processing resources in this mojo execution.
+      See also: ResourcesMojo.buildFilters and ResourcesMojo.filters
+
+    useDefaultDelimiters (Default: true)
+      (no description available)
+
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 3.312s
+[INFO] Finished at: Sun Dec 11 09:08:15 GMT 2011
+[INFO] Final Memory: 5M/15M
+[INFO] ------------------------------------------------------------------------
