@@ -16,14 +16,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac9d243f-05a9-48ed-9420-b82bd13cf595" name="Default" comment="Testing GIT">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../mc_auto/mvn_commentary.doc" afterPath="$PROJECT_DIR$/../mc_auto/mvn_commentary.doc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/quickstart-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/target/quickstart-1.0-SNAPSHOT.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../mc_auto/mvn_narrative.doc" afterPath="$PROJECT_DIR$/../mc_auto/mvn_narrative.doc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="quickstart.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1360506271508" ignored="false" />
+    <file path="/Dummy.txt" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1360996707156" ignored="false" />
     <file path="/pom.xml" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1360509694024" ignored="false" />
+    <file path="/DummyFile.xpath" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1361003078625" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,74 +96,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="App.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/jar/App.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="0" selection-start="112" selection-end="112" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="118" column="0" selection-start="4185" selection-end="4185" vertical-scroll-proportion="0.9459459">
+            <state line="85" column="13" selection-start="3021" selection-end="3021" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="maven.xsd" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="maven.xsd" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../../../Downloads/maven.xsd">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1665" column="0" selection-start="80777" selection-end="80807" vertical-scroll-proportion="-10.96">
+            <state line="240" column="13" selection-start="11804" selection-end="11804" vertical-scroll-proportion="0.63093144">
               <folding>
-                <element signature="tag#xs:annotation#0;tag#xs:complexType#2;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#0;tag#xs:all#0;tag#xs:complexType#2;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#1;tag#xs:all#0;tag#xs:complexType#2;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#2;tag#xs:all#0;tag#xs:complexType#2;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#3;tag#xs:all#0;tag#xs:complexType#2;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#4;tag#xs:all#0;tag#xs:complexType#2;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#5;tag#xs:all#0;tag#xs:complexType#2;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#6;tag#xs:all#0;tag#xs:complexType#2;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#7;tag#xs:all#0;tag#xs:complexType#2;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#8;tag#xs:all#0;tag#xs:complexType#2;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#9;tag#xs:all#0;tag#xs:complexType#2;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#10;tag#xs:all#0;tag#xs:complexType#2;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#11;tag#xs:all#0;tag#xs:complexType#2;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:complexType#3;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:complexType#4;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:complexType#5;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:complexType#6;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:complexType#7;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:complexType#8;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:complexType#9;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:complexType#10;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:complexType#11;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:complexType#12;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:complexType#13;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#0;tag#xs:all#0;tag#xs:complexType#13;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#1;tag#xs:all#0;tag#xs:complexType#13;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#2;tag#xs:all#0;tag#xs:complexType#13;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#3;tag#xs:all#0;tag#xs:complexType#13;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#4;tag#xs:all#0;tag#xs:complexType#13;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#5;tag#xs:all#0;tag#xs:complexType#13;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#6;tag#xs:all#0;tag#xs:complexType#13;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:complexType#24;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#0;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#1;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#2;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#3;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#4;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#5;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#6;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#7;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#8;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#9;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#10;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
-                <element signature="tag#xs:element#11;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
+                <element signature="tag#xs:annotation#0;tag#xs:element#11;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -283,11 +230,15 @@
   <component name="PropertiesComponent">
     <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="options.splitter.main.proportions" value="0.3" />
     <property name="MemberChooser.sorted" value="false" />
+    <property name="options.lastSelected" value="appearance" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Downloads/maven.xsd" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="Remote" factoryName="Remote">
@@ -397,7 +348,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1292" height="1000" extended-state="0" />
+    <frame x="-8" y="-8" width="1292" height="1000" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298611" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -406,14 +357,14 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32956383" sideWeight="0.75635105" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24364896" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26905313" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5821759" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32956383" sideWeight="0.75635105" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24878837" sideWeight="0.75635105" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24878837" sideWeight="0.7309469" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -522,7 +473,82 @@
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
+  <component name="XPathView.XPathProjectComponent">
+    <history>
+      <element expression="//build/plugins/plugin">
+        <namespace prefix="xs" uri="http://www.w3.org/2001/XMLSchema" />
+        <namespace prefix="" uri="http://maven.apache.org/POM/4.0.0" />
+      </element>
+      <element expression="/*/build/plugins/plugin">
+        <namespace prefix="xs" uri="http://www.w3.org/2001/XMLSchema" />
+        <namespace prefix="" uri="http://maven.apache.org/POM/4.0.0" />
+      </element>
+      <element expression="//*[Sname='build']">
+        <namespace prefix="xs" uri="http://www.w3.org/2001/XMLSchema" />
+        <namespace prefix="" uri="http://maven.apache.org/POM/4.0.0" />
+      </element>
+      <element expression="//*[@name='build']">
+        <namespace prefix="xs" uri="http://www.w3.org/2001/XMLSchema" />
+        <namespace prefix="" uri="http://maven.apache.org/POM/4.0.0" />
+      </element>
+      <element expression="//*[@name='modules']">
+        <namespace prefix="xs" uri="http://www.w3.org/2001/XMLSchema" />
+        <namespace prefix="" uri="http://maven.apache.org/POM/4.0.0" />
+      </element>
+      <element expression="//*[@name='module']">
+        <namespace prefix="xs" uri="http://www.w3.org/2001/XMLSchema" />
+        <namespace prefix="" uri="http://maven.apache.org/POM/4.0.0" />
+      </element>
+    </history>
+    <find-history />
+  </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/jar/App.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="0" selection-start="112" selection-end="112" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="118" column="0" selection-start="4185" selection-end="4185" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../Downloads/maven.xsd">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1665" column="0" selection-start="80777" selection-end="80807" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="tag#xs:annotation#0;tag#xs:element#11;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/jar/App.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="0" selection-start="112" selection-end="112" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="118" column="0" selection-start="4185" selection-end="4185" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../Downloads/maven.xsd">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1665" column="0" selection-start="80777" selection-end="80807" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="tag#xs:annotation#0;tag#xs:element#11;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/jar/App.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="10" column="0" selection-start="112" selection-end="112" vertical-scroll-proportion="0.0">
@@ -546,68 +572,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/jar/App.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="112" selection-end="112" vertical-scroll-proportion="0.0">
+        <state line="10" column="0" selection-start="112" selection-end="112" vertical-scroll-proportion="0.26984128">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="85" column="13" selection-start="3021" selection-end="3021" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../../Downloads/maven.xsd">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1665" column="0" selection-start="80777" selection-end="80807" vertical-scroll-proportion="-10.96">
+        <state line="240" column="13" selection-start="11804" selection-end="11804" vertical-scroll-proportion="0.63093144">
           <folding>
-            <element signature="tag#xs:annotation#0;tag#xs:complexType#2;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#0;tag#xs:all#0;tag#xs:complexType#2;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#1;tag#xs:all#0;tag#xs:complexType#2;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#2;tag#xs:all#0;tag#xs:complexType#2;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#3;tag#xs:all#0;tag#xs:complexType#2;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#4;tag#xs:all#0;tag#xs:complexType#2;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#5;tag#xs:all#0;tag#xs:complexType#2;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#6;tag#xs:all#0;tag#xs:complexType#2;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#7;tag#xs:all#0;tag#xs:complexType#2;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#8;tag#xs:all#0;tag#xs:complexType#2;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#9;tag#xs:all#0;tag#xs:complexType#2;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#10;tag#xs:all#0;tag#xs:complexType#2;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#11;tag#xs:all#0;tag#xs:complexType#2;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:complexType#3;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:complexType#4;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:complexType#5;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:complexType#6;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:complexType#7;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:complexType#8;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:complexType#9;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:complexType#10;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:complexType#11;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:complexType#12;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:complexType#13;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#0;tag#xs:all#0;tag#xs:complexType#13;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#1;tag#xs:all#0;tag#xs:complexType#13;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#2;tag#xs:all#0;tag#xs:complexType#13;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#3;tag#xs:all#0;tag#xs:complexType#13;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#4;tag#xs:all#0;tag#xs:complexType#13;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#5;tag#xs:all#0;tag#xs:complexType#13;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#6;tag#xs:all#0;tag#xs:complexType#13;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:complexType#24;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#0;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#1;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#2;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#3;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#4;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#5;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#6;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#7;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#8;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#9;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#10;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
-            <element signature="tag#xs:element#11;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
+            <element signature="tag#xs:annotation#0;tag#xs:element#11;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="118" column="0" selection-start="4185" selection-end="4185" vertical-scroll-proportion="0.9459459">
-          <folding />
         </state>
       </provider>
     </entry>
