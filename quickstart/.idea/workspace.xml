@@ -93,19 +93,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="85" column="13" selection-start="3021" selection-end="3021" vertical-scroll-proportion="0.0">
+            <state line="85" column="13" selection-start="3021" selection-end="3021" vertical-scroll-proportion="2.3805602">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="maven.xsd" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="maven.xsd" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../../Downloads/maven.xsd">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="240" column="13" selection-start="11804" selection-end="11804" vertical-scroll-proportion="0.63093144">
+            <state line="240" column="41" selection-start="11832" selection-end="11832" vertical-scroll-proportion="-14.36">
               <folding>
                 <element signature="tag#xs:annotation#0;tag#xs:element#11;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
               </folding>
@@ -346,7 +346,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1292" height="1000" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298611" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -574,19 +574,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="85" column="13" selection-start="3021" selection-end="3021" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../../Downloads/maven.xsd">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="240" column="13" selection-start="11804" selection-end="11804" vertical-scroll-proportion="0.63093144">
+        <state line="240" column="41" selection-start="11832" selection-end="11832" vertical-scroll-proportion="-14.36">
           <folding>
             <element signature="tag#xs:annotation#0;tag#xs:element#11;tag#xs:all#0;tag#xs:complexType#25;tag#xs:schema#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="85" column="13" selection-start="3021" selection-end="3021" vertical-scroll-proportion="2.3805602">
+          <folding />
         </state>
       </provider>
     </entry>
