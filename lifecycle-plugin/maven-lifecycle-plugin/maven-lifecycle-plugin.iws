@@ -4,6 +4,11 @@
     <list default="true" id="690fc60c-f40e-4936-98c1-ca257346ae93" name="Default" comment="" />
     <ignored path="maven-lifecycle-plugin.iws" />
     <ignored path=".idea/workspace.xml" />
+    <file path="$PROJECT_DIR$/../../quickstart/pom.xml" changelist="690fc60c-f40e-4936-98c1-ca257346ae93" time="1361085419462" ignored="false" />
+    <file path="$PROJECT_DIR$/../../quickstart/effective-pom.xml" changelist="690fc60c-f40e-4936-98c1-ca257346ae93" time="1361097608806" ignored="false" />
+    <file path="/effective-pom.xml" changelist="690fc60c-f40e-4936-98c1-ca257346ae93" time="1361097608806" ignored="false" />
+    <file path="/Dummy.txt" changelist="690fc60c-f40e-4936-98c1-ca257346ae93" time="1361093048790" ignored="false" />
+    <file path="/a.dummy" changelist="690fc60c-f40e-4936-98c1-ca257346ae93" time="1361093462775" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,10 +72,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="EchoMojo.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="EchoMojo.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/maven_plugin/EchoMojo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="35" selection-start="495" selection-end="495" vertical-scroll-proportion="0.0">
+            <state line="20" column="25" selection-start="511" selection-end="511" vertical-scroll-proportion="0.3709091">
               <folding />
             </state>
           </provider>
@@ -94,10 +99,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="35" selection-start="776" selection-end="776" vertical-scroll-proportion="0.37192118">
+            <state line="22" column="35" selection-start="776" selection-end="776" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -555,6 +560,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="35" selection-start="776" selection-end="776" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/maven_plugin/EchoMojoTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="13" selection-start="175" selection-end="175" vertical-scroll-proportion="0.0">
@@ -564,14 +576,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/maven_plugin/EchoMojo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="35" selection-start="495" selection-end="495" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="35" selection-start="776" selection-end="776" vertical-scroll-proportion="0.37192118">
+        <state line="20" column="25" selection-start="511" selection-end="511" vertical-scroll-proportion="0.3709091">
           <folding />
         </state>
       </provider>
