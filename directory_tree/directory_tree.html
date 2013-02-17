@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>directory_tree</title>
+    <link rel="stylesheet" href="css/normalize2.css">
+</head>
+<body>
+    <style type='text/css'>
+        ul.tree    {padding-left: 0}
+        ul.tree ul {padding-left:1em}
+        ul.tree li {list-style-type:none}
+
+            /* specify line style */
+        ul.tree li:not(:last-child),
+        ul.tree li::before {border: 0 solid black}
+
+            /* vertical line connecting siblings */
+        ul.tree li:not(:last-child) {border-left-width: 1px}
+            /* horizontal line connecting children to the stem */
+        ul.tree li::before {
+            content: "";
+            display: inline-block;
+            position: relative;
+            border-bottom-width: 1px;
+            bottom: .3em; /*elevation*/
+            min-width: 1ex; /*length*/
+            margin-right: 2px;
+        }
+            /* vertical line connecting the last sibling
+               to the sibling-connecting line */
+        ul.tree li:last-child::before {
+            border-left-width: 1px;
+            min-height: .7em; /*line-height - elevation of the horizontal line*/
+        }
+    </style>
+
+    <h2>Achievement Tree</h2>
+    <ul class="tree"><li>Taking Inventory
+        <ul><li>Getting Wood
+            <ul><li>Benchmarking
+                <ul>
+                    <li>Time to Farm!
+                        <ul>
+                            <li>Bake Bread</li>
+                            <li>The Lie</li>
+                        </ul>
+                    </li>
+                    <li>Time to Strike!
+                        <ul>
+                            <li>Monster Hunter</li>
+                            <li>Cow Tipper
+                                <ul><li>When Pigs Fly</li></ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>Time to Mine!
+                        <ul>
+                            <li>Getting an Upgrade</li>
+                            <li>Hot Topic
+                                <ul>
+                                    <li>Delicious Fish</li>
+                                    <li>Acquire Hardware
+                                        <ul><li>On a Rail</li></ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li></ul>
+        </li></ul>
+    </li></ul>
+    <ul>
+        <li>Doesn’t affect lists outside</li>
+        <li>like this one</li>
+    </ul>
+
+</body>
+</html>
