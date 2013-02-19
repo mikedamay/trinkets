@@ -12,8 +12,8 @@
 
             /* specify line style */
         ul.tree li:not(:last-child),
-        ul.tree li::before {border: 0 solid black}
-
+        ul.tree li::before {border: 0 solid gray}
+        ul.tree li.target {color: gray}
             /* vertical line connecting siblings */
         ul.tree li:not(:last-child) {border-left-width: 1px}
             /* horizontal line connecting children to the stem */
@@ -33,47 +33,76 @@
             min-height: .7em; /*line-height - elevation of the horizontal line*/
         }
     </style>
+    <ul class="tree">
+        <li>quickstart
+            <ul>
 
-    <h2>Achievement Tree</h2>
-    <ul class="tree"><li>Taking Inventory
-        <ul><li>Getting Wood
-            <ul><li>Benchmarking
-                <ul>
-                    <li>Time to Farm!
-                        <ul>
-                            <li>Bake Bread</li>
-                            <li>The Lie</li>
-                        </ul>
-                    </li>
-                    <li>Time to Strike!
-                        <ul>
-                            <li>Monster Hunter</li>
-                            <li>Cow Tipper
-                                <ul><li>When Pigs Fly</li></ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>Time to Mine!
-                        <ul>
-                            <li>Getting an Upgrade</li>
-                            <li>Hot Topic
-                                <ul>
-                                    <li>Delicious Fish</li>
-                                    <li>Acquire Hardware
-                                        <ul><li>On a Rail</li></ul>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li></ul>
-        </li></ul>
-    </li></ul>
-    <ul>
-        <li>Doesn’t affect lists outside</li>
-        <li>like this one</li>
+
+                <li>pom.xml</li>
+
+
+                <li>src
+                    <ul>
+
+                        <li>main
+                            <ul>
+
+                                <li>java
+                                    <ul>
+
+                                        <li>jar
+                                            <ul>
+
+                                                <li>App.java</li>
+
+                                            </ul>
+                                        </li>
+
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li class="target">target
+                    <ul>
+
+                        <li>classes
+                            <ul>
+
+                                <li>jar
+                                    <ul>
+
+                                        <li>App.class</li>
+
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <li>maven-archiver
+                            <ul>
+
+                                <li>pom.properties</li>
+
+                            </ul>
+                        </li>
+
+                        <li>quickstart-1.0-SNAPSHOT.jar</li>
+
+                        <li>surefire
+                            <ul></ul>
+                        </li>
+
+                    </ul>
+                </li>
+
+            </ul>
+        </li>
     </ul>
-
 </body>
 </html>

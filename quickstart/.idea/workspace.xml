@@ -15,18 +15,29 @@
     <option name="historyRevisionsNumber" value="4" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac9d243f-05a9-48ed-9420-b82bd13cf595" name="Default" comment="Testing GIT" />
+    <list default="true" id="ac9d243f-05a9-48ed-9420-b82bd13cf595" name="Default" comment="Testing GIT">
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\bob.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\compiler-config.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\effective-pom.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\quickstart.iml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\resources-config.txt" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/quickstart-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/target/quickstart-1.0-SNAPSHOT.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../directory_tree/directory_tree.html" afterPath="$PROJECT_DIR$/../directory_tree/directory_tree.html" />
+    </list>
     <ignored path="quickstart.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1361117859806" ignored="false" />
+    <file path="/Dummy.txt" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1361163240905" ignored="false" />
     <file path="/pom.xml" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1360509694024" ignored="false" />
     <file path="/DummyFile.xpath" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1361003078625" ignored="false" />
     <file path="/effective-pom.xml" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1361097608806" ignored="false" />
     <file path="/a.dummy" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1361093462775" ignored="false" />
     <file path="$PROJECT_DIR$/../directory_tree/index.html" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1361120024197" ignored="false" />
     <file path="/index.html" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1361119042650" ignored="false" />
-    <file path="$PROJECT_DIR$/../directory_tree/directory_tree.html" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1361121387634" ignored="false" />
-    <file path="/directory_tree.html" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1361120141650" ignored="false" />
+    <file path="/directory_tree.html" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1361302123968" ignored="false" />
+    <file path="/resources-config.txt" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1361163534515" ignored="false" />
+    <file path="$PROJECT_DIR$/../directory_tree/create_dir_tree.xsl" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1361301853484" ignored="false" />
+    <file path="/create_dir_tree.xsl" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1361297857203" ignored="false" />
+    <file path="$PROJECT_DIR$/../directory_tree/dir.xml" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1361171750015" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,37 +110,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="24" selection-start="0" selection-end="392" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="effective-pom.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/effective-pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="75" column="13" selection-start="3680" selection-end="3680" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="resources-config.txt" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/resources-config.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="215" column="39" selection-start="8875" selection-end="8875" vertical-scroll-proportion="0.3148148">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="compiler-config.txt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/compiler-config.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="174" column="29" selection-start="6480" selection-end="6480" vertical-scroll-proportion="0.0">
+            <state line="5" column="24" selection-start="0" selection-end="392" vertical-scroll-proportion="0.14003295">
               <folding />
             </state>
           </provider>
@@ -242,6 +226,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -262,22 +248,20 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="options.lastSelected" value="appearance" />
     <property name="MemberChooser.sorted" value="false" />
-    <property name="last_opened_file_path" value="C:/projects/apache-maven-3.0.4/pom.xml" />
+    <property name="options.lastSelected" value="editing.templates" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../directory_tree/directory_tree.ipr" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="Remote" factoryName="Remote">
@@ -382,8 +366,8 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1292" height="1000" extended-state="0" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1292" height="1000" extended-state="1" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298611" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -613,28 +597,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="24" selection-start="0" selection-end="392" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/compiler-config.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="174" column="29" selection-start="6480" selection-end="6480" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/effective-pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="13" selection-start="3680" selection-end="3680" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources-config.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="215" column="39" selection-start="8875" selection-end="8875" vertical-scroll-proportion="0.3148148">
+        <state line="5" column="24" selection-start="0" selection-end="392" vertical-scroll-proportion="0.14003295">
           <folding />
         </state>
       </provider>
