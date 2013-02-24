@@ -1,70 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<directory name="minimal" size="0" lastModified="1348062103132" date="20120919T144143" absolutePath="c:\projects\intro\minimal" sort="name" reverse="false">
-    <directory name=".idea" size="0" lastModified="1348064657194" date="20120919T152417" absolutePath="c:\projects\intro\minimal\.idea">
-        <file name=".name" size="7" lastModified="1348059272351" date="20120919T135432" absolutePath="c:\projects\intro\minimal\.idea\.name"/>
-        <file name="ant.xml" size="170" lastModified="1348062042616" date="20120919T144042" absolutePath="c:\projects\intro\minimal\.idea\ant.xml"/>
-        <file name="compiler.xml" size="768" lastModified="1348059272569" date="20120919T135432" absolutePath="c:\projects\intro\minimal\.idea\compiler.xml"/>
-        <directory name="copyright" size="0" lastModified="1348059273241" date="20120919T135433" absolutePath="c:\projects\intro\minimal\.idea\copyright">
-            <file name="profiles_settings.xml" size="115" lastModified="1348059273288" date="20120919T135433" absolutePath="c:\projects\intro\minimal\.idea\copyright\profiles_settings.xml"/>
-        </directory>
-        <file name="encodings.xml" size="171" lastModified="1348059273132" date="20120919T135433" absolutePath="c:\projects\intro\minimal\.idea\encodings.xml"/>
-        <directory name="inspectionProfiles" size="0" lastModified="1348059555538" date="20120919T135915" absolutePath="c:\projects\intro\minimal\.idea\inspectionProfiles"/>
-        <directory name="libraries" size="0" lastModified="1348059555335" date="20120919T135915" absolutePath="c:\projects\intro\minimal\.idea\libraries">
-            <file name="Maven__junit_junit_3_8_1.xml" size="462" lastModified="1348059555382" date="20120919T135915" absolutePath="c:\projects\intro\minimal\.idea\libraries\Maven__junit_junit_3_8_1.xml"/>
-        </directory>
-        <file name="misc.xml" size="8905" lastModified="1348059555179" date="20120919T135915" absolutePath="c:\projects\intro\minimal\.idea\misc.xml"/>
-        <file name="modules.xml" size="265" lastModified="1348059555663" date="20120919T135915" absolutePath="c:\projects\intro\minimal\.idea\modules.xml"/>
-        <file name="projectCodeStyle.xml" size="246" lastModified="1348059555585" date="20120919T135915" absolutePath="c:\projects\intro\minimal\.idea\projectCodeStyle.xml"/>
-        <directory name="scopes" size="0" lastModified="1348059272913" date="20120919T135432" absolutePath="c:\projects\intro\minimal\.idea\scopes">
-            <file name="scope_settings.xml" size="143" lastModified="1348059272944" date="20120919T135432" absolutePath="c:\projects\intro\minimal\.idea\scopes\scope_settings.xml"/>
-        </directory>
-        <file name="uiDesigner.xml" size="8919" lastModified="1348059272694" date="20120919T135432" absolutePath="c:\projects\intro\minimal\.idea\uiDesigner.xml"/>
-        <file name="vcs.xml" size="173" lastModified="1348059273069" date="20120919T135433" absolutePath="c:\projects\intro\minimal\.idea\vcs.xml"/>
-        <file name="workspace.xml" size="26467" lastModified="1348064657148" date="20120919T152417" absolutePath="c:\projects\intro\minimal\.idea\workspace.xml"/>
-    </directory>
-    <file name="files.txt" size="2459" lastModified="1348062103304" date="20120919T144143" absolutePath="c:\projects\intro\minimal\files.txt"/>
-    <file name="install.txt" size="63924" lastModified="1348060561304" date="20120919T141601" absolutePath="c:\projects\intro\minimal\install.txt"/>
-    <file name="minimal.iml" size="885" lastModified="1348059555038" date="20120919T135915" absolutePath="c:\projects\intro\minimal\minimal.iml"/>
-    <file name="pom.xml" size="602" lastModified="1348060456319" date="20120919T141416" absolutePath="c:\projects\intro\minimal\pom.xml"/>
-    <directory name="src" size="0" lastModified="1348059191866" date="20120919T135311" absolutePath="c:\projects\intro\minimal\src">
-        <directory name="main" size="0" lastModified="1348059191788" date="20120919T135311" absolutePath="c:\projects\intro\minimal\src\main">
-            <directory name="java" size="0" lastModified="1348059542069" date="20120919T135902" absolutePath="c:\projects\intro\minimal\src\main\java">
-                <directory name="disappointed" size="0" lastModified="1348059553194" date="20120919T135913" absolutePath="c:\projects\intro\minimal\src\main\java\disappointed">
-                    <file name="App.java" size="188" lastModified="1348059552991" date="20120919T135912" absolutePath="c:\projects\intro\minimal\src\main\java\disappointed\App.java"/>
-                </directory>
-            </directory>
-        </directory>
-        <directory name="test" size="0" lastModified="1348059191898" date="20120919T135311" absolutePath="c:\projects\intro\minimal\src\test">
-            <directory name="java" size="0" lastModified="1348059542382" date="20120919T135902" absolutePath="c:\projects\intro\minimal\src\test\java">
-                <directory name="disappointed" size="0" lastModified="1348059552944" date="20120919T135912" absolutePath="c:\projects\intro\minimal\src\test\java\disappointed">
-                    <file name="AppTest.java" size="678" lastModified="1348059552616" date="20120919T135912" absolutePath="c:\projects\intro\minimal\src\test\java\disappointed\AppTest.java"/>
-                </directory>
-            </directory>
-        </directory>
-    </directory>
-    <directory name="target" size="0" lastModified="1348060560116" date="20120919T141600" absolutePath="c:\projects\intro\minimal\target">
-        <directory name="classes" size="0" lastModified="1348060554007" date="20120919T141554" absolutePath="c:\projects\intro\minimal\target\classes">
-            <directory name="disappointed" size="0" lastModified="1348060554023" date="20120919T141554" absolutePath="c:\projects\intro\minimal\target\classes\disappointed">
-                <file name="App.class" size="539" lastModified="1348060554038" date="20120919T141554" absolutePath="c:\projects\intro\minimal\target\classes\disappointed\App.class"/>
-            </directory>
-        </directory>
-        <directory name="maven-archiver" size="0" lastModified="1348060559991" date="20120919T141559" absolutePath="c:\projects\intro\minimal\target\maven-archiver">
-            <file name="pom.properties" size="116" lastModified="1348060560007" date="20120919T141600" absolutePath="c:\projects\intro\minimal\target\maven-archiver\pom.properties"/>
-        </directory>
-        <file name="minimal-1.0-SNAPSHOT.jar" size="2020" lastModified="1348060560194" date="20120919T141600" absolutePath="c:\projects\intro\minimal\target\minimal-1.0-SNAPSHOT.jar"/>
-        <directory name="surefire" size="0" lastModified="1348060557398" date="20120919T141557" absolutePath="c:\projects\intro\minimal\target\surefire">
-            <file name="surefire5238152605757349043tmp" size="1586" lastModified="1348060557335" date="20120919T141557" absolutePath="c:\projects\intro\minimal\target\surefire\surefire5238152605757349043tmp"/>
-            <file name="surefire5547984483849284943tmp" size="193" lastModified="1348060557366" date="20120919T141557" absolutePath="c:\projects\intro\minimal\target\surefire\surefire5547984483849284943tmp"/>
-            <file name="surefirebooter4245046427534627574.jar" size="745" lastModified="1348060557476" date="20120919T141557" absolutePath="c:\projects\intro\minimal\target\surefire\surefirebooter4245046427534627574.jar"/>
-        </directory>
-        <directory name="surefire-reports" size="0" lastModified="1348060559226" date="20120919T141559" absolutePath="c:\projects\intro\minimal\target\surefire-reports">
-            <file name="disappointed.AppTest.txt" size="269" lastModified="1348060559226" date="20120919T141559" absolutePath="c:\projects\intro\minimal\target\surefire-reports\disappointed.AppTest.txt"/>
-            <file name="TEST-disappointed.AppTest.xml" size="5068" lastModified="1348060559257" date="20120919T141559" absolutePath="c:\projects\intro\minimal\target\surefire-reports\TEST-disappointed.AppTest.xml"/>
-        </directory>
-        <directory name="test-classes" size="0" lastModified="1348060555382" date="20120919T141555" absolutePath="c:\projects\intro\minimal\target\test-classes">
-            <directory name="disappointed" size="0" lastModified="1348060555382" date="20120919T141555" absolutePath="c:\projects\intro\minimal\target\test-classes\disappointed">
-                <file name="AppTest.class" size="604" lastModified="1348060555413" date="20120919T141555" absolutePath="c:\projects\intro\minimal\target\test-classes\disappointed\AppTest.class"/>
-            </directory>
-        </directory>
-    </directory>
+<directory name="quickstart" size="0" lastModified="1361702515833" date="20130224T104155" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart" sort="name" reverse="false">
+<directory name=".idea" size="0" lastModified="1361702797193" date="20130224T104637" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\.idea">
+<file name=".name" size="10" lastModified="1361117710712" date="20130217T161510" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\.idea\.name"/>
+<file name="compiler.xml" size="2780" lastModified="1361702496146" date="20130224T104136" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\.idea\compiler.xml"/>
+<file name="encodings.xml" size="242" lastModified="1361117710728" date="20130217T161510" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\.idea\encodings.xml"/>
+<file name="misc.xml" size="7302" lastModified="1361702496083" date="20130224T104136" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\.idea\misc.xml"/>
+<file name="modules.xml" size="271" lastModified="1361117710775" date="20130217T161510" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\.idea\modules.xml"/>
+<file name="projectCodeStyle.xml" size="246" lastModified="1361117710790" date="20130217T161510" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\.idea\projectCodeStyle.xml"/>
+<directory name="scopes" size="0" lastModified="1361117710806" date="20130217T161510" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\.idea\scopes">
+<file name="scope_settings.xml" size="143" lastModified="1361117710806" date="20130217T161510" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\.idea\scopes\scope_settings.xml"/>
+</directory>
+<file name="uiDesigner.xml" size="8919" lastModified="1361117710822" date="20130217T161510" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\.idea\uiDesigner.xml"/>
+<file name="vcs.xml" size="192" lastModified="1361117710837" date="20130217T161510" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\.idea\vcs.xml"/>
+<file name="workspace.xml" size="41819" lastModified="1361702797146" date="20130224T104637" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\.idea\workspace.xml"/>
+</directory>
+<file name="pom.xml" size="399" lastModified="1361689016724" date="20130224T065656" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\pom.xml"/>
+<file name="quickstart.iml" size="1478" lastModified="1361702495833" date="20130224T104135" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\quickstart.iml"/>
+<file name="quickstart.pom" size="4500" lastModified="1361117710915" date="20130217T161510" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\quickstart.pom"/>
+<directory name="src" size="0" lastModified="1361117710947" date="20130217T161510" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\src">
+<directory name="main" size="0" lastModified="1361701171646" date="20130224T101931" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\src\main">
+<directory name="java" size="0" lastModified="1361117710962" date="20130217T161510" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\src\main\java">
+<directory name="jar" size="0" lastModified="1361702345740" date="20130224T103905" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\src\main\java\jar">
+<file name="App.java" size="612" lastModified="1361702345662" date="20130224T103905" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\src\main\java\jar\App.java"/>
+</directory>
+</directory>
+<directory name="resources" size="0" lastModified="1361701351833" date="20130224T102231" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\src\main\resources">
+<file name="app.properties" size="20" lastModified="1361701351755" date="20130224T102231" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\src\main\resources\app.properties"/>
+</directory>
+</directory>
+</directory>
+<file name="suppress-default-goal.pom" size="1128" lastModified="1361698899771" date="20130224T094139" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\suppress-default-goal.pom"/>
+<directory name="target" size="0" lastModified="1361702525474" date="20130224T104205" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\target">
+<directory name="classes" size="0" lastModified="1361702520099" date="20130224T104200" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\target\classes">
+<file name="app.properties" size="20" lastModified="1361702515927" date="20130224T104155" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\target\classes\app.properties"/>
+<directory name="jar" size="0" lastModified="1361702520099" date="20130224T104200" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\target\classes\jar">
+<file name="App.class" size="1317" lastModified="1361702520115" date="20130224T104200" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\target\classes\jar\App.class"/>
+</directory>
+</directory>
+<directory name="maven-archiver" size="0" lastModified="1361702525302" date="20130224T104205" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\target\maven-archiver">
+<file name="pom.properties" size="119" lastModified="1361702525333" date="20130224T104205" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\target\maven-archiver\pom.properties"/>
+</directory>
+<file name="quickstart-1.0-SNAPSHOT.jar" size="2450" lastModified="1361702525568" date="20130224T104205" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\target\quickstart-1.0-SNAPSHOT.jar"/>
+<directory name="surefire" size="0" lastModified="1361702526505" date="20130224T104206" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\target\surefire"/>
+</directory>
 </directory>

@@ -12,7 +12,8 @@
 
             /* specify line style */
         ul.tree li:not(:last-child),
-        ul.tree li::before {border: 0 solid gray}
+        ul.tree li::before {border: 0 solid #604580
+        }
         ul.tree li.target {color: gray}
             /* vertical line connecting siblings */
         ul.tree li:not(:last-child) {border-left-width: 1px}
@@ -40,6 +41,8 @@
 
                 <li>pom.xml</li>
 
+                <li>quickstart.iml</li>
+
 
                 <li>src
                     <ul>
@@ -61,17 +64,29 @@
                                     </ul>
                                 </li>
 
+                                <li>resources
+                                    <ul>
+
+                                        <li>app.properties</li>
+
+                                    </ul>
+                                </li>
+
                             </ul>
                         </li>
 
                     </ul>
                 </li>
 
+                <li>suppress-default-goal.pom</li>
+
                 <li class="target">target
                     <ul>
 
                         <li>classes
                             <ul>
+
+                                <li>app.properties</li>
 
                                 <li>jar
                                     <ul>
