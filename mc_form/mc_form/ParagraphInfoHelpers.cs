@@ -9,6 +9,12 @@ namespace mc_auto
 {
     internal partial class ParagraphInfo
     {
+        /**
+         * <summary>Each object of type ParagraphInfo has a strategy associated with it.
+         * The strategy provides behaviour through a set of methods appropriate
+         * to the type of paragraph.
+         * </summary>
+         */
         private class Strategy
         {
             internal static readonly Strategy Default = new Strategy(
@@ -17,19 +23,25 @@ namespace mc_auto
                 , isc: StdIsChild
                 , gl: StdGetLevel
             );
-            public Strategy(Starter st, Ender en, IsChilder isc, GetLeveler gl)
+            public Strategy(StartBehaviour st, EndBehaviour en, IsChildBehaviour isc, GetLeveler gl)
             {
                 DoStart = st;
                 DoEnd = en;
                 DoIsChild = isc;
                 DoGetLevel = gl;
             }
-            internal readonly Starter DoStart;
-            internal readonly Ender DoEnd;
-            internal readonly IsChilder DoIsChild;
+            internal readonly StartBehaviour DoStart;
+            internal readonly EndBehaviour DoEnd;
+            internal readonly IsChildBehaviour DoIsChild;
             internal readonly GetLeveler DoGetLevel;
 
         }
+        /**
+         * <summary>There is a map of strategies from which a paragraph's strategy is selected.
+         * The key munges together the outline level and the styles in play to provide a value
+         * that can be looked up in the map for a strategy that corresponds to the given values.
+         * </summary>
+         */
         private class StrategyKey
         {
             private static readonly IDictionary<string, bool> paragraphInfos = new Dictionary<string, bool>()
@@ -41,6 +53,11 @@ namespace mc_auto
 
             private int hash;
 
+            /**
+             * <param name="wt">wrapper type is used to indicate whether the paragraph
+             * is a psuedo paragraph indicating the start or end of the document
+             * </param>
+             */
             public StrategyKey(WrapperType wt)
                 : this(wt, 0, string.Empty, string.Empty)
             {

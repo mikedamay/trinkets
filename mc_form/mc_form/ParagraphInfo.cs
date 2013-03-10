@@ -27,38 +27,38 @@ namespace mc_auto
         private const string STR_ROW = "row";
         private const string STR_COLUMN = "column";
 
-        private delegate void Starter(System.Xml.XmlWriter xw, ParagraphInfo pi);
-        private delegate void Ender(System.Xml.XmlWriter xw, ParagraphInfo pi);
-        private delegate bool IsChilder(ParagraphInfo pi, ParagraphInfo piParent);
+        private delegate void StartBehaviour(System.Xml.XmlWriter xw, ParagraphInfo pi);
+        private delegate void EndBehaviour(System.Xml.XmlWriter xw, ParagraphInfo pi);
+        private delegate bool IsChildBehaviour(ParagraphInfo pi, ParagraphInfo piParent);
         private delegate int GetLeveler(ParagraphInfo pi);
 
         private delegate void AttributeWriter(System.Xml.XmlWriter xw);
 
-        private static readonly Starter NoopStart = (xw, pi) => { };
-        private static readonly Ender NoopEnd = (xw, pi) => { };
-        private static readonly IsChilder TrueIsChild = (p, pp) => true;
-        private static readonly IsChilder FalseIsChild = (p, pp) => false;
+        private static readonly StartBehaviour NoopStart = (xw, pi) => { };
+        private static readonly EndBehaviour NoopEnd = (xw, pi) => { };
+        private static readonly IsChildBehaviour TrueIsChild = (p, pp) => true;
+        private static readonly IsChildBehaviour FalseIsChild = (p, pp) => false;
         private static readonly GetLeveler SuperParent = pi => int.MinValue;
-        private static readonly Ender StdEnd = (xw, pi) => xw.WriteEndElement();
-        private static readonly IsChilder StdIsChild = (child, parent) => (int)parent.Paragraph.OutlineLevel < (int)child.Level;
+        private static readonly EndBehaviour StdEnd = (xw, pi) => xw.WriteEndElement();
+        private static readonly IsChildBehaviour StdIsChild = (child, parent) => (int)parent.Paragraph.OutlineLevel < (int)child.Level;
         private static readonly GetLeveler StdGetLevel = (pi) => (int)pi.Paragraph.OutlineLevel;
-        private static readonly Starter StdStart = (xw, pi) =>
+        private static readonly StartBehaviour StdStart = (xw, pi) =>
         {
             xw.WriteStartElement(STR_PARAGRAPH);
             xw.WriteAttributeString(STR_LEVEL, pi.Level.ToString());
-            xw.WriteAttributeString(STR_CLASS, "my_para_style" ); // pi.Paragraph.Range.ParagraphStyle.NameLocal.ToString());
+            xw.WriteAttributeString(STR_CLASS, pi.Paragraph.get_Style().NameLocal.ToString());
             GetTableCountAttributeWriter(pi.Paragraph.Range)(xw);
             GetRowAttributeWriter(pi.Paragraph.Range)(xw);
             GetColumnAttributeWriter(pi.Paragraph.Range)(xw);
             xw.WriteString(MassageXMLString(pi.Paragraph.Range.Text));
         };
-        private static readonly Starter ParentStart = (xw, pi) =>
+        private static readonly StartBehaviour ParentStart = (xw, pi) =>
         {
             xw.WriteStartElement(STR_PARAGRAPH);
             StdStart(xw, pi);
             xw.WriteEndElement();
         };
-
+        
         private static IDictionary<StrategyKey, Strategy> _strategyMap 
           = new Dictionary<StrategyKey, Strategy>()
             {
@@ -66,11 +66,10 @@ namespace mc_auto
                 ,{new StrategyKey(WrapperType.EndMarker), new Strategy(st: NoopStart, en: NoopEnd, isc: FalseIsChild, gl: SuperParent )}
                 ,{new StrategyKey(HEADING_1_LEVEL), new Strategy(st: ParentStart, en: StdEnd, isc: StdIsChild, gl: StdGetLevel )}
                         // this will be used for paragraphs with a outline level other than 1
-                //,{new StrategyKey(BODY_LEVEL), new Strategy(st: StdStart, en: StdEnd, isc: StdIsChild, gl: StdGetLevel )}
                 ,{new StrategyKey(MC_TECH_STYLE, string.Empty)
                         // this will be used for all other paragraphs
                   , new Strategy(st: ParentStart, en: StdEnd
-                      , isc: (child, parent) => false //parent.Paragraph.Range.ParagraphStyle.NameLocal == child.Paragraph.Range.ParagraphStyle.NameLocal
+                      , isc: (child, parent) => parent.Paragraph.get_Style().NameLocal == child.Paragraph.get_Style().NameLocal
                       , gl: StdGetLevel 
                       )
                 }
@@ -145,8 +144,8 @@ namespace mc_auto
             _strategy = _strategyMap.GetValueOrDefault(
               new StrategyKey(wt
               , para == null ? 0 : (int)para.OutlineLevel
-              , para == null ? string.Empty : string.Empty //para.Range.ParagraphStyle.NameLocal.ToString()
-              , previousPara == null ? string.Empty : string.Empty) // previousPara.Range.ParagraphStyle.NameLocal.ToString())
+              , para == null ? string.Empty : para.get_Style().NameLocal.ToString()
+              , previousPara == null ? string.Empty : previousPara.get_Style().NameLocal.ToString())
               , Strategy.Default);
             _wrapperType = wt;
             Paragraph = para;
