@@ -1,0 +1,341 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="mvn.css">
+</head>
+<body>
+<div class="Level_1">
+    
+<p level="1" class="Heading_1">Introduction</p>
+    
+<p level="10" class="mc_body">What is striking about Maven is its ability to build complex applications with so few commands.  This approach brings with it problems especially for the novice.</p>
+    
+<p level="10" class="mc_body">This piece discusses the idiosyncrasies of Maven&rsquo;s design and the benefits that accrue for developing enterprise web applications.  It examines the roots of Maven&rsquo;s portability, economy of expression, customisability and comprehensiveness.</p>
+    
+<p level="10" class="mc_body">We explore how a simple configuration file (pom.xml), comprising a few statements that identify the component being built, is sufficient for maven to marshal resources, compile, incorporate into a jar and publish the component.</p>
+    
+<p level="10" class="mc_body">We answer the questions: how does Maven know what to do?  How can you vary its behaviour?</p>
+    
+<div class="Level_2">
+      
+<p level="2" class="Heading_2">Three Features</p>
+      
+<p level="10" class="mc_body">Maven&rsquo;s secret is found in 3 inter-related approaches: &nbsp;</p>
+      
+<p level="10" class="mc_body">Firstly convention over configuration: for instance, the location of inputs to the build are specified by the tool&rsquo;s rules rather than the user&rsquo;s choice. &nbsp;Not only does this mean that locations can be omitted but the tool is now free to omit the mention of the tools that rely on those locations, &nbsp;i.e. if it were not for convention over configuration the names of the tools would need to be specified at least so that their configuration could be detailed?</p>
+      
+<p level="10" class="mc_body">Secondly, the most idiosyncratic of Maven&rsquo;s features which is the structure of the build instructions. &nbsp;This architecture is covered in detail below.  Its particular genius is to allow build instructions to be contributed from different sections of the project such as the Maven executable, parent POM, explicitly within the POM and from profiles.  As a result of this approach you will search in vain for a set of step-by-step instructions for the build.  Maven has a declarative feel to it rather than imperative or procedural.  Sometimes you may think of it more as passive aggressive.</p>
+      
+<p level="10" class="mc_body">Maven has a third feature, a real boon for developers although not central to the issues addressed by this piece. &nbsp;The feature is the automatic download of both dependencies and build tools (plug-ins). &nbsp;It is this feature that gives Maven projects such a high degree of portability.</p>
+    
+</div>
+  
+</div>
+<div class="Level_1">
+    
+<p level="1" class="Heading_1">Life-cycles, Phases and Plug-ins</p>
+    
+<p level="10" class="mc_body">We have hinted at Maven&rsquo;s idiosyncratic nature and the role of plugins.  How does the plug-in system work?</p>
+    
+<p level="10" class="mc_body">There are two conventional approaches to building application artefacts: either specifying steps as a set of tasks as in a batch file or having the execution order set by a dependency tree as in a traditional make configuration, the Maven build process manages to find a third way.  It breaks the build up into a number of phases, such as compile, test and package. &nbsp;&nbsp;Zero, one or more tasks are allocated to each phase. &nbsp;Instead of having a build step as a sort of heading and its associated tasks listed underneath it, the configuration of the plug-ins, which execute the tasks, specify the phase in which they should be executed (in Maven parlance, the phases to which they are bound).</p>
+    
+<p level="10" class="mc_body">Before we examine the phases in detail we need to talk about life-cycles. &nbsp;Maven supports 3 life-cycles, clean, site and default. &nbsp;We won&rsquo;t consider the clean and site life-cycles further but be assured they follow the same pattern as the default life-cycle.  Phases and their order are specified by the lifecycle.  However, the default tasks (plug-in goals) to be executed are not specified by the lifecycle but instead by the POM&rsquo;s packaging property for a given lifecycle.  Lifecycles are never explicitly referred to in the POM or during a build.  Maven instead infers the lifecycle from information about phases and goals passed to it on the command line.</p>
+    
+<p level="10" class="mc_body">The default (build) life-cycle has twenty three phases. &nbsp;Eight of these contain tasks out of the box for a packaging of jar. &nbsp; This combination, build &ndash; jar,  is about as bulk standard as you can get when using Maven in enterprise development.  The project developer is free to use the other 17 or in fact to add tasks (in the form of plug-in references) to the eight already occupied. &nbsp;These tasks will be added to the default ones rather than overwriting them. &nbsp;The execution order of the phases is fixed (which is rather the point of them) and the order of execution of tasks within a phase is supposed to follow the order of their textual occurrences within the POM.  It is not clear what the order is where goals for the same phase are specified in different blocks within the POM such as profiles or parent POMs.</p>
+    
+<p level="10" class="mc_body">Maven command line.</p>
+    
+<p level="10" class="mc_body">Role of repository in publishing the artefacts.  Hierarchical relationships between repos.</p>
+    
+<div class="Level_2">
+      
+<p level="2" class="Heading_2">Goals</p>
+      
+<p level="10" class="mc_body">When we talked about the equivalence of plug-ins and tasks that was not the full story. &nbsp;Plug-ins can perform a number of tasks. &nbsp;Each capability (task type) is identified as a goal.  Its implementation is sometimes referred to as mojo.</p>
+      
+<p level="10" class="mc_body">For instance the maven-compiler-plugin has two goals: the compile goal is executed in the compile phase and the testCompile goal is executed in the test-compile phase. &nbsp;In the case of the compiler plugin, hese two goals execute the same code but operate on distinct source directories and build into distinct target directories.  In most other cases different goals execute different code.</p>
+    
+</div>
+    
+<div class="Level_2">
+      
+<p level="2" class="Heading_2">More about Defaults</p>
+      
+<p level="10" class="mc_body">The particular plug-ins and goals to be executed by default during each phase of the build vary according the value of the project&rsquo;s &lt;packaging&gt; element. &nbsp;As well as the jar packaging, used in our examples so far there is a number of other predefined packaging types. &nbsp;The war packaging changes only the plug-in and goal associated with the package phase (i.e. in package phase of the build a war will be built rather than a jar) as do the ejb, ejb3, rar and par package types whereas the mojos executed for the ear are quite different having goals associated with only five phases and not surprisingly featuring a couple of goals of the maven-ear-plugin in a couple of those.</p>
+    
+</div>
+  
+</div>
+<div class="Level_1">
+    
+<p level="1" class="Heading_1">The Build</p>
+    
+<p level="10" class="mc_body">The workhorse of the POM is its build section and the build&rsquo;s plugin section.</p>
+    
+<div class="Level_2">
+      
+<p level="2" class="Heading_2">Plug-ins</p>
+      
+<p level="10" class="mc_body">Central to the build section are the plug-ins.  Each plug-in whose goals are to be executed must be specified in the build&rsquo;s plug-ins section for the POM if it is not included out-of the box, as discussed above, or in the build/plugins section of a profile or parent POM.</p>
+      
+<p level="10" class="mc_body">Each plugin is identified by its co-ordinates comprising groupId, artefactId and version.  In addition there are 3 important sections described below: dependencies, configuration and executions.</p>
+    
+</div>
+    
+<div class="Level_2">
+      
+<p level="2" class="Heading_2">Plugin Dependencies</p>
+      
+<p level="10" class="mc_body">Most dependencies required by the plug-in are automatically downloaded during the build.  They do not have to be specified anywhere in the POM. This is the effect of Maven&rsquo;s transitive treatment of dependencies whereby if you specify a plug-in or dependency in the POM Maven will use that artefact&rsquo;s published POM to determine further dependencies and download them.  This behaviour continues recursively </p>
+      
+<p level="10" class="mc_body">The developer becomes involved where it is necessary to specify a particular version or to exclude a dependency from the class-path of some phase of the build.  You use the scope attribute of the dependency to exert fine control over its use.  For instance a scope of provided will cause the dependency to be excluded from the class path of build phases other than compile and testCompile and test.  Alternatively you can use dependency/exclusions to exclude unwanted transitive dependencies.  This mechanism is typically used to avoid library clashes.</p>
+      
+<p level="10" class="mc_body">Unfortunately you can&rsquo;t just sit back and let Maven take care of all dependencies.</p>
+      
+<p level="10" class="mc_body">Some plug-ins such as the maven-sql-plugin cannot specify their dependencies as they depend on the plugin&rsquo;s run-time environement as much as the plug-in&rsquo;s functionality.  In the case of the sql plug-in it needs the database driver to be specified. The application developer must add that dependency to the plug-in section when using it.</p>
+      
+<p level="10" class="mc_body">There is a slightly different case where a plugin may cause a requirement for dependencies to arise but in this latter case dependencies need to be added to the main project rather than to the plug-in. &nbsp;The case is where the plug-in generates code. &nbsp;For instance, when using Axis a project dependency on Axiom will be created as that library is required for build and run time to handle marshalling.</p>
+      
+<p level="10" class="mc_body">The only documentation detailing the need for such non-transitive dependencies tends to be the plugin&rsquo;s homepage, if you&rsquo;re lucky, or the web.</p>
+    
+</div>
+    
+<div class="Level_2">
+      
+<p level="2" class="Heading_2">Configuration</p>
+      
+<p level="10" class="mc_body">We next consider the configuration section allows information to be passed between the project and the plugin in order to parameterise the operation of the plugin. &nbsp;In general, the maven infrastructure has little interest in this but it is key to the operation of the plugins.  One respect in which the plugin does interact closely with the POM is that plugin can directly bind its parameters to maven properties without their being specified in the configuration section.  For example with the Surefire plugin which orchestrates the running of unit tests has a confirmation parameter &lt;skip&gt; which when set to true will cause tests not to be run.  However an often used alternative is to define the POM property maven.test.skip and set it to true.  The surefire plugin respects this setting and does not run the tests without any setting in the configuration section.</p>
+      
+<p level="10" class="mc_body">Configuration sections may be present for the plugin as a whole and / or the individual execution sections. &nbsp;Where the antrun plug-in is in use there will often be multiple execution sections and, in the nature of ant, each one will require its own configuration section.</p>
+      
+<p level="10" class="mc_body">Where multiple configuration sections relate to the same plugin the effect is additive so that for instance values that occur in the execution&rsquo;s configuration section are added to those in the top level plugin configuration section.  Where the values are for the same configuration item, the execution value is used.</p>
+    
+</div>
+    
+<div class="Level_2">
+      
+<p level="2" class="Heading_2">Executions</p>
+      
+<p level="10" class="mc_body">Typically if a plugin section is included in the build/plugins section then it will contain an &lt;executions&gt; section. &nbsp;</p>
+      
+<p level="10" class="mc_body">The executions section comprises one or more &lt;execution&gt; sections, each one of which specifies a goal and binds that goal to a build phase.  The upshot is that when maven reaches that particular phase it will execute the mojos of all goals associated with it.  We discussed above in Default Phases for Jar Build how the key phases such as compile, test and package come with goals pre-bound.  What we are looking at here is non-standard tasks in the build such as generating web-service sources or building databases.</p>
+      
+<p level="10" class="mc_body">The execution section allows the phase to be specified, i.e. when it should occur in the build cycle. &nbsp;In our example above we&rsquo;ve chosen to run our database scripts in the generate-test-sources. &nbsp;Arguably the plugin should be bound to the generate-test-resources phase as databases are more like resources than sources but from Maven&rsquo;s point of view it makes no difference as long as the task gets executed before the test phase (or to be precise, whatever the first phase is, at which the database will be needed). &nbsp;It does of course matter from a human readability point of view.</p>
+      
+<p level="10" class="mc_body">Whereas the phase is important to the Maven infrastructure and determines the point at which a task is executed, the goal is important to the plugin and determines what is done. &nbsp;Most plugins have at least two goals (one of which will typically be help) so it is necessary to specify the goal in the execution section.</p>
+      
+<p level="10" class="mc_body">The other possible attributes of an execution are id and configuration which are both relevant where multiple executions are involved.</p>
+    
+</div>
+    
+<div class="Level_2">
+      
+<p level="2" class="Heading_2">Multiple Executions</p>
+      
+<p level="10" class="mc_body">A plugin can have more than one execution associated with it.  Typically each execution would relate to a distinct phase.  For instance, you could add multiple executions for the antrun plugin each execution is bound to a different phase of the build for example to echo some separator characters at the end of each phase.  If you specify an id for the execution then the execution can be overridden in a user profile.</p>
+      
+<p level="10" class="mc_body">That completes our consideration of the core of the build structure.  There are one or two related topics dealt with below.</p>
+    
+</div>
+    
+<div class="Level_2">
+      
+<p level="2" class="Heading_2">User Provided Libraries</p>
+      
+<p level="10" class="mc_body">Builds may need to incorporate libraries that are not available from the artefact repository in use.  There are two ways to address this issue: either by installing the library into the local copy of the repository (link to this) or referring, within the dependency specification to an artefact outside of the maven ecosystem.</p>
+      
+<div class="Level_3">
+        
+<p level="3" class="Heading_3">Install Artefact Locally</p>
+        
+<p level="10" class="Normal">The command line</p>
+        
+<p level="10" class="mc_sgl_cmd" tables="1" row="1" column="1">mvn install:install-file &lt;file path and name of jar or war etc.&gt;</p>
+        
+<p level="10" class="Normal" tables="1"></p>
+        
+<p level="10" class="Normal">can be used to add a dependency to the local repository</p>
+      
+</div>
+      
+<div class="Level_3">
+        
+<p level="3" class="Heading_3">Local Reference</p>
+        
+<p level="10" class="Normal">Alternatively you can configure the dependency to reference some arbitrary local file with the following:</p>
+        
+<div class="mc_tech">
+          
+<p level="10" class="mc_tech" tables="1" row="1" column="1">&lt;project&gt;</p>
+          
+<p level="10" class="mc_tech" tables="1" row="1" column="1">  &lt;!&mdash;other project stuff --&gt;</p>
+          
+<p level="10" class="mc_tech" tables="1" row="1" column="1">  &lt;dependencies&gt;</p>
+          
+<p level="10" class="mc_tech" tables="1" row="1" column="1">  &lt;!&mdash;other dependencies --&gt;</p>
+          
+<p level="10" class="mc_tech" tables="1" row="1" column="1">    &lt;dependency&gt;</p>
+          
+<p level="10" class="mc_tech" tables="1" row="1" column="1">        &lt;groupId&gt;&lt;/groupId&gt;</p>
+          
+<p level="10" class="mc_tech" tables="1" row="1" column="1">        &lt;artefactId&gt;&lt;/artefactId&gt;</p>
+          
+<p level="10" class="mc_tech" tables="1" row="1" column="1">        &lt;version&gt;&lt;/version&gt;</p>
+          
+<p level="10" class="mc_tech" tables="1" row="1" column="1">        &lt;scope&gt;system&lt;/scope&gt;</p>
+          
+<p level="10" class="mc_tech" tables="1" row="1" column="1">        &lt;systemPath&gt;&lt;/systemPath&gt;</p>
+          
+<p level="10" class="mc_tech" tables="1" row="1" column="1">    &lt;/dependency&gt;</p>
+          
+<p level="10" class="mc_tech" tables="1" row="1" column="1">  &lt;/dependencies&gt;</p>
+          
+<p level="10" class="mc_tech" tables="1" row="1" column="1">  &lt;!&mdash;other project stuff --&gt;</p>
+          
+<p level="10" class="mc_tech" tables="1" row="1" column="1">&lt;/project&gt;</p>
+        
+</div>
+        
+<p level="10" class="Normal" tables="1"></p>
+        
+<p level="10" class="mc_body">Make up some suitable values for groupId, artefactId and version to keep Maven and its plugins happy.  A scope of system indicates that the reference is found locally at the location and with the name specified by systemPath.</p>
+        
+<p level="10" class="mc_body">Will the ear packager pick up the system scoped dependencies?</p>
+      
+</div>
+    
+</div>
+    
+<div class="Level_2">
+      
+<p level="2" class="Heading_2">Multiple Projects</p>
+      
+<p level="10" class="mc_body">Complex builds can be simplified by segregating parts of a solution into separate project files and by using inheritance to pick up settings from a parent POM.</p>
+      
+<p level="10" class="mc_body">A common pattern that employs multiple modules is a solution to produce an ear file.  Typically you would have a POM for a war, a POM for the ear and a POM to control both. </p>
+    
+</div>
+    
+<div class="Level_2">
+      
+<p level="2" class="Heading_2">Inheritance</p>
+      
+<p level="10" class="mc_body">There are three possible relationships between your Maven projects:  </p>
+      
+<p level="10" class="mc_body">One project can inherit values from another by declaring the other project as its parent.</p>
+      
+<p level="10" class="mc_body">One project can refer to a number of sub-modules that will be built at the same time as the module which refers to them.</p>
+      
+<p level="10" class="mc_body">One project can have a dependency of another project.</p>
+      
+<p level="10" class="mc_body">The existence of one of these relationships in no way implies or entails the existence of any of the others.  They must all be explicitly specified.</p>
+      
+<p level="10" class="mc_body">You need to make sure that the version numbers of the POMs involved in the relationships match otherwise Maven will grab the binary version from the repository instead of referring to the local version.</p>
+      
+<p level="10" class="mc_body">A single POM will often be used for both 1) and 2).</p>
+      
+<div class="Level_3">
+        
+<p level="3" class="Heading_3">Inheritance</p>
+        
+<p level="10" class="mc_body">A number of values are inherited from the parent POM including properties, profiles, pluginManagement.</p>
+        
+<p level="10" class="mc_body">Plugins are inherited if the inherited configuration value is set to true.</p>
+        
+<p level="10" class="mc_body">The parent POM has a packaging of pom.</p>
+      
+</div>
+      
+<div class="Level_3">
+        
+<p level="3" class="Heading_3">Sub-modules</p>
+        
+<p level="10" class="mc_body">Sub-modules are identified by the path in which their POMs are found.  Maven will ensure that sub-modules are built in an order that ensures that dependencies are built before the projects that depend on them.</p>
+        
+<p level="10" class="mc_body">The main POM has a packaging of pom.</p>
+      
+</div>
+      
+<div class="Level_3">
+        
+<p level="3" class="Heading_3">Inter-Project Dependencies</p>
+        
+<p level="10" class="mc_body">Dependencies are specified and behave like any Maven dependency.  Typically the locally built version will be used in preference to the repository version but it must have the required version number.</p>
+      
+</div>
+    
+</div>
+  
+</div>
+<div class="Level_1">
+    
+<p level="1" class="Heading_1">Variation</p>
+    
+<div class="Level_2">
+      
+<p level="2" class="Heading_2">Phases vs. Goals</p>
+      
+<p level="10" class="mc_body">So far our command line has specified the phases of life-cycles, for instance &ldquo;mvn clean install&rdquo; instructs Maven to execute the plugins in (bound to) all phases up to and including the clean phase of the clean life-cycle followed by the plugins in all phases up to and including the install phase of the default lifecycle.</p>
+      
+<p level="10" class="mc_body">You can specify other phases on the command line, for instance whereas &ldquo;mvn install&rdquo; executes all phases except the deploy phase (the final phase), &ldquo;mvn compile&rdquo; will execute no further than the compile phase.  If we invoked Maven with &ldquo;mvn compile&rdquo; for the minimal configuration mentioned previously it would execute two plugins, firstly to copy resources and then to compile. That is to say that the default lifecycle of the jar packaging has eight phases to which some plugin goal is bound, the first two of which are the process-resources phase with org.apache.maven.plugins:maven-resources-plugin:resources goal which copies resources such as property files or spring context xml files and the compile phase with org.apache.maven.plugins:maven-compiler-plugin:compile to compile the production code.  Maven executes goals that are bound to phases up to and including the phase specified on the command line.  Maven infers the lifecycle in play from the phase that is specified.  There are no phases in the 3 lifecycles whose names clash.</p>
+      
+<p level="10" class="mc_body">The issue is confused by the fact that you can specify goals directly on the command line.  For instance when creating a project you invoke Maven with &ldquo;mvn archetype:generate&rdquo;.  This directly executes the goal generate of the archetype plugin.</p>
+      
+<p level="10" class="mc_body">The tokens on the command line represent different Maven concepts.  In the case of &ldquo;mvn clean install&rdquo; or &ldquo;mvn compile&rdquo; the values refer to phases whereas in the case of &ldquo;mvn archetype:generate&rdquo; ignores phases altogether and concentrates on the plugins and goals.</p>
+      
+<p level="10" class="mc_body">The command line specification can look very similar.  Compare &ldquo;mvn install&rdquo; with &ldquo;mvn install:install-file&hellip;&rdquo;.  In the first example &ldquo;install&rdquo; refers to a Maven lifecycle phase, in the second to the plugin maven-install-plugin.  Another way to express the second example is &ldquo;mvn org.apache.maven.plugins:maven-install-plugin:install-file&rdquo;.  Presumably some careful parsing allows Maven to make the distinction.</p>
+      
+<p level="10" class="mc_body">In some cases specifying a phase and specifying a plugin goal have exactly the same effect.  Take a minimal POM, i.e. one without any additional plugins specified, and you can either provide &ldquo;mvn process-resources&rdquo; or &ldquo;mvn resources:resources&rdquo;.  In both cases Maven will copy resources from the standard source resource directory to the target (classes) directory.  However with a non-standard POM specifying the phases will ensure that all goals in that phase and the goals of all previous phases will be executed whereas specifying a goal will not guarantee this.</p>
+      
+<p level="10" class="mc_body">Similarly for compile &ldquo;mvn compile&rdquo; can be contrasted with &ldquo;mvn compiler:compile&rdquo;.  The first incarnation will cause previous phases to be executed, the second will simply carry out the compilation.  There is no requirement for the names of the plugins install and compile to be the same as the names of the phases.  In fact it just adds to the confusion.</p>
+      
+<div class="Level_4">
+        
+<p level="4" class="Heading_4">Shortcut</p>
+        
+<p level="10" class="mc_body">The names compile and install in the direct goal example are plugin goal prefixes. Goal prefixes are assigned from two sources.  If the name of the plugin artefact has the pattern &lt;name&gt;-maven-plugin or maven-&lt;name&gt;-plugin then the prefix will be &lt;name&gt;.  Alternatively, the prefix can be set in the file, maven-metadata-central.xml found in the root directory corresponding to the groupId.   These prefix assignments work fine for the predefined plugin groups of maven-plugins and codehaus-mojo.  If plugins are added from some other source and you want to use the prefix then there is one more piece of configuration.  You can add new prefixes by modifying settings.xml in your .m2 repository and adding the group id of the plugins to the pluginGroups section.&nbsp;</p>
+        
+<p level="10" class="mc_body">The final issue to consider is whether when goals are executed previous phases are executed.</p>
+        
+<p level="10" class="mc_body">Further complicated by goals that cause other phases to be executed.</p>
+        
+<p level="10" class="mc_body">Execution of dependencies and role of inheritance</p>
+      
+</div>
+    
+</div>
+  
+</div>
+<div class="Level_1">
+    
+<p level="1" class="Heading_1">Summary</p>
+    
+<p level="10" class="mc_body">As we have seen, the build section of the POM file specifies the steps required to build the project. &nbsp;You can think of Maven as executing the build section of the POM. &nbsp;</p>
+    
+<p level="10" class="mc_body">The build instructions are not provided in the form of steps to be carried out by Maven but rather specified by identifying the tools (plugins) to be used and the tasks (goals), supported by each plugin, &nbsp;to be performed. &nbsp;The selection of tasks from the POM to be executed is controlled by the arguments passed on the maven command line.</p>
+    
+<p level="10" class="mc_body">To summarise: a task to be performed and its timing in the build process are determined by the following five identifiers:</p>
+    
+<p level="10" class="mc_body" tables="1" row="1" column="1">Lifecycle (packaging)</p>
+    
+<p level="10" class="mc_body" tables="1" row="1" column="1">Phase</p>
+    
+<p level="10" class="mc_body" tables="1" row="1" column="1">Plugin</p>
+    
+<p level="10" class="mc_body" tables="1" row="1" column="1">Goal</p>
+    
+<p level="10" class="mc_body" tables="1" row="1" column="1">Execution Id</p>
+    
+<p level="10" class="Normal" tables="1"></p>
+    
+<p level="10" class="mc_body"></p>
+    
+<p level="10" class="mc_body"></p>
+    
+<p level="10" class="mc_body"></p>
+    
+<p level="10" class="Normal"></p>
+  
+</div>
+</body>
+</html>

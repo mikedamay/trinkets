@@ -14,8 +14,8 @@ namespace mc_form
 {
     public partial class Form1 : Form
     {
-        private string INPUT_FILE_NAME = "mvn_howto.doc";
-        //private string INPUT_FILE_NAME = "mvn_narrative.doc";
+        //private string INPUT_FILE_NAME = "mvn_howto.doc";
+        private string INPUT_FILE_NAME = "mvn_narrative.doc";
         //private string INPUT_FILE_NAME = "mvn_commentary.doc";
         private string OUTPUT_FILE_EXTENSION = "xml";
         private const string EL_DOC = "doc";
@@ -26,14 +26,23 @@ namespace mc_form
         }
         private void Process()
         {
-            //new DocumentController().Doc2Xml();
-            string location = Directory.GetCurrentDirectory();
-            string docPathAndFile = System.IO.Path.Combine(location, INPUT_FILE_NAME);
-            string xmlPathAndFile = System.IO.Path.ChangeExtension(docPathAndFile, OUTPUT_FILE_EXTENSION);
-            Word.Application app = new Word.Application();
-            Word.Document doc = app.Documents.Open(docPathAndFile);
-            WriteDocumentAsXMLFile(doc.StoryRanges[Word.WdStoryType.wdMainTextStory], xmlPathAndFile);
-            (doc as Microsoft.Office.Interop.Word._Document).Close(null, null, null);
+            Word.Document doc = null;
+            try
+            {
+                string location = Directory.GetCurrentDirectory();
+                string docPathAndFile = System.IO.Path.Combine(location, INPUT_FILE_NAME);
+                string xmlPathAndFile = System.IO.Path.ChangeExtension(docPathAndFile, OUTPUT_FILE_EXTENSION);
+                Word.Application app = new Word.Application();
+                doc = app.Documents.Open(docPathAndFile);
+                WriteDocumentAsXMLFile(doc.StoryRanges[Word.WdStoryType.wdMainTextStory], xmlPathAndFile);
+            }
+            finally
+            {
+                if (doc != null)
+                {
+                    (doc as Microsoft.Office.Interop.Word._Document).Close(null, null, null);
+                }
+            }
         }
         private void WriteDocumentAsXMLFile(Word.Range doc, string pathAndFile)
         {

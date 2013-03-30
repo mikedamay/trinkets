@@ -46,7 +46,7 @@ namespace mc_auto
         {
             xw.WriteStartElement(STR_PARAGRAPH);
             xw.WriteAttributeString(STR_LEVEL, pi.Level.ToString());
-            xw.WriteAttributeString(STR_CLASS, pi.Paragraph.get_Style().NameLocal.ToString());
+            xw.WriteAttributeString(STR_CLASS, MassageClassName(pi.Paragraph.get_Style().NameLocal.ToString()));
             GetTableCountAttributeWriter(pi.Paragraph.Range)(xw);
             GetRowAttributeWriter(pi.Paragraph.Range)(xw);
             GetColumnAttributeWriter(pi.Paragraph.Range)(xw);
@@ -188,6 +188,18 @@ namespace mc_auto
             return rng.Tables.Count > 0 && rng.Cells.Count > 0
                 ? (AttributeWriter)((xw) => xw.WriteAttributeString(STR_COLUMN, rng.Cells[1].Column.Index.ToString()))
                 : (xw) => { };
+        }
+        private static string MassageClassName(string classNameIn)
+        {
+            StringBuilder sb = new StringBuilder(classNameIn);
+            for (int ii = 0; ii < sb.Length; ii++)
+            {
+                if (!Char.IsLetterOrDigit(sb[ii]) )
+                {
+                    sb[ii] = '_';
+                }
+            }
+            return sb.ToString();
         }
     }
 }

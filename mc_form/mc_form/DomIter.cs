@@ -9,8 +9,8 @@ namespace mc_auto
 {
     /// <summary>
     /// usage: 
+    ///     domIter.MoveNext();  // need one to get to the first para
     ///     doSomethingWith(domIter.Current);
-    ///     domIter.MoveNext();
     ///     if (domIter.Current.IsEndMarker)
     ///         exit();
     /// 
@@ -31,7 +31,7 @@ namespace mc_auto
             }
             _count = doc.Paragraphs.Count;
             _document = doc;
-            _index = 1;
+            _index = 0;
         }
         public void Reset()
         {
