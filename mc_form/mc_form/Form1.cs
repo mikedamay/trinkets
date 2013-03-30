@@ -14,7 +14,8 @@ namespace mc_form
 {
     public partial class Form1 : Form
     {
-        private string INPUT_FILE_NAME = "mvn_narrative.doc";
+        private string INPUT_FILE_NAME = "mvn_howto.doc";
+        //private string INPUT_FILE_NAME = "mvn_narrative.doc";
         //private string INPUT_FILE_NAME = "mvn_commentary.doc";
         private string OUTPUT_FILE_EXTENSION = "xml";
         private const string EL_DOC = "doc";

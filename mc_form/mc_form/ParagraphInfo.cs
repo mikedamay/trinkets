@@ -151,25 +151,25 @@ namespace mc_auto
             Paragraph = para;
         }
         /// <summary>
-        /// strips unsightly control characters off the end of paragraphs
+        /// strips unsightly control characters out of of paragraphs.  XML cannot handle them
+        /// Most control characters occur at/after the end of the paragraph.  but some such as foot note (introduced by char(2) is 
+        /// embedded.
         /// </summary>
         /// <param name="text">typically Paragraph.Text from Word</param>
-        /// <returns>text minus trailing control characters</returns>
+        /// <returns>text minus trailing and other control characters</returns>
         private static string MassageXMLString(string text)
         {
-            int reduceBy = 0;
-            for (int ii = text.Length - 1; ii >= 0; ii--)
+            StringBuilder sbIn = new StringBuilder(text), sbOut = new StringBuilder(text.Length);
+            int jj = 0, ii = 0;
+            for (ii = 0; ii < text.Length - 1; ii++)
             {
-                if (Char.IsControl(text[ii]))
+                if (!Char.IsControl(sbIn[ii]))
                 {
-                    reduceBy++;
-                }
-                else
-                {
-                    break;
+                    sbOut.Append(sbIn[ii]);
+                    jj++;
                 }
             }
-            return text.Substring(0, text.Length - reduceBy);
+            return sbOut.ToString();
         }
         private static AttributeWriter GetTableCountAttributeWriter(Word.Range rng)
         {

@@ -1,19 +1,19 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<pom:project xmlns:pom="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+  <pom:modelVersion>4.0.0</pom:modelVersion>
 
-  <groupId>disappointed</groupId>
-  <artifactId>quickstart</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <pom:groupId>disappointed</pom:groupId>
+  <pom:artifactId>quickstart</pom:artifactId>
+  <pom:version>1.0-SNAPSHOT</pom:version>
+  <pom:packaging>jar</pom:packaging>
 
-  <name>quickstart</name>
-  <url>http://maven.apache.org</url>
+  <pom:name>quickstart</pom:name>
+  <pom:url>http://maven.apache.org</pom:url>
 
-  <properties>
+  <pom:properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <test.prop>test.prop from properties</test.prop>
-  </properties>
+  </pom:properties>
 
 
 <!--
@@ -67,60 +67,60 @@
     </profile>
     </profiles>
 -->
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-antrun-plugin</artifactId>
-                    <version>1.6</version>
-                    <configuration>
-                        <target name="echo">
+    <pom:build>
+        <pom:pluginManagement>
+            <pom:plugins>
+                <pom:plugin>
+                    <pom:groupId>org.apache.maven.plugins</pom:groupId>
+                    <pom:artifactId>maven-antrun-plugin</pom:artifactId>
+                    <pom:version>1.6</pom:version>
+                    <pom:configuration>
+                        <pom:target name="echo">
                             <echo>end point is set to ${test.prop} from pluginManagement</echo>
                             <echo>${test.prop2}</echo>
-                        </target>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>echo</id>
-                            <phase>install</phase>
-                            <goals>
-                                <goal>run</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>echo</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <target name="echo">
+                        </pom:target>
+                    </pom:configuration>
+                    <pom:executions>
+                        <pom:execution>
+                            <pom:id>echo</pom:id>
+                            <pom:phase>install</pom:phase>
+                            <pom:goals>
+                                <pom:goal>run</pom:goal>
+                            </pom:goals>
+                        </pom:execution>
+                    </pom:executions>
+                </pom:plugin>
+            </pom:plugins>
+        </pom:pluginManagement>
+        <pom:plugins>
+            <pom:plugin>
+                <pom:groupId>org.apache.maven.plugins</pom:groupId>
+                <pom:artifactId>maven-antrun-plugin</pom:artifactId>
+                <pom:executions>
+                    <pom:execution>
+                        <pom:id>echo</pom:id>
+                        <pom:phase>install</pom:phase>
+                        <pom:goals>
+                            <pom:goal>run</pom:goal>
+                        </pom:goals>
+                        <pom:configuration>
+                            <pom:target name="echo">
                                 <echo>end point is set to ${test.prop}</echo>
                                 <echo>${test.prop2}</echo>
-                            </target>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+                            </pom:target>
+                        </pom:configuration>
+                    </pom:execution>
+                </pom:executions>
+            </pom:plugin>
+        </pom:plugins>
+    </pom:build>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-</project>
+  <pom:dependencies>
+    <pom:dependency>
+      <pom:groupId>junit</pom:groupId>
+      <pom:artifactId>junit</pom:artifactId>
+      <pom:version>3.8.1</pom:version>
+      <pom:scope>test</pom:scope>
+    </pom:dependency>
+  </pom:dependencies>
+</pom:project>

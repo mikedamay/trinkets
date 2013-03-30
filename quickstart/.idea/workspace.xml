@@ -16,17 +16,76 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac9d243f-05a9-48ed-9420-b82bd13cf595" name="Default" comment="Testing GIT">
-      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\bob.txt" afterPath="" />
-      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\compiler-config.txt" afterPath="" />
-      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\effective-pom.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\quickstart.iml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\quickstart\resources-config.txt" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/quickstart-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/target/quickstart-1.0-SNAPSHOT.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../directory_tree/directory_tree.html" afterPath="$PROJECT_DIR$/../directory_tree/directory_tree.html" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\fs_simple.PNG" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto.sln" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto.v11.suo" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\ActionsPaneControl1.Designer.cs" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\ActionsPaneControl1.cs" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\ActionsPaneControl1.resx" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\DocumentController.cs" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\DomIter.cs" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\DomProcessor.cs" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\MyExtensions.cs" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\ParagraphInfo.cs" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\ParagraphInfoHelpers.cs" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\Properties\AssemblyInfo.cs" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\Properties\Resources.Designer.cs" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\Properties\Resources.resx" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\Properties\Settings.Designer.cs" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\Properties\Settings.settings" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\ThisDocument.Designer.cs" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\ThisDocument.Designer.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\ThisDocument.cs" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\ThisDocument.resx" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\bin\Debug\Microsoft.Office.Tools.Word.v4.0.Utilities.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\bin\Debug\Microsoft.Office.Tools.Word.v4.0.Utilities.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\bin\Debug\mc_auto" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\bin\Debug\mc_auto.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\bin\Debug\mc_auto.dll.manifest" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\bin\Debug\mc_auto.docm" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\bin\Debug\mc_auto.pdb" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\bin\Debug\mc_auto.vsto" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\bin\Debug\mc_auto.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\bin\Debug\mc_auto_orig.docm" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\bin\Debug\mvn_commentary.docm" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\bin\Debug\mvn_commentary.html" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\bin\Debug\mvn_commentary.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\bin\Debug\mvnc.html" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\bin\Debug\~$c_auto.docm" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\bin\Debug\~$n_commentary.docm" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\mc_auto.csproj" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\mc_auto.docm" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\mc_auto_TemporaryKey.pfx" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\mvn_commentary.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\DesignTimeResolveAssemblyReferences.cache" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\mc_auto.ActionsPaneControl1.resources" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\mc_auto.Properties.Resources.resources" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\mc_auto.ThisDocument.resources" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\mc_auto.csproj.FileListAbsolute.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\mc_auto.csproj.GenerateResource.Cache" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\mc_auto.csprojResolveAssemblyReference.cache" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\mc_auto.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\obj\Debug\mc_auto.pdb" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mc_auto\~$c_auto.docm" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mvn_commentary.doc" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mvn_howto.doc" afterPath="" />
+      <change type="DELETED" beforePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\mc_auto\mvn_narrative.doc" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../mc_form/mc_form/mc_form.csproj" afterPath="$PROJECT_DIR$/../mc_form/mc_form/mc_form.csproj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../mc_form/mc_form/DocumentController.cs" afterPath="$PROJECT_DIR$/../mc_form/mc_form/DocumentController.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../mc_form/mc_form/Form1.cs" afterPath="$PROJECT_DIR$/../mc_form/mc_form/Form1.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../mc_form/mc_form/ParagraphInfo.cs" afterPath="$PROJECT_DIR$/../mc_form/mc_form/ParagraphInfo.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/quickstart.pom" afterPath="$PROJECT_DIR$/quickstart.pom" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="quickstart.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1361163240905" ignored="false" />
+    <file path="/Dummy.txt" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1364536966281" ignored="false" />
     <file path="/pom.xml" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1360509694024" ignored="false" />
     <file path="/DummyFile.xpath" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1361003078625" ignored="false" />
     <file path="/effective-pom.xml" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1361097608806" ignored="false" />
@@ -38,6 +97,10 @@
     <file path="$PROJECT_DIR$/../directory_tree/create_dir_tree.xsl" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1361301853484" ignored="false" />
     <file path="/create_dir_tree.xsl" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1361297857203" ignored="false" />
     <file path="$PROJECT_DIR$/../directory_tree/dir.xml" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1361171750015" ignored="false" />
+    <file path="$PROJECT_DIR$/../mc_live/directory_tree.html" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1364539749093" ignored="false" />
+    <file path="/quickstart.pom" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1364552815500" ignored="false" />
+    <file path="$PROJECT_DIR$/../mc_live/howto.xsl" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1364565882500" ignored="false" />
+    <file path="/howto.xsl" changelist="ac9d243f-05a9-48ed-9420-b82bd13cf595" time="1364565812234" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +125,6 @@
     <sortChildren value="false" />
   </component>
   <component name="DebuggerManager">
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -97,6 +159,7 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -110,28 +173,37 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="24" selection-start="0" selection-end="392" vertical-scroll-proportion="0.14003295">
+            <state line="10" column="0" selection-start="389" selection-end="389" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="quickstart.pom" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="quickstart.iml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/quickstart.iml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="quickstart.pom" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/quickstart.pom">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="18" selection-start="459" selection-end="459" vertical-scroll-proportion="0.0">
+            <state line="11" column="0" selection-start="508" selection-end="508" vertical-scroll-proportion="0.30807248">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="maven.xsd" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../Downloads/maven.xsd">
+      <file leaf-file-name="suppress-default-goal.pom" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/suppress-default-goal.pom">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="240" column="41" selection-start="11832" selection-end="11832" vertical-scroll-proportion="0.0">
+            <state line="0" column="74" selection-start="74" selection-end="74" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -165,6 +237,7 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/effective-pom.xml" />
         <option value="$PROJECT_DIR$/resources-config.txt" />
+        <option value="$PROJECT_DIR$/quickstart.pom" />
       </list>
     </option>
   </component>
@@ -226,8 +299,8 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -246,6 +319,46 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="quickstart" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="quickstart" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="quickstart" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="quickstart" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -254,14 +367,14 @@
     <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="options.lastSelected" value="reference.settingsdialog.IDE.editor.colors" />
     <property name="MemberChooser.sorted" value="false" />
-    <property name="options.lastSelected" value="editing.templates" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../directory_tree/directory_tree.ipr" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="MemberChooser.copyJavadoc" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="Remote" factoryName="Remote">
@@ -366,7 +479,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1292" height="1000" extended-state="1" />
+    <frame x="-8" y="-8" width="1292" height="1000" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298611" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -583,21 +696,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/quickstart.pom">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="18" selection-start="459" selection-end="459" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/projects/apache-maven-3.0.4/maven.iml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/quickstart.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../mc_form/mc_form/bin/Debug/mvn_narrative.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="74" selection-start="38" selection-end="38" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="24" selection-start="0" selection-end="392" vertical-scroll-proportion="0.14003295">
+        <state line="10" column="0" selection-start="389" selection-end="389" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/suppress-default-goal.pom">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="74" selection-start="74" selection-end="74" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/quickstart.pom">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="0" selection-start="508" selection-end="508" vertical-scroll-proportion="0.30807248">
           <folding />
         </state>
       </provider>

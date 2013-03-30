@@ -17,14 +17,24 @@ namespace mc_auto
         private const string EL_DOC = "doc";
         public void Doc2Xml()
         {
-            string location = @"C:\Users\Mike\Documents\GitHub\maven_commentary\mc_auto\mc_auto\bin\Debug";
-            //string location = this.GetType().Assembly.Location;
-            string docPathAndFile = System.IO.Path.Combine(location, INPUT_FILE_NAME);
-            string xmlPathAndFile = System.IO.Path.ChangeExtension(docPathAndFile, OUTPUT_FILE_EXTENSION);
-            Word.Application app = new Word.Application();
-            Word.Document doc = app.Documents.Open(docPathAndFile);
-            WriteDocumentAsXMLFile(doc.StoryRanges[Word.WdStoryType.wdMainTextStory], xmlPathAndFile);
-            (doc as Microsoft.Office.Interop.Word._Document).Close(null, null, null);
+            Word.Document doc = null;
+            try
+            {
+                string location = @"C:\Users\Mike\Documents\GitHub\maven_commentary\mc_auto\mc_auto\bin\Debug";
+                //string location = this.GetType().Assembly.Location;
+                string docPathAndFile = System.IO.Path.Combine(location, INPUT_FILE_NAME);
+                string xmlPathAndFile = System.IO.Path.ChangeExtension(docPathAndFile, OUTPUT_FILE_EXTENSION);
+                Word.Application app = new Word.Application();
+                doc = app.Documents.Open(docPathAndFile);
+                WriteDocumentAsXMLFile(doc.StoryRanges[Word.WdStoryType.wdMainTextStory], xmlPathAndFile);
+            }
+            finally
+            {
+                if (doc != null)
+                {
+                    (doc as Microsoft.Office.Interop.Word._Document).Close(null, null, null);
+                }
+            }
         }
         private void WriteDocumentAsXMLFile(Word.Range doc, string pathAndFile)
         {

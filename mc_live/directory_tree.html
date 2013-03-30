@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>directory_tree</title>
+</head>
+<body>
+    <style type='text/css'>
+        ul.tree    {padding-left: 0}
+        ul.tree ul {padding-left:1em}
+        ul.tree li {list-style-type:none}
+
+            /* specify line style */
+        ul.tree li:not(:last-child),
+        ul.tree li::before {border: 0 solid #604580
+        }
+        ul.tree li.target {color: gray}
+            /* vertical line connecting siblings */
+        ul.tree li:not(:last-child) {border-left-width: 1px}
+            /* horizontal line connecting children to the stem */
+        ul.tree li::before {
+            content: "";
+            display: inline-block;
+            position: relative;
+            border-bottom-width: 1px;
+            bottom: .3em; /*elevation*/
+            min-width: 1ex; /*length*/
+            margin-right: 2px;
+        }
+            /* vertical line connecting the last sibling
+               to the sibling-connecting line */
+        ul.tree li:last-child::before {
+            border-left-width: 1px;
+            min-height: .7em; /*line-height - elevation of the horizontal line*/
+        }
+    </style>
+    <ul class="tree">
+        <li>quickstart
+            <ul>
+
+
+                <li>pom.xml</li>
+
+                <li>quickstart.iml</li>
+
+
+                <li>src
+                    <ul>
+
+                        <li>main
+                            <ul>
+
+                                <li>java
+                                    <ul>
+
+                                        <li>jar
+                                            <ul>
+
+                                                <li>App.java</li>
+
+                                            </ul>
+                                        </li>
+
+                                    </ul>
+                                </li>
+
+                                <li>resources
+                                    <ul>
+
+                                        <li>app.properties</li>
+
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li>suppress-default-goal.pom</li>
+
+                <li class="target">target
+                    <ul>
+
+                        <li>classes
+                            <ul>
+
+                                <li>app.properties</li>
+
+                                <li>jar
+                                    <ul>
+
+                                        <li>App.class</li>
+
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <li>maven-archiver
+                            <ul>
+
+                                <li>pom.properties</li>
+
+                            </ul>
+                        </li>
+
+                        <li>quickstart-1.0-SNAPSHOT.jar</li>
+
+                        <li>surefire
+                            <ul></ul>
+                        </li>
+
+                    </ul>
+                </li>
+
+            </ul>
+        </li>
+    </ul>
+</body>
+</html>
