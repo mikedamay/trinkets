@@ -175,7 +175,7 @@ function doStartup2()
         return this.createElementNS(svgNS, tagName);
     };
 
-    var grid = function (numberPerHSide, numberPerVSide, dims, pixelsAcross, pixelsDown)
+    var grid = function (left, top, numberPerHSide, numberPerVSide, dims, pixelsAcross, pixelsDown)
     {
 
         function makeText(size, number)
@@ -204,6 +204,8 @@ function doStartup2()
         }
 
         var svg = document.createSvg("svg");
+        svg.setAttribute("y", 50);
+        svg.setAttribute("x", 50);
         svg.setAttribute("width", pixelsAcross);
         svg.setAttribute("height", pixelsDown);
         svg.setAttribute("viewBox", [0, 0, numberPerHSide * dims.width, numberPerVSide * dims.height].join(" "));
@@ -234,7 +236,13 @@ function doStartup2()
                     }
                 },
                 false);
-        return svg;
+        var svgParent = document.createSvg("svg");
+        svgParent.setAttribute("y", 0);
+        svgParent.setAttribute("width", pixelsAcross + 100);
+        svgParent.setAttribute("height", pixelsDown + 100);
+        svgParent.setAttribute("viewBox", [0, 0, pixelsAcross - 400, pixelsDown - 300].join(" "));
+        svgParent.appendChild(svg);
+        return svgParent;
     };
 
     function populateGridWithPhases(grid, phases)
@@ -245,7 +253,7 @@ function doStartup2()
     };
 
     var container = document.getElementById("container");
-    container.appendChild(grid(MPG_NUM_COLS, MPG_NUM_ROWS, {width:300, height:100}, 900, 800));
+    container.appendChild(grid(200, 200, MPG_NUM_COLS, MPG_NUM_ROWS, {width:300, height:100}, 900, 800));
     populateGridWithPhases(grid, populated_phases);
 
 }
