@@ -61,9 +61,10 @@ randCol = rand (\r -> if r < 0.1 then lightBlue else defaultPill.col)
 
 interval = (every (second * spawnInterval))
 
+event : Signal Event
 event = mergeMany [ map Tick input
 --                ,map2 (\x col -> Add (newPill x col)) (randX interval) (randCol interval)  -- MM!!!
-                ,map (\x -> Add (newPill 100 lightBlue)) interval
+                ,map (\_ -> Add (newPill 100 lightBlue)) interval
                 ,map (\_ -> Click) Mouse.clicks ] -- Mouse.isClicked is deprecated
 
 -- MODEL
@@ -97,31 +98,20 @@ stepPlay : Event -> Game -> Game
 stepPlay event g =
     case event of
         Tick (t, mp) -> let hit pill = (vecLen <| vecSub g.player.pos pill.pos) < g.player.rad + pill.rad
-                        in  g
-                       
-        Add p        -> { g | pills <- p :: g.pills }
-        Click        -> g
-
-{-
-stepPlay : Event -> Game -> Game
-stepPlay event g =
-    case event of
-        Tick (t, mp) -> let hit pill = (vecLen <| vecSub g.player.pos pill.pos) < g.player.rad + pill.rad
-                            unculled = filter (\{pos} -> snd pos > -hHeight) g.pills
-                            untouched = filter (not << hit) unculled
-                            touched = filter hit unculled
-                            hitColor c = not <| isEmpty <| filter (\{col} -> col == c) touched
+                            unculled = List.filter (\{pos} -> snd pos > -hHeight) g.pills
+                            untouched = List.filter (not << hit) unculled
+                            touched = List.filter hit unculled
+                            hitColor c = not <| isEmpty <| List.filter (\{col} -> col == c) touched
                             hitBlue = hitColor lightBlue
                             hitRed = hitColor lightRed
                             out = let (x, y) = mp in abs (toFloat x) > hWidth || abs (toFloat y) > hHeight
                             g' = { g | player <- stepPlayer mp g.player
-                                     , pills  <- map (stepPill t) untouched
+                                     , pills  <- List.map (stepPill t) untouched
                                      , score  <- if hitBlue then g.score + 1 else g.score }
                         in  if hitRed || out then { defaultGame | score <-  g'.score
                                                                 , state <- Over } else g'
         Add p        -> { g | pills <- p :: g.pills }
         Click        -> g
--}
 
 click : Event -> Bool
 click event =
@@ -152,9 +142,9 @@ render (w, h) g =
         txts = case g.state of
             Start -> [ tf  70 4 "BluePiLL"
                       ,tf   0 2 "Click to Start" ]
-            Play  -> [ tf   0 4 (toString (toForm (show g.score))) ]
+            Play  -> [ tf   0 4 (toString  g.score)]
             Over  -> [ tf  70 4 "Game Over"
-                      ,tf   0 4 (toString (toForm (show g.score)))
+                      ,tf   0 4 (toString  g.score)
                       ,tf -50 2 "Click to Restart" ]
         forms = txts ++ (List.map formPill <| g.player :: g.pills)
     in  color lightGray <| container w h middle
@@ -163,26 +153,3 @@ render (w, h) g =
 
 
 main = map2 render Window.dimensions (foldp stepGame defaultGame event)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
