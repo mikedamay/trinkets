@@ -12,7 +12,7 @@ import Graphics.Element exposing (Element, centered, color
                                   , container, middle, show)
 
 -- CONFIG
-speed = 500
+speed = 50
 spawnInterval = 57 / speed
 sizePill = 15
 sizePlayer = sizePill
@@ -25,7 +25,7 @@ relativeMouse : (Int, Int) -> (Int, Int) -> (Int, Int)
 relativeMouse (ox, oy) (x, y) = (x - ox, -(y - oy))
 
 center : (Int, Int) -> (Int, Int)
-center (w, h) = ( w // 2, h // 2)  -- MM!!! replaced div
+center (w, h) = ( w // 2, h // 2)
 
 type alias Vec = (Float, Float)
 
@@ -43,7 +43,7 @@ vecMulS (x, y) t = (x * t, y * t)
 
 tf : Float -> Float -> String -> Form
 tf y scl str = (Text.fromString str) |> Text.color gray
-                          |> centered    -- MM!! centered
+                          |> centered
                           |> toForm
                           |> scale scl
                           |> move (0, y)
@@ -53,19 +53,12 @@ delta = (fps 30)
 input = map2 (,) (map inSeconds delta)
              (sampleOn delta (map2 relativeMouse (map center Window.dimensions) Mouse.position))
 
---rand fn sig = map fn (Random.float sig)  -- MM!!!  - revisit Random.Generator
---rand fn sig = fn (Random.float 0 1 )
-rand fn sig = fn 0.5
-randX = rand (\r -> (width * r) - hWidth)
-randCol = rand (\r -> if r < 0.1 then lightBlue else defaultPill.col)
-
 interval = (every (second * spawnInterval))
 
 event : Signal Event
 event = mergeMany [ map Tick input
---                ,map2 (\x col -> Add (newPill x col)) (randX interval) (randCol interval)  -- MM!!!
                 ,map (\_ -> Add defaultPill) interval
-                ,map (\_ -> Click) Mouse.clicks ] -- Mouse.isClicked is deprecated
+                ,map (\_ -> Click) Mouse.clicks ]
 
 -- MODEL
 type alias Pill = {pos:Vec, vel:Vec, rad:Float, col:Color}
@@ -99,7 +92,7 @@ newRandomPill pill g =
         (randXX, seed' ) = generate (Random.float 0 1) g.seed
         (colval, seed'' ) = generate (Random.float 0 1) seed'
     in
-        ({ pill | pos <- (width * randXX, -hWidth), col <- lightBlue}
+        ({ pill | pos <- (width * randXX - hWidth, hHeight), col <- if colval > 0.9 then lightBlue else lightRed }
         ,{ g | seed <- seed'' })
 
 -- UPDATE
@@ -124,6 +117,7 @@ stepPlay event g =
         Add p        -> let (p', g') = (newRandomPill p g )
                         in  { g' | pills <- p' :: g.pills }
         Click        -> g
+
 
 click : Event -> Bool
 click event =
