@@ -55,9 +55,30 @@ input = map2 (,) (map inSeconds delta)
 
 interval = (every (second * spawnInterval))
 
+randX sig =
+    let
+        randX' s =
+            let
+                (r,seed) = generate (Random.float 0 1) (initialSeed (truncate s))
+            in
+                width * r - hWidth
+    in                
+        map randX' sig
+
+    
+randCol sig =
+    let
+        randCol' s =
+            let
+                (r,seed) = generate (Random.float 0 1) (initialSeed (truncate s))
+            in
+                if r > 0.9 then lightBlue else lightRed
+    in
+        map randCol' sig
+    
 event : Signal Event
 event = mergeMany [ map Tick input
-                ,map (\_ -> Add defaultPill) interval
+                ,map2 (\x col -> Add (newPill x col)) (randX interval) (randCol interval)
                 ,map (\_ -> Click) Mouse.clicks ]
 
 -- MODEL
@@ -74,26 +95,17 @@ defaultPlayer = { defaultPill | pos <- (0, -hHeight - sizePlayer)
                               , col <- black }
 
 type State = Start | Play | Over
-type alias Game = {player:Pill, pills:List Pill, score:Int, state:State, seed: Seed}
+type alias Game = {player:Pill, pills:List Pill, score:Int, state:State}
 
 defaultGame = { player = defaultPlayer
                ,pills = []
                ,score = 0
                ,state = Start 
-               ,seed = (initialSeed 31425)}
+               }
 
 newPill : Float -> Color -> Pill
 newPill x col = { defaultPill | pos <- (x, hHeight)
                               , col <- col }
-
-newRandomPill : Pill -> Game -> ( Pill, Game)
-newRandomPill pill g =
-    let
-        (randXX, seed' ) = generate (Random.float 0 1) g.seed
-        (colval, seed'' ) = generate (Random.float 0 1) seed'
-    in
-        ({ pill | pos <- (width * randXX - hWidth, hHeight), col <- if colval > 0.9 then lightBlue else lightRed }
-        ,{ g | seed <- seed'' })
 
 -- UPDATE
 type Event = Tick (Time, (Int, Int)) | Add Pill | Click
@@ -114,8 +126,8 @@ stepPlay event g =
                                      , score  <- if hitBlue then g.score + 1 else g.score }
                         in  if hitRed || out then { defaultGame | score <-  g'.score
                                                                 , state <- Over } else g'
-        Add p        -> let (p', g') = (newRandomPill p g )
-                        in  { g' | pills <- p' :: g.pills }
+        Add p        -> { g | pills <- p :: g.pills }
+        
         Click        -> g
 
 
@@ -159,3 +171,4 @@ render (w, h) g =
 
 
 main = map2 render Window.dimensions (foldp stepGame defaultGame event)
+
