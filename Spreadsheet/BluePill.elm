@@ -1,6 +1,15 @@
 import Mouse
 import Window
 import Random
+import Color exposing (Color, black, gray, lightBlue, lightGray, lightRed, white)
+import Time exposing (Time, fps, inSeconds, every, second)
+import Graphics.Collage exposing (Form, circle, collage, filled
+                                  , move, scale, text, toForm)
+import Text exposing (Text)
+import Signal exposing (Signal, filter, foldp, map, map2, mergeMany, sampleOn)
+import List exposing (isEmpty)
+import Graphics.Element exposing (Element, centered, color
+                                  , container, middle, show)
 
 -- CONFIG
 speed = 500
@@ -16,7 +25,7 @@ relativeMouse : (Int, Int) -> (Int, Int) -> (Int, Int)
 relativeMouse (ox, oy) (x, y) = (x - ox, -(y - oy))
 
 center : (Int, Int) -> (Int, Int)
-center (w, h) = (div w 2, div h 2)
+center (w, h) = ( w // 2, h // 2)  -- MM!!! replaced div
 
 type alias Vec = (Float, Float)
 
@@ -33,25 +42,26 @@ vecMulS : Vec -> Time -> Vec
 vecMulS (x, y) t = (x * t, y * t)
 
 tf : Float -> Float -> String -> Form
-tf y scl str = toText str |> Text.color gray
-                          |> centered
+tf y scl str = (Text.fromString str) |> Text.color gray
+                          |> centered    -- MM!! centered
                           |> toForm
                           |> scale scl
                           |> move (0, y)
 
 -- INPUT
 delta = (fps 30)
-input = (,) <~ lift inSeconds delta
-             ~ sampleOn delta (lift2 relativeMouse (lift center Window.dimensions) Mouse.position)
+input = map2 (,) (map inSeconds delta)
+             (sampleOn delta (map2 relativeMouse (map center Window.dimensions) Mouse.position))
 
-rand fn sig = lift fn (Random.float sig)
+rand fn sig = map fn (Random.float sig)
 randX = rand (\r -> (width * r) - hWidth)
 randCol = rand (\r -> if r < 0.1 then lightBlue else defaultPill.col)
 
 interval = (every (second * spawnInterval))
-event = merges [ lift Tick input
-                ,lift2 (\x col -> Add (newPill x col)) (randX interval) (randCol interval)
-                ,lift (\_ -> Click) Mouse.clicks ] -- Mouse.isClicked is deprecated
+
+event = mergeMany [ map Tick input
+                ,map2 (\x col -> Add (newPill x col)) (randX interval) (randCol interval)
+                ,map (\_ -> Click) Mouse.clicks ] -- Mouse.isClicked is deprecated
 
 -- MODEL
 type alias Pill = {pos:Vec, vel:Vec, rad:Float, col:Color}
@@ -66,7 +76,7 @@ defaultPlayer = { defaultPill | pos <- (0, -hHeight - sizePlayer)
                               , col <- black }
 
 type State = Start | Play | Over
-type alias Game = {player:Pill, pills:[Pill], score:Int, state:State}
+type alias Game = {player:Pill, pills:List Pill, score:Int, state:State}
 
 defaultGame = { player = defaultPlayer
                ,pills = []
@@ -85,7 +95,7 @@ stepPlay event g =
     case event of
         Tick (t, mp) -> let hit pill = (vecLen <| vecSub g.player.pos pill.pos) < g.player.rad + pill.rad
                             unculled = filter (\{pos} -> snd pos > -hHeight) g.pills
-                            untouched = filter (not . hit) unculled
+                            untouched = filter (not << hit) unculled
                             touched = filter hit unculled
                             hitColor c = not <| isEmpty <| filter (\{col} -> col == c) touched
                             hitBlue = hitColor lightBlue
@@ -139,4 +149,26 @@ render (w, h) g =
                         <| collage width height forms
 
 
-main = render <~ Window.dimensions ~ foldp stepGame defaultGame event
+main = map2 render Window.dimensions (foldp stepGame defaultGame event)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
