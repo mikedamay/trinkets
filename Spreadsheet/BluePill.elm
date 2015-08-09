@@ -1,6 +1,6 @@
 import Mouse
 import Window
-import Random
+import Random exposing (Seed, generate, initialSeed)
 import Color exposing (Color, black, gray, lightBlue, lightGray, lightRed, white)
 import Time exposing (Time, fps, inSeconds, every, second)
 import Graphics.Collage exposing (Form, circle, collage, filled
@@ -64,7 +64,7 @@ interval = (every (second * spawnInterval))
 event : Signal Event
 event = mergeMany [ map Tick input
 --                ,map2 (\x col -> Add (newPill x col)) (randX interval) (randCol interval)  -- MM!!!
-                ,map (\_ -> Add (newPill 100 lightBlue)) interval
+                ,map (\_ -> Add defaultPill) interval
                 ,map (\_ -> Click) Mouse.clicks ] -- Mouse.isClicked is deprecated
 
 -- MODEL
@@ -73,23 +73,34 @@ type alias Pill = {pos:Vec, vel:Vec, rad:Float, col:Color}
 defaultPill = { pos = (0, hHeight)
                ,vel = (0, -speed)
                ,rad = sizePill
-               ,col = lightRed }
+               ,col = lightRed 
+               }
 
 defaultPlayer = { defaultPill | pos <- (0, -hHeight - sizePlayer)
                               , rad <- sizePlayer
                               , col <- black }
 
 type State = Start | Play | Over
-type alias Game = {player:Pill, pills:List Pill, score:Int, state:State}
+type alias Game = {player:Pill, pills:List Pill, score:Int, state:State, seed: Seed}
 
 defaultGame = { player = defaultPlayer
                ,pills = []
                ,score = 0
-               ,state = Start }
+               ,state = Start 
+               ,seed = (initialSeed 31425)}
 
 newPill : Float -> Color -> Pill
 newPill x col = { defaultPill | pos <- (x, hHeight)
                               , col <- col }
+
+newRandomPill : Pill -> Game -> ( Pill, Game)
+newRandomPill pill g =
+    let
+        (randXX, seed' ) = generate (Random.float 0 1) g.seed
+        (colval, seed'' ) = generate (Random.float 0 1) seed'
+    in
+        ({ pill | pos <- (width * randXX, -hWidth), col <- lightBlue}
+        ,{ g | seed <- seed'' })
 
 -- UPDATE
 type Event = Tick (Time, (Int, Int)) | Add Pill | Click
@@ -110,7 +121,8 @@ stepPlay event g =
                                      , score  <- if hitBlue then g.score + 1 else g.score }
                         in  if hitRed || out then { defaultGame | score <-  g'.score
                                                                 , state <- Over } else g'
-        Add p        -> { g | pills <- p :: g.pills }
+        Add p        -> let (p', g') = (newRandomPill p g )
+                        in  { g' | pills <- p' :: g.pills }
         Click        -> g
 
 click : Event -> Bool
