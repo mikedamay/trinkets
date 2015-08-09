@@ -53,14 +53,17 @@ delta = (fps 30)
 input = map2 (,) (map inSeconds delta)
              (sampleOn delta (map2 relativeMouse (map center Window.dimensions) Mouse.position))
 
-rand fn sig = map fn (Random.float sig)
+--rand fn sig = map fn (Random.float sig)  -- MM!!!  - revisit Random.Generator
+--rand fn sig = fn (Random.float 0 1 )
+rand fn sig = fn 0.5
 randX = rand (\r -> (width * r) - hWidth)
 randCol = rand (\r -> if r < 0.1 then lightBlue else defaultPill.col)
 
 interval = (every (second * spawnInterval))
 
 event = mergeMany [ map Tick input
-                ,map2 (\x col -> Add (newPill x col)) (randX interval) (randCol interval)
+--                ,map2 (\x col -> Add (newPill x col)) (randX interval) (randCol interval)  -- MM!!!
+                ,map (\x -> Add (newPill 100 lightBlue)) interval
                 ,map (\_ -> Click) Mouse.clicks ] -- Mouse.isClicked is deprecated
 
 -- MODEL
@@ -94,6 +97,16 @@ stepPlay : Event -> Game -> Game
 stepPlay event g =
     case event of
         Tick (t, mp) -> let hit pill = (vecLen <| vecSub g.player.pos pill.pos) < g.player.rad + pill.rad
+                        in  g
+                       
+        Add p        -> { g | pills <- p :: g.pills }
+        Click        -> g
+
+{-
+stepPlay : Event -> Game -> Game
+stepPlay event g =
+    case event of
+        Tick (t, mp) -> let hit pill = (vecLen <| vecSub g.player.pos pill.pos) < g.player.rad + pill.rad
                             unculled = filter (\{pos} -> snd pos > -hHeight) g.pills
                             untouched = filter (not << hit) unculled
                             touched = filter hit unculled
@@ -108,7 +121,7 @@ stepPlay event g =
                                                                 , state <- Over } else g'
         Add p        -> { g | pills <- p :: g.pills }
         Click        -> g
-
+-}
 
 click : Event -> Bool
 click event =
@@ -139,17 +152,18 @@ render (w, h) g =
         txts = case g.state of
             Start -> [ tf  70 4 "BluePiLL"
                       ,tf   0 2 "Click to Start" ]
-            Play  -> [ tf   0 4 (show g.score) ]
+            Play  -> [ tf   0 4 (toString (toForm (show g.score))) ]
             Over  -> [ tf  70 4 "Game Over"
-                      ,tf   0 4 (show g.score)
+                      ,tf   0 4 (toString (toForm (show g.score)))
                       ,tf -50 2 "Click to Restart" ]
-        forms = txts ++ (map formPill <| g.player :: g.pills)
+        forms = txts ++ (List.map formPill <| g.player :: g.pills)
     in  color lightGray <| container w h middle
                         <| color white
                         <| collage width height forms
 
 
 main = map2 render Window.dimensions (foldp stepGame defaultGame event)
+
 
 
 
