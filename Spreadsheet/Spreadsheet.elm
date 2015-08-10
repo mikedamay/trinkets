@@ -5,32 +5,30 @@ import Color
 import Text
 import Window
 import Mouse
-import Gridlines exposing (doGridlines)
--- doGridlines = Signal.map (\_ -> []) (Time.fps 1)  -- dummy routine while testing on elm site
+-- import Gridlines exposing (doGridlines)
+doGridlines = Signal.map (\_ -> []) (Time.fps 1)  -- dummy routine while testing on elm site
 
 type alias Vec = (Float, Float)
 
 type alias Pos = (Int, Int)
 
-mainy : Signal.Signal Graphics.Element.Element
-mainy =
-    Signal.map handleClick (Signal.sampleOn Mouse.clicks Mouse.position)
-    
-handleClick : Pos -> Graphics.Element.Element    
-handleClick (x, y) =
-    Graphics.Collage.collage 500 500 [Graphics.Collage.toForm (Graphics.Element.show (x,y))]
-
 main : Signal.Signal Graphics.Element.Element
 main =
     doCollage (Time.fps 1) Window.dimensions
 
+type Event = Mover Time.Time | Gridder GridCoords | Clicker (Int, Int) | Dimmer (Int, Int)
+
 doCollage : Signal.Signal Time.Time -> Signal.Signal (Int, Int) -> Signal.Signal Graphics.Element.Element
 doCollage timeSignal windowSignal =
   let
-      staticCollageToElement fm fm2 (width, height) =
-        Graphics.Collage.collage width height (List.concat [[fm], fm2])
+      staticCollageToElement fm fm2 fm3 (width, height) =
+        Graphics.Collage.collage width height (List.concat [[fm], fm2, [fm3]])
   in
-      Signal.map3 staticCollageToElement (moveForm timeSignal) doGridlines windowSignal
+      Signal.map4 staticCollageToElement
+        (moveForm timeSignal)
+        doGridlines
+        (Signal.map handleClick (Signal.sampleOn Mouse.clicks Mouse.position))
+        windowSignal
 
 moveForm : Signal.Signal Time.Time -> Signal.Signal (Graphics.Collage.Form)
 moveForm timeSignal =
@@ -54,6 +52,10 @@ constrainMovement t (direction, magnitude) =
   if | magnitude > 20 -> (-1, 20)
      | magnitude < 0 -> (1, 0)
      | otherwise -> (direction, magnitude + direction)
+
+handleClick : Pos -> Graphics.Collage.Form
+handleClick (x, y) =
+    Graphics.Collage.move (200,200) (Graphics.Collage.toForm (Graphics.Element.show (x,y)))
 
 
 
