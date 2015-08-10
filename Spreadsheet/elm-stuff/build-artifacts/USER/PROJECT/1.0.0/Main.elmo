@@ -12,6 +12,7 @@ Elm.Main.make = function (_elm) {
    $Basics = Elm.Basics.make(_elm),
    $Graphics$Collage = Elm.Graphics.Collage.make(_elm),
    $Graphics$Element = Elm.Graphics.Element.make(_elm),
+   $Gridlines = Elm.Gridlines.make(_elm),
    $List = Elm.List.make(_elm),
    $Maybe = Elm.Maybe.make(_elm),
    $Mouse = Elm.Mouse.make(_elm),
@@ -19,13 +20,6 @@ Elm.Main.make = function (_elm) {
    $Signal = Elm.Signal.make(_elm),
    $Time = Elm.Time.make(_elm),
    $Window = Elm.Window.make(_elm);
-   var doGridLines = function (sig) {
-      return A2($Signal.map,
-      function (a) {
-         return _L.fromArray([]);
-      },
-      sig);
-   };
    var constrainMovement = F2(function (t,
    _v0) {
       return function () {
@@ -41,7 +35,7 @@ Elm.Main.make = function (_elm) {
                                  ,_0: _v0._0
                                  ,_1: _v0._1 + _v0._0};}
          _U.badCase($moduleName,
-         "between lines 53 and 55");
+         "between lines 54 and 56");
       }();
    });
    var moveFormOneStep = F2(function (t,
@@ -63,7 +57,7 @@ Elm.Main.make = function (_elm) {
                         ,_1: newVec};
               }();}
          _U.badCase($moduleName,
-         "between lines 44 and 48");
+         "between lines 45 and 49");
       }();
    });
    var moveForm = function (timeSignal) {
@@ -96,17 +90,17 @@ Elm.Main.make = function (_elm) {
                     $List.concat(_L.fromArray([_L.fromArray([fm])
                                               ,fm2])));}
                _U.badCase($moduleName,
-               "on line 30, column 18 to 71");
+               "on line 31, column 18 to 71");
             }();
          });
          return A4($Signal.map3,
          staticCollageToElement,
          moveForm(timeSignal),
-         doGridLines(windowSignal),
+         $Gridlines.doGridlines,
          windowSignal);
       }();
    });
-   var mainx = A2(doCollage,
+   var main = A2(doCollage,
    $Time.fps(1),
    $Window.dimensions);
    var handleClick = function (_v12) {
@@ -120,22 +114,21 @@ Elm.Main.make = function (_elm) {
                                                                             ,_0: _v12._0
                                                                             ,_1: _v12._1}))]));}
          _U.badCase($moduleName,
-         "on line 20, column 14 to 93");
+         "on line 21, column 14 to 93");
       }();
    };
-   var main = A2($Signal.map,
+   var mainy = A2($Signal.map,
    handleClick,
    A2($Signal.sampleOn,
    $Mouse.clicks,
    $Mouse.position));
    _elm.Main.values = {_op: _op
-                      ,main: main
+                      ,mainy: mainy
                       ,handleClick: handleClick
-                      ,mainx: mainx
+                      ,main: main
                       ,doCollage: doCollage
                       ,moveForm: moveForm
                       ,moveFormOneStep: moveFormOneStep
-                      ,constrainMovement: constrainMovement
-                      ,doGridLines: doGridLines};
+                      ,constrainMovement: constrainMovement};
    return _elm.Main.values;
 };

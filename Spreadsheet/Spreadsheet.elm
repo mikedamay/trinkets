@@ -5,23 +5,23 @@ import Color
 import Text
 import Window
 import Mouse
--- import Gridlines exposing (doGridLines)
-doGridLines sig = Signal.map (\a -> []) sig  -- dummy routine while testing on elm site
+import Gridlines exposing (doGridlines)
+-- doGridlines = Signal.map (\_ -> []) (Time.fps 1)  -- dummy routine while testing on elm site
 
 type alias Vec = (Float, Float)
 
 type alias Pos = (Int, Int)
 
-main : Signal.Signal Graphics.Element.Element
-main =
+mainy : Signal.Signal Graphics.Element.Element
+mainy =
     Signal.map handleClick (Signal.sampleOn Mouse.clicks Mouse.position)
     
 handleClick : Pos -> Graphics.Element.Element    
 handleClick (x, y) =
     Graphics.Collage.collage 500 500 [Graphics.Collage.toForm (Graphics.Element.show (x,y))]
 
-mainx : Signal.Signal Graphics.Element.Element
-mainx =
+main : Signal.Signal Graphics.Element.Element
+main =
     doCollage (Time.fps 1) Window.dimensions
 
 doCollage : Signal.Signal Time.Time -> Signal.Signal (Int, Int) -> Signal.Signal Graphics.Element.Element
@@ -30,7 +30,7 @@ doCollage timeSignal windowSignal =
       staticCollageToElement fm fm2 (width, height) =
         Graphics.Collage.collage width height (List.concat [[fm], fm2])
   in
-      Signal.map3 staticCollageToElement (moveForm timeSignal) (doGridLines windowSignal) windowSignal
+      Signal.map3 staticCollageToElement (moveForm timeSignal) doGridlines windowSignal
 
 moveForm : Signal.Signal Time.Time -> Signal.Signal (Graphics.Collage.Form)
 moveForm timeSignal =

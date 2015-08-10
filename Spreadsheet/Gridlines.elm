@@ -1,52 +1,47 @@
 module Gridlines where
-
 import Graphics.Element
 import Graphics.Collage
 import Time
 import Color
 import Text
 import Window
+import Grid exposing (GridCoords, getGridCoords)
 
-cellHeight = 17
-cellWidth = 100
+--main : Signal.Signal Graphics.Element.Element
+--main =
+--    Signal.map2 setWindowAsCollage Window.dimensions
+--       (makeGridlines (getGridCoords Window.dimensions) Window.dimensions)
 
-type alias Liner = Int -> (Int, Int) -> Graphics.Collage.Form
+doGridlines =
+    makeGridlines (getGridCoords Window.dimensions) Window.dimensions
 
-{-
-    takes a signal of dimensions and returns a set of grid lines fitting those dimensions
--}
-doGridLines : Signal.Signal (Int, Int) -> Signal.Signal (List Graphics.Collage.Form)
-doGridLines windowSignal =
+setWindowAsCollage : (Int, Int)
+                     -> List Graphics.Collage.Form
+                     -> Graphics.Element.Element
+setWindowAsCollage windowDimensions gridlines =
+    Graphics.Collage.collage (fst windowDimensions) (snd windowDimensions) gridlines
+
+makeGridlines : Signal.Signal GridCoords
+                -> Signal.Signal (Int, Int)
+                -> Signal.Signal (List Graphics.Collage.Form)
+makeGridlines gridCoords windowDimensions =
     let
-        doGridLinesEx (width, height) =
+        makeGridlines' gridCoords (width, height) =
             let
-                vgl = horzOrVert (width // cellWidth)
-                hgl = horzOrVert (height // cellHeight)
+                makeVerts (w, h) pos =
+                  makeGridline (w, h) [(toFloat pos, 0),(toFloat pos, toFloat h)]
+                makeHorzs (w, h) pos =
+                  makeGridline (w, h) [(0, (toFloat pos)), ((toFloat w), (toFloat pos))]
             in
-                List.concat [(vgl (width, height) vfm),
-                (hgl (width, height) hfm)]
+                List.concat [List.map (makeVerts (width, height)) gridCoords.vert
+                 ,List.map (makeHorzs (width, height)) gridCoords.horz]
     in
-        Signal.map doGridLinesEx windowSignal
+        Signal.map2 makeGridlines' gridCoords windowDimensions
 
-horzOrVert : Int -> (Int, Int) -> Liner -> List Graphics.Collage.Form
-horzOrVert ctr (width, height) fm =
-  if ctr == 0 then
-    []
-  else
-    (fm ctr (width, height)) :: (horzOrVert (ctr - 1) (width, height) fm)
-
-hfm : Liner
-hfm ctr (width, height) =
-    vhfm (width, height)
-      [(0, toFloat ctr * cellHeight),(toFloat width, toFloat (ctr * cellHeight) )]
-
-vfm : Liner
-vfm ctr (width, height) =
-    vhfm (width, height)
-    [(toFloat ctr * cellWidth, 0),(toFloat (ctr * cellWidth), toFloat height)]
-
-vhfm (width, height) path = 
+makeGridline : (Int, Int) -> Graphics.Collage.Path -> Graphics.Collage.Form
+makeGridline (width, height) path =
     let
+        myLineStyle : Color.Color -> Graphics.Collage.LineStyle
         myLineStyle  clr =
             let
                 localDefaultLine =
@@ -54,8 +49,5 @@ vhfm (width, height) path =
             in
                 { localDefaultLine | color <- Color.gray }
     in
-        Graphics.Collage.move ( -(toFloat width) / 2, -(toFloat height) / 2) 
+        Graphics.Collage.move ( -(toFloat width) / 2, -(toFloat height) / 2)
           <| Graphics.Collage.traced (myLineStyle Color.gray) path
-
-
-
