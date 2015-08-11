@@ -13,7 +13,7 @@ import Grid exposing (GridCoords, getGridCoords)
 --       (makeGridlines (getGridCoords Window.dimensions) Window.dimensions)
 
 doGridlines =
-    makeGridlines (getGridCoords Window.dimensions) Window.dimensions
+    makeGridlinesWithSig (getGridCoords Window.dimensions) Window.dimensions
 
 setWindowAsCollage : (Int, Int)
                      -> List Graphics.Collage.Form
@@ -21,22 +21,21 @@ setWindowAsCollage : (Int, Int)
 setWindowAsCollage windowDimensions gridlines =
     Graphics.Collage.collage (fst windowDimensions) (snd windowDimensions) gridlines
 
-makeGridlines : Signal.Signal GridCoords
+makeGridlinesWithSig : Signal.Signal GridCoords
                 -> Signal.Signal (Int, Int)
                 -> Signal.Signal (List Graphics.Collage.Form)
-makeGridlines gridCoords windowDimensions =
+makeGridlinesWithSig gridCoords windowDimensions =
+        Signal.map2 makeGridlines gridCoords windowDimensions
+
+makeGridlines gridCoords (width, height) =
     let
-        makeGridlines' gridCoords (width, height) =
-            let
-                makeVerts (w, h) pos =
-                  makeGridline (w, h) [(toFloat pos, 0),(toFloat pos, toFloat h)]
-                makeHorzs (w, h) pos =
-                  makeGridline (w, h) [(0, (toFloat pos)), ((toFloat w), (toFloat pos))]
-            in
-                List.concat [List.map (makeVerts (width, height)) gridCoords.vert
-                 ,List.map (makeHorzs (width, height)) gridCoords.horz]
+        makeVerts (w, h) pos =
+          makeGridline (w, h) [(toFloat pos, 0),(toFloat pos, toFloat h)]
+        makeHorzs (w, h) pos =
+          makeGridline (w, h) [(0, (toFloat pos)), ((toFloat w), (toFloat pos))]
     in
-        Signal.map2 makeGridlines' gridCoords windowDimensions
+        List.concat [List.map (makeVerts (width, height)) gridCoords.vert
+         ,List.map (makeHorzs (width, height)) gridCoords.horz]
 
 makeGridline : (Int, Int) -> Graphics.Collage.Path -> Graphics.Collage.Form
 makeGridline (width, height) path =

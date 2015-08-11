@@ -5,50 +5,60 @@ import Color
 import Text
 import Window
 import Mouse
--- import Gridlines exposing (doGridlines)
-doGridlines = Signal.map (\_ -> []) (Time.fps 1)  -- dummy routine while testing on elm site
+import Gridlines exposing (doGridlines)
+import Grid exposing (GridCoords, getGridCoords)
+--type alias GridCoords = { horz : List Int, vert : List Int }
+--doGridlines = Signal.map (\_ -> []) (Time.fps 1)  -- dummy routine while testing on elm site
+--getGridCoords p = {horz=[], vert=[]}
 
 type alias Vec = (Float, Float)
-
 type alias Pos = (Int, Int)
 
 main : Signal.Signal Graphics.Element.Element
 main =
-    doCollage (Time.fps 1) Window.dimensions
+    doCollage
 
-type Event = Mover Time.Time | Gridder GridCoords | Clicker (Int, Int) | Dimmer (Int, Int)
+doCollage : Signal.Signal Graphics.Element.Element
+doCollage =
+    Signal.map (Graphics.Collage.collage 500 500)
+      (Signal.map2 prepareForRender (Signal.foldp doModel initialModel event) Window.dimensions)
 
-doCollage : Signal.Signal Time.Time -> Signal.Signal (Int, Int) -> Signal.Signal Graphics.Element.Element
-doCollage timeSignal windowSignal =
-  let
-      staticCollageToElement fm fm2 fm3 (width, height) =
-        Graphics.Collage.collage width height (List.concat [[fm], fm2, [fm3]])
-  in
-      Signal.map4 staticCollageToElement
-        (moveForm timeSignal)
-        doGridlines
-        (Signal.map handleClick (Signal.sampleOn Mouse.clicks Mouse.position))
-        windowSignal
+prepareForRender : Model -> (Int, Int) -> List Graphics.Collage.Form
+prepareForRender model (width, height) =
+    List.concat [[ moveForm model.mover, handleClick model.clicker
+      ], Gridlines.makeGridlines model.gridder (width, height)]
 
-moveForm : Signal.Signal Time.Time -> Signal.Signal (Graphics.Collage.Form)
-moveForm timeSignal =
+moveForm : (Float, Float) -> Graphics.Collage.Form
+moveForm pos =
   let
       myForm =
         Graphics.Collage.toForm ( Graphics.Element.show "mike was here" )
   in
-      Signal.map Basics.fst (Signal.foldp moveFormOneStep (myForm, (1, 1)) timeSignal)
-
-moveFormOneStep : Float -> (Graphics.Collage.Form, Vec) -> (Graphics.Collage.Form, Vec)
-moveFormOneStep t (fm, vec) =
-  let
-      newVec = (constrainMovement t vec)
-      x = t / 500
-  in
-      (Graphics.Collage.move (x * fst newVec, 0) fm, newVec)
+      Graphics.Collage.move pos myForm
 
 
-constrainMovement : Time.Time -> (Float, Float) -> (Float, Float)
-constrainMovement t (direction, magnitude) =
+type Event = Mover Time.Time | Gridder GridCoords | Clicker (Int, Int) | Dimmer (Int, Int)
+event : Signal Event
+event = Signal.mergeMany [Signal.map Mover (Time.fps 30)
+                          ,Signal.map Gridder (getGridCoords Window.dimensions)
+                          ,Signal.map Clicker (Signal.sampleOn Mouse.clicks Mouse.position)
+                          ,Signal.map Dimmer Window.dimensions
+                         ]
+
+type alias Model = {mover : (Float, Float), gridder : GridCoords, clicker : (Int, Int), dimmer : (Int, Int) }
+initialModel : Model
+initialModel = {mover=(1,1), gridder = {horz=[], vert=[]}, clicker = (200,200), dimmer = (500, 500) }
+
+doModel : Event -> Model -> Model
+doModel event model =
+    case event of
+        Mover t     -> {model | mover <- constrainMovement model.mover }
+        Gridder g   -> {model | gridder <- g }
+        Clicker p   -> {model | clicker <- p }
+        Dimmer d    -> {model | dimmer <- d }
+
+constrainMovement : (Float, Float) -> (Float, Float)
+constrainMovement (direction, magnitude) =
   if | magnitude > 20 -> (-1, 20)
      | magnitude < 0 -> (1, 0)
      | otherwise -> (direction, magnitude + direction)
@@ -59,4 +69,5 @@ handleClick (x, y) =
 
 
 
+-- ******************************************************************************************
 

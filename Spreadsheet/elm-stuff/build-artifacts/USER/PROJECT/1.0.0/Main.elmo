@@ -12,6 +12,7 @@ Elm.Main.make = function (_elm) {
    $Basics = Elm.Basics.make(_elm),
    $Graphics$Collage = Elm.Graphics.Collage.make(_elm),
    $Graphics$Element = Elm.Graphics.Element.make(_elm),
+   $Grid = Elm.Grid.make(_elm),
    $Gridlines = Elm.Gridlines.make(_elm),
    $List = Elm.List.make(_elm),
    $Maybe = Elm.Maybe.make(_elm),
@@ -20,115 +21,164 @@ Elm.Main.make = function (_elm) {
    $Signal = Elm.Signal.make(_elm),
    $Time = Elm.Time.make(_elm),
    $Window = Elm.Window.make(_elm);
-   var constrainMovement = F2(function (t,
-   _v0) {
+   var handleClick = function (_v0) {
       return function () {
          switch (_v0.ctor)
          {case "_Tuple2":
-            return _U.cmp(_v0._1,
-              20) > 0 ? {ctor: "_Tuple2"
-                        ,_0: -1
-                        ,_1: 20} : _U.cmp(_v0._1,
-              0) < 0 ? {ctor: "_Tuple2"
-                       ,_0: 1
-                       ,_1: 0} : {ctor: "_Tuple2"
-                                 ,_0: _v0._0
-                                 ,_1: _v0._1 + _v0._0};}
+            return A2($Graphics$Collage.move,
+              {ctor: "_Tuple2"
+              ,_0: 200
+              ,_1: 200},
+              $Graphics$Collage.toForm($Graphics$Element.show({ctor: "_Tuple2"
+                                                              ,_0: _v0._0
+                                                              ,_1: _v0._1})));}
          _U.badCase($moduleName,
-         "between lines 54 and 56");
+         "on line 68, column 14 to 89");
       }();
-   });
-   var moveFormOneStep = F2(function (t,
-   _v4) {
+   };
+   var constrainMovement = function (_v4) {
       return function () {
          switch (_v4.ctor)
          {case "_Tuple2":
-            return function () {
-                 var x = t / 500;
-                 var newVec = A2(constrainMovement,
-                 t,
-                 _v4._1);
-                 return {ctor: "_Tuple2"
-                        ,_0: A2($Graphics$Collage.move,
-                        {ctor: "_Tuple2"
-                        ,_0: x * $Basics.fst(newVec)
-                        ,_1: 0},
-                        _v4._0)
-                        ,_1: newVec};
-              }();}
+            return _U.cmp(_v4._1,
+              20) > 0 ? {ctor: "_Tuple2"
+                        ,_0: -1
+                        ,_1: 20} : _U.cmp(_v4._1,
+              0) < 0 ? {ctor: "_Tuple2"
+                       ,_0: 1
+                       ,_1: 0} : {ctor: "_Tuple2"
+                                 ,_0: _v4._0
+                                 ,_1: _v4._1 + _v4._0};}
          _U.badCase($moduleName,
-         "between lines 45 and 49");
+         "between lines 62 and 64");
+      }();
+   };
+   var doModel = F2(function (event,
+   model) {
+      return function () {
+         switch (event.ctor)
+         {case "Clicker":
+            return _U.replace([["clicker"
+                               ,event._0]],
+              model);
+            case "Dimmer":
+            return _U.replace([["dimmer"
+                               ,event._0]],
+              model);
+            case "Gridder":
+            return _U.replace([["gridder"
+                               ,event._0]],
+              model);
+            case "Mover":
+            return _U.replace([["mover"
+                               ,constrainMovement(model.mover)]],
+              model);}
+         _U.badCase($moduleName,
+         "between lines 54 and 58");
       }();
    });
-   var moveForm = function (timeSignal) {
+   var initialModel = {_: {}
+                      ,clicker: {ctor: "_Tuple2"
+                                ,_0: 200
+                                ,_1: 200}
+                      ,dimmer: {ctor: "_Tuple2"
+                               ,_0: 500
+                               ,_1: 500}
+                      ,gridder: {_: {}
+                                ,horz: _L.fromArray([])
+                                ,vert: _L.fromArray([])}
+                      ,mover: {ctor: "_Tuple2"
+                              ,_0: 1
+                              ,_1: 1}};
+   var Model = F4(function (a,
+   b,
+   c,
+   d) {
+      return {_: {}
+             ,clicker: c
+             ,dimmer: d
+             ,gridder: b
+             ,mover: a};
+   });
+   var Dimmer = function (a) {
+      return {ctor: "Dimmer"
+             ,_0: a};
+   };
+   var Clicker = function (a) {
+      return {ctor: "Clicker"
+             ,_0: a};
+   };
+   var Gridder = function (a) {
+      return {ctor: "Gridder"
+             ,_0: a};
+   };
+   var Mover = function (a) {
+      return {ctor: "Mover",_0: a};
+   };
+   var event = $Signal.mergeMany(_L.fromArray([A2($Signal.map,
+                                              Mover,
+                                              $Time.fps(30))
+                                              ,A2($Signal.map,
+                                              Gridder,
+                                              $Grid.getGridCoords($Window.dimensions))
+                                              ,A2($Signal.map,
+                                              Clicker,
+                                              A2($Signal.sampleOn,
+                                              $Mouse.clicks,
+                                              $Mouse.position))
+                                              ,A2($Signal.map,
+                                              Dimmer,
+                                              $Window.dimensions)]));
+   var moveForm = function (pos) {
       return function () {
          var myForm = $Graphics$Collage.toForm($Graphics$Element.show("mike was here"));
-         return A2($Signal.map,
-         $Basics.fst,
-         A3($Signal.foldp,
-         moveFormOneStep,
-         {ctor: "_Tuple2"
-         ,_0: myForm
-         ,_1: {ctor: "_Tuple2"
-              ,_0: 1
-              ,_1: 1}},
-         timeSignal));
+         return A2($Graphics$Collage.move,
+         pos,
+         myForm);
       }();
    };
-   var doCollage = F2(function (timeSignal,
-   windowSignal) {
+   var prepareForRender = F2(function (model,
+   _v13) {
       return function () {
-         var staticCollageToElement = F3(function (fm,
-         fm2,
-         _v8) {
-            return function () {
-               switch (_v8.ctor)
-               {case "_Tuple2":
-                  return A3($Graphics$Collage.collage,
-                    _v8._0,
-                    _v8._1,
-                    $List.concat(_L.fromArray([_L.fromArray([fm])
-                                              ,fm2])));}
-               _U.badCase($moduleName,
-               "on line 31, column 18 to 71");
-            }();
-         });
-         return A4($Signal.map3,
-         staticCollageToElement,
-         moveForm(timeSignal),
-         $Gridlines.doGridlines,
-         windowSignal);
+         switch (_v13.ctor)
+         {case "_Tuple2":
+            return $List.concat(_L.fromArray([_L.fromArray([moveForm(model.mover)
+                                                           ,handleClick(model.clicker)])
+                                             ,A2($Gridlines.makeGridlines,
+                                             model.gridder,
+                                             {ctor: "_Tuple2"
+                                             ,_0: _v13._0
+                                             ,_1: _v13._1})]));}
+         _U.badCase($moduleName,
+         "between lines 28 and 29");
       }();
    });
-   var main = A2(doCollage,
-   $Time.fps(1),
-   $Window.dimensions);
-   var handleClick = function (_v12) {
-      return function () {
-         switch (_v12.ctor)
-         {case "_Tuple2":
-            return A3($Graphics$Collage.collage,
-              500,
-              500,
-              _L.fromArray([$Graphics$Collage.toForm($Graphics$Element.show({ctor: "_Tuple2"
-                                                                            ,_0: _v12._0
-                                                                            ,_1: _v12._1}))]));}
-         _U.badCase($moduleName,
-         "on line 21, column 14 to 93");
-      }();
-   };
-   var mainy = A2($Signal.map,
-   handleClick,
-   A2($Signal.sampleOn,
-   $Mouse.clicks,
-   $Mouse.position));
+   var doCollage = A2($Signal.map,
+   A2($Graphics$Collage.collage,
+   500,
+   500),
+   A3($Signal.map2,
+   prepareForRender,
+   A3($Signal.foldp,
+   doModel,
+   initialModel,
+   event),
+   $Window.dimensions));
+   var main = doCollage;
    _elm.Main.values = {_op: _op
-                      ,mainy: mainy
-                      ,handleClick: handleClick
                       ,main: main
                       ,doCollage: doCollage
+                      ,prepareForRender: prepareForRender
                       ,moveForm: moveForm
-                      ,moveFormOneStep: moveFormOneStep
-                      ,constrainMovement: constrainMovement};
+                      ,Mover: Mover
+                      ,Gridder: Gridder
+                      ,Clicker: Clicker
+                      ,Dimmer: Dimmer
+                      ,event: event
+                      ,Model: Model
+                      ,initialModel: initialModel
+                      ,doModel: doModel
+                      ,constrainMovement: constrainMovement
+                      ,handleClick: handleClick};
    return _elm.Main.values;
 };
