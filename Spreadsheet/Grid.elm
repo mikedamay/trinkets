@@ -30,6 +30,18 @@ getGridCoords winDims =
     in  
         Signal.map getGridCoords' winDims 
 
+getGridCoordsEx : (Int, Int) -> GridCoords
+getGridCoordsEx (width, height) =
+        let
+            numCols = width // cellWidth
+            numRows = height // cellHeight
+            spacer numRowsOrCols space =
+                let
+                    multiplyBySpace n = n * space
+                in
+                    List.map multiplyBySpace [1..numRowsOrCols]
+        in
+            { horz = (spacer numRows cellHeight), vert = (spacer numCols cellWidth) }
 
 
 
