@@ -7,32 +7,12 @@ import Text
 import Window
 import Grid exposing (GridCoords, getGridCoords)
 
---main : Signal.Signal Graphics.Element.Element
---main =
---    Signal.map2 setWindowAsCollage Window.dimensions
---       (makeGridlines (getGridCoords Window.dimensions) Window.dimensions)
-
-doGridlines =
-    makeGridlinesWithSig (getGridCoords Window.dimensions) Window.dimensions
-
-setWindowAsCollage : (Int, Int)
-                     -> List Graphics.Collage.Form
-                     -> Graphics.Element.Element
-setWindowAsCollage windowDimensions gridlines =
-    Graphics.Collage.collage (fst windowDimensions) (snd windowDimensions) gridlines
-
-makeGridlinesWithSig : Signal.Signal GridCoords
-                -> Signal.Signal (Int, Int)
-                -> Signal.Signal (List Graphics.Collage.Form)
-makeGridlinesWithSig gridCoords windowDimensions =
-        Signal.map2 makeGridlines gridCoords windowDimensions
-
 makeGridlines gridCoords (width, height) =
     let
         makeVerts (w, h) pos =
           makeGridline (w, h) [(toFloat pos, 0),(toFloat pos, toFloat h)]
         makeHorzs (w, h) pos =
-          makeGridline (w, h) [(0, (toFloat pos)), ((toFloat w), (toFloat pos))]
+          makeGridline (w, h) [(0, (toFloat (height - pos))), ((toFloat w), (toFloat (height - pos)))]
     in
         List.concat [List.map (makeVerts (width, height)) gridCoords.vert
          ,List.map (makeHorzs (width, height)) gridCoords.horz]

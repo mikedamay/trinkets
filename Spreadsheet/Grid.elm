@@ -7,13 +7,13 @@ import Color
 import Text
 import Window
 
-cellHeight = 17
+cellHeight = 21
 cellWidth = 100
 
 type alias GridCoords = { horz : List Int, vert : List Int }
 
-getGridCoords : Signal.Signal (Int, Int) -> Signal.Signal GridCoords
-getGridCoords winDims =
+getGridCoords_OBSOLETE : Signal.Signal (Int, Int) -> Signal.Signal GridCoords
+getGridCoords_OBSOLETE winDims =
     let
         getGridCoords' : (Int, Int) -> GridCoords
         getGridCoords' (width, height) =
@@ -30,8 +30,8 @@ getGridCoords winDims =
     in  
         Signal.map getGridCoords' winDims 
 
-getGridCoordsEx : (Int, Int) -> GridCoords
-getGridCoordsEx (width, height) =
+getGridCoords : (Int, Int) -> GridCoords
+getGridCoords (width, height) =
         let
             numCols = width // cellWidth
             numRows = height // cellHeight
@@ -39,7 +39,7 @@ getGridCoordsEx (width, height) =
                 let
                     multiplyBySpace n = n * space
                 in
-                    List.map multiplyBySpace [1..numRowsOrCols]
+                    List.map multiplyBySpace [0..numRowsOrCols]
         in
             { horz = (spacer numRows cellHeight), vert = (spacer numCols cellWidth) }
 
