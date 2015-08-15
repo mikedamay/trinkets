@@ -9,40 +9,26 @@ import Window
 
 cellHeight = 21
 cellWidth = 100
+rowHeaderWidth = 50
+colHeaderHeight = 25
 
-type alias GridCoords = { horz : List Int, vert : List Int }
-
-getGridCoords_OBSOLETE : Signal.Signal (Int, Int) -> Signal.Signal GridCoords
-getGridCoords_OBSOLETE winDims =
-    let
-        getGridCoords' : (Int, Int) -> GridCoords
-        getGridCoords' (width, height) =
-            let
-                numCols = width // cellWidth
-                numRows = height // cellHeight
-                spacer numRowsOrCols space =
-                    let 
-                        multiplyBySpace n = n * space
-                    in
-                        List.map multiplyBySpace [1..numRowsOrCols]
-            in               
-                { horz = (spacer numRows cellHeight), vert = (spacer numCols cellWidth) }
-    in  
-        Signal.map getGridCoords' winDims 
+type alias GridCoords = { headers : {width : Int, height : Int }, horz : List Int, vert : List Int }
 
 getGridCoords : (Int, Int) -> GridCoords
 getGridCoords (width, height) =
         let
-            numCols = width // cellWidth
-            numRows = height // cellHeight
+            numCols = (width - rowHeaderWidth) // cellWidth
+            numRows = (height - colHeaderHeight) // cellHeight
             spacer numRowsOrCols space =
                 let
                     multiplyBySpace n = n * space
                 in
                     List.map multiplyBySpace [0..numRowsOrCols]
         in
-            { horz = (spacer numRows cellHeight), vert = (spacer numCols cellWidth) }
+            { headers = { width = rowHeaderWidth, height = colHeaderHeight }
+              ,horz = (spacer numRows cellHeight), vert = (spacer numCols cellWidth) }
 
+initialGridCoords = {headers={width = rowHeaderWidth, height = colHeaderHeight}, horz=[], vert=[]}
 
 
 

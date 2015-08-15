@@ -4,7 +4,7 @@ import Mouse
 import Window
 import Text
 import Time
-import Grid exposing (GridCoords, getGridCoords)
+import Grid exposing (GridCoords, getGridCoords, initialGridCoords)
 import Gridlines exposing (makeGridlines)
 
 main : Signal.Signal Graphics.Element.Element
@@ -31,7 +31,6 @@ main =
 type alias Model = {dims : (Int, Int), click : (Int, Int)
                      , text : String, time : Time.Time, mousepos : (Int, Int)
                      , gridCoords : GridCoords }
-initialGridCoords = {horz=[], vert=[]}
 
 initialModel : Model
 initialModel =

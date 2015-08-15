@@ -19,166 +19,198 @@ Elm.Main.make = function (_elm) {
    $Mouse = Elm.Mouse.make(_elm),
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm),
+   $Text = Elm.Text.make(_elm),
    $Time = Elm.Time.make(_elm),
    $Window = Elm.Window.make(_elm);
-   var handleClick = function (_v0) {
+   var formAt = F2(function (_v0,
+   str) {
       return function () {
          switch (_v0.ctor)
          {case "_Tuple2":
-            return A2($Graphics$Collage.move,
-              {ctor: "_Tuple2"
-              ,_0: 200
-              ,_1: 200},
-              $Graphics$Collage.toForm($Graphics$Element.show({ctor: "_Tuple2"
-                                                              ,_0: _v0._0
-                                                              ,_1: _v0._1})));}
+            return $Graphics$Collage.move({ctor: "_Tuple2"
+                                          ,_0: $Basics.toFloat(_v0._0)
+                                          ,_1: $Basics.toFloat(_v0._1)})($Graphics$Collage.text($Text.fromString(str)));}
          _U.badCase($moduleName,
-         "on line 68, column 14 to 89");
-      }();
-   };
-   var constrainMovement = function (_v4) {
-      return function () {
-         switch (_v4.ctor)
-         {case "_Tuple2":
-            return _U.cmp(_v4._1,
-              20) > 0 ? {ctor: "_Tuple2"
-                        ,_0: -1
-                        ,_1: 20} : _U.cmp(_v4._1,
-              0) < 0 ? {ctor: "_Tuple2"
-                       ,_0: 1
-                       ,_1: 0} : {ctor: "_Tuple2"
-                                 ,_0: _v4._0
-                                 ,_1: _v4._1 + _v4._0};}
-         _U.badCase($moduleName,
-         "between lines 62 and 64");
-      }();
-   };
-   var doModel = F2(function (event,
-   model) {
-      return function () {
-         switch (event.ctor)
-         {case "Clicker":
-            return _U.replace([["clicker"
-                               ,event._0]],
-              model);
-            case "Dimmer":
-            return _U.replace([["dimmer"
-                               ,event._0]],
-              model);
-            case "Gridder":
-            return _U.replace([["gridder"
-                               ,event._0]],
-              model);
-            case "Mover":
-            return _U.replace([["mover"
-                               ,constrainMovement(model.mover)]],
-              model);}
-         _U.badCase($moduleName,
-         "between lines 54 and 58");
+         "between lines 72 and 74");
       }();
    });
-   var initialModel = {_: {}
-                      ,clicker: {ctor: "_Tuple2"
-                                ,_0: 200
-                                ,_1: 200}
-                      ,dimmer: {ctor: "_Tuple2"
-                               ,_0: 500
-                               ,_1: 500}
-                      ,gridder: {_: {}
-                                ,horz: _L.fromArray([])
-                                ,vert: _L.fromArray([])}
-                      ,mover: {ctor: "_Tuple2"
-                              ,_0: 1
-                              ,_1: 1}};
-   var Model = F4(function (a,
-   b,
-   c,
-   d) {
-      return {_: {}
-             ,clicker: c
-             ,dimmer: d
-             ,gridder: b
-             ,mover: a};
-   });
-   var Dimmer = function (a) {
-      return {ctor: "Dimmer"
+   var MousePos = function (a) {
+      return {ctor: "MousePos"
              ,_0: a};
    };
-   var Clicker = function (a) {
-      return {ctor: "Clicker"
-             ,_0: a};
+   var Timer = function (a) {
+      return {ctor: "Timer",_0: a};
    };
-   var Gridder = function (a) {
-      return {ctor: "Gridder"
-             ,_0: a};
+   var Click = function (a) {
+      return {ctor: "Click",_0: a};
    };
-   var Mover = function (a) {
-      return {ctor: "Mover",_0: a};
+   var Dims = function (a) {
+      return {ctor: "Dims",_0: a};
    };
    var event = $Signal.mergeMany(_L.fromArray([A2($Signal.map,
-                                              Mover,
-                                              $Time.fps(30))
+                                              Dims,
+                                              $Window.dimensions)
                                               ,A2($Signal.map,
-                                              Gridder,
-                                              $Grid.getGridCoords($Window.dimensions))
+                                              MousePos,
+                                              $Mouse.position)
                                               ,A2($Signal.map,
-                                              Clicker,
+                                              Click,
                                               A2($Signal.sampleOn,
                                               $Mouse.clicks,
                                               $Mouse.position))
                                               ,A2($Signal.map,
-                                              Dimmer,
-                                              $Window.dimensions)]));
-   var moveForm = function (pos) {
+                                              Timer,
+                                              $Time.every($Time.second))]));
+   var initialModel = {_: {}
+                      ,click: {ctor: "_Tuple2"
+                              ,_0: 0
+                              ,_1: 0}
+                      ,dims: {ctor: "_Tuple2"
+                             ,_0: 500
+                             ,_1: 500}
+                      ,gridCoords: $Grid.initialGridCoords
+                      ,mousepos: {ctor: "_Tuple2"
+                                 ,_0: 0
+                                 ,_1: 0}
+                      ,text: "mike was here"
+                      ,time: 0};
+   var doModel = function (ev) {
       return function () {
-         var myForm = $Graphics$Collage.toForm($Graphics$Element.show("mike was here"));
-         return A2($Graphics$Collage.move,
-         pos,
-         myForm);
+         var addGridCoords = F2(function (mod,
+         d) {
+            return function () {
+               var updatedMod = _U.replace([["gridCoords"
+                                            ,$Grid.getGridCoords(d)]],
+               mod);
+               var updatedMod2 = _U.replace([["dims"
+                                             ,d]],
+               updatedMod);
+               return updatedMod2;
+            }();
+         });
+         var doModel$ = F2(function (ev,
+         mod) {
+            return function () {
+               switch (ev.ctor)
+               {case "Click":
+                  switch (ev._0.ctor)
+                    {case "_Tuple2":
+                       return _U.replace([["click"
+                                          ,{ctor: "_Tuple2"
+                                           ,_0: ev._0._0
+                                           ,_1: ev._0._1}]],
+                         mod);}
+                    break;
+                  case "Dims":
+                  return A2(addGridCoords,
+                    mod,
+                    ev._0);
+                  case "MousePos":
+                  switch (ev._0.ctor)
+                    {case "_Tuple2":
+                       return _U.replace([["mousepos"
+                                          ,{ctor: "_Tuple2"
+                                           ,_0: ev._0._0
+                                           ,_1: ev._0._1}]],
+                         mod);}
+                    break;
+                  case "Timer":
+                  return _U.replace([["time"
+                                     ,ev._0]],
+                    mod);}
+               _U.badCase($moduleName,
+               "between lines 49 and 54");
+            }();
+         });
+         return A3($Signal.map2,
+         addGridCoords,
+         A3($Signal.foldp,
+         doModel$,
+         initialModel,
+         ev),
+         $Window.dimensions);
       }();
    };
-   var prepareForRender = F2(function (model,
-   _v13) {
-      return function () {
-         switch (_v13.ctor)
-         {case "_Tuple2":
-            return $List.concat(_L.fromArray([_L.fromArray([moveForm(model.mover)
-                                                           ,handleClick(model.clicker)])
-                                             ,A2($Gridlines.makeGridlines,
-                                             model.gridder,
-                                             {ctor: "_Tuple2"
-                                             ,_0: _v13._0
-                                             ,_1: _v13._1})]));}
-         _U.badCase($moduleName,
-         "between lines 28 and 29");
-      }();
+   var Model = F6(function (a,
+   b,
+   c,
+   d,
+   e,
+   f) {
+      return {_: {}
+             ,click: b
+             ,dims: a
+             ,gridCoords: f
+             ,mousepos: e
+             ,text: c
+             ,time: d};
    });
-   var doCollage = A2($Signal.map,
-   A2($Graphics$Collage.collage,
-   500,
-   500),
-   A3($Signal.map2,
-   prepareForRender,
-   A3($Signal.foldp,
-   doModel,
-   initialModel,
-   event),
-   $Window.dimensions));
-   var main = doCollage;
+   var main = function () {
+      var display = function (model) {
+         return function () {
+            var gridCoords = model.gridCoords;
+            var t = model.time;
+            var $ = model.click,
+            x = $._0,
+            y = $._1;
+            var $ = model.mousepos,
+            mouse_x = $._0,
+            mouse_y = $._1;
+            var $ = model.dims,
+            width = $._0,
+            height = $._1;
+            return A3($Graphics$Collage.collage,
+            width,
+            height,
+            $List.concat(_L.fromArray([_L.fromArray([A2(formAt,
+                                                    {ctor: "_Tuple2"
+                                                    ,_0: x - (width / 2 | 0)
+                                                    ,_1: 0 - y + (height / 2 | 0)},
+                                                    $Basics.toString(gridCoords.horz))
+                                                    ,A2(formAt,
+                                                    {ctor: "_Tuple2"
+                                                    ,_0: 0
+                                                    ,_1: 0},
+                                                    $Basics.toString(t))
+                                                    ,A2(formAt,
+                                                    {ctor: "_Tuple2"
+                                                    ,_0: 100
+                                                    ,_1: 100},
+                                                    A2($Basics._op["++"],
+                                                    $Basics.toString(width),
+                                                    A2($Basics._op["++"],
+                                                    ",",
+                                                    $Basics.toString(height))))
+                                                    ,A2(formAt,
+                                                    {ctor: "_Tuple2"
+                                                    ,_0: 200
+                                                    ,_1: 200},
+                                                    A2($Basics._op["++"],
+                                                    $Basics.toString(mouse_x),
+                                                    A2($Basics._op["++"],
+                                                    ",",
+                                                    $Basics.toString(mouse_y))))])
+                                      ,A2($Gridlines.makeGridlines,
+                                      gridCoords,
+                                      {ctor: "_Tuple2"
+                                      ,_0: width
+                                      ,_1: height})])));
+         }();
+      };
+      return A2($Signal.map,
+      display,
+      doModel(event));
+   }();
    _elm.Main.values = {_op: _op
                       ,main: main
-                      ,doCollage: doCollage
-                      ,prepareForRender: prepareForRender
-                      ,moveForm: moveForm
-                      ,Mover: Mover
-                      ,Gridder: Gridder
-                      ,Clicker: Clicker
-                      ,Dimmer: Dimmer
-                      ,event: event
                       ,Model: Model
                       ,initialModel: initialModel
                       ,doModel: doModel
-                      ,constrainMovement: constrainMovement
-                      ,handleClick: handleClick};
+                      ,Dims: Dims
+                      ,Click: Click
+                      ,Timer: Timer
+                      ,MousePos: MousePos
+                      ,event: event
+                      ,formAt: formAt};
    return _elm.Main.values;
 };
