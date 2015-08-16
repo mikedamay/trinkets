@@ -16,11 +16,16 @@ makeGridlines gridCoords (width, height) =
           makeGridline (w, h) (toFloat gridCoords.headers.width, toFloat gridCoords.headers.height)
           [(0, (toFloat (height - pos))), ((toFloat w), (toFloat (height - pos)))]
     in
-        List.concat [List.map (makeVerts (width, height)) gridCoords.vert
+        List.concat [
+        List.map (makeVerts (width, height)) gridCoords.vert
          ,List.map (makeHorzs (width, height)) gridCoords.horz
          ,List.map (makeRowHeader (width, height)
                                   (gridCoords.headers.width, gridCoords.headers.height))
-                                  gridCoords.horz]
+                                  gridCoords.horz
+         ,List.map (makeColHeader (width, height)
+                                  (gridCoords.headers.width, gridCoords.headers.height))
+                                  gridCoords.vert
+         ]
 
 makeGridline : (Int, Int) -> (Float, Float)-> Graphics.Collage.Path -> Graphics.Collage.Form
 makeGridline (width, height) (headerWidth, headerHeight) path =
@@ -38,11 +43,11 @@ makeGridline (width, height) (headerWidth, headerHeight) path =
 
 makeRowHeader : (Int, Int) -> (Int, Int) -> Int -> Graphics.Collage.Form
 makeRowHeader (width, height) (headerWidth, headerHeight) row =
-    makeHeader (width, height) headerHeight
+    makeRowHeaderForm (width, height) headerHeight
       [(0, (toFloat (height - row))), ((toFloat headerWidth), (toFloat (height - row)))]
 
-makeHeader : (Int, Int) -> Int -> Graphics.Collage.Path -> Graphics.Collage.Form
-makeHeader (width, height) headerHeight path =
+makeRowHeaderForm : (Int, Int) -> Int -> Graphics.Collage.Path -> Graphics.Collage.Form
+makeRowHeaderForm (width, height) headerHeight path =
     let
         myLineStyle : Color.Color -> Graphics.Collage.LineStyle
         myLineStyle  clr =
@@ -53,4 +58,24 @@ makeHeader (width, height) headerHeight path =
                 { localDefaultLine | color <- Color.gray }
     in
         Graphics.Collage.move ( -(toFloat width) / 2, -(toFloat height) / 2 - (toFloat headerHeight))
+          <| Graphics.Collage.traced (myLineStyle Color.gray) path
+
+makeColHeader : (Int, Int) -> (Int, Int) -> Int -> Graphics.Collage.Form
+makeColHeader (width, height) (headerWidth, headerHeight) colPos =
+    makeColHeaderForm (width, height) headerWidth headerHeight
+      [(toFloat colPos, 0), ((toFloat colPos), (toFloat headerHeight))]
+
+makeColHeaderForm : (Int, Int) -> Int -> Int -> Graphics.Collage.Path -> Graphics.Collage.Form
+makeColHeaderForm (width, height) headerWidth headerHeight path =
+    let
+        myLineStyle : Color.Color -> Graphics.Collage.LineStyle
+        myLineStyle  clr =
+            let
+                localDefaultLine =
+                  Graphics.Collage.defaultLine
+            in
+                { localDefaultLine | color <- Color.gray }
+    in
+        Graphics.Collage.move ( -(toFloat width) / 2 + (toFloat headerWidth)
+          ,(toFloat height) / 2 - (toFloat headerHeight))
           <| Graphics.Collage.traced (myLineStyle Color.gray) path
