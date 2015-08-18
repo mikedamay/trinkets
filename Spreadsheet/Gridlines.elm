@@ -42,31 +42,17 @@ makeGridline (width, height) (headerWidth, headerHeight) path =
           <| Graphics.Collage.traced (myLineStyle Color.gray) path
 
 makeRowHeader : (Int, Int) -> (Int, Int) -> Int -> Graphics.Collage.Form
-makeRowHeader (width, height) (headerWidth, headerHeight) row =
-    makeRowHeaderForm (width, height) headerHeight
-      [(0, (toFloat (height - row))), ((toFloat headerWidth), (toFloat (height - row)))]
-
-makeRowHeaderForm : (Int, Int) -> Int -> Graphics.Collage.Path -> Graphics.Collage.Form
-makeRowHeaderForm (width, height) headerHeight path =
-    let
-        myLineStyle : Color.Color -> Graphics.Collage.LineStyle
-        myLineStyle  clr =
-            let
-                localDefaultLine =
-                  Graphics.Collage.defaultLine
-            in
-                { localDefaultLine | color <- Color.gray }
-    in
-        Graphics.Collage.move ( -(toFloat width) / 2, -(toFloat height) / 2 - (toFloat headerHeight))
-          <| Graphics.Collage.traced (myLineStyle Color.gray) path
+makeRowHeader (width, height) (headerWidth, headerHeight) rowPos =
+    makeHeaderForm (width, height)
+      (offsetBy (0,toFloat headerHeight) [(0, (toFloat rowPos)), ((toFloat headerWidth), (toFloat rowPos))])
 
 makeColHeader : (Int, Int) -> (Int, Int) -> Int -> Graphics.Collage.Form
 makeColHeader (width, height) (headerWidth, headerHeight) colPos =
-    makeColHeaderForm (width, height) headerWidth headerHeight
-      [(toFloat colPos, 0), ((toFloat colPos), (toFloat headerHeight))]
+    makeHeaderForm (width, height)
+      (offsetBy (toFloat headerWidth,0) [(toFloat colPos, 0), ((toFloat colPos), (toFloat headerHeight))])
 
-makeColHeaderForm : (Int, Int) -> Int -> Int -> Graphics.Collage.Path -> Graphics.Collage.Form
-makeColHeaderForm (width, height) headerWidth headerHeight path =
+makeHeaderForm : (Int, Int) -> Graphics.Collage.Path -> Graphics.Collage.Form
+makeHeaderForm (width, height) path =
     let
         myLineStyle : Color.Color -> Graphics.Collage.LineStyle
         myLineStyle  clr =
@@ -76,6 +62,23 @@ makeColHeaderForm (width, height) headerWidth headerHeight path =
             in
                 { localDefaultLine | color <- Color.gray }
     in
-        Graphics.Collage.move ( -(toFloat width) / 2 + (toFloat headerWidth)
-          ,(toFloat height) / 2 - (toFloat headerHeight))
-          <| Graphics.Collage.traced (myLineStyle Color.gray) path
+        Graphics.Collage.traced (myLineStyle Color.gray) (windowToCollage (width, height) path)
+
+offsetBy : (Float, Float) -> Graphics.Collage.Path -> Graphics.Collage.Path
+offsetBy ((offX, offY) as offset) path =
+    List.map (\(x, y) -> (x + offX, y + offY)) path
+
+-- convert window coordinates into collage coordinates
+-- collage origin (0,0) is in the centre of the collage.  Window origin top left
+-- to map from window to collage x : subtract half the width from the coord
+--                               y : subtract the coord from half the height
+-- e.g. for a window 600 across x 800 down
+--      0,0 -> -300,400
+--      20,30 -> -280, 370
+windowToCollage : (Int, Int) -> Graphics.Collage.Path -> Graphics.Collage.Path
+windowToCollage (windowWidth, windowHeight) path =
+    let
+        mapPath (windowWidth, windowHeight) path =
+            List.map (\(coordX, coordY) -> (-windowWidth / 2 + coordX, windowHeight / 2 - coordY)) path
+    in
+        mapPath (toFloat windowWidth, toFloat windowHeight) path
