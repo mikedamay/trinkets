@@ -1,0 +1,21 @@
+{
+  parserClass="com.maddyhome.idea.copyright.language.parser.SimpleParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Simple"
+  psiImplClassSuffix="Impl"
+  psiPackage="com.maddyhome.idea.copyright.language.psi"
+  psiImplPackage="com.maddyhome.idea.copyright.language.psi.impl"
+
+  elementTypeHolderClass="com.maddyhome.idea.copyright.language.psi.SimpleTypes"
+  elementTypeClass="com.maddyhome.idea.copyright.language.psi.SimpleElementType"
+  tokenTypeClass="com.maddyhome.idea.copyright.language.psi.SimpleTokenType"
+
+}
+
+simpleFile ::= item_*
+
+private item_ ::= (property|COMMENT|CRLF)
+
+property ::= (KEY? SEPARATOR VALUE?) | KEY
