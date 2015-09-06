@@ -25,6 +25,9 @@ import org.jetbrains.annotations.NotNull;
  */
 public class SimpleFileTypeFactory extends FileTypeFactory {
 
+  public SimpleFileTypeFactory() {
+
+  }
   @Override
   public void createFileTypes(@NotNull FileTypeConsumer fileTypeConsumer) {
     fileTypeConsumer.consume(SimpleFileType.INSTANCE, "simple");

@@ -14,19 +14,17 @@
   ~ limitations under the License.
   -->
 <idea-plugin version="2">
-  <id>com.yourcompany.unique.plugin.id</id>
-  <name>Plugin display name here</name>
+  <id>co.uk.mikedamay.simple</id>
+  <name>Simple Plugin</name>
   <version>1.0</version>
-  <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+  <vendor email="mikemay@blueyonder.co.uk" url="http://mikedamay.co.uk">YourCompany</vendor>
 
   <description><![CDATA[
-      Enter short description for your plugin here.<br>
-      <em>most HTML tags may be used</em>
+      Simple Test Excercise<br>
     ]]></description>
 
   <change-notes><![CDATA[
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>
+      Early Days<br>
     ]]>
   </change-notes>
 
@@ -40,7 +38,7 @@
   -->
 
   <extensions defaultExtensionNs="com.intellij">
-    <fileTypeFactory implementation="co.uk.mikedamay.SimpleFileTypeFactory"/>
+    <!--<fileTypeFactory implementation="co.uk.mikedamay.SimpleFileTypeFactory"/>-->
   </extensions>
 
   <application-components>
