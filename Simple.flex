@@ -15,6 +15,7 @@ import com.intellij.psi.TokenType;
 %eof}
 
 CRLF=\n|\r|\r\n
+WHITE_SPACE=[\ \t\f]
 FIRST_VALUE_CHARACTER=[^ \n\r\f\\] | "\\"{CRLF} | "\\".
 VALUE_CHARACTER=[^\n\r\f\\] | "\\"{CRLF} | "\\".
 END_OF_LINE_COMMENT=("#"|"!")[^\r\n]*
@@ -35,7 +36,11 @@ KEY_CHARACTER=[^:=\ \n\r\t\f\\] | "\\"{CRLF}
 
 <WAITING_VALUE> {FIRST_VALUE_CHARACTER}{VALUE_CHARACTER}* { yybegin(YYINITIAL); return SimpleTypes.VALUE; }
 
+<WAITING_VALUE> {WHITE_SPACE}+  { yybegin(WAITING_VALUE); return TokenType.WHITE_SPACE; }
+
 {CRLF} { yybegin(YYINITIAL); return SimpleTypes.CRLF; }
+
+{WHITE_SPACE}+  {yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
 
 . {return TokenType.BAD_CHARACTER;}
 
