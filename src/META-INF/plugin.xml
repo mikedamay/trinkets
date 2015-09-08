@@ -34,6 +34,7 @@
     </extensions>
     <extensions defaultExtensionNs="com.intellij">
       <fileTypeFactory implementation="com.maddyhome.idea.copyright.language.SimpleFileTypeFactory"/>
+      <lang.parserDefinition language="Simple"  implementationClass="com.maddyhome.idea.copyright.language.SimpleParserDefinition"/>
     </extensions>
     <extensionPoints>
       <extensionPoint name="updater" beanClass="com.intellij.openapi.fileTypes.FileTypeExtensionPoint">

@@ -15,6 +15,7 @@
  */
 package com.maddyhome.idea.copyright.language;
 
+
 import com.intellij.lexer.FlexAdapter;
 import com.intellij.lexer.FlexLexer;
 
