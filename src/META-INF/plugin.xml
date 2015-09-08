@@ -35,6 +35,8 @@
     <extensions defaultExtensionNs="com.intellij">
       <fileTypeFactory implementation="com.maddyhome.idea.copyright.language.SimpleFileTypeFactory"/>
       <lang.parserDefinition language="Simple"  implementationClass="com.maddyhome.idea.copyright.language.SimpleParserDefinition"/>
+      <lang.syntaxHighlighterFactory key="Simple" implementationClass="com.maddyhome.idea.copyright.language.SimpleSyntaxHighlighterFactory"/>
+      <colorSettingsPage implementation="com.maddyhome.idea.copyright.language.SimpleColorSettingsPage"/>
     </extensions>
     <extensionPoints>
       <extensionPoint name="updater" beanClass="com.intellij.openapi.fileTypes.FileTypeExtensionPoint">

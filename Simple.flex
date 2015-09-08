@@ -29,7 +29,7 @@ KEY_CHARACTER=[^:=\ \n\r\t\f\\] | "\\"{CRLF}
 
 <YYINITIAL> {KEY_CHARACTER}+ { yybegin(YYINITIAL); return SimpleTypes.KEY; }
 
-<YYINITIAL> {SEPARATOR} { yybegin(YYINITIAL); return SimpleTypes.SEPARATOR; }
+<YYINITIAL> {SEPARATOR} { yybegin(WAITING_VALUE); return SimpleTypes.SEPARATOR; }
 
 <WAITING_VALUE> {CRLF} { yybegin(YYINITIAL); return SimpleTypes.CRLF; }
 
