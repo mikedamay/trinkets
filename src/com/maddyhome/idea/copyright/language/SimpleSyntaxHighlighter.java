@@ -26,6 +26,9 @@ import com.intellij.psi.tree.IElementType;
 import com.maddyhome.idea.copyright.language.psi.SimpleTypes;
 import org.jetbrains.annotations.NotNull;
 
+/*
+mike
+ */
 
 import java.awt.*;
 import java.io.Reader;
@@ -44,6 +47,8 @@ public class SimpleSyntaxHighlighter extends SyntaxHighlighterBase {
     = createTextAttributesKey("SIMPLE_VALUE", SyntaxHighlighterColors.STRING);
   public static final TextAttributesKey COMMENT
     = createTextAttributesKey("SIMPLE_COMMENT", SyntaxHighlighterColors.LINE_COMMENT);
+  public static final TextAttributesKey STR
+    = createTextAttributesKey("SIMPLE_STR", SyntaxHighlighterColors.STRING);
   public static final TextAttributesKey BAD_CHARACTER = createTextAttributesKey("SIMPLE_BAD_CHARACTER"
     ,new TextAttributes(Color.RED, null, null, null, Font.BOLD));
 
@@ -52,6 +57,7 @@ public class SimpleSyntaxHighlighter extends SyntaxHighlighterBase {
   private static final TextAttributesKey[] KEY_KEYS = new TextAttributesKey[]{KEY};
   private static final TextAttributesKey[] VALUE_KEYS = new TextAttributesKey[]{VALUE};
   private static final TextAttributesKey[] COMMENT_KEYS = new TextAttributesKey[]{COMMENT};
+  private static final TextAttributesKey[] STR_KEYS = new TextAttributesKey[]{STR};
   private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
 
   @NotNull
@@ -71,6 +77,8 @@ public class SimpleSyntaxHighlighter extends SyntaxHighlighterBase {
       return VALUE_KEYS;
     } else if (tokenType.equals(SimpleTypes.COMMENT)) {
       return COMMENT_KEYS;
+    } else if (tokenType.equals(SimpleTypes.STR)) {
+      return STR_KEYS;
     } else if (tokenType.equals(TokenType.BAD_CHARACTER)){
       return BAD_CHAR_KEYS;
     } else{

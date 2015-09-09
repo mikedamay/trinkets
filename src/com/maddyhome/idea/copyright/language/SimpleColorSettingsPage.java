@@ -35,6 +35,7 @@ public class SimpleColorSettingsPage implements ColorSettingsPage {
     new AttributesDescriptor("Key", SimpleSyntaxHighlighter.KEY)
     ,new AttributesDescriptor("Separator", SimpleSyntaxHighlighter.SEPARATOR)
     ,new AttributesDescriptor("Value", SimpleSyntaxHighlighter.VALUE)
+    ,new AttributesDescriptor("String", SimpleSyntaxHighlighter.STR)
   };
 
 

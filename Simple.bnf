@@ -1,5 +1,6 @@
 {
   parserClass="com.maddyhome.idea.copyright.language.parser.SimpleParser"
+  parserUtilClass="com.maddyhome.idea.copyright.language.parser.SimpleParserUtil"
 
   extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
 
@@ -16,6 +17,7 @@
 
 simpleFile ::= item_*
 
-private item_ ::= (property|COMMENT|CRLF)
+private item_ ::= (property|COMMENT|CRLF)|STR
 
 property ::= (KEY? WHITE_SPACE? SEPARATOR WHITE_SPACE? VALUE?) | KEY
+

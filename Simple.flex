@@ -6,6 +6,11 @@ import com.maddyhome.idea.copyright.language.psi.SimpleTypes;
 import com.intellij.psi.TokenType;
 
 %%
+
+%{
+  StringBuffer sb = new StringBuffer();
+%}
+
 %class SimpleLexer
 %implements FlexLexer
 %unicode
@@ -14,6 +19,7 @@ import com.intellij.psi.TokenType;
 %eof{ return;
 %eof}
 
+ESCAPES = [abfnrtv]
 CRLF=\n|\r|\r\n
 WHITE_SPACE=[\ \t\f]
 FIRST_VALUE_CHARACTER=[^ \n\r\f\\] | "\\"{CRLF} | "\\".
@@ -21,12 +27,15 @@ VALUE_CHARACTER=[^\n\r\f\\] | "\\"{CRLF} | "\\".
 END_OF_LINE_COMMENT=("#"|"!")[^\r\n]*
 SEPARATOR=[:=]
 KEY_CHARACTER=[^:=\ \n\r\t\f\\] | "\\"{CRLF}
-
+DQ="\""
+STRLINE={DQ} ( [^\"\\\n\r] | "\\" ("\\" | {DQ} | {ESCAPES} | [0-8xuU] ) )* {DQ}?
 %state WAITING_VALUE
 
 %%
 
 <YYINITIAL> {END_OF_LINE_COMMENT} { yybegin(YYINITIAL); return SimpleTypes.COMMENT; }
+
+<YYINITIAL> {STRLINE} { yybegin(YYINITIAL); return SimpleTypes.STR; }
 
 <YYINITIAL> {KEY_CHARACTER}+ { yybegin(YYINITIAL); return SimpleTypes.KEY; }
 
