@@ -39,7 +39,7 @@ public class SimpleColorSettingsPage implements ColorSettingsPage {
     ,new AttributesDescriptor("Parenthesis", SimpleSyntaxHighlightingColors.PARENTHESIS)
     ,new AttributesDescriptor("Keyword", SimpleSyntaxHighlightingColors.KEYWORD)
     ,new AttributesDescriptor("Comment", SimpleSyntaxHighlightingColors.COMMENT)
-    ,new AttributesDescriptor("Operators", SimpleSyntaxHighlightingColors.OPERATOR)
+    ,new AttributesDescriptor("Operator", SimpleSyntaxHighlightingColors.OPERATOR)
   };
 
 

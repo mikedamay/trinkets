@@ -44,10 +44,15 @@ import static com.maddyhome.idea.copyright.language.psi.SimpleTypes.*;
 public class SimpleParserDefinition implements ParserDefinition {
   public TokenSet WHITE_SPACES = TokenSet.create(TokenType.WHITE_SPACE);
   public TokenSet COMMENTS = TokenSet.create(SimpleTypes.COMMENT);
-  public TokenSet OPERATORS = TokenSet.create(SimpleTypes.COMMENT);
+  public static TokenSet OPERATORS = TokenSet.create(
+    LBRACE, RBRACE, LBRACK, RBRACK, COLON, EQ, ASSIGN, NOT_EQ, NOT, PLUS, MINUS, COND_OR, COND_AND
+   ,BIT_AND, SEND_CHANNEL, LESS, BIT_XOR, MUL, QUOTIENT, REMAINDER, GREATER
+   ,TILDE,PIPE_FORWARD, BACK_TICK, COMBINE, MULTIMAP, PIPE_BACK, GE, LE, COMBINE_BACK
+   ,COLON_COLON, INT_DIVIDE, DOT_DOT, DOT, RETURN
+  );
 
   public static final TokenSet KEYWORDS = TokenSet.create(
-     IMPORT, CASE, ELSE, IF, IMPORT
+    ALIAS, AS, CASE, ELSE, EXPOSING, IF, IMPORT, IN, LET, MODULE, OF, PORT, THEN, TYPE, WHERE
     );
 
 

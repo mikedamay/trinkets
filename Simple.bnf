@@ -17,15 +17,19 @@
 
 simpleFile ::= item_*
 
-statement ::= (CASE | ELSE | IF)
+statement ::= (ALIAS | AS | CASE | ELSE | EXPOSING | IF | IN | LET | MODULE | OF | PORT | THEN | TYPE )
 
 operator ::= (LBRACE | RBRACE | LBRACK | RBRACK | COLON | EQ | ASSIGN | NOT_EQ | NOT | PLUS | MINUS | COND_OR | COND_AND
-  | BIT_AND | SEND_CHANNEL | LESS | BIT_XOR | MUL | QUOTIENT | REMAINDER | GREATER )
+  | BIT_AND | SEND_CHANNEL | LESS | BIT_XOR | MUL | QUOTIENT | REMAINDER | GREATER
+  | TILDE |PIPE_FORWARD | BACK_TICK | COMBINE | MULTIMAP | PIPE_BACK | GE | LE | COMBINE_BACK
+  | COLON_COLON | INT_DIVIDE | DOT_DOT | DOT | RETURN )
 
-private item_ ::= import_statement|COMMENT|STR|MULTILINE_COMMENT|CRLF
+private item_ ::= import_statement|COMMENT|STR|MULTILINE_COMMENT|CRLF|case_stateemnt
 
 import_body ::= L_PAREN VALUE (COMMA VALUE)* R_PAREN
 
 import_statement ::= IMPORT import_body WHERE CRLF
+
+case_statement ::= CASE OF {methods [getKey getValue]}
 
 //property ::= (KEY? SEPARATOR VALUE?) | KEY

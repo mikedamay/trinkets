@@ -51,24 +51,8 @@ public class SimpleSyntaxHighlighter extends SyntaxHighlighterBase {
     fillMap(ATTRIBUTES, MULTILINE_COMMENT, SimpleTypes.MULTILINE_COMMENT);
     fillMap(ATTRIBUTES, STR, SimpleTypes.STR);
     fillMap(ATTRIBUTES, SimpleParserDefinition.KEYWORDS, KEYWORD);
+    fillMap(ATTRIBUTES, SimpleParserDefinition.OPERATORS, OPERATOR);
     fillMap(ATTRIBUTES, BAD_CHARACTER, TokenType.BAD_CHARACTER);
-    /*
-    fillMap(ATTRIBUTES, LINE_COMMENT, GoParserDefinition.LINE_COMMENT);
-    fillMap(ATTRIBUTES, BLOCK_COMMENT, GoParserDefinition.MULTILINE_COMMENT);
-    fillMap(ATTRIBUTES, PARENTHESES, GoTypes.LPAREN, GoTypes.RPAREN);
-    fillMap(ATTRIBUTES, BRACES, GoTypes.LBRACE, GoTypes.RBRACE);
-    fillMap(ATTRIBUTES, BRACKETS, GoTypes.LBRACK, GoTypes.RBRACK);
-    fillMap(ATTRIBUTES, BAD_CHARACTER, TokenType.BAD_CHARACTER);
-    fillMap(ATTRIBUTES, IDENTIFIER, GoTypes.IDENTIFIER);
-    fillMap(ATTRIBUTES, DOT, GoTypes.DOT, GoTypes.TRIPLE_DOT);
-    fillMap(ATTRIBUTES, COLON, GoTypes.COLON);
-    fillMap(ATTRIBUTES, SEMICOLON, GoTypes.SEMICOLON);
-    fillMap(ATTRIBUTES, COMMA, GoTypes.COMMA);
-    fillMap(ATTRIBUTES, GoParserDefinition.OPERATORS, OPERATOR);
-    fillMap(ATTRIBUTES, GoParserDefinition.KEYWORDS, KEYWORD);
-    fillMap(ATTRIBUTES, GoParserDefinition.NUMBERS, NUMBER);
-    fillMap(ATTRIBUTES, GoParserDefinition.STRING_LITERALS, STRING);
-    */
   }
 
 

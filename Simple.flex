@@ -69,6 +69,10 @@ MULTILINE_COMMENT="{-" ( ([^"-"]|[\r\n])* ("-"+ [^"-""}"] )? )* ("-" | "-"+"}")?
 
 "&"                                       { return SimpleTypes.BIT_AND; }
 
+"<|"                                      { return SimpleTypes.PIPE_BACK; }
+"<="                                      { return SimpleTypes.LE; }
+"<<"                                      { return SimpleTypes.COMBINE_BACK; }
+"<~"                                      { return SimpleTypes.MULTIMAP; }
 "<-"                                      { return SimpleTypes.SEND_CHANNEL; }
 "<"                                       { return SimpleTypes.LESS; }
 
@@ -76,23 +80,39 @@ MULTILINE_COMMENT="{-" ( ([^"-"]|[\r\n])* ("-"+ [^"-""}"] )? )* ("-" | "-"+"}")?
 
 "*"                                       { return SimpleTypes.MUL; }
 
+"//"                                      { return SimpleTypes.INT_DIVIDE; }
 "/"                                       { return SimpleTypes.QUOTIENT; }
 
 "%"                                       { return SimpleTypes.REMAINDER; }
 
+">="                                      { return SimpleTypes.GE; }
+"->"                                      { return SimpleTypes.RETURN; }
+">>"                                      { return SimpleTypes.COMBINE; }
+"|>"                                      { return SimpleTypes.PIPE_FORWARD; }
 ">"                                       { return SimpleTypes.GREATER; }
 
+"~"                                      { return SimpleTypes.TILDE; }
+"`"                                      { return SimpleTypes.BACK_TICK; }
+"::"                                      { return SimpleTypes.COLON_COLON; }
+".."                                      { return SimpleTypes.DOT_DOT; }
+"."                                      { return SimpleTypes.DOT; }
 
 
-
+"alias"                                   {  return SimpleTypes.ALIAS;  }
+"as"                                      {  return SimpleTypes.AS;  }
 "case"                                    {  return SimpleTypes.CASE;  }
 "else"                                    {  return SimpleTypes.ELSE;  }
-
+"exposing"                                {  return SimpleTypes.EXPOSING;  }
+"in"                                      {  return SimpleTypes.IN;  }
 "if"                                      {  return SimpleTypes.IF ;  }
 "import"                                  {  return SimpleTypes.IMPORT ;  }
-
-  "where"   {yybegin(YYINITIAL); return SimpleTypes.WHERE; }
-
+"let"                                     {  return SimpleTypes.LET;  }
+"module"                                  {  return SimpleTypes.MODULE ;  }
+"of"                                      {  return SimpleTypes.OF;  }
+"port"                                    {  return SimpleTypes.PORT;  }
+"then"                                    {  return SimpleTypes.THEN;  }
+"type"                                    {  return SimpleTypes.TYPE;  }
+"where"                                   {  return SimpleTypes.WHERE; }
 
   {FIRST_VALUE_CHARACTER}{VALUE_CHARACTER}* { yybegin(YYINITIAL); return SimpleTypes.VALUE; }
 }

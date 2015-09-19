@@ -25,8 +25,6 @@ import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAtt
  * Created by mike on 9/19/15.
  */
 public class SimpleSyntaxHighlightingColors {
-  public static final TextAttributesKey KEY
-    = createTextAttributesKey("SIMPLE_KEY", DefaultLanguageHighlighterColors.KEYWORD);
   public static final TextAttributesKey VALUE
     = createTextAttributesKey("SIMPLE_VALUE", DefaultLanguageHighlighterColors.STRING);
   public static final TextAttributesKey COMMENT
@@ -37,13 +35,11 @@ public class SimpleSyntaxHighlightingColors {
     = createTextAttributesKey("SIMPLE_STR", DefaultLanguageHighlighterColors.STRING);
   public static final TextAttributesKey PARENTHESIS
     = createTextAttributesKey("SIMPLE_PARENTHESIS", DefaultLanguageHighlighterColors.STRING);
-  public static final TextAttributesKey R_PAREN
-    = createTextAttributesKey("SIMPLE_R_PAREN", DefaultLanguageHighlighterColors.STRING);
   public static final TextAttributesKey BAD_CHARACTER = HighlighterColors.BAD_CHARACTER;
   public static final TextAttributesKey KEYWORD
-    = createTextAttributesKey("SIMPLE_KEYWORD", DefaultLanguageHighlighterColors.COMMA);
+    = createTextAttributesKey("SIMPLE_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD);
   public static final TextAttributesKey OPERATOR
-    = createTextAttributesKey("SIMPLE_KEYWORD", DefaultLanguageHighlighterColors.OPERATION_SIGN);
+    = createTextAttributesKey("SIMPLE_OPERATOR", DefaultLanguageHighlighterColors.OPERATION_SIGN);
   private SimpleSyntaxHighlightingColors() {
   }
 }
