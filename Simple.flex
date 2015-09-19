@@ -22,8 +22,8 @@ import com.intellij.psi.TokenType;
 ESCAPES = [abfnrtv]
 CRLF=\n|\r|\r\n
 WHITE_SPACE=[\ \t\f]
-FIRST_VALUE_CHARACTER=[^ \n\r\f\\] | "\\"{CRLF} | "\\".
-VALUE_CHARACTER=[^\n\r\f\\] | "\\"{CRLF} | "\\".
+FIRST_VALUE_CHARACTER=[A-Za-z_]
+VALUE_CHARACTER=[A-Za-z0-9_]
 END_OF_LINE_COMMENT=("--")[^\r\n]*
 SEPARATOR=[:=]
 KEY_CHARACTER=[^:=\ \n\r\t\f\\] | "\\"{CRLF}
@@ -43,17 +43,20 @@ MULTILINE_COMMENT="{-" ( ([^"-"]|[\r\n])* ("-"+ [^"-""}"] )? )* ("-" | "-"+"}")?
 
 <YYINITIAL> {
   "import"  {yybegin(YYINITIAL); return SimpleTypes.IMPORT; }
-
+  "where"   {yybegin(YYINITIAL); return SimpleTypes.WHERE; }
+  "(" {yybegin(YYINITIAL); return SimpleTypes.L_PAREN; }
+  ")" {yybegin(YYINITIAL); return SimpleTypes.R_PAREN; }
+  "," {yybegin(YYINITIAL); return SimpleTypes.COMMA; }
+  {FIRST_VALUE_CHARACTER}{VALUE_CHARACTER}* { yybegin(YYINITIAL); return SimpleTypes.VALUE; }
 }
-<YYINITIAL> {KEY_CHARACTER}+ { yybegin(YYINITIAL); return SimpleTypes.KEY; }
 
-<YYINITIAL> {SEPARATOR} { yybegin(WAITING_VALUE); return SimpleTypes.SEPARATOR; }
+//<YYINITIAL> {KEY_CHARACTER}+ { yybegin(YYINITIAL); return SimpleTypes.KEY; }
 
-<WAITING_VALUE> {CRLF} { yybegin(YYINITIAL); return SimpleTypes.CRLF; }
+//<YYINITIAL> {SEPARATOR} { yybegin(WAITING_VALUE); return SimpleTypes.SEPARATOR; }
 
-<WAITING_VALUE> {FIRST_VALUE_CHARACTER}{VALUE_CHARACTER}* { yybegin(YYINITIAL); return SimpleTypes.VALUE; }
+//<WAITING_VALUE> {CRLF} { yybegin(YYINITIAL); return SimpleTypes.CRLF; }
 
-<WAITING_VALUE> {WHITE_SPACE}+  { yybegin(WAITING_VALUE); return TokenType.WHITE_SPACE; }
+//<WAITING_VALUE> {WHITE_SPACE}+  { yybegin(WAITING_VALUE); return TokenType.WHITE_SPACE; }
 
 
 {CRLF} { yybegin(YYINITIAL); return SimpleTypes.CRLF; }

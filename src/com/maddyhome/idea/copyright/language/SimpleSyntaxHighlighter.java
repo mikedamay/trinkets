@@ -23,6 +23,7 @@ import com.intellij.openapi.editor.markup.TextAttributes;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
+//import com.maddyhome.idea.copyright.language.parser.SimpleLexer;
 import com.maddyhome.idea.copyright.language.psi.SimpleTypes;
 import org.jetbrains.annotations.NotNull;
 
@@ -51,6 +52,10 @@ public class SimpleSyntaxHighlighter extends SyntaxHighlighterBase {
     = createTextAttributesKey("SIMPLE_MULTILINE_COMMENT", SyntaxHighlighterColors.LINE_COMMENT);
   public static final TextAttributesKey STR
     = createTextAttributesKey("SIMPLE_STR", SyntaxHighlighterColors.STRING);
+  public static final TextAttributesKey L_PAREN
+    = createTextAttributesKey("L_PAREN", SyntaxHighlighterColors.STRING);
+  public static final TextAttributesKey R_PAREN
+    = createTextAttributesKey("R_PAREN", SyntaxHighlighterColors.STRING);
   public static final TextAttributesKey BAD_CHARACTER = createTextAttributesKey("SIMPLE_BAD_CHARACTER"
     ,new TextAttributes(Color.RED, null, null, null, Font.BOLD));
   public static final TextAttributesKey KEYWORD
@@ -58,11 +63,13 @@ public class SimpleSyntaxHighlighter extends SyntaxHighlighterBase {
 
   private static final TextAttributesKey[] BAD_CHAR_KEYS = new TextAttributesKey[]{BAD_CHARACTER};
   private static final TextAttributesKey[] SEPARATOR_KEYS = new TextAttributesKey[]{SEPARATOR};
-  private static final TextAttributesKey[] KEY_KEYS = new TextAttributesKey[]{KEY};
+  //private static final TextAttributesKey[] KEY_KEYS = new TextAttributesKey[]{KEY};
   private static final TextAttributesKey[] VALUE_KEYS = new TextAttributesKey[]{VALUE};
   private static final TextAttributesKey[] COMMENT_KEYS = new TextAttributesKey[]{COMMENT};
   private static final TextAttributesKey[] ML_COMMENT_KEYS = new TextAttributesKey[]{MULTILINE_COMMENT};
   private static final TextAttributesKey[] STR_KEYS = new TextAttributesKey[]{STR};
+  private static final TextAttributesKey[] L_PAREN_KEYS = new TextAttributesKey[]{L_PAREN};
+  private static final TextAttributesKey[] R_PAREN_KEYS = new TextAttributesKey[]{R_PAREN};
   private static final TextAttributesKey[] KEYWORDS = new TextAttributesKey[]{KEYWORD};
   private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
 
@@ -75,11 +82,12 @@ public class SimpleSyntaxHighlighter extends SyntaxHighlighterBase {
   @NotNull
   @Override
   public TextAttributesKey[] getTokenHighlights(IElementType tokenType) {
-    if (tokenType.equals(SimpleTypes.SEPARATOR)) {
-      return SEPARATOR_KEYS;
-    } else if (tokenType.equals(SimpleTypes.KEY)) {
-      return KEY_KEYS;
-    } else if (tokenType.equals(SimpleTypes.VALUE)) {
+    if
+      //(tokenType.equals(SimpleTypes.SEPARATOR)) {
+      //return SEPARATOR_KEYS;
+    //} else if (tokenType.equals(SimpleTypes.KEY)) {
+    //  return KEY_KEYS;
+    (tokenType.equals(SimpleTypes.VALUE)) {
       return VALUE_KEYS;
     } else if (tokenType.equals(SimpleTypes.COMMENT)) {
       return COMMENT_KEYS;
@@ -87,6 +95,10 @@ public class SimpleSyntaxHighlighter extends SyntaxHighlighterBase {
       return ML_COMMENT_KEYS;
     } else if (tokenType.equals(SimpleTypes.STR)) {
       return STR_KEYS;
+    } else if (tokenType.equals(SimpleTypes.L_PAREN)) {
+      return L_PAREN_KEYS;
+    } else if (tokenType.equals(SimpleTypes.R_PAREN)) {
+      return R_PAREN_KEYS;
     } else if (tokenType.equals(SimpleTypes.IMPORT)) {
       return KEYWORDS;
     } else if (tokenType.equals(TokenType.BAD_CHARACTER)){

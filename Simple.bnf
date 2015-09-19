@@ -17,7 +17,10 @@
 
 simpleFile ::= item_*
 
-private item_ ::= (property|COMMENT|CRLF)|STR|import_statement|MULTILINE_COMMENT
+private item_ ::= import_statement|COMMENT|STR|MULTILINE_COMMENT|CRLF
 
-property ::= (KEY? SEPARATOR VALUE?) | KEY
-import_statement ::= IMPORT STR
+import_body ::= L_PAREN VALUE (COMMA VALUE)* R_PAREN
+
+import_statement ::= IMPORT import_body WHERE CRLF
+
+//property ::= (KEY? SEPARATOR VALUE?) | KEY

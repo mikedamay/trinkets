@@ -28,6 +28,7 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
+//import com.maddyhome.idea.copyright.language.parser.SimpleLexer;
 import com.maddyhome.idea.copyright.language.parser.SimpleParser;
 import com.maddyhome.idea.copyright.language.psi.SimpleFile;
 import com.maddyhome.idea.copyright.language.psi.SimpleTypes;

@@ -13,20 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.maddyhome.idea.copyright.language;
+package com.maddyhome.idea.copyright.language.parser;
 
-
-import com.intellij.lexer.FlexAdapter;
-import com.intellij.lexer.FlexLexer;
-//import com.maddyhome.idea.copyright.language.parser.SimpleLexer;
-
-import java.io.Reader;
+import com.intellij.lang.parser.GeneratedParserUtilBase;
 
 /**
- * Created by mike on 9/6/15.
+ * Created by mike on 9/13/15.
  */
-public class SimpleLexerAdapter extends FlexAdapter {
-  public SimpleLexerAdapter() {
-    super(new SimpleLexer((Reader) null));
-  }
+public class SimpleParserUtil extends GeneratedParserUtilBase {
 }
