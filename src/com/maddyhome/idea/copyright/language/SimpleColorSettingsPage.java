@@ -33,13 +33,13 @@ import java.util.Map;
 public class SimpleColorSettingsPage implements ColorSettingsPage {
   public static final AttributesDescriptor[] DESCRIPTORS = new AttributesDescriptor[] {
     /*new AttributesDescriptor("Key", SimpleSyntaxHighlighter.KEY)
-    ,*/new AttributesDescriptor("Separator", SimpleSyntaxHighlighter.SEPARATOR)
-    ,new AttributesDescriptor("Value", SimpleSyntaxHighlighter.VALUE)
-    ,new AttributesDescriptor("String", SimpleSyntaxHighlighter.STR)
-    ,new AttributesDescriptor("Left Paren", SimpleSyntaxHighlighter.L_PAREN)
-    ,new AttributesDescriptor("Right Paren", SimpleSyntaxHighlighter.R_PAREN)
-    ,new AttributesDescriptor("Keyword", SimpleSyntaxHighlighter.KEYWORD)
-    ,new AttributesDescriptor("Comment", SimpleSyntaxHighlighter.COMMENT)
+    ,new AttributesDescriptor("Separator", SimpleSyntaxHighlighter.SEPARATOR)
+    ,*/new AttributesDescriptor("Value", SimpleSyntaxHighlightingColors.VALUE)
+    ,new AttributesDescriptor("String", SimpleSyntaxHighlightingColors.STR)
+    ,new AttributesDescriptor("Left Paren", SimpleSyntaxHighlightingColors.L_PAREN)
+    ,new AttributesDescriptor("Right Paren", SimpleSyntaxHighlightingColors.R_PAREN)
+    ,new AttributesDescriptor("Keyword", SimpleSyntaxHighlightingColors.KEYWORD)
+    ,new AttributesDescriptor("Comment", SimpleSyntaxHighlightingColors.COMMENT)
   };
 
 
