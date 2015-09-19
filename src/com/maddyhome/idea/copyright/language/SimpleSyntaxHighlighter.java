@@ -26,8 +26,11 @@ import com.maddyhome.idea.copyright.language.psi.SimpleTypes;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Reader;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey;
+import static com.maddyhome.idea.copyright.language.SimpleSyntaxHighlightingColors.*;
 
 /**
  * Created by mike on 9/8/15.
@@ -38,6 +41,39 @@ public class SimpleSyntaxHighlighter extends SyntaxHighlighterBase {
 
   private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
 
+  private static final Map<IElementType, TextAttributesKey> ATTRIBUTES = new HashMap<IElementType, TextAttributesKey>();
+
+  static {
+    fillMap(ATTRIBUTES, PARENTHESIS, SimpleTypes.L_PAREN, SimpleTypes.R_PAREN);
+    //fillMap(ATTRIBUTES, R_PAREN, SimpleTypes.R_PAREN);
+    fillMap(ATTRIBUTES, VALUE, SimpleTypes.VALUE);
+    fillMap(ATTRIBUTES, COMMENT, SimpleTypes.COMMENT);
+    fillMap(ATTRIBUTES, MULTILINE_COMMENT, SimpleTypes.MULTILINE_COMMENT);
+    fillMap(ATTRIBUTES, STR, SimpleTypes.STR);
+    fillMap(ATTRIBUTES, SimpleParserDefinition.KEYWORDS, KEYWORD);
+    fillMap(ATTRIBUTES, BAD_CHARACTER, TokenType.BAD_CHARACTER);
+    /*
+    fillMap(ATTRIBUTES, LINE_COMMENT, GoParserDefinition.LINE_COMMENT);
+    fillMap(ATTRIBUTES, BLOCK_COMMENT, GoParserDefinition.MULTILINE_COMMENT);
+    fillMap(ATTRIBUTES, PARENTHESES, GoTypes.LPAREN, GoTypes.RPAREN);
+    fillMap(ATTRIBUTES, BRACES, GoTypes.LBRACE, GoTypes.RBRACE);
+    fillMap(ATTRIBUTES, BRACKETS, GoTypes.LBRACK, GoTypes.RBRACK);
+    fillMap(ATTRIBUTES, BAD_CHARACTER, TokenType.BAD_CHARACTER);
+    fillMap(ATTRIBUTES, IDENTIFIER, GoTypes.IDENTIFIER);
+    fillMap(ATTRIBUTES, DOT, GoTypes.DOT, GoTypes.TRIPLE_DOT);
+    fillMap(ATTRIBUTES, COLON, GoTypes.COLON);
+    fillMap(ATTRIBUTES, SEMICOLON, GoTypes.SEMICOLON);
+    fillMap(ATTRIBUTES, COMMA, GoTypes.COMMA);
+    fillMap(ATTRIBUTES, GoParserDefinition.OPERATORS, OPERATOR);
+    fillMap(ATTRIBUTES, GoParserDefinition.KEYWORDS, KEYWORD);
+    fillMap(ATTRIBUTES, GoParserDefinition.NUMBERS, NUMBER);
+    fillMap(ATTRIBUTES, GoParserDefinition.STRING_LITERALS, STRING);
+    */
+  }
+
+
+
+
   @NotNull
   @Override
   public Lexer getHighlightingLexer() {
@@ -47,6 +83,8 @@ public class SimpleSyntaxHighlighter extends SyntaxHighlighterBase {
   @NotNull
   @Override
   public TextAttributesKey[] getTokenHighlights(IElementType tokenType) {
+    return pack(ATTRIBUTES.get(tokenType));
+    /*
     if
       //(tokenType.equals(SimpleTypes.SEPARATOR)) {
       //return SEPARATOR_KEYS;
@@ -71,5 +109,6 @@ public class SimpleSyntaxHighlighter extends SyntaxHighlighterBase {
     } else{
       return EMPTY_KEYS;
     }
+    */
   }
 }

@@ -35,13 +35,15 @@ public class SimpleSyntaxHighlightingColors {
     = createTextAttributesKey("SIMPLE_MULTILINE_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
   public static final TextAttributesKey STR
     = createTextAttributesKey("SIMPLE_STR", DefaultLanguageHighlighterColors.STRING);
-  public static final TextAttributesKey L_PAREN
-    = createTextAttributesKey("SIMPLE_L_PAREN", DefaultLanguageHighlighterColors.STRING);
+  public static final TextAttributesKey PARENTHESIS
+    = createTextAttributesKey("SIMPLE_PARENTHESIS", DefaultLanguageHighlighterColors.STRING);
   public static final TextAttributesKey R_PAREN
     = createTextAttributesKey("SIMPLE_R_PAREN", DefaultLanguageHighlighterColors.STRING);
   public static final TextAttributesKey BAD_CHARACTER = HighlighterColors.BAD_CHARACTER;
   public static final TextAttributesKey KEYWORD
     = createTextAttributesKey("SIMPLE_KEYWORD", DefaultLanguageHighlighterColors.COMMA);
+  public static final TextAttributesKey OPERATOR
+    = createTextAttributesKey("SIMPLE_KEYWORD", DefaultLanguageHighlighterColors.OPERATION_SIGN);
   private SimpleSyntaxHighlightingColors() {
   }
 }

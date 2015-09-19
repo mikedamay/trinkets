@@ -36,10 +36,10 @@ public class SimpleColorSettingsPage implements ColorSettingsPage {
     ,new AttributesDescriptor("Separator", SimpleSyntaxHighlighter.SEPARATOR)
     ,*/new AttributesDescriptor("Value", SimpleSyntaxHighlightingColors.VALUE)
     ,new AttributesDescriptor("String", SimpleSyntaxHighlightingColors.STR)
-    ,new AttributesDescriptor("Left Paren", SimpleSyntaxHighlightingColors.L_PAREN)
-    ,new AttributesDescriptor("Right Paren", SimpleSyntaxHighlightingColors.R_PAREN)
+    ,new AttributesDescriptor("Parenthesis", SimpleSyntaxHighlightingColors.PARENTHESIS)
     ,new AttributesDescriptor("Keyword", SimpleSyntaxHighlightingColors.KEYWORD)
     ,new AttributesDescriptor("Comment", SimpleSyntaxHighlightingColors.COMMENT)
+    ,new AttributesDescriptor("Operators", SimpleSyntaxHighlightingColors.OPERATOR)
   };
 
 

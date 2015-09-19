@@ -36,12 +36,20 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.Reader;
 
+import static com.maddyhome.idea.copyright.language.psi.SimpleTypes.*;
+
 /**
  * Created by mike on 9/7/15.
  */
 public class SimpleParserDefinition implements ParserDefinition {
   public TokenSet WHITE_SPACES = TokenSet.create(TokenType.WHITE_SPACE);
   public TokenSet COMMENTS = TokenSet.create(SimpleTypes.COMMENT);
+  public TokenSet OPERATORS = TokenSet.create(SimpleTypes.COMMENT);
+
+  public static final TokenSet KEYWORDS = TokenSet.create(
+     IMPORT, CASE, ELSE, IF, IMPORT
+    );
+
 
   public static final IFileElementType FILE
     = new IFileElementType(Language.<SimpleLanguage>findInstance(SimpleLanguage.class));

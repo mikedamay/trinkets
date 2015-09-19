@@ -17,6 +17,11 @@
 
 simpleFile ::= item_*
 
+statement ::= (CASE | ELSE | IF)
+
+operator ::= (LBRACE | RBRACE | LBRACK | RBRACK | COLON | EQ | ASSIGN | NOT_EQ | NOT | PLUS | MINUS | COND_OR | COND_AND
+  | BIT_AND | SEND_CHANNEL | LESS | BIT_XOR | MUL | QUOTIENT | REMAINDER | GREATER )
+
 private item_ ::= import_statement|COMMENT|STR|MULTILINE_COMMENT|CRLF
 
 import_body ::= L_PAREN VALUE (COMMA VALUE)* R_PAREN

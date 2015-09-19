@@ -42,11 +42,58 @@ MULTILINE_COMMENT="{-" ( ([^"-"]|[\r\n])* ("-"+ [^"-""}"] )? )* ("-" | "-"+"}")?
 <YYINITIAL> {STRLINE} { yybegin(YYINITIAL); return SimpleTypes.STR; }
 
 <YYINITIAL> {
-  "import"  {yybegin(YYINITIAL); return SimpleTypes.IMPORT; }
-  "where"   {yybegin(YYINITIAL); return SimpleTypes.WHERE; }
   "(" {yybegin(YYINITIAL); return SimpleTypes.L_PAREN; }
   ")" {yybegin(YYINITIAL); return SimpleTypes.R_PAREN; }
   "," {yybegin(YYINITIAL); return SimpleTypes.COMMA; }
+"{"                                       { return SimpleTypes.LBRACE; }
+"}"                                       { return SimpleTypes.RBRACE; }
+
+"["                                       { return SimpleTypes.LBRACK; }
+"]"                                       { return SimpleTypes.RBRACK; }
+
+":"                                       { return SimpleTypes.COLON; }
+
+"=="                                      { return SimpleTypes.EQ; }
+"="                                       { return SimpleTypes.ASSIGN; }
+
+"!="                                      { return SimpleTypes.NOT_EQ; }
+"!"                                       { return SimpleTypes.NOT; }
+
+"+"                                       { return SimpleTypes.PLUS; }
+
+"-"                                       { return SimpleTypes.MINUS; }
+
+"||"                                      { return SimpleTypes.COND_OR; }
+
+"&&"                                      { return SimpleTypes.COND_AND; }
+
+"&"                                       { return SimpleTypes.BIT_AND; }
+
+"<-"                                      { return SimpleTypes.SEND_CHANNEL; }
+"<"                                       { return SimpleTypes.LESS; }
+
+"^"                                       { return SimpleTypes.BIT_XOR; }
+
+"*"                                       { return SimpleTypes.MUL; }
+
+"/"                                       { return SimpleTypes.QUOTIENT; }
+
+"%"                                       { return SimpleTypes.REMAINDER; }
+
+">"                                       { return SimpleTypes.GREATER; }
+
+
+
+
+"case"                                    {  return SimpleTypes.CASE;  }
+"else"                                    {  return SimpleTypes.ELSE;  }
+
+"if"                                      {  return SimpleTypes.IF ;  }
+"import"                                  {  return SimpleTypes.IMPORT ;  }
+
+  "where"   {yybegin(YYINITIAL); return SimpleTypes.WHERE; }
+
+
   {FIRST_VALUE_CHARACTER}{VALUE_CHARACTER}* { yybegin(YYINITIAL); return SimpleTypes.VALUE; }
 }
 
