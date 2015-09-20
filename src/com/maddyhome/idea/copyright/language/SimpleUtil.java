@@ -50,8 +50,8 @@ public class SimpleUtil {
             if (result == null) {
               result = new ArrayList<SimpleProperty>();
             }
+            result.add(simpleProperty);
           }
-          result.add(simpleProperty);
         }
       }
     }
@@ -60,6 +60,18 @@ public class SimpleUtil {
 
   public static List<SimpleProperty> findProperties(Project project ) {
     List<SimpleProperty> result = new ArrayList<SimpleProperty>();
+    Collection<VirtualFile> virtualFiles
+      = FileBasedIndex.getInstance().getContainingFiles(FileTypeIndex.NAME
+      ,SimpleFileType.INSTANCE, GlobalSearchScope.allScope(project) );
+    for (VirtualFile virtualFile : virtualFiles ) {
+      SimpleFile simpleFile = (SimpleFile)PsiManager.getInstance(project).findFile(virtualFile);
+      if (simpleFile != null ) {
+        SimpleProperty[] simpleProperties = PsiTreeUtil.getChildrenOfType(simpleFile, SimpleProperty.class);
+        if (simpleProperties != null) {
+          Collections.addAll(result, simpleProperties);
+        }
+      }
+    }
     return result;
   }
 }
