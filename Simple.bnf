@@ -24,19 +24,18 @@ operator ::= (LBRACE | RBRACE | LBRACK | RBRACK | COLON | EQ | ASSIGN | NOT_EQ |
   | TILDE |PIPE_FORWARD | BACK_TICK | COMBINE | MULTIMAP | PIPE_BACK | GE | LE | COMBINE_BACK
   | COLON_COLON | INT_DIVIDE | DOT_DOT | DOT | RETURN )
 
-private item_ ::= import_statement|COMMENT|STR|MULTILINE_COMMENT|CRLF|case_stateemnt
+private item_ ::= import_statement|module_statement|function_declaration|COMMENT|STR|MULTILINE_COMMENT|CRLF|case_statement
 
-module_body ::= L_PAREN VALUE (COMMA VALUE)* R_PAREN
+exposing_list ::= VALUE [(COMMA VALUE)*]
+compound_identifier ::= VALUE [(DOT VALUE)*]
+import_body ::= compound_identifier EXPOSING L_PAREN exposing_list R_PAREN CRLF
+
+module_body ::= compound_identifier L_PAREN exposing_list R_PAREN
 
 module_statement ::= MODULE module_body WHERE CRLF
 
 case_statement ::= CASE OF {methods [getKey getValue]}
 
-compound_identifier ::= VALUE [(DOT VALUE)*]
-exposing_list ::= VALUE [(COMMA VALUE)*]
-
-import_body ::= compound_identifier EXPOSING L_PAREN exposing_list R_PAREN
-
 import_statement ::= IMPORT import_body
 
-//property ::= (KEY? SEPARATOR VALUE?) | KEY
+function_declaration ::= VALUE COLON 
