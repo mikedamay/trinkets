@@ -36,12 +36,9 @@ public class SimpleAnnotator implements Annotator {
 
   @Override
   public void annotate(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
-    if (element instanceof PsiLiteralExpression) {
-      PsiLiteralExpression literalExpression = (PsiLiteralExpression)element;
-      String value = literalExpression.getValue().toString();
-      if ( value != null && value.startsWith("case")) {
+    if (element.toString().equals("PsiKeyword:public")) {
         Project project = element.getProject();
-        List<SimpleProperty> properties = SimpleUtil.findProperties(project, value);
+        List<SimpleProperty> properties = SimpleUtil.findProperties(project, "case");
         if (properties.size() == 1) {
           TextRange range = new TextRange(element.getTextRange().getStartOffset() + 1,
             element.getTextRange().getStartOffset() + 1);
@@ -54,6 +51,5 @@ public class SimpleAnnotator implements Annotator {
           holder.createErrorAnnotation(range, "unresolved issue");
         }
       }
-    }
   }
 }

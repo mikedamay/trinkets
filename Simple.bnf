@@ -26,10 +26,17 @@ operator ::= (LBRACE | RBRACE | LBRACK | RBRACK | COLON | EQ | ASSIGN | NOT_EQ |
 
 private item_ ::= import_statement|COMMENT|STR|MULTILINE_COMMENT|CRLF|case_stateemnt
 
-import_body ::= L_PAREN VALUE (COMMA VALUE)* R_PAREN
+module_body ::= L_PAREN VALUE (COMMA VALUE)* R_PAREN
 
-import_statement ::= IMPORT import_body WHERE CRLF
+module_statement ::= MODULE module_body WHERE CRLF
 
 case_statement ::= CASE OF {methods [getKey getValue]}
+
+compound_identifier ::= VALUE [(DOT VALUE)*]
+exposing_list ::= VALUE [(COMMA VALUE)*]
+
+import_body ::= compound_identifier EXPOSING L_PAREN exposing_list R_PAREN
+
+import_statement ::= IMPORT import_body
 
 //property ::= (KEY? SEPARATOR VALUE?) | KEY
