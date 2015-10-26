@@ -24,18 +24,21 @@ operator ::= (LBRACE | RBRACE | LBRACK | RBRACK | COLON | EQ | ASSIGN | NOT_EQ |
   | TILDE |PIPE_FORWARD | BACK_TICK | COMBINE | MULTIMAP | PIPE_BACK | GE | LE | COMBINE_BACK
   | COLON_COLON | INT_DIVIDE | DOT_DOT | DOT | RETURN )
 
-private item_ ::= import_statement|module_statement|function_declaration|COMMENT|STR|MULTILINE_COMMENT|CRLF|case_statement
-
-exposing_list ::= VALUE [(COMMA VALUE)*]
-compound_identifier ::= VALUE [(DOT VALUE)*]
-import_body ::= compound_identifier EXPOSING L_PAREN exposing_list R_PAREN CRLF
-
-module_body ::= compound_identifier L_PAREN exposing_list R_PAREN
+private item_ ::= import_statement|module_statement|fun_decl|fun_def|COMMENT|STR|MULTILINE_COMMENT|CRLF|case_statement
 
 module_statement ::= MODULE module_body WHERE CRLF
+module_body ::= compound_identifier L_PAREN exposing_list R_PAREN
+
+import_statement ::= IMPORT import_body
+import_body ::= compound_identifier EXPOSING L_PAREN exposing_list R_PAREN CRLF
+exposing_list ::= VALUE [(COMMA VALUE)*]
 
 case_statement ::= CASE OF {methods [getKey getValue]}
 
-import_statement ::= IMPORT import_body
+fun_decl ::= VALUE COLON type_param (RETURN type_param)*]
+type_param ::= compound_identifier
+  | L_PAREN compound_identifier [(COMMA compound_identifier)*] R_PAREN
+fun_def ::= VALUE [params] ASSIGN
+params ::= (VALUE)*
 
-function_declaration ::= VALUE COLON 
+compound_identifier ::= VALUE [(DOT VALUE)*]

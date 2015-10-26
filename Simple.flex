@@ -22,6 +22,7 @@ import com.intellij.psi.TokenType;
 ESCAPES = [abfnrtv]
 CRLF=\n|\r|\r\n
 WHITE_SPACE=[\ \t\f]
+NUMBER=-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]*)?
 FIRST_VALUE_CHARACTER=[A-Za-z_]
 VALUE_CHARACTER=[A-Za-z0-9_]
 END_OF_LINE_COMMENT=("--")[^\r\n]*
