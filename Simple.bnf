@@ -35,7 +35,7 @@ private item_ ::=
   | MULTILINE_COMMENT
   | case_statement
   | type_alias
-  | CRLF
+  //| CRLF
 
 module_statement ::= MODULE module_body WHERE
 module_body ::= compound_identifier L_PAREN exposing_list R_PAREN

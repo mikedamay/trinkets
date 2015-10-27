@@ -21,13 +21,12 @@ import com.intellij.psi.TokenType;
 
 ESCAPES = [abfnrtv]
 CRLF=\n|\r|\r\n
-WHITE_SPACE=[\ \t\f]
+WHITE_SPACE=[\ \t\f\r\n]
 NUMBER=-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]*)?
 FIRST_VALUE_CHARACTER=[A-Za-z_]
 VALUE_CHARACTER=[A-Za-z0-9_]
 END_OF_LINE_COMMENT=("--")[^\r\n]*
 SEPARATOR=[:=]
-KEY_CHARACTER=[^:=\ \n\r\t\f\\] | "\\"{CRLF}
 DQ="\""
 STRLINE={DQ} ( [^\"\\\n\r] | "\\" ("\\" | {DQ} | {ESCAPES} | [0-8xuU] ) )* {DQ}?
 MULTILINE_COMMENT="{-" ( ([^"-"]|[\r\n])* ("-"+ [^"-""}"] )? )* ("-" | "-"+"}")?
@@ -119,16 +118,7 @@ MULTILINE_COMMENT="{-" ( ([^"-"]|[\r\n])* ("-"+ [^"-""}"] )? )* ("-" | "-"+"}")?
   {FIRST_VALUE_CHARACTER}{VALUE_CHARACTER}* { yybegin(YYINITIAL); return SimpleTypes.VALUE; }
 }
 
-//<YYINITIAL> {KEY_CHARACTER}+ { yybegin(YYINITIAL); return SimpleTypes.KEY; }
-
-//<YYINITIAL> {SEPARATOR} { yybegin(WAITING_VALUE); return SimpleTypes.SEPARATOR; }
-
-//<WAITING_VALUE> {CRLF} { yybegin(YYINITIAL); return SimpleTypes.CRLF; }
-
-//<WAITING_VALUE> {WHITE_SPACE}+  { yybegin(WAITING_VALUE); return TokenType.WHITE_SPACE; }
-
-
-{CRLF} { yybegin(YYINITIAL); return SimpleTypes.CRLF; }
+//{CRLF} { yybegin(YYINITIAL); return SimpleTypes.CRLF; }
 
 {WHITE_SPACE}+  {yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
 
