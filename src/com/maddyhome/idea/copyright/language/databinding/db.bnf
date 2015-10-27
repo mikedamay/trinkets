@@ -80,13 +80,7 @@
 
 dataBindingExpression ::= expr defaults?
 
-expr
-  ::= myExpr | yourExpr
 
-myExpr ::= NUMBER
-yourExpr ::= expr COND_OR expr
-
-/*
 // All branches here must end in "Expr"
 expr
   ::= nullCoalesceExpr     //  '??'
@@ -183,4 +177,3 @@ constantValue
   ::= literal
   |   RESOURCE_REFERENCE
   |   IDENTIFIER
-*/

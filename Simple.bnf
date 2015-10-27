@@ -33,15 +33,15 @@ private item_ ::=
   | fun_def
   | COMMENT
   | MULTILINE_COMMENT
-  | CRLF
   | case_statement
   | type_alias
+  | CRLF
 
-module_statement ::= MODULE module_body WHERE CRLF
+module_statement ::= MODULE module_body WHERE
 module_body ::= compound_identifier L_PAREN exposing_list R_PAREN
 
 import_statement ::= IMPORT import_body
-import_body ::= compound_identifier EXPOSING L_PAREN exposing_list R_PAREN CRLF
+import_body ::= compound_identifier EXPOSING L_PAREN exposing_list R_PAREN
 exposing_list ::= VALUE [(COMMA VALUE)*]
 
 case_statement ::= CASE OF {methods [getKey getValue]}
@@ -70,11 +70,12 @@ expr ::=
   | AddExpr
   | MulExpr
   | UnaryExpr
-  //| ParenthesesExpr
   | IdExpr
   //| TupleExpr
   | RecordExpr
   | ListExpr
+  //| LineBreakExpr
+  | ParenthesesExpr
 
 
 OrExpr ::= expr COND_OR expr
@@ -83,13 +84,14 @@ UnaryExpr ::=  unary_op expr
 ConditionalExpr ::= expr rel_op expr
 AddExpr ::= expr add_op expr
 MulExpr ::= expr mul_op expr
-//ParenthesesExpr ::= L_PAREN expr R_PAREN
-TupleExpr ::= tuple
+//TupleExpr ::= tuple
 RecordExpr ::= record
 ListExpr ::= list
 NumberExpr ::= NUM
 StringExpr ::= STR
 IdExpr ::= compound_identifier
+//LineBreakExpr ::= expr CRLF
+ParenthesesExpr ::= L_PAREN expr R_PAREN
 
 
 private rel_op ::= EQ | NOT_EQ | LESS | LE | GREATER | GE
