@@ -33,6 +33,8 @@ public class SimpleSyntaxHighlightingColors {
     = createTextAttributesKey("SIMPLE_MULTILINE_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
   public static final TextAttributesKey STR
     = createTextAttributesKey("SIMPLE_STR", DefaultLanguageHighlighterColors.STRING);
+  public static final TextAttributesKey NUM
+    = createTextAttributesKey("SIMPLE_NUM", DefaultLanguageHighlighterColors.NUMBER);
   public static final TextAttributesKey PARENTHESIS
     = createTextAttributesKey("SIMPLE_PARENTHESIS", DefaultLanguageHighlighterColors.STRING);
   public static final TextAttributesKey BAD_CHARACTER = HighlighterColors.BAD_CHARACTER;

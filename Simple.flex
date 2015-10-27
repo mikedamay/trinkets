@@ -42,7 +42,9 @@ MULTILINE_COMMENT="{-" ( ([^"-"]|[\r\n])* ("-"+ [^"-""}"] )? )* ("-" | "-"+"}")?
 <YYINITIAL> {STRLINE} { yybegin(YYINITIAL); return SimpleTypes.STR; }
 <YYINITIAL> {NUMBER} { yybegin(YYINITIAL); return SimpleTypes.NUM; }
 
+
 <YYINITIAL> {
+  "List" {yybegin(YYINITIAL); return SimpleTypes.LIST; }
   "(" {yybegin(YYINITIAL); return SimpleTypes.L_PAREN; }
   ")" {yybegin(YYINITIAL); return SimpleTypes.R_PAREN; }
   "," {yybegin(YYINITIAL); return SimpleTypes.COMMA; }
@@ -110,15 +112,14 @@ MULTILINE_COMMENT="{-" ( ([^"-"]|[\r\n])* ("-"+ [^"-""}"] )? )* ("-" | "-"+"}")?
 "let"                                     {  return SimpleTypes.LET;  }
 "module"                                  {  return SimpleTypes.MODULE ;  }
 "of"                                      {  return SimpleTypes.OF;  }
+"otherwise"                               {  return SimpleTypes.OTHERWISE;  }
 "port"                                    {  return SimpleTypes.PORT;  }
 "then"                                    {  return SimpleTypes.THEN;  }
 "type"                                    {  return SimpleTypes.TYPE;  }
 "where"                                   {  return SimpleTypes.WHERE; }
 
-  {FIRST_VALUE_CHARACTER}{VALUE_CHARACTER}* { yybegin(YYINITIAL); return SimpleTypes.VALUE; }
+  {FIRST_VALUE_CHARACTER}{VALUE_CHARACTER}* { yybegin(YYINITIAL); return SimpleTypes.IDENTIFIER; }
 }
-
-//{CRLF} { yybegin(YYINITIAL); return SimpleTypes.CRLF; }
 
 {WHITE_SPACE}+  {yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
 

@@ -46,17 +46,15 @@ public class SimpleSyntaxHighlighter extends SyntaxHighlighterBase {
   static {
     fillMap(ATTRIBUTES, PARENTHESIS, SimpleTypes.L_PAREN, SimpleTypes.R_PAREN);
     //fillMap(ATTRIBUTES, R_PAREN, SimpleTypes.R_PAREN);
-    fillMap(ATTRIBUTES, VALUE, SimpleTypes.VALUE);
+    fillMap(ATTRIBUTES, VALUE, SimpleTypes.IDENTIFIER);
     fillMap(ATTRIBUTES, COMMENT, SimpleTypes.COMMENT);
     fillMap(ATTRIBUTES, MULTILINE_COMMENT, SimpleTypes.MULTILINE_COMMENT);
     fillMap(ATTRIBUTES, STR, SimpleTypes.STR);
+    fillMap(ATTRIBUTES, NUM, SimpleTypes.NUM);
     fillMap(ATTRIBUTES, SimpleParserDefinition.KEYWORDS, KEYWORD);
     fillMap(ATTRIBUTES, SimpleParserDefinition.OPERATORS, OPERATOR);
     fillMap(ATTRIBUTES, BAD_CHARACTER, TokenType.BAD_CHARACTER);
   }
-
-
-
 
   @NotNull
   @Override
@@ -68,31 +66,5 @@ public class SimpleSyntaxHighlighter extends SyntaxHighlighterBase {
   @Override
   public TextAttributesKey[] getTokenHighlights(IElementType tokenType) {
     return pack(ATTRIBUTES.get(tokenType));
-    /*
-    if
-      //(tokenType.equals(SimpleTypes.SEPARATOR)) {
-      //return SEPARATOR_KEYS;
-    //} else if (tokenType.equals(SimpleTypes.KEY)) {
-    //  return KEY_KEYS;
-    (tokenType.equals(SimpleTypes.VALUE)) {
-      return pack(SimpleSyntaxHighlightingColors.VALUE);
-    } else if (tokenType.equals(SimpleTypes.COMMENT)) {
-      return pack(SimpleSyntaxHighlightingColors.COMMENT);
-    } else if (tokenType.equals(SimpleTypes.MULTILINE_COMMENT)) {
-      return pack(SimpleSyntaxHighlightingColors.MULTILINE_COMMENT);
-    } else if (tokenType.equals(SimpleTypes.STR)) {
-      return pack(SimpleSyntaxHighlightingColors.STR);
-    } else if (tokenType.equals(SimpleTypes.L_PAREN)) {
-      return pack(SimpleSyntaxHighlightingColors.L_PAREN);
-    } else if (tokenType.equals(SimpleTypes.R_PAREN)) {
-      return pack(SimpleSyntaxHighlightingColors.R_PAREN);
-    } else if (tokenType.equals(SimpleTypes.IMPORT)) {
-      return pack(SimpleSyntaxHighlightingColors.KEYWORD);
-    } else if (tokenType.equals(TokenType.BAD_CHARACTER)){
-      return pack(SimpleSyntaxHighlightingColors.BAD_CHARACTER);
-    } else{
-      return EMPTY_KEYS;
-    }
-    */
   }
 }

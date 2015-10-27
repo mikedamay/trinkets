@@ -19,7 +19,7 @@
 
 simpleFile ::= item_*
 
-statement ::= (ALIAS | AS | CASE | ELSE | EXPOSING | IF | IN | LET | MODULE | OF | PORT | THEN | TYPE )
+statement ::= (ALIAS | AS | CASE | ELSE | EXPOSING | IF | IN | LET | MODULE | OF | OTHERWISE | PORT | THEN | TYPE )
 
 operator ::= (LBRACE | RBRACE | LBRACK | RBRACK | COLON | EQ | ASSIGN | NOT_EQ | NOT | PLUS | MINUS | COND_OR | COND_AND
   | BIT_AND | SEND_CHANNEL | LESS | BIT_XOR | MUL | QUOTIENT | REMAINDER | GREATER
@@ -33,32 +33,29 @@ private item_ ::=
   | fun_def
   | COMMENT
   | MULTILINE_COMMENT
-  | case_statement
   | type_alias
-  //| CRLF
 
 module_statement ::= MODULE module_body WHERE
 module_body ::= compound_identifier L_PAREN exposing_list R_PAREN
 
 import_statement ::= IMPORT import_body
 import_body ::= compound_identifier EXPOSING L_PAREN exposing_list R_PAREN
-exposing_list ::= VALUE [(COMMA VALUE)*]
+exposing_list ::= IDENTIFIER [(COMMA IDENTIFIER)*]
 
-case_statement ::= CASE OF {methods [getKey getValue]}
-
-fun_decl ::= VALUE COLON [type_param (RETURN type_param)*]
+fun_decl ::= IDENTIFIER COLON [type_param (RETURN type_param)*]
 type_param ::= compound_identifier
   | L_PAREN compound_identifier [(COMMA compound_identifier)*] R_PAREN
-fun_def ::= VALUE [params] ASSIGN expr
-params ::= (VALUE)*
+fun_def ::= IDENTIFIER [params] ASSIGN expr
+params ::= param*
+param ::= IDENTIFIER | tuple | record | list_type
 
 type_alias ::= TYPE ALIAS type_alias_body
-type_alias_body ::= compound_identifier /*| tuple */| record | list
+type_alias_body ::= compound_identifier ASSIGN (compound_identifier | tuple | record | list_type)
 
-compound_identifier ::= VALUE [(DOT VALUE)*]
-//tuple ::= LPAREN expr [ (COMMA expr)*] R_PAREN
+compound_identifier ::= IDENTIFIER [(DOT IDENTIFIER)*]
+tuple ::= LPAREN expr [ (COMMA expr)*] R_PAREN
 record ::= LBRACE expr [ (COMMA expr)*] RBRACE
-list ::= LBRACK expr [ (COMMA expr)*] RBRACK
+list_type ::= LIST [compound_identifier]
 
 
 expr ::=
@@ -71,10 +68,11 @@ expr ::=
   | MulExpr
   | UnaryExpr
   | IdExpr
-  //| TupleExpr
+  | TupleExpr
   | RecordExpr
   | ListExpr
-  //| LineBreakExpr
+  | IfExpr
+  | CaseExpr
   | ParenthesesExpr
 
 
@@ -84,14 +82,19 @@ UnaryExpr ::=  unary_op expr
 ConditionalExpr ::= expr rel_op expr
 AddExpr ::= expr add_op expr
 MulExpr ::= expr mul_op expr
-//TupleExpr ::= tuple
+TupleExpr ::= tuple
 RecordExpr ::= record
 ListExpr ::= list
 NumberExpr ::= NUM
 StringExpr ::= STR
 IdExpr ::= compound_identifier
-//LineBreakExpr ::= expr CRLF
+IfExpr ::= IF expr THEN expr [ELSE expr]
+CaseExpr ::= case_statement
 ParenthesesExpr ::= L_PAREN expr R_PAREN
+
+case_statement ::= CASE IDENTIFIER OF case_body
+case_body ::= (case_body_part)* [OTHERWISE expr]
+case_body_part ::= expr RETURN expr
 
 
 private rel_op ::= EQ | NOT_EQ | LESS | LE | GREATER | GE

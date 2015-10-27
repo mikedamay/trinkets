@@ -52,9 +52,8 @@ public class SimpleParserDefinition implements ParserDefinition {
   );
 
   public static final TokenSet KEYWORDS = TokenSet.create(
-    ALIAS, AS, CASE, ELSE, EXPOSING, IF, IMPORT, IN, LET, MODULE, OF, PORT, THEN, TYPE, WHERE
+    ALIAS, AS, CASE, ELSE, EXPOSING, IF, IMPORT, IN, LET, MODULE, OF, OTHERWISE, PORT, THEN, TYPE, WHERE
     );
-
 
   public static final IFileElementType FILE
     = new IFileElementType(Language.<SimpleLanguage>findInstance(SimpleLanguage.class));

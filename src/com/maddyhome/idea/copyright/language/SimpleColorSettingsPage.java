@@ -34,12 +34,13 @@ public class SimpleColorSettingsPage implements ColorSettingsPage {
   public static final AttributesDescriptor[] DESCRIPTORS = new AttributesDescriptor[] {
     /*new AttributesDescriptor("Key", SimpleSyntaxHighlighter.KEY)
     ,new AttributesDescriptor("Separator", SimpleSyntaxHighlighter.SEPARATOR)
-    ,*/new AttributesDescriptor("Value", SimpleSyntaxHighlightingColors.VALUE)
+    ,*/new AttributesDescriptor("Identifier", SimpleSyntaxHighlightingColors.VALUE)
     ,new AttributesDescriptor("String", SimpleSyntaxHighlightingColors.STR)
     ,new AttributesDescriptor("Parenthesis", SimpleSyntaxHighlightingColors.PARENTHESIS)
     ,new AttributesDescriptor("Keyword", SimpleSyntaxHighlightingColors.KEYWORD)
     ,new AttributesDescriptor("Comment", SimpleSyntaxHighlightingColors.COMMENT)
     ,new AttributesDescriptor("Operator", SimpleSyntaxHighlightingColors.OPERATOR)
+    ,new AttributesDescriptor("Number", SimpleSyntaxHighlightingColors.NUM)
   };
 
 
