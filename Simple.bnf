@@ -23,7 +23,7 @@ statement ::= (ALIAS | AS | CASE | ELSE | EXPOSING | IF | IN | LET | MODULE | OF
 
 operator ::= (LBRACE | RBRACE | LBRACK | RBRACK | COLON | EQ | ASSIGN | NOT_EQ | NOT | PLUS | MINUS | COND_OR | COND_AND
   | BIT_AND | SEND_CHANNEL | LESS | BIT_XOR | MUL | QUOTIENT | REMAINDER | GREATER
-  | TILDE |PIPE_FORWARD | BACK_TICK | COMBINE | MULTIMAP | PIPE_BACK | GE | LE | COMBINE_BACK
+  | TILDE | PIPE_FORWARD | BACK_TICK | COMBINE | MULTIMAP | PIPE_BACK | GE | LE | COMBINE_BACK
   | COLON_COLON | INT_DIVIDE | DOT_DOT | DOT | RETURN | BIT_OR )
 
 private item_ ::=
@@ -45,14 +45,14 @@ module_body ::= compound_identifier L_PAREN exposing_list R_PAREN
 
 import_statement ::= IMPORT import_body
 import_body ::= compound_identifier EXPOSING L_PAREN exposing_list R_PAREN
-exposing_list ::= IDENTIFIER [(COMMA IDENTIFIER)*]
+exposing_list ::= IDENTIFIER [(COMMA IDENTIFIER)*] | DOT_DOT
 
 fun_decl ::= IDENTIFIER COLON [type_param (RETURN type_param)*]
-type_param ::= compound_identifier
-  | L_PAREN compound_identifier [(COMMA compound_identifier)*] R_PAREN
+type_param ::= TYPE_IDENTIFIER
+  | L_PAREN TYPE_IDENTIFIER [(COMMA TYPE_IDENTIFIER)*] R_PAREN
 fun_def ::= IDENTIFIER [params] ASSIGN fun_body
 params ::= param*
-param ::= (IDENTIFIER | tuple | record | list_type) AS IDENTIFIER
+param ::= (IDENTIFIER | tuple | record | list_type) [AS IDENTIFIER]
 fun_body ::= expr | let_statement
 
 port_decl ::= PORT IDENTIFIER COLON (compound_identifier)*
@@ -67,7 +67,7 @@ type_alias ::= TYPE ALIAS type_alias_body
 type_alias_body ::= compound_identifier ASSIGN (compound_identifier | tuple | record | list_type)
 
 let_statement ::= LET let_body IN expr
-let_body ::=  [fun_decl] fun_def | (let_body_part)*
+let_body ::=  [fun_decl] fun_def | (let_body_part)+
 let_body_part ::= IDENTIFIER ASSIGN expr
 
 compound_identifier ::= IDENTIFIER [(DOT IDENTIFIER)*]
@@ -88,6 +88,7 @@ expr ::=
   | IdExpr
   | TupleExpr
   | RecordExpr
+  | RecordUpdateExpr
   | ListExpr
   | IfExpr
   | CaseExpr
@@ -109,6 +110,12 @@ IdExpr ::= compound_identifier
 IfExpr ::= IF expr THEN expr [ELSE expr]
 CaseExpr ::= case_statement
 ParenthesesExpr ::= L_PAREN expr R_PAREN
+RecordUpdateExpr ::= LBRACE record_name BIT_OR record_update_body RBRACE
+
+record_name ::= IDENTIFIER
+record_update_body ::= record_update_body_part [(record_update_body_part)*]
+record_update_body_part ::= field_name SEND_CHANNEL expr
+field_name ::= IDENTIFIER
 
 case_statement ::= CASE IDENTIFIER OF case_body
 case_body ::= (case_body_part)* [OTHERWISE expr]
@@ -120,3 +127,9 @@ private add_op ::= PLUS | MINUS
 private mul_op ::= MUL | QUOTIENT | INT_DIVIDE | REMAINDER
 private unary_op ::= PLUS | MINUS | NOT
 
+/*
+  1) Add single apostrophe to identifier chars - cannot be first char - single quotes not supported for string
+  * 2) {recname | id <- expr, id <- xpr } SEND_CHANNEL
+  3) detect type identifiers by Capital case
+  4) concat relationship with COLON_COLON operator
+ */

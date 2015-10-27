@@ -23,8 +23,10 @@ ESCAPES = [abfnrtv]
 CRLF=\n|\r|\r\n
 WHITE_SPACE=[\ \t\f\r\n]
 NUMBER=-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]*)?
-FIRST_VALUE_CHARACTER=[A-Za-z_]
-VALUE_CHARACTER=[A-Za-z0-9_]
+FIRST_VALUE_CHARACTER=[a-z_]
+VALUE_CHARACTER=[A-Za-z0-9_']
+TYPE_IDENTIFIER_FIRST_CHAR=[A-Z]
+TYPE_IDENTIFIER_CHAR=[A-Za-z0-9_'.]
 END_OF_LINE_COMMENT=("--")[^\r\n]*
 SEPARATOR=[:=]
 DQ="\""
@@ -121,6 +123,7 @@ MULTILINE_COMMENT="{-" ( ([^"-"]|[\r\n])* ("-"+ [^"-""}"] )? )* ("-" | "-"+"}")?
 "where"                                   {  return SimpleTypes.WHERE; }
 
   {FIRST_VALUE_CHARACTER}{VALUE_CHARACTER}* { yybegin(YYINITIAL); return SimpleTypes.IDENTIFIER; }
+  {TYPE_IDENTIFIER_FIRST_CHAR}{TYPE_IDENTIFIER_CHAR}* { yybegin(YYINITIAL); return SimpleTypes.TYPE_IDENTIFIER; }
 }
 
 {WHITE_SPACE}+  {yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
