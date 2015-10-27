@@ -13,6 +13,8 @@
   elementTypeClass="com.maddyhome.idea.copyright.language.psi.SimpleElementType"
   tokenTypeClass="com.maddyhome.idea.copyright.language.psi.SimpleTokenType"
 
+  extends(".*Expr")=expr
+
 }
 
 simpleFile ::= item_*
@@ -24,7 +26,16 @@ operator ::= (LBRACE | RBRACE | LBRACK | RBRACK | COLON | EQ | ASSIGN | NOT_EQ |
   | TILDE |PIPE_FORWARD | BACK_TICK | COMBINE | MULTIMAP | PIPE_BACK | GE | LE | COMBINE_BACK
   | COLON_COLON | INT_DIVIDE | DOT_DOT | DOT | RETURN )
 
-private item_ ::= import_statement|module_statement|fun_decl|fun_def|COMMENT|STR|MULTILINE_COMMENT|CRLF|case_statement
+private item_ ::=
+  import_statement
+  | module_statement
+  | fun_decl
+  | fun_def
+  | COMMENT
+  | MULTILINE_COMMENT
+  | CRLF
+  | case_statement
+  | type_alias
 
 module_statement ::= MODULE module_body WHERE CRLF
 module_body ::= compound_identifier L_PAREN exposing_list R_PAREN
@@ -35,10 +46,54 @@ exposing_list ::= VALUE [(COMMA VALUE)*]
 
 case_statement ::= CASE OF {methods [getKey getValue]}
 
-fun_decl ::= VALUE COLON type_param (RETURN type_param)*]
+fun_decl ::= VALUE COLON [type_param (RETURN type_param)*]
 type_param ::= compound_identifier
   | L_PAREN compound_identifier [(COMMA compound_identifier)*] R_PAREN
-fun_def ::= VALUE [params] ASSIGN
+fun_def ::= VALUE [params] ASSIGN expr
 params ::= (VALUE)*
 
+type_alias ::= TYPE ALIAS type_alias_body
+type_alias_body ::= compound_identifier /*| tuple */| record | list
+
 compound_identifier ::= VALUE [(DOT VALUE)*]
+//tuple ::= LPAREN expr [ (COMMA expr)*] R_PAREN
+record ::= LBRACE expr [ (COMMA expr)*] RBRACE
+list ::= LBRACK expr [ (COMMA expr)*] RBRACK
+
+
+expr ::=
+  NumberExpr
+  | StringExpr
+  | OrExpr
+  | AndExpr
+  | ConditionalExpr
+  | AddExpr
+  | MulExpr
+  | UnaryExpr
+  //| ParenthesesExpr
+  | IdExpr
+  //| TupleExpr
+  | RecordExpr
+  | ListExpr
+
+
+OrExpr ::= expr COND_OR expr
+AndExpr ::= expr COND_AND expr
+UnaryExpr ::=  unary_op expr
+ConditionalExpr ::= expr rel_op expr
+AddExpr ::= expr add_op expr
+MulExpr ::= expr mul_op expr
+//ParenthesesExpr ::= L_PAREN expr R_PAREN
+TupleExpr ::= tuple
+RecordExpr ::= record
+ListExpr ::= list
+NumberExpr ::= NUM
+StringExpr ::= STR
+IdExpr ::= compound_identifier
+
+
+private rel_op ::= EQ | NOT_EQ | LESS | LE | GREATER | GE
+private add_op ::= PLUS | MINUS
+private mul_op ::= MUL | QUOTIENT | INT_DIVIDE | REMAINDER
+private unary_op ::= PLUS | MINUS | NOT
+
