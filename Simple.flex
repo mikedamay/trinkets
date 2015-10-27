@@ -54,6 +54,8 @@ MULTILINE_COMMENT="{-" ( ([^"-"]|[\r\n])* ("-"+ [^"-""}"] )? )* ("-" | "-"+"}")?
 "["                                       { return SimpleTypes.LBRACK; }
 "]"                                       { return SimpleTypes.RBRACK; }
 
+"|"                                      { return SimpleTypes.BIT_OR; }
+
 ":"                                       { return SimpleTypes.COLON; }
 
 "=="                                      { return SimpleTypes.EQ; }

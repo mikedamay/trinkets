@@ -24,7 +24,7 @@ statement ::= (ALIAS | AS | CASE | ELSE | EXPOSING | IF | IN | LET | MODULE | OF
 operator ::= (LBRACE | RBRACE | LBRACK | RBRACK | COLON | EQ | ASSIGN | NOT_EQ | NOT | PLUS | MINUS | COND_OR | COND_AND
   | BIT_AND | SEND_CHANNEL | LESS | BIT_XOR | MUL | QUOTIENT | REMAINDER | GREATER
   | TILDE |PIPE_FORWARD | BACK_TICK | COMBINE | MULTIMAP | PIPE_BACK | GE | LE | COMBINE_BACK
-  | COLON_COLON | INT_DIVIDE | DOT_DOT | DOT | RETURN )
+  | COLON_COLON | INT_DIVIDE | DOT_DOT | DOT | RETURN | BIT_OR )
 
 private item_ ::=
   import_statement
@@ -34,6 +34,11 @@ private item_ ::=
   | COMMENT
   | MULTILINE_COMMENT
   | type_alias
+  | type_decl
+  | let_statement
+  | port_def
+  | port_decl
+
 
 module_statement ::= MODULE module_body WHERE
 module_body ::= compound_identifier L_PAREN exposing_list R_PAREN
@@ -45,12 +50,25 @@ exposing_list ::= IDENTIFIER [(COMMA IDENTIFIER)*]
 fun_decl ::= IDENTIFIER COLON [type_param (RETURN type_param)*]
 type_param ::= compound_identifier
   | L_PAREN compound_identifier [(COMMA compound_identifier)*] R_PAREN
-fun_def ::= IDENTIFIER [params] ASSIGN expr
+fun_def ::= IDENTIFIER [params] ASSIGN fun_body
 params ::= param*
-param ::= IDENTIFIER | tuple | record | list_type
+param ::= (IDENTIFIER | tuple | record | list_type) AS IDENTIFIER
+fun_body ::= expr | let_statement
+
+port_decl ::= PORT IDENTIFIER COLON (compound_identifier)*
+port_def ::= PORT IDENTIFIER ASSIGN (compound_identifier)*
+
+type_decl ::= TYPE IDENTIFIER ASSIGN type_body
+type_body ::= type_body_part [ BIT_OR type_body_part ]
+type_body_part ::= tag [compound_identifier]
+tag ::= IDENTIFIER
 
 type_alias ::= TYPE ALIAS type_alias_body
 type_alias_body ::= compound_identifier ASSIGN (compound_identifier | tuple | record | list_type)
+
+let_statement ::= LET let_body IN expr
+let_body ::=  [fun_decl] fun_def | (let_body_part)*
+let_body_part ::= IDENTIFIER ASSIGN expr
 
 compound_identifier ::= IDENTIFIER [(DOT IDENTIFIER)*]
 tuple ::= LPAREN expr [ (COMMA expr)*] R_PAREN
