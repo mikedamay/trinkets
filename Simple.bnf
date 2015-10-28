@@ -134,11 +134,11 @@ NumberExpr ::= NUM
 StringExpr ::= STR
 //IdExpr ::= compound_identifier
 IfExpr ::= IF expr THEN expr [ELSE expr]
-CaseExpr ::= case_statement
 ConcatExpr ::= expr COLON_COLON expr
 CombineExpr ::= expr combine_op expr
 PipeExpr ::= expr pipe_op expr
 FunctionCallExpr ::= (IDENTIFIER | ParenthesesExpr) expr*
+CaseExpr ::= case_statement
 ParenthesesExpr ::= L_PAREN expr R_PAREN
 RecordUpdateExpr ::= LBRACE record_name BIT_OR record_update_body RBRACE
 
@@ -149,8 +149,8 @@ record_update_body_part ::= field_name SEND_CHANNEL expr
 field_name ::= IDENTIFIER
 
 case_statement ::= CASE IDENTIFIER OF case_body
-case_body ::= (case_body_part)* [OTHERWISE expr]
-case_body_part ::= expr RETURN expr
+case_body ::= (case_body_part)* [OTHERWISE RETURN expr]
+case_body_part ::= NUM RETURN expr
 
 
 private rel_op ::= EQ | NOT_EQ | LESS | LE | GREATER | GE
