@@ -45,7 +45,7 @@ MULTILINE_COMMENT="{-" ( ([^"-"]|[\r\n])* ("-"+ [^"-""}"] )? )* ("-" | "-"+"}")?
 
 
 <YYINITIAL> {
-  "List" {yybegin(YYINITIAL); return SimpleTypes.LIST; }
+  "List" {yybegin(YYINITIAL); return SimpleTypes.LIST_TYPENAME; }
   "(" {yybegin(YYINITIAL); return SimpleTypes.L_PAREN; }
   ")" {yybegin(YYINITIAL); return SimpleTypes.R_PAREN; }
   "," {yybegin(YYINITIAL); return SimpleTypes.COMMA; }

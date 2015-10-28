@@ -27,7 +27,17 @@ private operator ::= (LBRACE | RBRACE | LBRACK | RBRACK | COLON | EQ | ASSIGN | 
   | TILDE | PIPE_FORWARD | BACK_TICK | COMBINE | MULTIMAP | PIPE_BACK | GE | LE | COMBINE_BACK
   | COLON_COLON | INT_DIVIDE | DOT_DOT | DOT | RETURN | BIT_OR | L_PAREN | R_PAREN)
 
-private other ::= TYPE_IDENTIFIER | COMMENT | MULTILINE_COMMENT | LIST | COMMA | IDENTIFIER
+private other ::= TYPE_IDENTIFIER | COMMENT | MULTILINE_COMMENT | LIST_TYPENAME | COMMA | IDENTIFIER | FUN_NAME | STR | NUM
+
+/*
+private item_ ::=
+  tuple
+  | IDENTIFIER
+
+tuple ::= LPAREN expr [ (COMMA expr)*] R_PAREN
+
+expr ::= IDENTIFIER PLUS NUM
+*/
 
 private item_ ::=
   import_statement
@@ -57,7 +67,7 @@ type_param ::= TYPE_IDENTIFIER
 fun_def ::= IDENTIFIER [params] ASSIGN fun_body
 top_level_fun_def ::= FUN_NAME [params] ASSIGN fun_body
 params ::= param*
-param ::= (IDENTIFIER | tuple | record | list_type) [AS IDENTIFIER]
+param ::= (IDENTIFIER | tuple_patern | record_patern | list_patern) [AS IDENTIFIER]
 fun_body ::= expr | let_statement
 
 port_decl ::= PORT IDENTIFIER COLON (compound_identifier)*
@@ -73,32 +83,20 @@ type_alias_body ::= TYPE_IDENTIFIER ASSIGN (compound_identifier | tuple | record
 
 let_statement ::= LET let_body IN expr
 let_body ::=  [fun_decl] fun_def | (let_body_part)+
-let_body_part ::= IDENTIFIER ASSIGN expr
+let_body_part ::= (IDENTIFIER | tuple_patern) ASSIGN expr
 
 compound_identifier ::= IDENTIFIER [(DOT IDENTIFIER)*]
-tuple ::= LPAREN expr [ (COMMA expr)*] R_PAREN
-record ::= LBRACE expr [ (COMMA expr)*] RBRACE
-list_type ::= LIST [compound_identifier]
-/*
-expr ::=
-  NumberExpr
-  | StringExpr
-  //| JoinExpr
-  | AddExpr
-  | FunctionCallExpr
-  | ParenthesesExpr
 
-NumberExpr ::= NUM
-StringExpr ::= STR
-//JoinExpr ::= NumberExpr | StringExpr
-AddExpr ::= expr PLUS expr
-FunctionCallExpr ::= (IDENTIFIER | ParenthesesExpr) expr*
-ParenthesesExpr ::= L_PAREN expr R_PAREN
-*/
+tuple_patern ::= L_PAREN IDENTIFIER COMMA IDENTIFIER [ (COMMA IDENTIFIER)*] R_PAREN
+record_patern ::= LBRACE IDENTIFIER [ (COMMA IDENTIFIER)*] RBRACE
+list_patern ::= LBRACK IDENTIFIER [ (COMMA IDENTIFIER)*] RBRACK
+
+
 
 /*
 FunctionCallExp was not recognised with IdExp defined as IDENTIFIER
  */
+
 
 expr ::=
   NumberExpr
@@ -162,3 +160,31 @@ private unary_op ::= PLUS | MINUS | NOT
 private combine_op ::= COMBINE | COMBINE_BACK
 private pipe_op ::= PIPE_FORWARD | PIPE_BACK
 
+
+tuple ::= L_PAREN expr COMMA expr [ (COMMA expr)*] R_PAREN
+record ::= LBRACE expr [ (COMMA expr)*] RBRACE
+list ::= LBRACK  [expr [ (COMMA expr)*]] RBRACK
+list_type ::= LIST_TYPENAME [compound_identifier]
+
+/*
+  1) list as expression
+  2) tuple does not work as params
+  3) Unary operator ha priority over binary
+ */
+
+ /*
+ expr ::=
+   NumberExpr
+   | StringExpr
+   //| JoinExpr
+   | AddExpr
+   | FunctionCallExpr
+   | ParenthesesExpr
+
+ NumberExpr ::= NUM
+ StringExpr ::= STR
+ //JoinExpr ::= NumberExpr | StringExpr
+ AddExpr ::= expr PLUS expr
+ FunctionCallExpr ::= (IDENTIFIER | ParenthesesExpr) expr*
+ ParenthesesExpr ::= L_PAREN expr R_PAREN
+ */
