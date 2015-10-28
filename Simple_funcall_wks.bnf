@@ -30,6 +30,10 @@ private operator ::= (LBRACE | RBRACE | LBRACK | RBRACK | COLON | EQ | ASSIGN | 
 private other ::= TYPE_IDENTIFIER | COMMENT | MULTILINE_COMMENT | LIST | COMMA | IDENTIFIER
 
 private item_ ::=
+  top_level_fun_def
+
+/*
+private item_ ::=
   import_statement
   | module_statement
   | top_level_fun_decl
@@ -59,7 +63,11 @@ top_level_fun_def ::= FUN_NAME [params] ASSIGN fun_body
 params ::= param*
 param ::= (IDENTIFIER | tuple | record | list_type) [AS IDENTIFIER]
 fun_body ::= expr | let_statement
+*/
+top_level_fun_def ::= FUN_NAME ASSIGN fun_body
+fun_body ::= expr*
 
+/*
 port_decl ::= PORT IDENTIFIER COLON (compound_identifier)*
 port_def ::= PORT IDENTIFIER ASSIGN (compound_identifier)*
 
@@ -79,7 +87,8 @@ compound_identifier ::= IDENTIFIER [(DOT IDENTIFIER)*]
 tuple ::= LPAREN expr [ (COMMA expr)*] R_PAREN
 record ::= LBRACE expr [ (COMMA expr)*] RBRACE
 list_type ::= LIST [compound_identifier]
-/*
+*/
+
 expr ::=
   NumberExpr
   | StringExpr
@@ -94,12 +103,13 @@ StringExpr ::= STR
 AddExpr ::= expr PLUS expr
 FunctionCallExpr ::= (IDENTIFIER | ParenthesesExpr) expr*
 ParenthesesExpr ::= L_PAREN expr R_PAREN
-*/
+
 
 /*
 FunctionCallExp was not recognised with IdExp defined as IDENTIFIER
  */
 
+/*
 expr ::=
   NumberExpr
   | StringExpr
@@ -109,7 +119,7 @@ expr ::=
   | AddExpr
   | MulExpr
   | UnaryExpr
-  //| IdExpr
+  | IdExpr
   | TupleExpr
   | RecordExpr
   | RecordUpdateExpr
@@ -134,13 +144,13 @@ RecordExpr ::= record
 ListExpr ::= list
 NumberExpr ::= NUM
 StringExpr ::= STR
-//IdExpr ::= compound_identifier
+IdExpr ::= compound_identifier
 IfExpr ::= IF expr THEN expr [ELSE expr]
 CaseExpr ::= case_statement
 ConcatExpr ::= expr COLON_COLON expr
 CombineExpr ::= expr combine_op expr
 PipeExpr ::= expr pipe_op expr
-FunctionCallExpr ::= (IDENTIFIER | ParenthesesExpr) expr*
+FunctionCallExpr ::= expr expr [expr]
 ParenthesesExpr ::= L_PAREN expr R_PAREN
 RecordUpdateExpr ::= LBRACE record_name BIT_OR record_update_body RBRACE
 
@@ -162,3 +172,4 @@ private unary_op ::= PLUS | MINUS | NOT
 private combine_op ::= COMBINE | COMBINE_BACK
 private pipe_op ::= PIPE_FORWARD | PIPE_BACK
 
+*/

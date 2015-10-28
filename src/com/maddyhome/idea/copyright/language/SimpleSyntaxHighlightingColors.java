@@ -26,7 +26,9 @@ import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAtt
  */
 public class SimpleSyntaxHighlightingColors {
   public static final TextAttributesKey VALUE
-    = createTextAttributesKey("SIMPLE_VALUE", DefaultLanguageHighlighterColors.STRING);
+    = createTextAttributesKey("SIMPLE_IDENTIFIER", DefaultLanguageHighlighterColors.IDENTIFIER);
+  public static final TextAttributesKey TYPE_IDENTIFIER
+    = createTextAttributesKey("SIMPLE_TYPE_IDENTIFIER", DefaultLanguageHighlighterColors.CLASS_NAME);
   public static final TextAttributesKey COMMENT
     = createTextAttributesKey("SIMPLE_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
   public static final TextAttributesKey MULTILINE_COMMENT
@@ -36,7 +38,7 @@ public class SimpleSyntaxHighlightingColors {
   public static final TextAttributesKey NUM
     = createTextAttributesKey("SIMPLE_NUM", DefaultLanguageHighlighterColors.NUMBER);
   public static final TextAttributesKey PARENTHESIS
-    = createTextAttributesKey("SIMPLE_PARENTHESIS", DefaultLanguageHighlighterColors.STRING);
+    = createTextAttributesKey("SIMPLE_PARENTHESIS", DefaultLanguageHighlighterColors.PARENTHESES);
   public static final TextAttributesKey BAD_CHARACTER = HighlighterColors.BAD_CHARACTER;
   public static final TextAttributesKey KEYWORD
     = createTextAttributesKey("SIMPLE_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD);

@@ -47,6 +47,7 @@ public class SimpleSyntaxHighlighter extends SyntaxHighlighterBase {
     fillMap(ATTRIBUTES, PARENTHESIS, SimpleTypes.L_PAREN, SimpleTypes.R_PAREN);
     //fillMap(ATTRIBUTES, R_PAREN, SimpleTypes.R_PAREN);
     fillMap(ATTRIBUTES, VALUE, SimpleTypes.IDENTIFIER);
+    fillMap(ATTRIBUTES, TYPE_IDENTIFIER, SimpleTypes.TYPE_IDENTIFIER);
     fillMap(ATTRIBUTES, COMMENT, SimpleTypes.COMMENT);
     fillMap(ATTRIBUTES, MULTILINE_COMMENT, SimpleTypes.MULTILINE_COMMENT);
     fillMap(ATTRIBUTES, STR, SimpleTypes.STR);
