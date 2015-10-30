@@ -29,29 +29,6 @@ private operator ::= (LBRACE | RBRACE | LBRACK | RBRACK | COLON | EQ | ASSIGN | 
 
 private other ::= TYPE_IDENTIFIER | COMMENT | MULTILINE_COMMENT | LIST_TYPENAME | COMMA | IDENTIFIER | FUN_NAME | STR | NUM
 
-/*
-private item_ ::=
-  IDENTIFIER
-  | expr
-
-//tuple ::= L_PAREN expr [ (COMMA expr)*] R_PAREN
-
-expr ::=
-  FunctionCallExpr
-  | CaseExpr
-  | CaseBodyPartStart ::= NUM RETURN
-  | NUM
-  | IDENTIFIER
-
-
-CaseExpr ::= CASE IDENTIFIER OF case_body
-case_body ::= (case_body_part)* OTHERWISE "->" expr
-case_body_part ::= CaseBodyPartStart expr
-
-FunctionCallExpr ::= IDENTIFIER NUM
-*/
-
-
 private item_ ::=
   top_level_fun_decl
   | top_level_fun_def
@@ -105,14 +82,6 @@ tuple_patern ::= L_PAREN IDENTIFIER COMMA IDENTIFIER [ (COMMA IDENTIFIER)*] R_PA
 record_patern ::= LBRACE IDENTIFIER [ (COMMA IDENTIFIER)*] RBRACE
 list_patern ::= LBRACK IDENTIFIER [ (COMMA IDENTIFIER)*] RBRACK
 
-
-
-/*
-FunctionCallExp was not recognised with IdExp defined as IDENTIFIER
- */
-
-
-
 expr ::=
   TupleExpr
   | FunctionCallExpr
@@ -123,7 +92,6 @@ expr ::=
   | AddExpr
   | MulExpr
   | UnaryExpr
-  //| IdExpr
   | RecordExpr
   | RecordUpdateExpr
   | ListExpr
@@ -147,7 +115,6 @@ MulExpr ::= expr mul_op expr
 TupleExpr ::= tuple
 RecordExpr ::= record
 ListExpr ::= list
-//IdExpr ::= compound_identifier
 IfExpr ::= IF expr THEN expr [ELSE expr]
 ConcatExpr ::= expr COLON_COLON expr
 CombineExpr ::= expr combine_op expr
@@ -158,7 +125,6 @@ ParenthesesExpr ::= L_PAREN expr R_PAREN
 RecordUpdateExpr ::= LBRACE record_name BIT_OR record_update_body RBRACE
 NumberExpr ::= NUM
 StringExpr ::= STR
-
 
 record_name ::= IDENTIFIER
 record_update_body ::= record_update_body_part [(record_update_body_part)*]
@@ -189,19 +155,13 @@ list_type ::= LIST_TYPENAME [compound_identifier]
   3) Unary operator ha priority over binary
  */
 
- /*
- expr ::=
-   NumberExpr
-   | StringExpr
-   //| JoinExpr
-   | AddExpr
-   | FunctionCallExpr
-   | ParenthesesExpr
 
- NumberExpr ::= NUM
- StringExpr ::= STR
- //JoinExpr ::= NumberExpr | StringExpr
- AddExpr ::= expr PLUS expr
- FunctionCallExpr ::= (IDENTIFIER | ParenthesesExpr) expr*
- ParenthesesExpr ::= L_PAREN expr R_PAREN
+
+/**
+  How do we underline with squiglies - underwaves
+  Inspections
+  1) module - not preceded by whitespaces
+  2) import - not preceded by whitespace
+  3) case - indentation
+  4) Declaration is followed by definition
  */
