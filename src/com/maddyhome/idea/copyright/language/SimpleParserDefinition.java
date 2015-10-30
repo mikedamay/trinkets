@@ -43,7 +43,7 @@ import static com.maddyhome.idea.copyright.language.psi.SimpleTypes.*;
  */
 public class SimpleParserDefinition implements ParserDefinition {
   public TokenSet WHITE_SPACES = TokenSet.create(TokenType.WHITE_SPACE);
-  public TokenSet COMMENTS = TokenSet.create(SimpleTypes.COMMENT);
+  public TokenSet COMMENTS = TokenSet.create(SimpleTypes.COMMENT, SimpleTypes.MULTILINE_COMMENT);
   public static TokenSet OPERATORS = TokenSet.create(
     LBRACE, RBRACE, LBRACK, RBRACK, COLON, EQ, ASSIGN, NOT_EQ, NOT, PLUS, MINUS, COND_OR, COND_AND
    ,BIT_AND, SEND_CHANNEL, LESS, BIT_XOR, MUL, QUOTIENT, REMAINDER, GREATER

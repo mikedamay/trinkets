@@ -24,6 +24,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLiteralExpression;
+import com.maddyhome.idea.copyright.language.psi.SimpleImportStatement;
 import com.maddyhome.idea.copyright.language.psi.SimpleProperty;
 import org.jetbrains.annotations.NotNull;
 
@@ -36,7 +37,13 @@ public class SimpleAnnotator implements Annotator {
 
   @Override
   public void annotate(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
-    if (element.toString().equals("PsiKeyword:public")) {
+     if (element instanceof SimpleImportStatement) {
+       TextRange range = element.getTextRange();
+       Annotation annotation = holder.createInfoAnnotation(range, null);
+       annotation.setTextAttributes(SyntaxHighlighterColors.LINE_COMMENT);
+     }
+
+    else if (element.toString().equals("PsiKeyword:public")) {
         Project project = element.getProject();
         List<SimpleProperty> properties = SimpleUtil.findProperties(project, "case");
         if (properties.size() == 1) {

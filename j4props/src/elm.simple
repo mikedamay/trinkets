@@ -1,18 +1,21 @@
+{-- what -}
+module mike (stuff, more_stuff
+  ,even_more) where
 {-- this is the first comment - there is lot's going on behind the scenes --}
 -- single line comment
-
-module mike (stuff, more_stuff,even_more) where
 
 import Graghics.Element exposing (show, abc)
 import Graghics.Collage exposing (..)
 
-fn = {mike | bob <- 1 + 2 }
+
+fn = {mike | bob <- 1 + 23 }
 
 
 type alias Bob = List a
 
 mike : (Bool,Bool) -> Bool
 mike = ("abc" || "def")
+{-- what -}
   || 22 && "5"
 
 jon2 = let x = let y = 1 + 2 in y in x

@@ -17,7 +17,7 @@
 
 }
 
-simpleFile ::= item_*
+simpleFile ::= module_statement?  import_list  item_*
 
 private statement ::= (ALIAS | AS | CASE | ELSE | EXPOSING | IF
   | IMPORT | IN | LET | MODULE | OF | OTHERWISE | PORT | THEN | TYPE | WHERE)
@@ -53,17 +53,18 @@ FunctionCallExpr ::= IDENTIFIER NUM
 
 
 private item_ ::=
-  import_statement
-  | module_statement
-  | top_level_fun_decl
+  top_level_fun_decl
   | top_level_fun_def
-  | COMMENT
-  | MULTILINE_COMMENT
+  | comments
   | type_alias
   | type_decl
   | let_statement
   | port_def
   | port_decl
+
+import_list ::= (comments | import_statement)*
+
+comments ::= COMMENT | MULTILINE_COMMENT
 
 
 module_statement ::= MODULE module_body WHERE
