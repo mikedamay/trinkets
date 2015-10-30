@@ -1,0 +1,7 @@
+bob = "a simple string"
+
+{- is this the secret of every
+thning -}
+
+
+import Graphis.Element exposing (show)
