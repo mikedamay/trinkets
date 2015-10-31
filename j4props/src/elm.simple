@@ -14,11 +14,13 @@ fn = {mike | bob <- 1 + 23 }
 type alias Bob = List a
 
 mike : (Bool,Bool) -> Bool
-mike = ("abc" || "def")
+mike = ("abc" || "defb" || "fun:funny")
 {-- what -}
   || 22 && "5"
 
 jon2 = let x = let y = 1 + 2 in y in x
+
+xx ddl = f
 
 f2 = l1 :: l2
 

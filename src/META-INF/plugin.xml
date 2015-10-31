@@ -38,6 +38,8 @@
       <lang.syntaxHighlighterFactory key="Simple" implementationClass="com.maddyhome.idea.copyright.language.SimpleSyntaxHighlighterFactory"/>
       <colorSettingsPage implementation="com.maddyhome.idea.copyright.language.SimpleColorSettingsPage"/>
       <annotator language="Simple" implementationClass="com.maddyhome.idea.copyright.language.SimpleAnnotator"/>
+      <codeInsight.lineMarkerProvider language="Simple" implementationClass="com.maddyhome.idea.copyright.language.SimpleLineMarkerProvider"/>
+      <completion.contributor language="Simple" implementationClass="com.maddyhome.idea.copyright.language.SimpleCompletionContributor"/>
     </extensions>
     <extensionPoints>
       <extensionPoint name="updater" beanClass="com.intellij.openapi.fileTypes.FileTypeExtensionPoint">
