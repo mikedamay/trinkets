@@ -52,6 +52,9 @@ import_body ::= TYPE_IDENTIFIER EXPOSING L_PAREN exposing_list R_PAREN
 exposing_list ::= IDENTIFIER [(COMMA IDENTIFIER)*] | DOT_DOT
 
 top_level_fun_decl ::= FUN_NAME COLON [type_param (RETURN type_param)*]
+  {mixin="com.maddyhome.idea.copyright.language.psi.impl.SimpleNamedElementImpl"
+  implements="com.maddyhome.idea.copyright.language.psi.SimpleNamedElement"
+  methods=[getKey getValue getName setName getNamedIdentifier ]}
 fun_decl ::= IDENTIFIER COLON [type_param (RETURN type_param)*]
 type_param ::= TYPE_IDENTIFIER
   | L_PAREN TYPE_IDENTIFIER [(COMMA TYPE_IDENTIFIER)*] R_PAREN
