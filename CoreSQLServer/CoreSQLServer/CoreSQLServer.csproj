@@ -2,10 +2,11 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
+    <!--<TargetFramework>netcoreapp1.0.1</TargetFramework>-->
     <TargetFramework>netcoreapp1.1</TargetFramework>
-    <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
+    <!--<RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>-->
   </PropertyGroup>
-
+  <!-- prerequisites: install sql server add mike db and names table see journal for hints -->
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.1.1" />

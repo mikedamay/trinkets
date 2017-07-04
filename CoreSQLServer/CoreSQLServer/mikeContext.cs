@@ -11,7 +11,8 @@ namespace CoreSQLServer
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-            optionsBuilder.UseSqlServer(@"Server=localhost\sqlexpress;Database=mike;Trusted_Connection=True;");
+            //optionsBuilder.UseSqlServer(@"Server=localhost\sqlexpress;Database=mike;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"Server=127.0.0.1;Database=master;UID=SA;Password=SqlS3rver;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
