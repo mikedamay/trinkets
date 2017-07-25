@@ -1,18 +1,14 @@
 ﻿
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
-using Google.Apis.Drive.v3.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
-namespace com.theDisappointedProgrammer.Drive
+namespace com.TheDisappointedProgrammer.Drive
 {
     class Program
     {
@@ -24,7 +20,7 @@ namespace com.theDisappointedProgrammer.Drive
         static void Main(string[] args)
         {
             UserCredential credential;
-            String inputPath = GetHomeDirectoryName();
+            String inputPath = IOCC.AppContext.Platform.GetHomeDirectoryName();
             using (var stream =
                 new FileStream(Path.Combine(inputPath, "client_id.json"), FileMode.Open, FileAccess.Read))
             {
@@ -70,13 +66,6 @@ namespace com.theDisappointedProgrammer.Drive
             }
             Console.Read();
 
-        }
-        private static string GetHomeDirectoryName()
-        {
-            return System.IO.Path.Combine(
-              System.Environment.GetEnvironmentVariable("HOMEDRIVE")
-              ,System.Environment.GetEnvironmentVariable("HOMEPATH")
-              );
         }
     }
 }
