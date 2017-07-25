@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace com.theDisappointedProgrammer.Drive
 {
-    public interface Platform
+    public interface OSPlatform
     {    
        string GetHomeDirectoryName();
     }
-    internal class WindowsPlatform : Platform
+    internal class WindowsPlatform : OSPlatform
     {
         public string GetHomeDirectoryName()
         {

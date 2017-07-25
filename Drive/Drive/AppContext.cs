@@ -4,10 +4,12 @@ namespace com.TheDisappointedProgrammer.Drive
 {
     public interface AppContext
     {
-        Platform Platform { get; }
+        OSPlatform OsPlatform { get; }
     }
     public class StdAppContext : AppContext
     {
-        public Platform Platform { get; } = new WindowsPlatform();
-    }
+        [InjectedValue]
+        private OSPlatform osPlatform = new WindowsPlatform();
+        public OSPlatform OsPlatform => osPlatform;
+     }
 }
