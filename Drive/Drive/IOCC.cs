@@ -23,10 +23,20 @@ namespace com.TheDisappointedProgrammer.Drive
         {
             object root = Construct(rootType);
             sheetProcessor = root as SheetProcessor;
-            var properties = rootType.GetProperties(BindingFlags.Instance )
-            if (typeMap.ContainsKey(typeof(SheetProcessor)))
+            PropertyInfo[] propertyInfos = rootType.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            foreach (PropertyInfo propertyInfo in propertyInfos)
             {
-
+                if (propertyInfo.GetCustomAttribute<IOCCInjectedDependencyAttribute>() != null)
+                {
+                    
+                    if (typeMap.ContainsKey(propertyInfo.PropertyType))
+                    {
+                        Type implementation = typeMap[propertyInfo.PropertyType];
+                        object dependency = Construct(implementation);
+                        propertyInfo.SetValue(root, dependency);
+                    }
+                    
+                }
             }
         }
         /**
@@ -36,14 +46,29 @@ namespace com.TheDisappointedProgrammer.Drive
          */
         private object Construct(Type rootType)
         {
-            BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
-            var constructorInfos = rootType.GetConstructors(flags);
-            var numNoArgConstructors = constructorInfos.Count(ci => ci.GetParameters().Length == 0);
-            if (numNoArgConstructors == 0)
+            IEnumerator<ConstructorInfo> enumor = null;
+            try
             {
-                throw new Exception($"There is no no-arg constructor for {rootType.Name}.  A no-arg constructor is required.");
+                BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
+                var constructorInfos = rootType.GetConstructors(flags);
+                var noArgConstructorInfos = constructorInfos.Where(ci => ci.GetParameters().Length == 0).Select(ci => ci);
+                if (noArgConstructorInfos.Count() == 0)
+                {
+                    throw new Exception($"There is no no-arg constructor for {rootType.Name}.  A no-arg constructor is required.");
+                }
+                enumor = noArgConstructorInfos.GetEnumerator();
+                enumor.MoveNext();
+                return enumor.Current.Invoke(flags | BindingFlags.CreateInstance, null, new object[0], null);
+
             }
-            return constructorInfos[0].Invoke(flags | BindingFlags.CreateInstance, null, new object[0], null);
+            finally
+            {
+                if (enumor != null)
+                {
+                    enumor.Dispose();
+                    
+                }
+            }
         }
 
         public AppContext AppContext { get; } = new StdAppContext();
