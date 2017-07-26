@@ -8,7 +8,7 @@ namespace com.TheDisappointedProgrammer.Drive
     }
     public class StdAppContext : AppContext
     {
-        [InjectedValue]
+        [IOCCInjectedDependency]
         private OSPlatform osPlatform = new WindowsPlatform();
         public OSPlatform OsPlatform => osPlatform;
      }

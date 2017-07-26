@@ -2,7 +2,7 @@ using System;
 
 namespace com.TheDisappointedProgrammer.Drive
 {
-    internal class InjectedValueAttribute : Attribute
+    internal class IOCCInjectedDependencyAttribute : Attribute
     {
     }
 }

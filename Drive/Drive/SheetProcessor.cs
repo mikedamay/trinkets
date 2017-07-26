@@ -11,12 +11,19 @@ namespace com.TheDisappointedProgrammer.Drive
 {
     public class SheetProcessor
     {
-        [InjectedValue] private AppContext appContext = new StdAppContext();
+        [IOCCInjectedDependency] private AppContext appContext = new StdAppContext();
         // If modifying these scopes, delete your previously saved credentials
         // at ~/.credentials/drive-dotnet-quickstart.json
         static string[] Scopes = { DriveService.Scope.DriveReadonly };
         static string ApplicationName = "Drive API .NET Quickstart";
 
+        public SheetProcessor(int i)
+        {
+        }
+
+        //private SheetProcessor()
+        //{
+        //}
         public void Process()
         {
             UserCredential credential;

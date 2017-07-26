@@ -94,12 +94,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppContext.cs" />
-    <Compile Include="InjectedValueAttribute.cs" />
+    <Compile Include="IOCCInjectedDependencyAttribute.cs" />
     <Compile Include="IOCC.cs" />
+    <Compile Include="IOCConfigurer.cs" />
     <Compile Include="OSPlatform.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SheetProcessor.cs" />
+    <Compile Include="TypeMapHolder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
