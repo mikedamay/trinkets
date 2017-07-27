@@ -5,7 +5,7 @@ namespace com.TheDisappointedProgrammer.Drive
     {
         static void Main(string[] args)
         {
-            IOCC.Instance.SheetProcessor.Process();
+            IOCC.Instance.GetOrCreateObjectTree<SheetProcessor>(typeof(SheetProcessor)).Process();
         }
     }
 }
