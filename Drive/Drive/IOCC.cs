@@ -14,30 +14,44 @@ namespace com.TheDisappointedProgrammer.Drive
 
         private IDictionary<Type, Type> typeMap = TypeMapHolder.Instance.GetTypeMap();
 
+        private bool inited;
+
         private IOCC()
         {
             Init(TypeMapHolder.Instance.GetRootType());
+         }
+
+        public TRootType CreateInstance<TRootType>(Type rootType)
+        {
+            object root = Init(typeof(TRootType));
+            if (!(root is TRootType))
+            {
+                throw new Exception($"object created by IOC container is not {typeof(TRootType).Name} as expected");
+            }
+            inited = true;
+            return (TRootType)root;
         }
 
-        private void Init(Type rootType)
+        private object Init(Type rootType)
         {
             object root = Construct(rootType);
             sheetProcessor = root as SheetProcessor;
-            PropertyInfo[] propertyInfos = rootType.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            foreach (PropertyInfo propertyInfo in propertyInfos)
+            FieldInfo[] propertyInfos = rootType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            foreach (var propertyInfo in propertyInfos)
             {
                 if (propertyInfo.GetCustomAttribute<IOCCInjectedDependencyAttribute>() != null)
                 {
                     
-                    if (typeMap.ContainsKey(propertyInfo.PropertyType))
+                    if (typeMap.ContainsKey(propertyInfo.FieldType))
                     {
-                        Type implementation = typeMap[propertyInfo.PropertyType];
+                        Type implementation = typeMap[propertyInfo.FieldType];
                         object dependency = Construct(implementation);
                         propertyInfo.SetValue(root, dependency);
                     }
                     
                 }
             }
+            return root;
         }
         /**
          * <summary>checks if the type to be instantiated has an empty constructor and if so constructs it</summary>
@@ -46,32 +60,17 @@ namespace com.TheDisappointedProgrammer.Drive
          */
         private object Construct(Type rootType)
         {
-            IEnumerator<ConstructorInfo> enumor = null;
-            try
+            BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
+            var constructorInfos = rootType.GetConstructors(flags);
+            var noArgConstructorInfo = constructorInfos.FirstOrDefault(ci => ci.GetParameters().Length == 0);
+            if (noArgConstructorInfo == null)
             {
-                BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
-                var constructorInfos = rootType.GetConstructors(flags);
-                var noArgConstructorInfos = constructorInfos.Where(ci => ci.GetParameters().Length == 0).Select(ci => ci);
-                if (noArgConstructorInfos.Count() == 0)
-                {
-                    throw new Exception($"There is no no-arg constructor for {rootType.Name}.  A no-arg constructor is required.");
-                }
-                enumor = noArgConstructorInfos.GetEnumerator();
-                enumor.MoveNext();
-                return enumor.Current.Invoke(flags | BindingFlags.CreateInstance, null, new object[0], null);
+                throw new Exception($"There is no no-arg constructor for {rootType.Name}.  A no-arg constructor is required.");
+            }
+            return noArgConstructorInfo.Invoke(flags | BindingFlags.CreateInstance, null, new object[0], null);
 
-            }
-            finally
-            {
-                if (enumor != null)
-                {
-                    enumor.Dispose();
-                    
-                }
-            }
         }
 
-        public AppContext AppContext { get; } = new StdAppContext();
         SheetProcessor sheetProcessor;
         public SheetProcessor SheetProcessor => sheetProcessor;
 
