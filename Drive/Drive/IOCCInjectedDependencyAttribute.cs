@@ -2,7 +2,8 @@ using System;
 
 namespace com.TheDisappointedProgrammer.Drive
 {
-    internal class IOCCInjectedDependencyAttribute : Attribute
-    {
+    [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
+    public class IOCCInjectedDependencyAttribute : Attribute
+    { 
     }
 }

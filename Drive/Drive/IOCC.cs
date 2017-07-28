@@ -3,10 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime;
-using System.Runtime.InteropServices;
-using System.Runtime.Remoting.Messaging;
-using com.TheDisappointedProgrammer.IOC;
 
 namespace com.TheDisappointedProgrammer.Drive
 {
@@ -15,12 +11,15 @@ namespace com.TheDisappointedProgrammer.Drive
     // TODO handle structs
     // TODO handle properties
     // TODO object factories
+    // TODO handle multiple assemblies
     /// <summary>
     /// 
     /// </summary>
     /// <remarks>
     /// constraints:
-    ///     the object tree is static.  objects cannot be added, removed or changed after creation
+    ///     the object tree (i.e. the program's static model) is required to be static.
+    ///     if objects are added to the tree through code at run-time this will not be 
+    ///     reflected in the IOC container.
     /// </remarks>
     public class IOCC
     {
@@ -39,9 +38,8 @@ namespace com.TheDisappointedProgrammer.Drive
         /// 3. may be used to create an object or link to an existing object
         /// </summary>
         /// <typeparam name="TRootType">The concrete class (not an interface) of the top object in the tree</typeparam>
-        /// <param name="rootType">The concrete class (not an interface) of the top object in the tree</param>
         /// <returns>an ojbect of root type</returns>
-        public TRootType GetOrCreateObjectTree<TRootType>(Type rootType)
+        public TRootType GetOrCreateObjectTree<TRootType>()
         {
             object rootObject = CreateObjectTree(typeof(TRootType));
             if (!(rootObject is TRootType))
