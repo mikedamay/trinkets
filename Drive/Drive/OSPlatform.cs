@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
+using com.TheDisappointedProgrammer.IOCC;
 
 namespace com.theDisappointedProgrammer.Drive
 {
@@ -11,6 +12,7 @@ namespace com.theDisappointedProgrammer.Drive
     {    
        string GetHomeDirectoryName();
     }
+    [Bean]
     internal class WindowsPlatform : OSPlatform
     {
         public string GetHomeDirectoryName()

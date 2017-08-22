@@ -43,3 +43,8 @@ crashlytics-build.properties
 .elmi
 .elmo
 
+/Drive/Drive/obj/Debug
+/Drive/Drive/bin/Debug
+/Drive/packages
+/Drive/DriveTest/bin/Debug
+/Drive/DriveTest/obj/Debug

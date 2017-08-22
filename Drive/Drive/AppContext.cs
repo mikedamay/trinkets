@@ -1,4 +1,5 @@
 ﻿using com.theDisappointedProgrammer.Drive;
+using com.TheDisappointedProgrammer.IOCC;
 
 namespace com.TheDisappointedProgrammer.Drive
 {
@@ -6,10 +7,11 @@ namespace com.TheDisappointedProgrammer.Drive
     {
         OSPlatform OsPlatform { get; }
     }
+    [Bean]
     public class StdAppContext : AppContext
     {
-        [IOCCInjectedDependency]
-        private OSPlatform osPlatform = new WindowsPlatform();
+        [BeanReference]
+        private OSPlatform osPlatform;
         public OSPlatform OsPlatform => osPlatform;
      }
 }
