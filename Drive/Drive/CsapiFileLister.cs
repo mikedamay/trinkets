@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using com.TheDisappointedProgrammer.IOCC;
 using Google.Apis.Drive.v3;
+using Google.Apis.Drive.v3.Data;
 
 namespace com.TheDisappointedProgrammer.Drive
 {
     [Bean]
     public class CsapiFileLister : IFileLister
     {
+        [BeanReference]
+        private ILogger logger;
         [BeanReference(Factory=typeof(DriveServiceFactory))] private DriveService driveService;
         public IList<(string fileName, string fileId)> ListFiles()
         {
@@ -22,6 +25,14 @@ namespace com.TheDisappointedProgrammer.Drive
             IList<Google.Apis.Drive.v3.Data.File> files = listRequest.Execute()
                 .Files;
             return files.Select(f => (f.Name, f.Id)).ToList();
+        }
+
+        private void Log(IList<File> files)
+        {
+            foreach (var file in files)
+            {
+                Console.WriteLine($"{file.Name} {file.Id}");
+            }
         }
     }
 }

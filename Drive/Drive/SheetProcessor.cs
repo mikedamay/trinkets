@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Threading;
 using com.TheDisappointedProgrammer.IOCC;
 using Google.Apis.Auth.OAuth2;
@@ -13,31 +14,24 @@ namespace com.TheDisappointedProgrammer.Drive
     [Bean]
     public class SheetProcessor
     {
-        //[BeanReference(Factory=typeof(DriveServiceFactory))]
-        //private DriveService driveService;
-
-        [BeanReference(Name="bylist")] private IGoogleSheetLoader googleSheetLoader;
-
-        //[BeanReference] private IFileLister fileLister;
+        [BeanReference] private readonly IGoogleSheetLoader googleSheetLoader = null;
+        [BeanReference] private readonly ISheetTransformer transformer = null;
 
         public void Process()
         {
             byte[] sheetBytes = googleSheetLoader.LoadSheet("MDAM-EXES-2017");
 
-            //List<(string fileName, string fileId)> fileSpecs = fileLister.ListFiles();
-
-            //Console.WriteLine("Files:");
-            //if (fileSpecs != null && fileSpecs.Count > 0)
-            //{
-            //    foreach (var file in fileSpecs)
-            //    {
-            //        Console.WriteLine("{0} ({1})", file.fileName, file.fileId);
-            //    }
-            //}
-            //else
-            //{
-            //    Console.WriteLine("No files found.");
-            //}
+            System.IO.StreamReader sr = new StreamReader(new MemoryStream(sheetBytes));
+            var msin = new MemoryStream(sheetBytes);
+            var msout = new MemoryStream();
+            StreamWriter sw = new StreamWriter(msout);
+            foreach (var line in transformer.Transform(msin))
+            {
+                sw.WriteLine(line);
+            }
+            //string str = sr.ReadToEnd();
+            //var ms = new MemoryStream(Encoding.UTF8.GetBytes(str));
+            googleSheetLoader.SaveSheet("Finance", "MyLateatStuff", msout);
             Console.WriteLine(sheetBytes.Length);
             Console.Read();
 

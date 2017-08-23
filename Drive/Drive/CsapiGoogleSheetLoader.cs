@@ -4,24 +4,22 @@ using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Linq;
 using com.TheDisappointedProgrammer.IOCC;
-using Google.Apis.Drive.v3;
+using google = Google.Apis.Drive.v3;
 
 namespace com.TheDisappointedProgrammer.Drive
 {
-    [Bean(Name="bylist")]
+    [Bean]
     public class CsapiGoogleSheetLoaderByList : IGoogleSheetLoader
     {
-        [BeanReference] private IFileLister fileLister;
-        [BeanReference(Factory = typeof(DriveServiceFactory))] private DriveService driveService;
+        [BeanReference(Name = "bylist")] private readonly IFileSearcher fileSearcher = null;
+        [BeanReference(Factory = typeof(DriveServiceFactory))]
+          private readonly google.DriveService driveService = null;
+        [BeanReference] private ILogger logger;
         public byte[] LoadSheet(string sheetName)
         {
-            IList<(string fileName, string fileId)> fileSpecs
-              = fileLister.ListFiles();
             MemoryStream stream = new MemoryStream();
-            string matchingFileId = fileSpecs.Where(
-              f => f.fileName == sheetName).Select(f => f.fileId)
-              .FirstOrDefault();
-            if (matchingFileId == default(string))
+            string matchingFileId;
+            if ((matchingFileId = fileSearcher.GetId(sheetName)) == null)
             {
                 throw new Exception($"Failed to find a google sheet for {sheetName}");
             }
@@ -32,6 +30,29 @@ namespace com.TheDisappointedProgrammer.Drive
             }
             request.Download(stream);
             return stream.GetBuffer();
+        }
+
+        public void SaveSheet(string folderName, string sheetName, Stream stream)
+        {
+            string folderId;
+            if ((folderId = fileSearcher.GetId(folderName)) == null)
+            {
+                throw new Exception($"Failed to find a google folder: {folderName}");
+            }
+            google.Data.File fileMetaData = new google.Data.File()
+            {
+                Name = sheetName
+                ,MimeType = "application/vnd.google-apps.spreadsheet"
+                ,Parents = new List<string>
+                {
+                    folderId
+                }
+            };
+            google.FilesResource.CreateMediaUpload request;
+            request = driveService.Files.Create(fileMetaData, stream, "text/csv");
+            request.Fields = "id, parents";
+            request.Upload();
+            logger.Log($"id={request.ResponseBody.Id} parent={request.ResponseBody.Parents?.FirstOrDefault()}");
         }
     }
 }

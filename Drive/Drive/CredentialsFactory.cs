@@ -15,7 +15,7 @@ namespace com.TheDisappointedProgrammer.Drive
 
         // If modifying these scopes, delete your previously saved credentials
         // at ~/.credentials/drive-dotnet-quickstart.json
-        private static string[] Scopes = {DriveService.Scope.DriveReadonly};
+        private static string[] Scopes = {DriveService.Scope.Drive};
 
         public object Execute(BeanFactoryArgs args)
         {
@@ -25,17 +25,17 @@ namespace com.TheDisappointedProgrammer.Drive
             using (var stream =
                 new FileStream(Path.Combine(inputPath, "client_id.json"), FileMode.Open, FileAccess.Read))
             {
-                string credPath = Environment.GetFolderPath(
+                string generatedCredentialsPath = Environment.GetFolderPath(
                     Environment.SpecialFolder.Personal);
-                credPath = Path.Combine(credPath, ".credentials/drive-dotnet-quickstart.json");
+                generatedCredentialsPath = Path.Combine(generatedCredentialsPath, ".credentials/drive-dotnet-quickstart.json");
 
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
                     GoogleClientSecrets.Load(stream).Secrets,
                     Scopes,
                     "user",
                     CancellationToken.None,
-                    new FileDataStore(credPath, true)).Result;
-                Console.WriteLine("Credential file saved to: " + credPath);
+                    new FileDataStore(generatedCredentialsPath, true)).Result;
+                Console.WriteLine("Credential file saved to: " + generatedCredentialsPath);
 
             }
             return credential;
