@@ -96,7 +96,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountTotals.cs" />
     <Compile Include="AppContext.cs" />
+    <Compile Include="ColumnMap.cs" />
     <Compile Include="ConsoleLogger.cs" />
     <Compile Include="CredentialsFactory.cs" />
     <Compile Include="CsapiFileLister.cs" />

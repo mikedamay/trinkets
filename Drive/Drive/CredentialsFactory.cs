@@ -11,6 +11,7 @@ namespace com.TheDisappointedProgrammer.Drive
     [Bean]
     internal class CredentialsFactory : IFactory
     {
+        [BeanReference] private ILogger logger = null;
         [BeanReference] private AppContext appContext;
 
         // If modifying these scopes, delete your previously saved credentials
@@ -35,7 +36,7 @@ namespace com.TheDisappointedProgrammer.Drive
                     "user",
                     CancellationToken.None,
                     new FileDataStore(generatedCredentialsPath, true)).Result;
-                Console.WriteLine("Credential file saved to: " + generatedCredentialsPath);
+                logger.LogLine("Credential file saved to: " + generatedCredentialsPath);
 
             }
             return credential;

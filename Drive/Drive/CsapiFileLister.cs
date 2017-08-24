@@ -31,7 +31,7 @@ namespace com.TheDisappointedProgrammer.Drive
         {
             foreach (var file in files)
             {
-                Console.WriteLine($"{file.Name} {file.Id}");
+                logger.LogLine($"{file.Name} {file.Id}");
             }
         }
     }

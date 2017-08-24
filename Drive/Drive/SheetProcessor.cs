@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using com.TheDisappointedProgrammer.IOCC;
@@ -14,6 +15,7 @@ namespace com.TheDisappointedProgrammer.Drive
     [Bean]
     public class SheetProcessor
     {
+        [BeanReference] private ILogger logger = null;
         [BeanReference] private readonly IGoogleSheetLoader googleSheetLoader = null;
         [BeanReference] private readonly ISheetTransformer transformer = null;
 
@@ -21,19 +23,14 @@ namespace com.TheDisappointedProgrammer.Drive
         {
             byte[] sheetBytes = googleSheetLoader.LoadSheet("MDAM-EXES-2017");
 
-            System.IO.StreamReader sr = new StreamReader(new MemoryStream(sheetBytes));
             var msin = new MemoryStream(sheetBytes);
-            var msout = new MemoryStream();
-            StreamWriter sw = new StreamWriter(msout);
             foreach (var line in transformer.Transform(msin))
             {
-                sw.WriteLine(line);
+                logger.Log(line.AccountingMonth);
+                line.Summary.Select(s => logger.Log($" {s}")).ToList();
+                logger.LogLine("");
             }
-            //string str = sr.ReadToEnd();
-            //var ms = new MemoryStream(Encoding.UTF8.GetBytes(str));
-            googleSheetLoader.SaveSheet("Finance", "MyLateatStuff", msout);
-            Console.WriteLine(sheetBytes.Length);
-            Console.Read();
+            logger.LogLine(sheetBytes.Length);
 
         }
     }

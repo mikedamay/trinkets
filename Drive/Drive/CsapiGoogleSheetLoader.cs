@@ -52,7 +52,7 @@ namespace com.TheDisappointedProgrammer.Drive
             request = driveService.Files.Create(fileMetaData, stream, "text/csv");
             request.Fields = "id, parents";
             request.Upload();
-            logger.Log($"id={request.ResponseBody.Id} parent={request.ResponseBody.Parents?.FirstOrDefault()}");
+            logger.LogLine($"id={request.ResponseBody.Id} parent={request.ResponseBody.Parents?.FirstOrDefault()}");
         }
     }
 }

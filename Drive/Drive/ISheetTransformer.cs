@@ -6,6 +6,6 @@ namespace com.TheDisappointedProgrammer.Drive
 {
     internal interface ISheetTransformer
     {
-        IEnumerable<string> Transform(Stream sheetStream);
+        IEnumerable<AccountTotals> Transform(Stream sheetStream);
     }
 }

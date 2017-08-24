@@ -2,6 +2,7 @@
 {
     public interface ILogger
     {
-        void Log(string message);
+        bool LogLine(object message);
+        bool Log(object o);
     }
 }
