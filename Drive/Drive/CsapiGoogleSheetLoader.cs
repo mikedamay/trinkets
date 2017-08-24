@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Linq;
+using System.Text;
 using com.TheDisappointedProgrammer.IOCC;
 using google = Google.Apis.Drive.v3;
 
@@ -50,9 +51,10 @@ namespace com.TheDisappointedProgrammer.Drive
             };
             google.FilesResource.CreateMediaUpload request;
             request = driveService.Files.Create(fileMetaData, stream, "text/csv");
-            request.Fields = "id, parents";
+            request.Fields = "id, parents, size";
             request.Upload();
-            logger.LogLine($"id={request.ResponseBody.Id} parent={request.ResponseBody.Parents?.FirstOrDefault()}");
+            stream.Close();
+            logger.LogLine($"stream-size=xxx file size={request?.ResponseBody?.Size} id={request.ResponseBody.Id} parent={request?.ResponseBody?.Parents?.FirstOrDefault()}");
         }
     }
 }

@@ -13,7 +13,7 @@ namespace com.TheDisappointedProgrammer.Drive
             string line;
             while ( (line = reader.ReadLine()) != null )
             {
-                yield return new AccountTotals();
+                yield return new AccountTotals(0, new decimal[] {});
             }
         }
     }

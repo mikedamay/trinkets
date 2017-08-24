@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using com.TheDisappointedProgrammer.IOCC;
 
 namespace com.TheDisappointedProgrammer.Drive
@@ -11,8 +9,8 @@ namespace com.TheDisappointedProgrammer.Drive
     [Bean]
     public class SheetTransformer : ISheetTransformer
     {
-        [BeanReference] private IRegexer regexer;
-        [BeanReference] private ColumnMap columnMap;
+        [BeanReference] private readonly IRegexer regexer = null;
+        [BeanReference] private readonly ColumnMap columnMap = null;
 
         private class Summary
         {
@@ -80,7 +78,7 @@ namespace com.TheDisappointedProgrammer.Drive
                        {
                             var results = g.Aggregate(new Summary(columnMap)
                                 , (acc, l) => acc.AddExpenseLine(l), acc => acc);
-                            return new AccountTotals{ AccountingMonth = g.Key, Summary = results.Totals };
+                            return new AccountTotals(g.Key, results.Totals );
                         }
                   ).ToList();
                 return result;
@@ -98,7 +96,7 @@ namespace com.TheDisappointedProgrammer.Drive
             {
                 return csvFields.Select(cf => new {field = cf, index = ctr++})
                     .Join(columnMap.Columns, f => f.index, c => c.Index, (f, c) => c.Parser(f.field))
-                    .Select(x => (object) x).ToList();
+                    .ToList();
 
             }
             catch (Exception ex)
