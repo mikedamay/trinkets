@@ -41,17 +41,33 @@ namespace com.TheDisappointedProgrammer.Drive
 
         private class AccountingMonthComparer : IEqualityComparer<DateTime>
         {
+            private readonly int accountingYear;
+            public AccountingMonthComparer(int accountingYear)
+            {
+                this.accountingYear = accountingYear;
+            }
+
             public bool Equals(DateTime x, DateTime y)
             {
-                return x.Day == y.Day && x.Month == y.Month && x.Year == y.Year;
+                return MonthAndYearToMonth(x, accountingYear) == MonthAndYearToMonth(y, accountingYear);
             }
 
             public int GetHashCode(DateTime obj)
             {
-                return obj.Day * 17 * 17 + obj.Month * 17 + obj.Year;
+                return MonthAndYearToMonth(obj, accountingYear);
+            }
+            /// <summary>
+            /// barclay card bills go into the month following the main month to which relate
+            /// </summary>
+            /// <param name="dt">transaction date as recorded on Barclaycard bill</param>
+            /// <returns>mostly the same as the transacton month except for the first few days
+            ///   of January</returns>
+            public static int MonthAndYearToMonth(DateTime dt, int accountingYear)
+            {
+                return dt.Year == accountingYear ? dt.Month : 12;
             }
         }
-        public IEnumerable<AccountTotals> Transform(Stream sheetStream)
+        public IEnumerable<AccountTotals> Transform(Stream sheetStream, int accountingYear)
         {
             int ctr = 1;
             try
@@ -59,7 +75,8 @@ namespace com.TheDisappointedProgrammer.Drive
                 var result = StreamToIEnum(sheetStream)
                   .Where(l => IsExpenseLine(l, ctr++)).Select(l => ParseFields(l))
                   .OrderBy(l => (DateTime)l[0])
-                  .GroupBy(l => (DateTime)l[0], new AccountingMonthComparer()).Select(  g =>
+                  .GroupBy(l => AccountingMonthComparer.MonthAndYearToMonth((DateTime)l[0], accountingYear)
+                    ).Select(  g =>
                        {
                             var results = g.Aggregate(new Summary(columnMap)
                                 , (acc, l) => acc.AddExpenseLine(l), acc => acc);

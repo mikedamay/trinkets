@@ -4,7 +4,7 @@ namespace com.TheDisappointedProgrammer.Drive
 {
     public class AccountTotals
     {
-        public DateTime AccountingMonth;
+        public int AccountingMonth;
         public decimal[] Summary;
     }
 }

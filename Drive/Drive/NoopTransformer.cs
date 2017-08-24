@@ -7,7 +7,7 @@ namespace com.TheDisappointedProgrammer.Drive
     [Bean(Profile="NoopTransformer")]
     public class NoopTransformer : ISheetTransformer
     {
-        public IEnumerable<AccountTotals> Transform(Stream sheetStream)
+        public IEnumerable<AccountTotals> Transform(Stream sheetStream, int accountingYear)
         {
             StreamReader reader = new StreamReader(sheetStream);
             string line;
