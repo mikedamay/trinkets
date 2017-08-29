@@ -33,7 +33,7 @@ namespace mc_form
                 string docPathAndFile = System.IO.Path.Combine(location, INPUT_FILE_NAME);
                 string xmlPathAndFile = System.IO.Path.ChangeExtension(docPathAndFile, OUTPUT_FILE_EXTENSION);
                 Word.Application app = new Word.Application();
-                doc = app.Documents.Open(docPathAndFile);
+                doc = app.Documents.Open(docPathAndFile, ReadOnly: true);
                 WriteDocumentAsXMLFile(doc.StoryRanges[Word.WdStoryType.wdMainTextStory], xmlPathAndFile);
             }
             finally
