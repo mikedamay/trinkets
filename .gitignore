@@ -48,3 +48,8 @@ crashlytics-build.properties
 /Drive/packages
 /Drive/DriveTest/bin/Debug
 /Drive/DriveTest/obj/Debug
+
+# Visual Studio
+.vs/
+/TimeSheet/TimeSheet/bin/Debug
+/TimeSheet/TimeSheet/obj/Debug
