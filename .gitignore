@@ -43,3 +43,10 @@ crashlytics-build.properties
 .elmi
 .elmo
 
+# dotnet
+bin/
+obj/
+
+
+# MacOs
+.DS_Store
