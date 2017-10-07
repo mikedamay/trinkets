@@ -1,0 +1,9 @@
+1) when I select a node-set do nodes on the axis which are not selected get picked up elsewhere?
+Yes - there is no question of unselected nodes getting lost.
+
+2) What is the context node in a template's match statement?
+
+3) Is it true to say that apply-templates applies to a node and all its descendents?
+
+4) The stylesheet processes the the node set before the next sibling node in document order is processed.
+

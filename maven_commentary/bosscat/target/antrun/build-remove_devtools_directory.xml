@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="remove_devtools_directory"  >
+<target name="remove_devtools_directory">
+  <delete dir="C:\Users\Mike\Documents\GitHub\maven_commentary\bosscat\target\test-classes"/>
+</target>
+</project>

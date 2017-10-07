@@ -1,0 +1,90 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<modelVersion>4.0.0</modelVersion>
+<groupId>mdamay.com</groupId>
+<artifactId>bosscat</artifactId>
+<packaging>war</packaging>
+<version>1.0-SNAPSHOT</version>
+<name>bosscat Webapp</name>
+<url>http://maven.apache.org</url>
+<properties>
+    <devtoolsClassPath>${project.build.directory}\test-classes</devtoolsClassPath>
+</properties>
+<dependencies>
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>3.8.1</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>servlet-api</artifactId>
+        <version>2.5</version>
+    </dependency>
+</dependencies>
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.6</version>
+            <executions>
+                <execution>
+                    <id>remove_devtools_directory</id>
+                    <phase>clean</phase>
+                    <goals>
+                        <goal>run</goal>
+                    </goals>
+                    <configuration>
+                        <target name="remove_devtools_directory">
+                            <delete dir="${devtoolsClassPath}"/>
+                        </target>
+                    </configuration>
+                </execution>
+                <execution>
+                    <id>make_devtools_directory</id>
+                    <phase>initialize</phase>
+                    <goals>
+                        <goal>run</goal>
+                    </goals>
+                    <configuration>
+                        <target name="make_devtools_directory">
+                            <mkdir dir="${devtoolsClassPath}"/>
+                        </target>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.2.1</version>
+            <executions>
+                <execution>
+                    <id>build_devtools</id>
+                    <goals><goal>exec</goal></goals>
+                    <phase>generate-resources</phase>
+                    <configuration>
+                        <executable>javac</executable>
+                        <arguments>
+                            <argument>-d</argument>
+                            <argument>${devtoolsClassPath}</argument>
+                            <argument>${basedir}\devtools\disappointed\*.java</argument>
+                        </arguments>
+                    </configuration>
+                </execution>
+                <execution>
+                    <id>run_devtools</id>
+                    <phase>install</phase>
+                    <goals><goal>java</goal></goals>
+                    <configuration>
+                        <mainClass>disappointed.SoundPlayer</mainClass>
+                        <classpathScope>test</classpathScope>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
+</project>
