@@ -7,7 +7,16 @@ namespace ting
 		static Reader rdr = new Reader();
         static void Main(string[] args)
         {
-			rdr.Read();
+			//foreach(var line in rdr.Read<string>(st => st))
+			//{
+			//	Console.WriteLine(line);
+			//}
+			RunGetter();
         }
+		static void RunGetter()
+		{
+			Getter getter = new Getter();
+			getter.Get();
+		}
     }
 }
