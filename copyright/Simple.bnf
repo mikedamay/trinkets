@@ -1,0 +1,170 @@
+{
+  parserClass="com.maddyhome.idea.copyright.language.parser.SimpleParser"
+  parserUtilClass="com.maddyhome.idea.copyright.language.parser.SimpleParserUtil"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Simple"
+  psiImplClassSuffix="Impl"
+  psiPackage="com.maddyhome.idea.copyright.language.psi"
+  psiImplPackage="com.maddyhome.idea.copyright.language.psi.impl"
+
+  elementTypeHolderClass="com.maddyhome.idea.copyright.language.psi.SimpleTypes"
+  elementTypeClass="com.maddyhome.idea.copyright.language.psi.SimpleElementType"
+  tokenTypeClass="com.maddyhome.idea.copyright.language.psi.SimpleTokenType"
+
+  extends(".*Expr")=expr
+
+}
+
+simpleFile ::= module_statement?  import_list  item_*
+
+private statement ::= (ALIAS | AS | CASE | ELSE | EXPOSING | IF
+  | IMPORT | IN | LET | MODULE | OF | OTHERWISE | PORT | THEN | TYPE | WHERE)
+
+private operator ::= (LBRACE | RBRACE | LBRACK | RBRACK | COLON | EQ | ASSIGN | NOT_EQ | NOT | PLUS | MINUS | COND_OR | COND_AND
+  | BIT_AND | SEND_CHANNEL | LESS | BIT_XOR | MUL | QUOTIENT | REMAINDER | GREATER
+  | TILDE | PIPE_FORWARD | BACK_TICK | COMBINE | MULTIMAP | PIPE_BACK | GE | LE | COMBINE_BACK
+  | COLON_COLON | INT_DIVIDE | DOT_DOT | DOT | RETURN | BIT_OR | L_PAREN | R_PAREN)
+
+private other ::= TYPE_IDENTIFIER | COMMENT | MULTILINE_COMMENT | LIST_TYPENAME | COMMA | IDENTIFIER | FUN_NAME | STR | NUM
+
+private item_ ::=
+  top_level_fun_decl
+  | top_level_fun_def
+  | comments
+  | type_alias
+  | type_decl
+  | let_statement
+  | port_def
+  | port_decl
+
+import_list ::= (comments | import_statement)*
+
+comments ::= COMMENT | MULTILINE_COMMENT
+
+
+module_statement ::= MODULE module_body WHERE
+module_body ::= compound_identifier L_PAREN exposing_list R_PAREN
+
+import_statement ::= IMPORT import_body
+import_body ::= TYPE_IDENTIFIER EXPOSING L_PAREN exposing_list R_PAREN
+exposing_list ::= IDENTIFIER [(COMMA IDENTIFIER)*] | DOT_DOT
+
+top_level_fun_decl ::= FUN_NAME COLON [type_param (RETURN type_param)*]
+  {mixin="com.maddyhome.idea.copyright.language.psi.impl.SimpleNamedElementImpl"
+  implements="com.maddyhome.idea.copyright.language.psi.SimpleNamedElement"
+  methods=[getKey getValue getName setName getNamedIdentifier ]}
+fun_decl ::= IDENTIFIER COLON [type_param (RETURN type_param)*]
+type_param ::= TYPE_IDENTIFIER
+  | L_PAREN TYPE_IDENTIFIER [(COMMA TYPE_IDENTIFIER)*] R_PAREN
+fun_def ::= IDENTIFIER [params] ASSIGN fun_body
+top_level_fun_def ::= FUN_NAME [params] ASSIGN fun_body
+params ::= param*
+param ::= (IDENTIFIER | tuple_patern | record_patern | list_patern) [AS IDENTIFIER]
+fun_body ::= expr | let_statement
+
+port_decl ::= PORT IDENTIFIER COLON (compound_identifier)*
+port_def ::= PORT IDENTIFIER ASSIGN (compound_identifier)*
+
+type_decl ::= TYPE IDENTIFIER ASSIGN type_body
+type_body ::= type_body_part [ BIT_OR type_body_part ]
+type_body_part ::= tag [compound_identifier]
+tag ::= IDENTIFIER
+
+type_alias ::= TYPE ALIAS type_alias_body
+type_alias_body ::= TYPE_IDENTIFIER ASSIGN (compound_identifier | tuple | record | list_type)
+
+let_statement ::= LET let_body IN expr
+let_body ::=  [fun_decl] fun_def | (let_body_part)+
+let_body_part ::= (IDENTIFIER | tuple_patern) ASSIGN expr
+
+compound_identifier ::= IDENTIFIER [(DOT IDENTIFIER)*]
+
+tuple_patern ::= L_PAREN IDENTIFIER COMMA IDENTIFIER [ (COMMA IDENTIFIER)*] R_PAREN
+record_patern ::= LBRACE IDENTIFIER [ (COMMA IDENTIFIER)*] RBRACE
+list_patern ::= LBRACK IDENTIFIER [ (COMMA IDENTIFIER)*] RBRACK
+
+expr ::=
+  TupleExpr
+  | FunctionCallExpr
+  | ParenthesesExpr
+  | OrExpr
+  | AndExpr
+  | ConditionalExpr
+  | AddExpr
+  | MulExpr
+  | UnaryExpr
+  | RecordExpr
+  | RecordUpdateExpr
+  | ListExpr
+  | IfExpr
+  | CaseExpr
+  | ConcatExpr
+  | CombineExpr
+  | PipeExpr
+  | CaseBodyPartStartExpr
+  | IdExpr
+  | NumberExpr
+  | StringExpr
+
+IdExpr ::= IDENTIFIER
+OrExpr ::= expr COND_OR expr
+AndExpr ::= expr COND_AND expr
+UnaryExpr ::=  unary_op expr
+ConditionalExpr ::= expr rel_op expr
+AddExpr ::= expr add_op expr
+MulExpr ::= expr mul_op expr
+TupleExpr ::= tuple
+RecordExpr ::= record
+ListExpr ::= list
+IfExpr ::= IF expr THEN expr [ELSE expr]
+ConcatExpr ::= expr COLON_COLON expr
+CombineExpr ::= expr combine_op expr
+PipeExpr ::= expr pipe_op expr
+FunctionCallExpr ::= (IDENTIFIER| L_PAREN IDENTIFIER expr R_PAREN)  expr+
+CaseExpr ::= case_statement
+ParenthesesExpr ::= L_PAREN expr R_PAREN
+RecordUpdateExpr ::= LBRACE record_name BIT_OR record_update_body RBRACE
+NumberExpr ::= NUM
+StringExpr ::= STR
+
+record_name ::= IDENTIFIER
+record_update_body ::= record_update_body_part [(record_update_body_part)*]
+record_update_body_part ::= field_name SEND_CHANNEL expr
+field_name ::= IDENTIFIER
+
+case_statement ::= CASE IDENTIFIER OF case_body
+case_body ::= (case_body_part)* [OTHERWISE RETURN expr]
+case_body_part ::= CaseBodyPartStartExpr expr
+CaseBodyPartStartExpr ::= NUM RETURN
+
+private rel_op ::= EQ | NOT_EQ | LESS | LE | GREATER | GE
+private add_op ::= PLUS | MINUS
+private mul_op ::= MUL | QUOTIENT | INT_DIVIDE | REMAINDER
+private unary_op ::= PLUS | MINUS | NOT
+private combine_op ::= COMBINE | COMBINE_BACK
+private pipe_op ::= PIPE_FORWARD | PIPE_BACK
+
+
+tuple ::= L_PAREN expr COMMA expr [ (COMMA expr)*] R_PAREN
+record ::= LBRACE expr [ (COMMA expr)*] RBRACE
+list ::= LBRACK  [expr [ (COMMA expr)*]] RBRACK
+list_type ::= LIST_TYPENAME [compound_identifier]
+
+/*
+  1) list as expression
+  2) tuple does not work as params
+  3) Unary operator ha priority over binary
+ */
+
+
+
+/**
+  How do we underline with squiglies - underwaves
+  Inspections
+  1) module - not preceded by whitespaces
+  2) import - not preceded by whitespace
+  3) case - indentation
+  4) Declaration is followed by definition
+ */
