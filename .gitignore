@@ -45,6 +45,7 @@ crashlytics-build.properties
 .elmi
 .elmo
 
+<<<<<<< HEAD
 # dotnet
 bin/
 obj/
@@ -55,3 +56,15 @@ obj/
 
 # vim
 .*.swp
+=======
+/Drive/Drive/obj/Debug
+/Drive/Drive/bin/Debug
+/Drive/packages
+/Drive/DriveTest/bin/Debug
+/Drive/DriveTest/obj/Debug
+
+# Visual Studio
+.vs/
+/TimeSheet/TimeSheet/bin/Debug
+/TimeSheet/TimeSheet/obj/Debug
+>>>>>>> 3c5246629bbb8e40caa7d0b8ee0023bae836e6f3
