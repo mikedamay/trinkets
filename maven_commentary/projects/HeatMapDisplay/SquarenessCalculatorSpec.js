@@ -1,0 +1,62 @@
+describe( "SquarenessCalculator", function() {
+    var ColumnManager = speuappdev_heatMapEngine_ns.testableState.ColumnManager;
+    var SquarenessCalculator = speuappdev_heatMapEngine_ns.testableState.SquarenessCalculator;
+    var Column = speuappdev_heatMapEngine_ns.testableState.Column;
+    var Tile = speuappdev_heatMapEngine_ns.testableState.Tile;
+
+    it("should be able to calculate Squareness of tiles", function() {
+        var cm = ColumnManager();
+        var get_column = cm.testableState.get_column;
+        var sc = SquarenessCalculator();
+        cm.addColumn(Column());
+        get_column(0).addTile(Tile({area:80}));
+        get_column(0).set_widthFraction( 0.8 );
+        cm.addColumn(Column());
+        get_column(1).addTile(Tile({area:20}));
+        get_column(1).set_widthFraction( 0.2 );
+        var squareness = sc.calculateSquareness( cm);
+        expect(squareness).toEqual(1/0.8 * 80 + 1/0.2 * 20);
+        get_column(0).addTile(Tile({area:10}));
+        squareness = sc.calculateSquareness( cm);
+        expect(squareness).toEqual((8/9)/0.8 * 80 + 0.8/(1/9) * 10 + 1/0.2 * 20);
+        cm = ColumnManager();
+        get_column = cm.testableState.get_column;
+        cm.addColumn(Column());
+        get_column(0).addTile(Tile({area:80}));
+        get_column(0).set_widthFraction( 0.8 );
+        cm.addColumn(Column());
+        get_column(1).addTile(Tile({area:20}));
+        get_column(1).addTile(Tile({area:20}));
+        get_column(1).set_widthFraction( 0.2 );
+        squareness = sc.calculateSquareness( cm);
+        expect(squareness).toEqual(1/0.8 * 80 + 0.5/0.2 * 20 + 0.5/0.2 * 20);
+    });
+    it("should be able to calculate Squareness of tiles adjusting for a log scale", function() {
+        var cm = ColumnManager();
+        var sc = SquarenessCalculator(true);
+        var get_column = cm.testableState.get_column;
+        cm.addColumn(Column());
+        get_column(0).addTile(Tile({area:80}));
+        get_column(0).set_widthFraction( 0.8 );
+        cm.addColumn(Column());
+        get_column(1).addTile(Tile({area:20}));
+        get_column(1).set_widthFraction( 0.2 );
+        var squareness = sc.calculateSquareness( cm);
+        expect(squareness).toEqual(1/0.8 * Math.log(1+80) + 1/0.2 * Math.log(1+20));
+        get_column(0).addTile(Tile({area:10}));
+        squareness = sc.calculateSquareness( cm);
+        expect(squareness).toEqual((8/9)/0.8 * Math.log(1+80) + 0.8/(1/9) * Math.log(1+10) + 1/0.2 * Math.log(1+20));
+        cm = ColumnManager();
+        get_column = cm.testableState.get_column;
+        cm.addColumn(Column());
+        get_column(0).addTile(Tile({area:80}));
+        get_column(0).set_widthFraction( 0.8 );
+        cm.addColumn(Column());
+        get_column(1).addTile(Tile({area:20}));
+        get_column(1).addTile(Tile({area:20}));
+        get_column(1).set_widthFraction( 0.2 );
+        squareness = sc.calculateSquareness( cm);
+        expect(squareness).toEqual(1/0.8 * Math.log(1+80) + 0.5/0.2 * Math.log(1+20) + 0.5/0.2 * Math.log(1+20));
+    });
+
+});
