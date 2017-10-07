@@ -14,6 +14,8 @@ hs_err_pid*
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio
 
 *.iml
+target/
+.settings
 
 ## Directory-based project format:
 .idea/
@@ -50,3 +52,6 @@ obj/
 
 # MacOs
 .DS_Store
+
+# vim
+.*.swp
