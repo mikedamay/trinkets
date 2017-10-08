@@ -3,41 +3,47 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
+using PureDI;
 
 namespace ting
 {
+	[Bean]
 	public class Getter
 	{
+		[BeanReference] private Bufferer bufferer = null;
+		[BeanReference] private ILogger logger = null;
 		public void Get()
 		{
 			try
 			{
-				using (var client = new HttpClient())
+				string uri =
+					  "http://nuget.org/api/v2/Packages()"
+					  +"?$orderby=LastUpdated%20desc&$select=Id,Tags"
+					  +"&$filter=IsLatestVersion eq true";
+				int ctr = 0;
+				do
 				{
-					using( var response = client.GetStreamAsync(new Uri(
-					  "http://nuget.org/api/v2/Packages(Id='PureDI',Version='0.1.2-alpha')")))
+					using (var client = new HttpClient())
 					{
-						Stream s = response.Result;
-						using (var sr = new StreamReader(s))
+						using( var response = client.GetStreamAsync(new Uri(uri)))
 						{
-							string line = null;
-							int ctr = 0;
-							while((line = sr.ReadLine()) != null)
+							Stream s = response.Result;
+							using (var sr = new StreamReader(s))
 							{
-								Console.WriteLine(line);
+								uri = bufferer.Buffer(sr);
 								if (++ctr >= 100)
 								{
 									break;
 								}
 							}
-						}
-					}	
-				}
+						}	
+					}
+				} while (uri != null);
 			}
 			#pragma warning disable 168
 			catch (Exception ex)
 			{
-				throw;
+				throw new Exception("probably a null reference", ex);
 			}
 			#pragma warning restore 160
 		}
