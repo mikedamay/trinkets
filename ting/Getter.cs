@@ -31,7 +31,7 @@ namespace ting
 							using (var sr = new StreamReader(s))
 							{
 								uri = bufferer.Buffer(sr);
-								if (++ctr >= 100)
+								if (++ctr >= 10)
 								{
 									break;
 								}
