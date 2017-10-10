@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="us-ascii" ?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>netcoreapp2.0</TargetFramework>
+		<LangVersion>latest</LangVersion>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="PureDI" Version="0.1.2-alpha"/>
+	</ItemGroup>
+</Project>
