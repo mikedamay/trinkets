@@ -40,17 +40,36 @@ namespace Listen.Traffic
 			{
 				http.Prefixes.Add("http://*:8080/");
 				http.Start();
-				var context = http.GetContext();
-				var request = context.Request;
-				var response = context.Response;
-				var s = response.OutputStream;
-				using (StreamWriter sw = new StreamWriter(s))
+				while (true)
 				{
-					sw.WriteLine("Mike is great<br>");
-					sw.WriteLine("other stuff");
+					new EchoController().Echo(http);
+					Console.Read();
 				}
-				Thread.Sleep(1000);
 				http.Stop();
+			}
+		}
+	}
+}
+namespace Listen.Traffic
+{
+	using System;
+	using System.Net;
+	using System.Threading;
+	using System.IO;
+	using System.Threading.Tasks;
+
+	internal class EchoController
+	{
+		public async Task Echo(HttpListener http)
+		{
+			var context = await http.GetContextAsync();
+			var request = context.Request;
+			var response = context.Response;
+			var s = response.OutputStream;
+			using (StreamWriter sw = new StreamWriter(s))
+			{
+				Thread.Sleep(10000);
+				sw.WriteLine(request.QueryString.Get(0));
 			}
 		}
 	}
