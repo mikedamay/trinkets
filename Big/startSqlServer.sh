@@ -1,0 +1,1 @@
+docker run -d --name BigSqlServer -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=M1cromus' -p 1433:1433 microsoft/mssql-server-linux
