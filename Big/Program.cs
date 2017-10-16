@@ -41,8 +41,8 @@ namespace Big
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			optionsBuilder.UseSqlServer(
-			  //"Server=(localdb)\\mssqllocaldb;Database=Notes;Trusted_Connection=True;MultipleActiveResultSets=true"
-			  "Server=localhost;Database=Notes;User Id=sa;Password=M1cromus"
+			  "Server=(localdb)\\mssqllocaldb;Database=Notes;Trusted_Connection=True;MultipleActiveResultSets=true"
+			//   "Server=localhost;Database=Notes;User Id=sa;Password=M1cromus"
 
 			);
 		}
