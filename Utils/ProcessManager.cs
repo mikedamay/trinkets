@@ -6,9 +6,16 @@ namespace com.mikedamay.Utils
 		{
 			System.Console.WriteLine("hello process");
 			System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo();
-			psi.Arguments = "-i";
+			psi.CreateNoWindow = true;
+			psi.Arguments = "--verbose -i";
 			psi.FileName = "/bin/bash";
-			System.Diagnostics.Process.Start(psi);
+			psi.RedirectStandardInput = true;
+			var p = new System.Diagnostics.Process();
+			p.StartInfo = psi;
+			p.Start();
+			p.StandardInput.WriteLine("echo $SHLVL;sleep 5");
+			p.StandardInput.Close();
+			p.WaitForExit();
 			System.Console.WriteLine("Goodbye process");
 		}
 	}
