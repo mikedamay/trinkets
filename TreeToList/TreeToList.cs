@@ -14,18 +14,10 @@ namespace TreeToList
 		}
 	 	public static (ListNode first, ListNode last) ConvertTreeToList(TreeNode head)
 		{
-			ListNode firstSmaller = null, lastSmaller = null, firstLarger = null, lastLarger = null;
-			if (head.Smaller != null)
-			{
-				(firstSmaller, lastSmaller) = ConvertTreeToList(head.Smaller);
-			}
-			if (head.Larger != null)
-			{
-				(firstLarger, lastLarger) = ConvertTreeToList(head.Larger);
-			}
+			if (head == null) return (null, null);
+			(ListNode firstSmaller, ListNode lastSmaller) = ConvertTreeToList(head.Smaller);
+			(ListNode firstLarger, ListNode lastLarger) = ConvertTreeToList(head.Larger);
 			ListNode node = new ListNode{ Val = head.Val, Previous = lastSmaller, Next = firstLarger};
-			firstSmaller = firstSmaller ?? node;
-			lastLarger = lastLarger ?? node;	
 			if (lastSmaller != null)
 			{
 				lastSmaller.Next = node;
@@ -34,7 +26,7 @@ namespace TreeToList
 			{
 				firstLarger.Previous = node;
 			}
-			return (firstSmaller, lastLarger);
+			return (firstSmaller ?? node, lastLarger ?? node);
 		}
 	}
 }
