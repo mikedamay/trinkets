@@ -8,32 +8,23 @@ namespace Async
 	{
 		public async static Task Main()
 		{
-			//Task<Mike> tm = DoSomething();
-			//Mike mike = tm?.Result;
-			//await DoSomething();
-			Task t = DoThis();
+			const int NumTasks = 10;
+			Task[] tasks = new Task[NumTasks];
+			for (int ii = 0; ii < NumTasks; ii++ )
+			{
+				tasks[ii] = DoThis(ii);
+			}	
+			Task t = Task.WhenAll(tasks);
 			Console.WriteLine("In Main()");
-			await t;
 			Console.WriteLine("EXiting Main()");
+			await t;
 		}
-		private async static Task<Mike> DoSomething()
-		{
-			Mike mike = await Task.Run( () => {
-				Thread.Sleep(10000);
-				return new Mike();
-			} );
-			return mike;
-		}
-		private async static Task DoThis()
+		private async static Task DoThis(int n)
 		{
 			await Task.Yield();
 			Thread.Sleep(1000);
-			Console.WriteLine("In DoThis()");
+			Console.WriteLine($"In DoThis({n})");
 		}
-	}
-
-	internal class Mike
-	{
 	}
 }
 		
