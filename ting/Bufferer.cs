@@ -1,5 +1,6 @@
 using System;
 using PureDI;
+using PureDI.Attributes;
 using System.IO;
 using System.Text;
 using System.Xml.XPath;

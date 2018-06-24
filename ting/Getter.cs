@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
 using PureDI;
+using PureDI.Attributes;
 
 namespace ting
 {
