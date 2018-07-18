@@ -19,7 +19,8 @@ namespace Regexular
 				(?<date>[^\[]*)
 				\[
 				(?<loggerlevel>[^\]]*)
-				\][ ]
+				\]
+				[ ]
 				(?<category>[^:]+)
 				:
 				(?<eventcode>[^:]+)
