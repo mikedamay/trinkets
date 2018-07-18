@@ -14,7 +14,22 @@ namespace Regexular
 		}
 		private void DoOtherStuff()
 		{
-			Regex regex = new Regex(@"^(?<date>[^\[]*)\[(?<loggerlevel>[^\]]*)\][ ](?<category>[^:]+):(?<eventcode>[^:]+)::(?<message>.+)::(?<url>.+)$", RegexOptions.None);
+			Regex regex = new Regex(@"
+				^
+				(?<date>[^\[]*)
+				\[
+				(?<loggerlevel>[^\]]*)
+				\][ ]
+				(?<category>[^:]+)
+				:
+				(?<eventcode>[^:]+)
+				::
+				(?<message>.+)
+				::
+				(?<url>.+)
+				$
+				"
+				, RegexOptions.None | RegexOptions.IgnorePatternWhitespace);
 			Match match = regex.Match("2018-07-18 14:38:29.335 +01:00 [Information] DasBlog.Managers.BlogManager: EntryAdded :: extra :: good :: http://localhost:50431/extra-good");
 			Console.WriteLine($"there are {match.Groups.Count} groups");
 			foreach (var group in match.Groups)
