@@ -13,6 +13,7 @@ namespace Async
 			for (int ii = 0; ii < NumTasks; ii++ )
 			{
 				tasks[ii] = DoThis(ii);
+				//await DoThis(ii);
 			}	
 			Task t = Task.WhenAll(tasks);
 			Console.WriteLine("In Main()");
@@ -23,7 +24,8 @@ namespace Async
 		{
 			await Task.Yield();
 			Thread.Sleep(1000);
-			Console.WriteLine($"In DoThis({n})");
+			Console.WriteLine($"In DoThis({Thread.GetCurrentProcessorId()})");
+			//Console.WriteLine($"In DoThis({n})");
 		}
 	}
 }
