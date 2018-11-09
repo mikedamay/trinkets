@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<directory name="quickstart" size="0" lastModified="1361297705968" date="20130219T181505" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\dir-2-xml\bin\..\..\quickstart" sort="name" reverse="false">
+<directory xmlns="mike.com" name="quickstart" size="0" lastModified="1361297705968" date="20130219T181505" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\dir-2-xml\bin\..\..\quickstart" sort="name" reverse="false">
 <directory name=".idea" size="0" lastModified="1361297476671" date="20130219T181116" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\dir-2-xml\bin\..\..\quickstart\.idea">
 <file name=".name" size="10" lastModified="1361117710712" date="20130217T161510" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\dir-2-xml\bin\..\..\quickstart\.idea\.name"/>
 <file name="compiler.xml" size="2684" lastModified="1361117710712" date="20130217T161510" absolutePath="C:\Documents and Settings\Mike May\My Documents\GitHub\maven_commentary\dir-2-xml\bin\..\..\quickstart\.idea\compiler.xml"/>
