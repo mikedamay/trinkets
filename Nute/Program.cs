@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Nute.Entities;
 
 namespace Nute
 {
@@ -6,7 +9,14 @@ namespace Nute
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            NutritionDbContext nc = new NutritionDbContext();
+            var nut = new Nutrient(0, "another nut");
+            nc.Nutrient.Add(nut);
+            nc.SaveChanges();
+            foreach (var nutter in nc.Nutrient.ToList())
+            {
+                Console.WriteLine(nutter.Name);
+            }
         }
     }
 }

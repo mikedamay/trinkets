@@ -31,6 +31,9 @@ namespace Nute.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasAlternateKey("Name")
+                        .HasName("AK_Nutrient_Name");
+
                     b.ToTable("Nutrient");
 
                     b.HasData(

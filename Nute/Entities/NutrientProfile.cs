@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Nute.Entities
@@ -6,6 +7,7 @@ namespace Nute.Entities
     {
         public long Id { get; set; }
         public Nutrient Nutrient { get; set; }
+        [Required]
         public long NutrientId { get; set; }
 
         [NotMapped]

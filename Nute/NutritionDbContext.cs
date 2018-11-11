@@ -5,6 +5,18 @@ namespace Nute
 {
     public class NutritionDbContext : DbContext
     {
+        // needed for design time
+        public NutritionDbContext()
+        {
+            this.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;            
+        }
+        
+        // needed to build
+/*
+        public NutritionDbContext(DbContextOptions<NutritionDbContext> opts) : base(opts)
+        {
+        }
+*/
         protected override void OnConfiguring(DbContextOptionsBuilder ob)
         {
             ob.UseSqlServer(
@@ -13,15 +25,18 @@ namespace Nute
 
         protected override void OnModelCreating(ModelBuilder mb)
         {
+            mb.Entity<Nutrient>()
+                .HasAlternateKey(n => n.Name)
+                .HasName("AK_Nutrient_Name");
             mb.Entity<Nutrient>().HasData(
-                new Nutrient {Id = 1, Name = "Energy"}
-                , new Nutrient {Id = 2, Name = "Fat"}
-                , new Nutrient {Id = 3, Name = "Saturated Fat"}
-                , new Nutrient {Id = 4, Name = "Carbohydrate"}
-                , new Nutrient {Id = 5, Name = "Sugars"}
-                , new Nutrient {Id = 6, Name = "Fibre"}
-                , new Nutrient {Id = 7, Name = "Protein"}
-                , new Nutrient {Id = 8, Name = "Salt"}
+                new Nutrient (id : 1, name : "Energy")
+                , new Nutrient (id : 2, name : "Fat")
+                , new Nutrient (id : 3, name : "Saturated Fat")
+                , new Nutrient (id : 4, name : "Carbohydrate")
+                , new Nutrient (id : 5, name : "Sugars")
+                , new Nutrient (id : 6, name : "Fibre")
+                , new Nutrient (id : 7, name : "Protein")
+                , new Nutrient (id : 8, name : "Salt")
             );
             mb.Entity<Unit>().HasData(
                 new Unit{Id = 1, Name="Gram", Abbrev = "g"}
@@ -32,7 +47,8 @@ namespace Nute
                 .HasOne<Nutrient>()
                 .WithMany()
                 .HasForeignKey("NutrientId")
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
             mb.Entity<NutrientProfile>()
                 .Property("_servingSizeCount");
             mb.Entity<NutrientProfile>()
