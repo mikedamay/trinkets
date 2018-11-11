@@ -8,7 +8,7 @@ namespace Nute
         // needed for design time
         public NutritionDbContext()
         {
-            this.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;            
+            this.ChangeTracker.AutoDetectChangesEnabled = false;            
         }
         
         // needed to build
