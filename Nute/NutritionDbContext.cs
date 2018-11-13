@@ -38,17 +38,24 @@ namespace Nute
                 , new Nutrient (id : 7, name : "Protein")
                 , new Nutrient (id : 8, name : "Salt")
             );
+            mb.Entity<Unit>()
+                .HasAlternateKey(u => u.Name)
+                .HasName("AK_Unit_Name");
+            mb.Entity<Unit>()
+                .HasAlternateKey(u => u.Abbrev)
+                .HasName("AK_Unit_Abbrev");
+           
             mb.Entity<Unit>().HasData(
-                new Unit{Id = 1, Name="Gram", Abbrev = "g"}
-                , new Unit{Id = 2, Name="Each", Abbrev = "ea"}
-                , new Unit{Id = 3, Name="Large", Abbrev = "lge"}
+                new Unit(id : 1, name:"Gram", abbrev : "g")
+                , new Unit(id : 2, name:"Each", abbrev : "ea")
+                , new Unit(id : 3, name:"Large", abbrev : "lge")
             );
             mb.Entity<NutrientProfile>()
                 .HasOne<Nutrient>()
                 .WithMany()
                 .HasForeignKey("NutrientId")
                 .OnDelete(DeleteBehavior.Restrict)
-                .IsRequired();
+                /*.IsRequired()*/;
             mb.Entity<NutrientProfile>()
                 .Property("_servingSizeCount");
             mb.Entity<NutrientProfile>()

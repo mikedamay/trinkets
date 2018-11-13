@@ -5,10 +5,25 @@ namespace Nute.Entities
 {
     public class NutrientProfile
     {
-        public long Id { get; set; }
-        public Nutrient Nutrient { get; set; }
+        public NutrientProfile()
+        {
+            
+        }
+
+        public NutrientProfile(Nutrient nutrient, Quantity servingSize
+          , Quantity dailyRecommendedAount, long id = 0)
+        {
+            Id = id;
+            Nutrient = nutrient;
+            NutrientId = nutrient.Id;
+            ServingSize = servingSize;
+            DailyRecommendedAmount = dailyRecommendedAount;
+        }
+        public long Id { get; private set; }
+        [NotMapped]
+        public Nutrient Nutrient { get; private set; }
         [Required]
-        public long NutrientId { get; set; }
+        public long NutrientId { get; private set; }
 
         [NotMapped]
         public Quantity ServingSize

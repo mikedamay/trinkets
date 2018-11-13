@@ -9,7 +9,7 @@ namespace Nute.Entities
         {
             
         }
-        public Nutrient(int id, string name)
+        public Nutrient( string name, int id = 0)
         {
             Id = id;
             Name = name;
