@@ -18,34 +18,6 @@ namespace Nute.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Nute.Entities.Lud", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Lud");
-                });
-
-            modelBuilder.Entity("Nute.Entities.Luper", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("LudId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LudId");
-
-                    b.ToTable("Luper");
-                });
-
             modelBuilder.Entity("Nute.Entities.Nutrient", b =>
                 {
                     b.Property<long>("Id")
@@ -83,9 +55,9 @@ namespace Nute.Migrations
 
                     b.Property<long>("NutrientId");
 
-                    b.Property<decimal>("_dailyRecommendedAmountCount");
+                    b.Property<decimal>("_dailyRecommendedMaxCount");
 
-                    b.Property<long>("_dailyRecommendedAmountUnitId");
+                    b.Property<long>("_dailyRecommendedMaxUnitId");
 
                     b.Property<decimal>("_servingSizeCount");
 
@@ -95,7 +67,7 @@ namespace Nute.Migrations
 
                     b.HasIndex("NutrientId");
 
-                    b.HasIndex("_dailyRecommendedAmountUnitId");
+                    b.HasIndex("_dailyRecommendedMaxUnitId");
 
                     b.HasIndex("_servingSizeUnitId");
 
@@ -134,24 +106,16 @@ namespace Nute.Migrations
                     );
                 });
 
-            modelBuilder.Entity("Nute.Entities.Luper", b =>
-                {
-                    b.HasOne("Nute.Entities.Lud", "Lud")
-                        .WithMany()
-                        .HasForeignKey("LudId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("Nute.Entities.NutrientProfile", b =>
                 {
                     b.HasOne("Nute.Entities.Nutrient", "Nutrient")
                         .WithMany()
                         .HasForeignKey("NutrientId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Nute.Entities.Unit", "_dailyRecommendedAmountUnit")
+                    b.HasOne("Nute.Entities.Unit", "_dailyRecommendedMaxUnit")
                         .WithMany()
-                        .HasForeignKey("_dailyRecommendedAmountUnitId")
+                        .HasForeignKey("_dailyRecommendedMaxUnitId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Nute.Entities.Unit", "_servingSizeUnit")

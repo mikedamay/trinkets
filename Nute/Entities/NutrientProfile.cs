@@ -11,22 +11,19 @@ namespace Nute.Entities
         }
 
         public NutrientProfile(Nutrient nutrient, Quantity servingSize
-          , Quantity dailyRecommendedAount, long id = 0)
+          , Quantity dailyRecommendedMax, long id = 0)
         {
             Id = id;
             Nutrient = nutrient;
-//            NutrientId = nutrient.Id;
+            NutrientId = nutrient.Id;
             ServingSize = servingSize;
-            DailyRecommendedAmount = dailyRecommendedAount;
+            DailyRecommendedMax = dailyRecommendedMax;
         }
         public long Id { get; private set; }
-//        [NotMapped]
         [Required]
         public Nutrient Nutrient { get; private set; }
-/*
         [Required]
         public long NutrientId { get; private set; }
-*/
 
         [NotMapped]
         public Quantity ServingSize
@@ -45,19 +42,36 @@ namespace Nute.Entities
         private Unit _servingSizeUnit;
 
         [NotMapped]
-        public Quantity DailyRecommendedAmount
+        public Quantity DailyRecommendedMax
         {
-            get => new Quantity(count: _dailyRecommendedAmountCount, unit:  _dailyRecommendedAmountUnit);
+            get => new Quantity(count: _dailyRecommendedMaxCount, unit:  _dailyRecommendedMaxUnit);
             set
             {
-                _dailyRecommendedAmountCount = value.Count;
-                _dailyRecommendedAmountUnit = value.Unit;
+                _dailyRecommendedMaxCount = value.Count;
+                _dailyRecommendedMaxUnit = value.Unit;
             }
         }
-        private decimal _dailyRecommendedAmountCount;
+        private decimal _dailyRecommendedMaxCount;
 #pragma warning disable 169
-        private long _dailyRecommendedAmountUnitId;
+        private long _dailyRecommendedMaxUnitId;
 #pragma warning restore 169
-        private Unit _dailyRecommendedAmountUnit;
+        private Unit _dailyRecommendedMaxUnit;
+/*
+        [NotMapped]
+        public Quantity DailyRecommendedMin
+        {
+            get => new Quantity(count: _dailyRecommendedMinCount, unit:  _dailyRecommendedMinUnit);
+            set
+            {
+                _dailyRecommendedMinCount = value.Count;
+                _dailyRecommendedMinUnit = value.Unit;
+            }
+        }
+        private decimal _dailyRecommendedMinCount;
+#pragma warning disable 169
+        private long _dailyRecommendedMinUnitId;
+#pragma warning restore 169
+        private Unit _dailyRecommendedMinUnit;
+*/
     }
 }

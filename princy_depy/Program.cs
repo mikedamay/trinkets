@@ -17,7 +17,6 @@ namespace PrincyDepy
 	public class Depy
 	{
 		public long Id { get; set; }
-		public Princy Princy { get; set; }
 	}
 	public class TheDbContext : DbContext
 	{
@@ -28,7 +27,7 @@ namespace PrincyDepy
 		protected override void OnModelCreating(ModelBuilder mb)
 		{
 			mb.Entity<Depy>()
-				.HasOne(d => d.Princy)
+				.HasOne<Princy>()
 				.WithMany(p => p.Depies);
 		}
 		public DbSet<Princy> PrincySet { get; set; }

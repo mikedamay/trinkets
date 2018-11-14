@@ -25,6 +25,13 @@ namespace Nute
 
         protected override void OnModelCreating(ModelBuilder mb)
         {
+            CreateNutrient(mb);
+            CreateUnit(mb);
+            CreateNutrientProfile(mb);
+        }
+
+        private void CreateNutrient(ModelBuilder mb)
+        {
             mb.Entity<Nutrient>()
                 .HasAlternateKey(n => n.Name)
                 .HasName("AK_Nutrient_Name");
@@ -38,6 +45,10 @@ namespace Nute
                 , new Nutrient (id : 7, name : "Protein")
                 , new Nutrient (id : 8, name : "Salt")
             );
+        }
+
+        private void CreateUnit(ModelBuilder mb)
+        {
             mb.Entity<Unit>()
                 .HasAlternateKey(u => u.Name)
                 .HasName("AK_Unit_Name");
@@ -50,14 +61,16 @@ namespace Nute
                 , new Unit(id : 2, name:"Each", abbrev : "ea")
                 , new Unit(id : 3, name:"Large", abbrev : "lge")
             );
-/*
+        }
+
+        private void CreateNutrientProfile(ModelBuilder mb)
+        {
             mb.Entity<NutrientProfile>()
-                .HasOne<Nutrient>()
+                .HasOne(n => n.Nutrient)
                 .WithMany()
                 .HasForeignKey("NutrientId")
-//                .OnDelete(DeleteBehavior.Cascade)
-                /*.IsRequired()#1#;
-*/
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
             mb.Entity<NutrientProfile>()
                 .Property("_servingSizeCount");
             mb.Entity<NutrientProfile>()
@@ -68,29 +81,29 @@ namespace Nute
                 .HasForeignKey("_servingSizeUnitId")
                 .OnDelete(DeleteBehavior.Restrict);
             mb.Entity<NutrientProfile>()
-                .Property("_dailyRecommendedAmountCount");
+                .Property("_dailyRecommendedMaxCount");
             mb.Entity<NutrientProfile>()
-                .Property("_dailyRecommendedAmountUnitId");
+                .Property("_dailyRecommendedMaxUnitId");
             mb.Entity<NutrientProfile>()
-                .HasOne<Unit>("_dailyRecommendedAmountUnit")
+                .HasOne<Unit>("_dailyRecommendedMaxUnit")
                 .WithMany()
-                .HasForeignKey("_dailyRecommendedAmountUnitId")
+                .HasForeignKey("_dailyRecommendedMaxUnitId")
                 .OnDelete(DeleteBehavior.Restrict);
-/*
-            mb.Entity<Luper>()
-                .HasOne<Lud>()
-                .WithMany()
-                .IsRequired()
-                .HasForeignKey("LudId")
-//                .OnDelete(DeleteBehavior.Cascade)
-                ;
-*/
 
+/*
+            mb.Entity<NutrientProfile>()
+                .Property("_dailyRecommendedMinCount");
+            mb.Entity<NutrientProfile>()
+                .Property("_dailyRecommendedMinUnitId");
+            mb.Entity<NutrientProfile>()
+                .HasOne<Unit>("_dailyRecommendedMinUnit")
+                .WithMany()
+                .HasForeignKey("_dailyRecommendedMinUnitId")
+                .OnDelete(DeleteBehavior.Restrict);
+*/
         }
         public DbSet<Nutrient> Nutrient { get; set; }
         public DbSet<NutrientProfile> NutrientProfile { get; set; }
         public DbSet<Unit> Unit { get; set; }
-        public DbSet<Lud> Lud { get; set; }
-        public DbSet<Luper> Luper { get; set; }
     }
 }

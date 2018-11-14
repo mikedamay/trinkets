@@ -40,11 +40,11 @@ namespace Nute
             var np = new NutrientProfile(
                 nutrient: fat
                 , servingSize: new Quantity(100, grams)
-                , dailyRecommendedAount: new Quantity(1000, grams)
+                , dailyRecommendedMax: new Quantity(1000, grams)
                 );
             dbContext.NutrientProfile.Add(np);
             dbContext.SaveChanges();
-            dbContext.Database.CommitTransaction();
+//            dbContext.Database.CommitTransaction();
         }
     }
 }
