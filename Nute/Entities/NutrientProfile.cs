@@ -15,15 +15,18 @@ namespace Nute.Entities
         {
             Id = id;
             Nutrient = nutrient;
-            NutrientId = nutrient.Id;
+//            NutrientId = nutrient.Id;
             ServingSize = servingSize;
             DailyRecommendedAmount = dailyRecommendedAount;
         }
         public long Id { get; private set; }
-        [NotMapped]
+//        [NotMapped]
+        [Required]
         public Nutrient Nutrient { get; private set; }
+/*
         [Required]
         public long NutrientId { get; private set; }
+*/
 
         [NotMapped]
         public Quantity ServingSize

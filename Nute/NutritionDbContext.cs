@@ -50,12 +50,14 @@ namespace Nute
                 , new Unit(id : 2, name:"Each", abbrev : "ea")
                 , new Unit(id : 3, name:"Large", abbrev : "lge")
             );
+/*
             mb.Entity<NutrientProfile>()
                 .HasOne<Nutrient>()
                 .WithMany()
                 .HasForeignKey("NutrientId")
-                .OnDelete(DeleteBehavior.Restrict)
-                /*.IsRequired()*/;
+//                .OnDelete(DeleteBehavior.Cascade)
+                /*.IsRequired()#1#;
+*/
             mb.Entity<NutrientProfile>()
                 .Property("_servingSizeCount");
             mb.Entity<NutrientProfile>()
@@ -74,10 +76,21 @@ namespace Nute
                 .WithMany()
                 .HasForeignKey("_dailyRecommendedAmountUnitId")
                 .OnDelete(DeleteBehavior.Restrict);
+/*
+            mb.Entity<Luper>()
+                .HasOne<Lud>()
+                .WithMany()
+                .IsRequired()
+                .HasForeignKey("LudId")
+//                .OnDelete(DeleteBehavior.Cascade)
+                ;
+*/
 
         }
         public DbSet<Nutrient> Nutrient { get; set; }
         public DbSet<NutrientProfile> NutrientProfile { get; set; }
         public DbSet<Unit> Unit { get; set; }
+        public DbSet<Lud> Lud { get; set; }
+        public DbSet<Luper> Luper { get; set; }
     }
 }
