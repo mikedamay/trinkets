@@ -28,7 +28,7 @@ namespace PrincyDepy
 		protected override void OnModelCreating(ModelBuilder mb)
 		{
 			mb.Entity<Depy>()
-				.HasOne<Princy>()
+				.HasOne(d => d.Princy)
 				.WithMany(p => p.Depies);
 		}
 		public DbSet<Princy> PrincySet { get; set; }
