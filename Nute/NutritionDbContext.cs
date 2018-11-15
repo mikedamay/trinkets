@@ -1,5 +1,7 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 using Nute.Entities;
+using Version = Nute.Entities.Version;
 
 namespace Nute
 {
@@ -8,15 +10,9 @@ namespace Nute
         // needed for design time
         public NutritionDbContext()
         {
-            this.ChangeTracker.AutoDetectChangesEnabled = false;            
+            this.ChangeTracker.AutoDetectChangesEnabled = false;
         }
         
-        // needed to build
-/*
-        public NutritionDbContext(DbContextOptions<NutritionDbContext> opts) : base(opts)
-        {
-        }
-*/
         protected override void OnConfiguring(DbContextOptionsBuilder ob)
         {
             ob.UseSqlServer(
@@ -28,6 +24,8 @@ namespace Nute
             CreateNutrient(mb);
             CreateUnit(mb);
             CreateNutrientProfile(mb);
+            CreateVersion(mb);
+            CreateUser(mb);
         }
 
         private void CreateNutrient(ModelBuilder mb)
@@ -89,21 +87,31 @@ namespace Nute
                 .WithMany()
                 .HasForeignKey("_dailyRecommendedMaxUnitId")
                 .OnDelete(DeleteBehavior.Restrict);
-
-/*
             mb.Entity<NutrientProfile>()
-                .Property("_dailyRecommendedMinCount");
-            mb.Entity<NutrientProfile>()
-                .Property("_dailyRecommendedMinUnitId");
-            mb.Entity<NutrientProfile>()
-                .HasOne<Unit>("_dailyRecommendedMinUnit")
-                .WithMany()
-                .HasForeignKey("_dailyRecommendedMinUnitId")
-                .OnDelete(DeleteBehavior.Restrict);
-*/
+                .HasOne(np => np.Version)
+                .WithOne(v => v.NutrientProfile)
+//                .HasForeignKey("VersionId")
+                ;
         }
+        private void CreateVersion(ModelBuilder mb)
+        {
+            mb.Entity<Version>()
+                .HasData(
+                    new Version(DateTime.Today, null, 1L)
+                );
+        }
+
+        private void CreateUser(ModelBuilder mb)
+        {
+            mb.Entity<User>()
+                .HasData(new User(id: 1, token: "magic1")
+                );
+        }
+
         public DbSet<Nutrient> Nutrient { get; set; }
         public DbSet<NutrientProfile> NutrientProfile { get; set; }
         public DbSet<Unit> Unit { get; set; }
+        public DbSet<Version> Version { get; set; }
+        public DbSet<User> User { get; set; }
     }
 }

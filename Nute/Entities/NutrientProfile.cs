@@ -11,10 +11,11 @@ namespace Nute.Entities
         }
 
         public NutrientProfile(Nutrient nutrient, Quantity servingSize
-          , Quantity dailyRecommendedMax, long id = 0)
+            , Quantity dailyRecommendedMax, Version version, long id = 0)
         {
             Id = id;
             Nutrient = nutrient;
+            Version = version;
             NutrientId = nutrient.Id;
             ServingSize = servingSize;
             DailyRecommendedMax = dailyRecommendedMax;
@@ -24,6 +25,9 @@ namespace Nute.Entities
         public Nutrient Nutrient { get; private set; }
         [Required]
         public long NutrientId { get; private set; }
+        
+        public Version Version { get; private set; }
+        public long VersionId { get; private set; }
 
         [NotMapped]
         public Quantity ServingSize
@@ -56,22 +60,5 @@ namespace Nute.Entities
         private long _dailyRecommendedMaxUnitId;
 #pragma warning restore 169
         private Unit _dailyRecommendedMaxUnit;
-/*
-        [NotMapped]
-        public Quantity DailyRecommendedMin
-        {
-            get => new Quantity(count: _dailyRecommendedMinCount, unit:  _dailyRecommendedMinUnit);
-            set
-            {
-                _dailyRecommendedMinCount = value.Count;
-                _dailyRecommendedMinUnit = value.Unit;
-            }
-        }
-        private decimal _dailyRecommendedMinCount;
-#pragma warning disable 169
-        private long _dailyRecommendedMinUnitId;
-#pragma warning restore 169
-        private Unit _dailyRecommendedMinUnit;
-*/
     }
 }
