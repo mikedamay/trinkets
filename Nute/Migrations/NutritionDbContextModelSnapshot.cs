@@ -106,9 +106,9 @@ namespace Nute.Migrations
                     b.ToTable("Unit");
 
                     b.HasData(
-                        new { Id = 1L, Abbrev = "g", Name = "Gram" },
-                        new { Id = 2L, Abbrev = "ea", Name = "Each" },
-                        new { Id = 3L, Abbrev = "lge", Name = "Large" }
+                        new { Id = 1L, Abbrev = "g", Name = "gram" },
+                        new { Id = 2L, Abbrev = "ea", Name = "each" },
+                        new { Id = 3L, Abbrev = "lge", Name = "large" }
                     );
                 });
 
@@ -148,7 +148,7 @@ namespace Nute.Migrations
                     b.ToTable("Version");
 
                     b.HasData(
-                        new { Id = 1L, StartDate = new DateTime(2018, 11, 15, 0, 0, 0, 0, DateTimeKind.Local) }
+                        new { Id = 1L, StartDate = new DateTime(2018, 11, 16, 0, 0, 0, 0, DateTimeKind.Local) }
                     );
                 });
 

@@ -8,13 +8,11 @@ namespace Nute.Entities
         {
             
         }
-        public Unit(string name, string abbrev, long id = 0)
+        public Unit(string name, string abbrev)
         {
-            Id = id;
             Name = name;
             Abbrev = abbrev;
         }
-        public long Id { get; private set; }
         [Required]
         [MaxLength(50)]
         public string Name { get; private set; }

@@ -48,16 +48,24 @@ namespace Nute
         private void CreateUnit(ModelBuilder mb)
         {
             mb.Entity<Unit>()
-                .HasAlternateKey(u => u.Name)
+                .Property(typeof(Int64), "Id");
+            mb.Entity<Unit>()
+                .Property(typeof(string), "Name");
+            mb.Entity<Unit>()
+                .Property(typeof(string), "Abbrev");
+            mb.Entity<Unit>()
+                .HasKey("Id");
+            mb.Entity<Unit>()
+                .HasAlternateKey("Name")
                 .HasName("AK_Unit_Name");
             mb.Entity<Unit>()
-                .HasAlternateKey(u => u.Abbrev)
+                .HasAlternateKey("Abbrev")
                 .HasName("AK_Unit_Abbrev");
            
             mb.Entity<Unit>().HasData(
-                new Unit(id : 1, name:"Gram", abbrev : "g")
-                , new Unit(id : 2, name:"Each", abbrev : "ea")
-                , new Unit(id : 3, name:"Large", abbrev : "lge")
+                new {Id = 1L, Name = "gram", Abbrev = "g"}
+                ,new {Id = 2L, Name = "each", Abbrev = "ea"}
+                ,new {Id = 3L, Name = "large", Abbrev = "lge"}
             );
         }
 

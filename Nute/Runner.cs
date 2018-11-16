@@ -49,6 +49,7 @@ namespace Nute
                 );
             dbContext.NutrientProfile.Add(np);
             dbContext.SaveChanges();
+            var list = dbContext.NutrientProfile.ToList();
 //            dbContext.Database.CommitTransaction();
         }
     }
