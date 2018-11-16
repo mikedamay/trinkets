@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Nute.Entities;
 using Xunit;
+using Version = Nute.Entities.Version;
 
 namespace Nute
 {
@@ -36,17 +37,16 @@ namespace Nute
             }
 
             var fat = dbContext.Nutrient.FirstOrDefault(n => n.Name == "Fat");
-            var version = dbContext.Version.First();
             if (fat == null)
             {
                 throw new Exception("The database has been corrupted - there is no nutrient Fat available");
             }
+            var version = new Version(2, DateTime.Today);
             var np = new NutrientProfile(
-                nutrient: fat
-                , servingSize: new Quantity(100, grams)
-                , dailyRecommendedMax: new Quantity(1000, grams)
+                nutrient: fat, dailyRecommendedMax: new Quantity(1000, grams)
                 , version: version
                 );
+            dbContext.Version.Add(version);
             dbContext.NutrientProfile.Add(np);
             dbContext.SaveChanges();
             var list = dbContext.NutrientProfile.ToList();

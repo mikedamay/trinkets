@@ -78,15 +78,6 @@ namespace Nute
                 .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
             mb.Entity<NutrientProfile>()
-                .Property("_servingSizeCount");
-            mb.Entity<NutrientProfile>()
-                .Property("_servingSizeUnitId");
-            mb.Entity<NutrientProfile>()
-                .HasOne<Unit>("_servingSizeUnit")
-                .WithMany()
-                .HasForeignKey("_servingSizeUnitId")
-                .OnDelete(DeleteBehavior.Restrict);
-            mb.Entity<NutrientProfile>()
                 .Property("_dailyRecommendedMaxCount");
             mb.Entity<NutrientProfile>()
                 .Property("_dailyRecommendedMaxUnitId");
@@ -105,7 +96,7 @@ namespace Nute
         {
             mb.Entity<Version>()
                 .HasData(
-                    new Version(DateTime.Today, null, 1L)
+                    new Version(1, DateTime.Today, null, 1L)
                 );
         }
 

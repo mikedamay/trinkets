@@ -54,6 +54,9 @@ namespace Nute.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Name")
+                        .IsRequired();
+
                     b.Property<long>("NutrientId");
 
                     b.Property<long>("VersionId");
@@ -61,10 +64,6 @@ namespace Nute.Migrations
                     b.Property<decimal>("_dailyRecommendedMaxCount");
 
                     b.Property<long>("_dailyRecommendedMaxUnitId");
-
-                    b.Property<decimal>("_servingSizeCount");
-
-                    b.Property<long>("_servingSizeUnitId");
 
                     b.HasKey("Id");
 
@@ -74,8 +73,6 @@ namespace Nute.Migrations
                         .IsUnique();
 
                     b.HasIndex("_dailyRecommendedMaxUnitId");
-
-                    b.HasIndex("_servingSizeUnitId");
 
                     b.ToTable("NutrientProfile");
                 });
@@ -140,6 +137,8 @@ namespace Nute.Migrations
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("date");
 
+                    b.Property<int>("SequenceNumber");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("date");
 
@@ -148,7 +147,7 @@ namespace Nute.Migrations
                     b.ToTable("Version");
 
                     b.HasData(
-                        new { Id = 1L, StartDate = new DateTime(2018, 11, 16, 0, 0, 0, 0, DateTimeKind.Local) }
+                        new { Id = 1L, SequenceNumber = 1, StartDate = new DateTime(2018, 11, 16, 0, 0, 0, 0, DateTimeKind.Local) }
                     );
                 });
 
@@ -167,11 +166,6 @@ namespace Nute.Migrations
                     b.HasOne("Nute.Entities.Unit", "_dailyRecommendedMaxUnit")
                         .WithMany()
                         .HasForeignKey("_dailyRecommendedMaxUnitId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Nute.Entities.Unit", "_servingSizeUnit")
-                        .WithMany()
-                        .HasForeignKey("_servingSizeUnitId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618

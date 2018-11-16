@@ -6,11 +6,9 @@ namespace Nute.Entities
         {
             Count = count;
             Unit = unit;
-            UnitId = 0;
 
         }
         public decimal Count { get; private set;  }
-        public long UnitId { get; set; }
         public Unit Unit { get; private set; }
     }
 }
