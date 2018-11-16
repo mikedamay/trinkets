@@ -1,5 +1,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
+using Nute.Common;
 using Nute.Entities;
 using Version = Nute.Entities.Version;
 
@@ -74,7 +75,7 @@ namespace Nute
             mb.Entity<NutrientProfile>()
                 .HasOne(n => n.Nutrient)
                 .WithMany()
-                .HasForeignKey("NutrientId")
+                .HasForeignKey(Constants.NutrientId)
                 .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
             mb.Entity<NutrientProfile>()
@@ -87,9 +88,16 @@ namespace Nute
                 .HasForeignKey("_dailyRecommendedMaxUnitId")
                 .OnDelete(DeleteBehavior.Restrict);
             mb.Entity<NutrientProfile>()
+                .Property(Constants.NutrientId);
+            mb.Entity<NutrientProfile>()
+                .Property(Constants.VersionId);
+            mb.Entity<NutrientProfile>()
+                .HasAlternateKey(Constants.NutrientId, Constants.VersionId)
+                .HasName("AK_NutritionID_VersionId");
+            mb.Entity<NutrientProfile>()
                 .HasOne(np => np.Version)
                 .WithOne(v => v.NutrientProfile)
-//                .HasForeignKey("VersionId")
+//                .HasForeignKey(Constants.VersionId)
                 ;
         }
         private void CreateVersion(ModelBuilder mb)

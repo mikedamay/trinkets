@@ -17,19 +17,22 @@ namespace Nute.Entities
             Nutrient = nutrient;
             Name = name ?? nutrient.Name;
             Version = version;
-            NutrientId = nutrient.Id;
+            //NutrientId = nutrient.Id;
             DailyRecommendedMax = dailyRecommendedMax;
         }
         public long Id { get; private set; }
         [Required]
         // e.g. "Fibre" - typically the same as Nutrient.Name
         // but might vary from version to version
+        [MaxLength(50)]
         public string Name { get; private set; }
         [Required]
         // e.g. "Fibre"
         public Nutrient Nutrient { get; private set; }
+/*
         [Required]
         public long NutrientId { get; private set; }
+*/
         
         public Version Version { get; private set; }
         public long VersionId { get; private set; }

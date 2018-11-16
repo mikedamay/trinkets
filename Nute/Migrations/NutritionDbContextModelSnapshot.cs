@@ -55,7 +55,8 @@ namespace Nute.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<long>("NutrientId");
 
@@ -67,7 +68,8 @@ namespace Nute.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NutrientId");
+                    b.HasAlternateKey("NutrientId", "VersionId")
+                        .HasName("AK_NutritionID_VersionId");
 
                     b.HasIndex("VersionId")
                         .IsUnique();
