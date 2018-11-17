@@ -79,13 +79,15 @@ namespace Nute
                 .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
             mb.Entity<NutrientProfile>()
-                .Property("_dailyRecommendedMaxCount");
+                .Property("_dailyRecommendedMaxCount")
+                .HasColumnName("DailyRecommendedMaxCount");
             mb.Entity<NutrientProfile>()
-                .Property("_dailyRecommendedMaxUnitId");
+                .Property("_dailyRecommendedMaxUnitId")
+                .HasColumnName("DailyRecommendedMaxUnitId");
             mb.Entity<NutrientProfile>()
                 .HasOne<Unit>("_dailyRecommendedMaxUnit")
                 .WithMany()
-                .HasForeignKey("_dailyRecommendedMaxUnitId")
+                .HasForeignKey("DailyRecommendedMaxUnitId")
                 .OnDelete(DeleteBehavior.Restrict);
             mb.Entity<NutrientProfile>()
                 .Property(Constants.NutrientId);

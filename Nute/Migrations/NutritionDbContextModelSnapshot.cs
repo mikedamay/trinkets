@@ -56,6 +56,9 @@ namespace Nute.Migrations
 
                     b.Property<bool>("Active");
 
+                    b.Property<long>("DailyRecommendedMaxUnitId")
+                        .HasColumnName("NutrientProfile_DailyRecommendedMaxUnitId");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50);
@@ -64,19 +67,21 @@ namespace Nute.Migrations
 
                     b.Property<long>("VersionId");
 
-                    b.Property<decimal>("_dailyRecommendedMaxCount");
+                    b.Property<decimal>("_dailyRecommendedMaxCount")
+                        .HasColumnName("DailyRecommendedMaxCount");
 
-                    b.Property<long>("_dailyRecommendedMaxUnitId");
+                    b.Property<long>("_dailyRecommendedMaxUnitId")
+                        .HasColumnName("DailyRecommendedMaxUnitId");
 
                     b.HasKey("Id");
 
                     b.HasAlternateKey("NutrientId", "VersionId")
                         .HasName("AK_NutritionID_VersionId");
 
+                    b.HasIndex("DailyRecommendedMaxUnitId");
+
                     b.HasIndex("VersionId")
                         .IsUnique();
-
-                    b.HasIndex("_dailyRecommendedMaxUnitId");
 
                     b.ToTable("NutrientProfile");
                 });
@@ -159,6 +164,11 @@ namespace Nute.Migrations
 
             modelBuilder.Entity("Nute.Entities.NutrientProfile", b =>
                 {
+                    b.HasOne("Nute.Entities.Unit", "_dailyRecommendedMaxUnit")
+                        .WithMany()
+                        .HasForeignKey("DailyRecommendedMaxUnitId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Nute.Entities.Nutrient", "Nutrient")
                         .WithMany()
                         .HasForeignKey("NutrientId")
@@ -168,11 +178,6 @@ namespace Nute.Migrations
                         .WithOne("NutrientProfile")
                         .HasForeignKey("Nute.Entities.NutrientProfile", "VersionId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Nute.Entities.Unit", "_dailyRecommendedMaxUnit")
-                        .WithMany()
-                        .HasForeignKey("_dailyRecommendedMaxUnitId")
-                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

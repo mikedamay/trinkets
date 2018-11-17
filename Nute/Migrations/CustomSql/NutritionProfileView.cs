@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 /*
-    Constraints:
+    Constraints & Dependencies:
     a) Save <dbcontext>ModelSnapshot to support Database.Migrate()
     b) Git-ignore model based migrations so as not to confuse other devs.
     c) Database is disposable - completely reconstructable
+    d) Model migrations should not have dependencies on custom migrations.
 
     migrations workflow (to include custom sql).
     
