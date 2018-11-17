@@ -54,6 +54,8 @@ namespace Nute.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("Active");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50);
@@ -123,6 +125,8 @@ namespace Nute.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasAlternateKey("Token");
+
                     b.ToTable("User");
 
                     b.HasData(
@@ -149,7 +153,7 @@ namespace Nute.Migrations
                     b.ToTable("Version");
 
                     b.HasData(
-                        new { Id = 1L, SequenceNumber = 1, StartDate = new DateTime(2018, 11, 16, 0, 0, 0, 0, DateTimeKind.Local) }
+                        new { Id = 1L, SequenceNumber = 1, StartDate = new DateTime(2018, 11, 17, 0, 0, 0, 0, DateTimeKind.Local) }
                     );
                 });
 

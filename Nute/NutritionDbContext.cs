@@ -97,8 +97,9 @@ namespace Nute
             mb.Entity<NutrientProfile>()
                 .HasOne(np => np.Version)
                 .WithOne(v => v.NutrientProfile)
-//                .HasForeignKey(Constants.VersionId)
                 ;
+            mb.Entity<NutrientProfile>()
+                .Property(typeof(bool), Constants.Active);
         }
         private void CreateVersion(ModelBuilder mb)
         {
@@ -111,8 +112,10 @@ namespace Nute
         private void CreateUser(ModelBuilder mb)
         {
             mb.Entity<User>()
-                .HasData(new User(id: 1, token: "magic1")
-                );
+                .HasAlternateKey(Constants.Token);
+            mb.Entity<User>()
+                .HasData(new User(id: 1, token: "magic1"))
+                ;
         }
 
         public DbSet<Nutrient> Nutrient { get; set; }

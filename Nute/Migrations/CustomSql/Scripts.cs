@@ -1,8 +1,8 @@
-namespace Nute.Migrations
+namespace Nute.Migrations.CustomSql
 {
-public partial class NutritionProfileView
+public static partial class NutritionProfileView
 {
-private string upScript = @"
+private static string upScript = @"
 create view NutrientProfile_v
   as
     select NutrientProfile.Id
