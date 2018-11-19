@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Nute.Entities;
+using Nute.Repos;
 using Xunit;
 using Version = Nute.Entities.Version;
 
@@ -41,16 +42,18 @@ namespace Nute
             {
                 throw new Exception("The database has been corrupted - there is no nutrient Fat available");
             }
-            var version = new Version(2, DateTime.Today);
+            var bodyType = dbContext.BodyType.FirstOrDefault(n => n.Name == "Male");
+            if (bodyType == null)
+            {
+                throw new Exception("The database has been corrupted - there is no body type Male available");
+            }
             var np = new NutrientProfile(
-                nutrient: fat, dailyRecommendedMax: new Quantity(1000, grams)
-                , version: version
+                nutrient: fat, bodyType: bodyType, dailyRecommendedMax: new Quantity(1000, grams)
                 );
-            dbContext.Version.Add(version);
-            dbContext.NutrientProfile.Add(np);
-            dbContext.SaveChanges();
+            var ndh = new NutrientDataHandler(dbContext);
+            ndh.SaveNutrientProfile(np);
             var list = dbContext.NutrientProfile.ToList();
-//            dbContext.Database.CommitTransaction();
+            dbContext.Database.CommitTransaction();
         }
     }
 }

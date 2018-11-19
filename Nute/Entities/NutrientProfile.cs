@@ -11,23 +11,21 @@ namespace Nute.Entities
         }
 
         public NutrientProfile(Nutrient nutrient
-            , Quantity dailyRecommendedMax, Version version, string name = null, long id = 0)
+            , BodyType bodyType
+            , Quantity dailyRecommendedMax, Version version = null, long id = 0)
         {
             Id = id;
             Nutrient = nutrient;
-            Name = name ?? nutrient.Name;
+            BodyType = bodyType;
             Version = version;
             DailyRecommendedMax = dailyRecommendedMax;
         }
         public long Id { get; private set; }
         [Required]
-        // e.g. "Fibre" - typically the same as Nutrient.Name
-        // but might vary from version to version
-        [MaxLength(50)]
-        public string Name { get; private set; }
-        [Required]
         // e.g. "Fibre"
         public Nutrient Nutrient { get; private set; }
+        [Required]
+        public BodyType BodyType { get; private set; }
         
         public Version Version { get; private set; }
         public long VersionId { get; private set; }

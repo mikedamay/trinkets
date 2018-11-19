@@ -4,6 +4,10 @@ using Nute.Common;
 using Nute.Entities;
 using Version = Nute.Entities.Version;
 
+
+// https://www.nutritionix.com/business/api
+// https://www.gov.uk/government/publications/composition-of-foods-integrated-dataset-cofid
+
 namespace Nute
 {
     public class NutritionDbContext : DbContext
@@ -22,11 +26,21 @@ namespace Nute
 
         protected override void OnModelCreating(ModelBuilder mb)
         {
+            CreateBodyType(mb);
             CreateNutrient(mb);
             CreateUnit(mb);
             CreateNutrientProfile(mb);
             CreateVersion(mb);
             CreateUser(mb);
+        }
+
+        private void CreateBodyType(ModelBuilder mb)
+        {
+            mb.Entity<BodyType>()
+                .HasData(
+                    new BodyType("Male", "Male Std.", 1L)
+                    ,new BodyType("Female", "Female Std.", 2L)
+                );
         }
 
         private void CreateNutrient(ModelBuilder mb)
@@ -67,6 +81,7 @@ namespace Nute
                 new {Id = 1L, Name = "gram", Abbrev = "g"}
                 ,new {Id = 2L, Name = "each", Abbrev = "ea"}
                 ,new {Id = 3L, Name = "large", Abbrev = "lge"}
+                ,new {Id = 4L, Name = "calorie", Abbrev = "kcal"}
             );
         }
 
@@ -92,9 +107,11 @@ namespace Nute
             mb.Entity<NutrientProfile>()
                 .Property(Constants.NutrientId);
             mb.Entity<NutrientProfile>()
+                .Property(Constants.BodyTypeId);
+            mb.Entity<NutrientProfile>()
                 .Property(Constants.VersionId);
             mb.Entity<NutrientProfile>()
-                .HasAlternateKey(Constants.NutrientId, Constants.VersionId)
+                .HasAlternateKey(Constants.NutrientId, Constants.BodyTypeId, Constants.VersionId)
                 .HasName("AK_NutritionID_VersionId");
             mb.Entity<NutrientProfile>()
                 .HasOne(np => np.Version)
@@ -125,5 +142,6 @@ namespace Nute
         public DbSet<Unit> Unit { get; set; }
         public DbSet<Version> Version { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<BodyType> BodyType { get; set; }
     }
 }

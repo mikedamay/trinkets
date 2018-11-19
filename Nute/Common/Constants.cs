@@ -10,5 +10,6 @@ namespace Nute.Common
         public const string VersionId = "VersionId";
         public const string Token = "Token";
         public const string Active = "Active";
+        public const string BodyTypeId = "BodyTypeId";
     }
 }

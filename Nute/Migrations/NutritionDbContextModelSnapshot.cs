@@ -19,6 +19,30 @@ namespace Nute.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Nute.Entities.BodyType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BodyType");
+
+                    b.HasData(
+                        new { Id = 1L, Description = "Male Std.", Name = "Male" },
+                        new { Id = 2L, Description = "Female Std.", Name = "Female" }
+                    );
+                });
+
             modelBuilder.Entity("Nute.Entities.Nutrient", b =>
                 {
                     b.Property<long>("Id")
@@ -56,12 +80,10 @@ namespace Nute.Migrations
 
                     b.Property<bool>("Active");
 
+                    b.Property<long>("BodyTypeId");
+
                     b.Property<long>("DailyRecommendedMaxUnitId")
                         .HasColumnName("NutrientProfile_DailyRecommendedMaxUnitId");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50);
 
                     b.Property<long>("NutrientId");
 
@@ -77,6 +99,8 @@ namespace Nute.Migrations
 
                     b.HasAlternateKey("NutrientId", "VersionId")
                         .HasName("AK_NutritionID_VersionId");
+
+                    b.HasIndex("BodyTypeId");
 
                     b.HasIndex("DailyRecommendedMaxUnitId");
 
@@ -114,7 +138,8 @@ namespace Nute.Migrations
                     b.HasData(
                         new { Id = 1L, Abbrev = "g", Name = "gram" },
                         new { Id = 2L, Abbrev = "ea", Name = "each" },
-                        new { Id = 3L, Abbrev = "lge", Name = "large" }
+                        new { Id = 3L, Abbrev = "lge", Name = "large" },
+                        new { Id = 4L, Abbrev = "kcal", Name = "calorie" }
                     );
                 });
 
@@ -158,12 +183,17 @@ namespace Nute.Migrations
                     b.ToTable("Version");
 
                     b.HasData(
-                        new { Id = 1L, SequenceNumber = 1, StartDate = new DateTime(2018, 11, 17, 0, 0, 0, 0, DateTimeKind.Local) }
+                        new { Id = 1L, SequenceNumber = 1, StartDate = new DateTime(2018, 11, 18, 0, 0, 0, 0, DateTimeKind.Local) }
                     );
                 });
 
             modelBuilder.Entity("Nute.Entities.NutrientProfile", b =>
                 {
+                    b.HasOne("Nute.Entities.BodyType", "BodyType")
+                        .WithMany()
+                        .HasForeignKey("BodyTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Nute.Entities.Unit", "_dailyRecommendedMaxUnit")
                         .WithMany()
                         .HasForeignKey("DailyRecommendedMaxUnitId")
