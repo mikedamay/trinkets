@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Data;
+// https://www.nrv.gov.au/resources/nrv-summary-tables
 
 namespace Nute.Entities
 {

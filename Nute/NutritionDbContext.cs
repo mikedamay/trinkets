@@ -143,5 +143,7 @@ namespace Nute
         public DbSet<Version> Version { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<BodyType> BodyType { get; set; }
+        public DbSet<Constituent> Constituent { get; set; }
+        public DbSet<Ingredient> Ingredient { get; set; }
     }
 }
