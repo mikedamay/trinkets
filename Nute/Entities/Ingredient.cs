@@ -6,6 +6,10 @@ namespace Nute.Entities
 {
     public class Ingredient
     {
+        public Ingredient()
+        {
+            
+        }
         public Ingredient(string name, IEnumerable<Constituent> constituents = null
             , long id = 0)
         {

@@ -4,6 +4,10 @@ namespace Nute.Entities
 {
     public class Constituent
     {
+        public Constituent()
+        {
+            
+        }
         public Constituent(Nutrient nutrient, Quantity quantity
           ,Quantity servingSize, long id = 0)
         {
