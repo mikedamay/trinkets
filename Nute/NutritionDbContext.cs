@@ -32,6 +32,58 @@ namespace Nute
             CreateNutrientProfile(mb);
             CreateVersion(mb);
             CreateUser(mb);
+            CreateConstituent(mb);
+            CreateIngredient(mb);
+        }
+
+        private void CreateIngredient(ModelBuilder mb)
+        {
+            mb.Entity<Ingredient>()
+                .Property("_servingSizeCount")
+                .HasColumnName("servingSizeCount");
+            mb.Entity<Ingredient>()
+                .HasOne<Unit>("_servingSizeUnit")
+                .WithMany()
+/*
+                .HasForeignKey("ServingSizeUnitId")
+                .OnDelete(DeleteBehavior.Restrict)
+*/
+                  ;
+            mb.Entity<Ingredient>()
+                .Property("_servingSizeUnitId")
+                .HasColumnName("ServingSizeUnitId");
+            mb.Entity<Ingredient>()
+                .HasMany(ii => ii.Constituents)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
+        }
+
+        private void CreateConstituent(ModelBuilder mb)
+        {
+            mb.Entity<Constituent>()
+                .Property("_quantityCount")
+                .HasColumnName("QuantityCount");
+            mb.Entity<Constituent>()
+                .Property("_quantityUnitId")
+                .HasColumnName("QuantityUnitId");
+            mb.Entity<Constituent>()
+                .HasOne<Unit>("_quantityUnit")
+                .WithMany()
+                // specifying an FK here will create a shadow
+                // property and make that the FK rather than
+                // using QuantityUnitId
+                // ditto for ServingSize and Ingredient.ServingSize
+                .OnDelete(DeleteBehavior.ClientSetNull);
+            mb.Entity<Constituent>()
+                .Property("_servingSizeCount")
+                .HasColumnName("servingSizeCount");
+            mb.Entity<Constituent>()
+                .Property("_servingSizeUnitId")
+                .HasColumnName("ServingSizeUnitId");
+            mb.Entity<Constituent>()
+                .HasOne<Unit>("_servingSizeUnit")
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientSetNull);
         }
 
         private void CreateBodyType(ModelBuilder mb)

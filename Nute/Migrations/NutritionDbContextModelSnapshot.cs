@@ -15,7 +15,7 @@ namespace Nute.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-t000")
+                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -41,6 +41,62 @@ namespace Nute.Migrations
                         new { Id = 1L, Description = "Male Std.", Name = "Male" },
                         new { Id = 2L, Description = "Female Std.", Name = "Female" }
                     );
+                });
+
+            modelBuilder.Entity("Nute.Entities.Constituent", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long?>("IngredientId");
+
+                    b.Property<long?>("NutrientId");
+
+                    b.Property<decimal>("_quantityCount")
+                        .HasColumnName("QuantityCount");
+
+                    b.Property<long>("_quantityUnitId")
+                        .HasColumnName("QuantityUnitId");
+
+                    b.Property<decimal>("_servingSizeCount")
+                        .HasColumnName("servingSizeCount");
+
+                    b.Property<long>("_servingSizeUnitId")
+                        .HasColumnName("ServingSizeUnitId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IngredientId");
+
+                    b.HasIndex("NutrientId");
+
+                    b.HasIndex("_quantityUnitId");
+
+                    b.HasIndex("_servingSizeUnitId");
+
+                    b.ToTable("Constituent");
+                });
+
+            modelBuilder.Entity("Nute.Entities.Ingredient", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.Property<decimal>("_servingSizeCount")
+                        .HasColumnName("servingSizeCount");
+
+                    b.Property<long>("_servingSizeUnitId")
+                        .HasColumnName("ServingSizeUnitId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("_servingSizeUnitId");
+
+                    b.ToTable("Ingredient");
                 });
 
             modelBuilder.Entity("Nute.Entities.Nutrient", b =>
@@ -97,7 +153,7 @@ namespace Nute.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("NutrientId", "VersionId")
+                    b.HasAlternateKey("NutrientId", "BodyTypeId", "VersionId")
                         .HasName("AK_NutritionID_VersionId");
 
                     b.HasIndex("BodyTypeId");
@@ -183,8 +239,36 @@ namespace Nute.Migrations
                     b.ToTable("Version");
 
                     b.HasData(
-                        new { Id = 1L, SequenceNumber = 1, StartDate = new DateTime(2018, 11, 18, 0, 0, 0, 0, DateTimeKind.Local) }
+                        new { Id = 1L, SequenceNumber = 1, StartDate = new DateTime(2018, 12, 2, 0, 0, 0, 0, DateTimeKind.Local) }
                     );
+                });
+
+            modelBuilder.Entity("Nute.Entities.Constituent", b =>
+                {
+                    b.HasOne("Nute.Entities.Ingredient")
+                        .WithMany("Constituents")
+                        .HasForeignKey("IngredientId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Nute.Entities.Nutrient", "Nutrient")
+                        .WithMany()
+                        .HasForeignKey("NutrientId");
+
+                    b.HasOne("Nute.Entities.Unit", "_quantityUnit")
+                        .WithMany()
+                        .HasForeignKey("_quantityUnitId");
+
+                    b.HasOne("Nute.Entities.Unit", "_servingSizeUnit")
+                        .WithMany()
+                        .HasForeignKey("_servingSizeUnitId");
+                });
+
+            modelBuilder.Entity("Nute.Entities.Ingredient", b =>
+                {
+                    b.HasOne("Nute.Entities.Unit", "_servingSizeUnit")
+                        .WithMany()
+                        .HasForeignKey("_servingSizeUnitId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Nute.Entities.NutrientProfile", b =>

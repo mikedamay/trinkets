@@ -37,7 +37,7 @@ namespace Nute.Entities
         private Unit _quantityUnit;
         #endregion
 
-        #region ServingSize`
+        #region ServingSize
         [NotMapped]
         public Quantity ServingSize
         {
