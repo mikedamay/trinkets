@@ -1,26 +1,27 @@
 namespace Nute.Migrations.CustomSql
 {
-    public static partial class NutritionProfileView
+    public static partial class SundryViews
     {
         private static string upScript = @"
-create view NutrientProfile_v
+create view Nutrient_v
   as
-    select NutrientProfile.Id
+    select Nutrient.Id
         , Nutrient.Name as Nutrient
-        , BodyType.Name as [Body Type]
-        , concat(DailyRecommendedMaxCount
-            , Unit.Abbrev) as [Daily Recommended Amount]
-        , Version.SequenceNumber as [Version]
-        , Active
-    from NutrientProfile
-           inner join Unit
-             on Unit.Id = DailyRecommendedMaxUnitId
-           inner join Version
-             on Version.Id = VersionId
-           inner join Nutrient
-             on Nutrient.Id = NutrientId
-           inner join BodyType
-             on BodyType.Id = BodyTypeId
+    from Nutrient
+go
+create view BodyType_v
+  as
+    select BodyType.Id
+        , BodyType.Name
+    from BodyType
+go
             ";
+
+        private static string downScript = @"
+drop view Nutrient_v
+go
+drop view BodyType_v
+go
+";
     }
 }
