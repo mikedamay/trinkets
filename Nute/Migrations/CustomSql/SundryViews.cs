@@ -24,7 +24,7 @@
     Incremental (how to handle model changes on dev's machine as code evolves):
     1. Add a static class containing the Up() and Down() in CustomSql. 
     2. execute "dotnet ef migrations add --context NutritionDbContext <something>" - to generate migrations from model
-    5. execute "dotnet ef database update --context NutritionDbContext"
+    3. execute "dotnet ef database update --context NutritionDbContext"
     i.e you can simply operate on the nutrition db context using defaults  Commands
     like "migrations remove" and "database update 0" should work well.
     
