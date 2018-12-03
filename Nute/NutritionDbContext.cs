@@ -29,7 +29,6 @@ namespace Nute
             CreateBodyType(mb);
             CreateNutrient(mb);
             CreateUnit(mb);
-            CreateNutrientProfile(mb);
             CreateVersion(mb);
             CreateUser(mb);
             CreateConstituent(mb);
@@ -137,41 +136,6 @@ namespace Nute
             );
         }
 
-        private void CreateNutrientProfile(ModelBuilder mb)
-        {
-            mb.Entity<NutrientProfile>()
-                .HasOne(n => n.Nutrient)
-                .WithMany()
-                .HasForeignKey(Constants.NutrientId)
-                .OnDelete(DeleteBehavior.Restrict)
-                .IsRequired();
-            mb.Entity<NutrientProfile>()
-                .Property("_dailyRecommendedMaxCount")
-                .HasColumnName("DailyRecommendedMaxCount");
-            mb.Entity<NutrientProfile>()
-                .Property("_dailyRecommendedMaxUnitId")
-                .HasColumnName("DailyRecommendedMaxUnitId");
-            mb.Entity<NutrientProfile>()
-                .HasOne<Unit>("_dailyRecommendedMaxUnit")
-                .WithMany()
-                .HasForeignKey("DailyRecommendedMaxUnitId")
-                .OnDelete(DeleteBehavior.Restrict);
-            mb.Entity<NutrientProfile>()
-                .Property(Constants.NutrientId);
-            mb.Entity<NutrientProfile>()
-                .Property(Constants.BodyTypeId);
-            mb.Entity<NutrientProfile>()
-                .Property(Constants.VersionId);
-            mb.Entity<NutrientProfile>()
-                .HasAlternateKey(Constants.NutrientId, Constants.BodyTypeId, Constants.VersionId)
-                .HasName("AK_NutritionID_VersionId");
-            mb.Entity<NutrientProfile>()
-                .HasOne(np => np.Version)
-                .WithOne(v => v.NutrientProfile)
-                ;
-            mb.Entity<NutrientProfile>()
-                .Property(typeof(bool), Constants.Active);
-        }
         private void CreateVersion(ModelBuilder mb)
         {
             mb.Entity<Version>()
@@ -190,7 +154,6 @@ namespace Nute
         }
 
         public DbSet<Nutrient> Nutrient { get; set; }
-        public DbSet<NutrientProfile> NutrientProfile { get; set; }
         public DbSet<Unit> Unit { get; set; }
         public DbSet<Version> Version { get; set; }
         public DbSet<User> User { get; set; }

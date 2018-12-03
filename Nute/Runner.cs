@@ -28,6 +28,7 @@ namespace Nute
             Assert.NotNull(dbContext.Nutrient.ToList().FirstOrDefault(n => n.Name == "Test Nutrient"));
         }
 
+/*
         [Fact]
         public void Write_NutrientProfile()
         {
@@ -55,5 +56,6 @@ namespace Nute
             var list = dbContext.NutrientProfile.ToList();
             dbContext.Database.CommitTransaction();
         }
+*/
     }
 }

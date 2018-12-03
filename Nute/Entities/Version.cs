@@ -11,7 +11,7 @@ namespace Nute.Entities
         public DateTime StartDate { get; private set; }
         [Column(TypeName = "date")]
         public DateTime? EndDate { get; private set; }
-        public NutrientProfile NutrientProfile { get; private set; }
+//        public NutrientProfile NutrientProfile { get; private set; }
         public int SequenceNumber { get; private set; }
 
         public Version()

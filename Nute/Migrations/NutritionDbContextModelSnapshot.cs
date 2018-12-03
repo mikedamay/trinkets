@@ -128,44 +128,6 @@ namespace Nute.Migrations
                     );
                 });
 
-            modelBuilder.Entity("Nute.Entities.NutrientProfile", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Active");
-
-                    b.Property<long>("BodyTypeId");
-
-                    b.Property<long>("DailyRecommendedMaxUnitId")
-                        .HasColumnName("NutrientProfile_DailyRecommendedMaxUnitId");
-
-                    b.Property<long>("NutrientId");
-
-                    b.Property<long>("VersionId");
-
-                    b.Property<decimal>("_dailyRecommendedMaxCount")
-                        .HasColumnName("DailyRecommendedMaxCount");
-
-                    b.Property<long>("_dailyRecommendedMaxUnitId")
-                        .HasColumnName("DailyRecommendedMaxUnitId");
-
-                    b.HasKey("Id");
-
-                    b.HasAlternateKey("NutrientId", "BodyTypeId", "VersionId")
-                        .HasName("AK_NutritionID_VersionId");
-
-                    b.HasIndex("BodyTypeId");
-
-                    b.HasIndex("DailyRecommendedMaxUnitId");
-
-                    b.HasIndex("VersionId")
-                        .IsUnique();
-
-                    b.ToTable("NutrientProfile");
-                });
-
             modelBuilder.Entity("Nute.Entities.Unit", b =>
                 {
                     b.Property<long>("Id")
@@ -239,7 +201,7 @@ namespace Nute.Migrations
                     b.ToTable("Version");
 
                     b.HasData(
-                        new { Id = 1L, SequenceNumber = 1, StartDate = new DateTime(2018, 12, 2, 0, 0, 0, 0, DateTimeKind.Local) }
+                        new { Id = 1L, SequenceNumber = 1, StartDate = new DateTime(2018, 12, 3, 0, 0, 0, 0, DateTimeKind.Local) }
                     );
                 });
 
@@ -268,29 +230,6 @@ namespace Nute.Migrations
                     b.HasOne("Nute.Entities.Unit", "_servingSizeUnit")
                         .WithMany()
                         .HasForeignKey("_servingSizeUnitId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Nute.Entities.NutrientProfile", b =>
-                {
-                    b.HasOne("Nute.Entities.BodyType", "BodyType")
-                        .WithMany()
-                        .HasForeignKey("BodyTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Nute.Entities.Unit", "_dailyRecommendedMaxUnit")
-                        .WithMany()
-                        .HasForeignKey("DailyRecommendedMaxUnitId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Nute.Entities.Nutrient", "Nutrient")
-                        .WithMany()
-                        .HasForeignKey("NutrientId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Nute.Entities.Version", "Version")
-                        .WithOne("NutrientProfile")
-                        .HasForeignKey("Nute.Entities.NutrientProfile", "VersionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

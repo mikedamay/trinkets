@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Nute.Entities
 {
+/*
     public class NutrientProfile
     {
         public NutrientProfile()
@@ -46,4 +47,5 @@ namespace Nute.Entities
 #pragma warning restore 169
         private Unit _dailyRecommendedMaxUnit;
     }
+*/
 }
