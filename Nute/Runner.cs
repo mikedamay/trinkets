@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Nute.Entities;
@@ -28,6 +29,34 @@ namespace Nute
             Assert.NotNull(dbContext.Nutrient.ToList().FirstOrDefault(n => n.Name == "Test Nutrient"));
         }
 
+        [Fact]
+        public void Write_Ingredient()
+        {
+            var ndh = new NutrientDataHandler(dbContext);
+            var nutrients = ndh.LoadNutrients();
+            var units = ndh.LoadUnits();
+            var branFlakes = new Ingredient(
+                name: "Bran Flakes"
+                , servingSize: new Quantity(125, units[Unit.GRAM])
+                ,constituents: new List<Constituent>
+                {
+                    new Constituent(
+                      nutrient: nutrients[TestConstants.Energy]
+                      ,quantity: new Quantity(354, units[Unit.KCAL])
+                      ,servingSize: new Quantity(100, units[Unit.GRAM]) )                                            
+                }
+            );
+            ndh.SaveIngredient(branFlakes);
+            dbContext.Database.CommitTransaction();
+        }
+
+        [Fact]
+        public void Delete_Ingredient()
+        {
+            var ndh = new NutrientDataHandler(dbContext);
+            var ingredient = ndh.GetIngredient(3);
+            
+        }
 /*
         [Fact]
         public void Write_NutrientProfile()
@@ -57,5 +86,10 @@ namespace Nute
             dbContext.Database.CommitTransaction();
         }
 */
+    }
+
+    public static class TestConstants
+    {
+        public const string Energy = "Energy";
     }
 }

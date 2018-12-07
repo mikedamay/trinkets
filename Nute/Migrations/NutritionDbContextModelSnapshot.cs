@@ -109,6 +109,9 @@ namespace Nute.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
+                    b.Property<bool>("Subsidiary")
+                        .HasAnnotation("comment", "subsidiary nutrients (e.g. saturated fats) would not be included in any calculation of an ingredients weight - if we actually did that");
+
                     b.HasKey("Id");
 
                     b.HasAlternateKey("Name")
@@ -117,14 +120,14 @@ namespace Nute.Migrations
                     b.ToTable("Nutrient");
 
                     b.HasData(
-                        new { Id = 1L, Name = "Energy" },
-                        new { Id = 2L, Name = "Fat" },
-                        new { Id = 3L, Name = "Saturated Fat" },
-                        new { Id = 4L, Name = "Carbohydrate" },
-                        new { Id = 5L, Name = "Sugars" },
-                        new { Id = 6L, Name = "Fibre" },
-                        new { Id = 7L, Name = "Protein" },
-                        new { Id = 8L, Name = "Salt" }
+                        new { Id = 1L, Name = "Energy", Subsidiary = false },
+                        new { Id = 2L, Name = "Fat", Subsidiary = false },
+                        new { Id = 3L, Name = "Saturated Fat", Subsidiary = false },
+                        new { Id = 4L, Name = "Carbohydrate", Subsidiary = false },
+                        new { Id = 5L, Name = "Sugars", Subsidiary = false },
+                        new { Id = 6L, Name = "Fibre", Subsidiary = false },
+                        new { Id = 7L, Name = "Protein", Subsidiary = false },
+                        new { Id = 8L, Name = "Salt", Subsidiary = false }
                     );
                 });
 
@@ -157,7 +160,9 @@ namespace Nute.Migrations
                         new { Id = 1L, Abbrev = "g", Name = "gram" },
                         new { Id = 2L, Abbrev = "ea", Name = "each" },
                         new { Id = 3L, Abbrev = "lge", Name = "large" },
-                        new { Id = 4L, Abbrev = "kcal", Name = "calorie" }
+                        new { Id = 4L, Abbrev = "kcal", Name = "calorie" },
+                        new { Id = 5L, Abbrev = "mg", Name = "milligram" },
+                        new { Id = 6L, Abbrev = "μg", Name = "micro-gram" }
                     );
                 });
 
@@ -201,7 +206,7 @@ namespace Nute.Migrations
                     b.ToTable("Version");
 
                     b.HasData(
-                        new { Id = 1L, SequenceNumber = 1, StartDate = new DateTime(2018, 12, 3, 0, 0, 0, 0, DateTimeKind.Local) }
+                        new { Id = 1L, SequenceNumber = 1, StartDate = new DateTime(2018, 12, 7, 0, 0, 0, 0, DateTimeKind.Local) }
                     );
                 });
 

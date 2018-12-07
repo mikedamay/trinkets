@@ -10,14 +10,17 @@ namespace Nute.Entities
         {
             
         }
-        public Nutrient( string name, int id = 0)
+        public Nutrient( string name, bool subsidiary = false, int id = 0)
         {
             Id = id;
             Name = name;
+            Subsidiary = subsidiary;
         }
         public long Id { get; private set; }
         [Required]
         [MaxLength(50)]
         public string Name { get; private set; }
+        [Required]
+        public bool Subsidiary { get; private set; }
     }
 }

@@ -28,7 +28,7 @@
     like "migrations remove" and "database update 0" should work well.
     
     Changes to custom scripts:
-    1. execute "dotnet ef database update --context CustomSqlContext 0"
+    1. execute "dotnet ef database update --context CustomSqlDbContext 0"
         check: views created by the script should no longer be present in the Nutrition database 
     2. Make changes to migrations/CustomSql/Scripts.cs. to add or remove views
     3. execute "dotnet ef database update --context CustomSqlContext"

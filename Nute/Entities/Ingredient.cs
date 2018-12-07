@@ -11,10 +11,19 @@ namespace Nute.Entities
             
         }
         public Ingredient(string name, IEnumerable<Constituent> constituents = null
+            , Quantity servingSize = default(Quantity)
             , long id = 0)
         {
             Name = name;
             if (constituents != null) Constituents = constituents;
+            if (servingSize == default(Quantity))
+            {
+                ServingSize = new Quantity(100, new Unit("gram", "gram"));
+            }
+            else
+            {
+                ServingSize = servingSize;
+            }
             Id = id;
         }
         public long Id { get; private set; }

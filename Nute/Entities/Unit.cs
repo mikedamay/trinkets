@@ -1,9 +1,16 @@
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace Nute.Entities
 {
     public class Unit
     {
+        public const string KCAL = "kcal";
+        public const string GRAM = "g";
+        public const string EACH = "each";
+        public const string LGE = "lge";
+        public const string MILLIGRAM = "mg";
+        public const string MICROGRAM = "\u03bcg";
         public Unit()
         {
             
