@@ -22,6 +22,18 @@ EXEC sp_addextendedproperty
     @level1type = N'Table', @level1name = 'Nutrient', 
     @level2type = N'Column', @level2name = 'Subsidiary'
 go
+
+create view Ingredient_v as
+  select ingredient.Name as                                                     Name,
+         Nutrient.Name   as                                                     Nutrient,
+         concat(format(Constituent.QuantityCount, '###0.##'), QtyUnit.Abbrev)   [Qty per Serving],
+         concat(format(Constituent.ServingSizeCount, '###0.##'), SsUnit.Abbrev) [Serving Size]
+  from Constituent
+         inner join Ingredient on Constituent.IngredientId = Ingredient.Id
+         inner join Nutrient on Constituent.NutrientId = Nutrient.Id
+         inner join Unit as QtyUnit on Constituent.QuantityUnitId = QtyUnit.Id
+         inner join Unit as SsUnit on Constituent.ServingSizeUnitId = SsUnit.Id
+go
             ";
 
         private static string downScript = @"
@@ -34,6 +46,9 @@ EXEC sp_dropextendedproperty
     @level0type = N'Schema', @level0name = 'dbo',
     @level1type = N'Table', @level1name = 'Nutrient', 
     @level2type = N'Column', @level2name = 'Subsidiary'
+go
+
+drop view Ingredient_v
 go
 ";
     }

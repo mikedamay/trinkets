@@ -65,5 +65,11 @@ namespace Nute.Repos
                 .Include("Constituents.Nutrient")
                 .FirstOrDefault(i => i.Id == id);
         }
+
+        public void DeleteIngredient(Ingredient ingredient)
+        {
+            dbContext.Ingredient.Remove(ingredient);
+            dbContext.SaveChanges();
+        }
     }
 }

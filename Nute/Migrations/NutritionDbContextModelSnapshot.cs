@@ -84,7 +84,8 @@ namespace Nute.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<decimal>("_servingSizeCount")
                         .HasColumnName("servingSizeCount");
@@ -93,6 +94,9 @@ namespace Nute.Migrations
                         .HasColumnName("ServingSizeUnitId");
 
                     b.HasKey("Id");
+
+                    b.HasAlternateKey("Name")
+                        .HasName("AK_Ingredient_Name");
 
                     b.HasIndex("_servingSizeUnitId");
 
@@ -109,8 +113,7 @@ namespace Nute.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<bool>("Subsidiary")
-                        .HasAnnotation("comment", "subsidiary nutrients (e.g. saturated fats) would not be included in any calculation of an ingredients weight - if we actually did that");
+                    b.Property<bool>("Subsidiary");
 
                     b.HasKey("Id");
 
@@ -122,12 +125,19 @@ namespace Nute.Migrations
                     b.HasData(
                         new { Id = 1L, Name = "Energy", Subsidiary = false },
                         new { Id = 2L, Name = "Fat", Subsidiary = false },
-                        new { Id = 3L, Name = "Saturated Fat", Subsidiary = false },
+                        new { Id = 3L, Name = "Saturated Fat", Subsidiary = true },
                         new { Id = 4L, Name = "Carbohydrate", Subsidiary = false },
-                        new { Id = 5L, Name = "Sugars", Subsidiary = false },
+                        new { Id = 5L, Name = "Sugars", Subsidiary = true },
                         new { Id = 6L, Name = "Fibre", Subsidiary = false },
                         new { Id = 7L, Name = "Protein", Subsidiary = false },
-                        new { Id = 8L, Name = "Salt", Subsidiary = false }
+                        new { Id = 8L, Name = "Salt", Subsidiary = false },
+                        new { Id = 9L, Name = "Thiamin (B1)", Subsidiary = false },
+                        new { Id = 10L, Name = "Riboflavin (B2)", Subsidiary = false },
+                        new { Id = 11L, Name = "Niacin", Subsidiary = false },
+                        new { Id = 12L, Name = "Vitamin B6", Subsidiary = false },
+                        new { Id = 13L, Name = "Folic Acid (B9)", Subsidiary = false },
+                        new { Id = 14L, Name = "Vitamin B12", Subsidiary = false },
+                        new { Id = 15L, Name = "Iron", Subsidiary = false }
                     );
                 });
 
@@ -206,7 +216,7 @@ namespace Nute.Migrations
                     b.ToTable("Version");
 
                     b.HasData(
-                        new { Id = 1L, SequenceNumber = 1, StartDate = new DateTime(2018, 12, 7, 0, 0, 0, 0, DateTimeKind.Local) }
+                        new { Id = 1L, SequenceNumber = 1, StartDate = new DateTime(2018, 12, 8, 0, 0, 0, 0, DateTimeKind.Local) }
                     );
                 });
 
