@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
@@ -10,10 +11,12 @@ namespace Nute.Entities
         {
             
         }
-        public Ingredient(string name, IEnumerable<Constituent> constituents = null
+        public Ingredient(string shortCode, string name
+            , IEnumerable<Constituent> constituents = null
             , Quantity servingSize = default(Quantity)
             , long id = 0)
         {
+            ShortCode = shortCode;
             Name = name;
             if (constituents != null) Constituents = constituents;
             if (servingSize == default(Quantity))
@@ -27,6 +30,11 @@ namespace Nute.Entities
             Id = id;
         }
         public long Id { get; private set; }
+        [Required]
+        [MaxLength(10)]
+        public string ShortCode { get; private set; }
+        [Required]
+        [MaxLength(50)]
         public string Name { get; private set; }
         public IEnumerable<Constituent> Constituents { get; private set; } 
           = new List<Constituent>();

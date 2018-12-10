@@ -85,7 +85,12 @@ namespace Nute.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<string>("ShortCode")
+                        .IsRequired()
+                        .HasMaxLength(10);
 
                     b.Property<decimal>("_servingSizeCount")
                         .HasColumnName("servingSizeCount");
@@ -97,6 +102,10 @@ namespace Nute.Migrations
 
                     b.HasAlternateKey("Name")
                         .HasName("AK_Ingredient_Name");
+
+
+                    b.HasAlternateKey("ShortCode")
+                        .HasName("AK_Ingredient_ShortCode");
 
                     b.HasIndex("_servingSizeUnitId");
 
@@ -113,6 +122,10 @@ namespace Nute.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
+                    b.Property<string>("ShortCode")
+                        .IsRequired()
+                        .HasMaxLength(10);
+
                     b.Property<bool>("Subsidiary");
 
                     b.HasKey("Id");
@@ -120,24 +133,28 @@ namespace Nute.Migrations
                     b.HasAlternateKey("Name")
                         .HasName("AK_Nutrient_Name");
 
+
+                    b.HasAlternateKey("ShortCode")
+                        .HasName("AK_Nutrient_ShortCode");
+
                     b.ToTable("Nutrient");
 
                     b.HasData(
-                        new { Id = 1L, Name = "Energy", Subsidiary = false },
-                        new { Id = 2L, Name = "Fat", Subsidiary = false },
-                        new { Id = 3L, Name = "Saturated Fat", Subsidiary = true },
-                        new { Id = 4L, Name = "Carbohydrate", Subsidiary = false },
-                        new { Id = 5L, Name = "Sugars", Subsidiary = true },
-                        new { Id = 6L, Name = "Fibre", Subsidiary = false },
-                        new { Id = 7L, Name = "Protein", Subsidiary = false },
-                        new { Id = 8L, Name = "Salt", Subsidiary = false },
-                        new { Id = 9L, Name = "Thiamin (B1)", Subsidiary = false },
-                        new { Id = 10L, Name = "Riboflavin (B2)", Subsidiary = false },
-                        new { Id = 11L, Name = "Niacin", Subsidiary = false },
-                        new { Id = 12L, Name = "Vitamin B6", Subsidiary = false },
-                        new { Id = 13L, Name = "Folic Acid (B9)", Subsidiary = false },
-                        new { Id = 14L, Name = "Vitamin B12", Subsidiary = false },
-                        new { Id = 15L, Name = "Iron", Subsidiary = false }
+                        new { Id = 1L, Name = "Energy", ShortCode = "ENERGY", Subsidiary = false },
+                        new { Id = 2L, Name = "Fat", ShortCode = "FAT", Subsidiary = false },
+                        new { Id = 3L, Name = "Saturated Fat", ShortCode = "SATFAT", Subsidiary = true },
+                        new { Id = 4L, Name = "Carbohydrate", ShortCode = "CARB", Subsidiary = false },
+                        new { Id = 5L, Name = "Sugars", ShortCode = "SUGAR", Subsidiary = true },
+                        new { Id = 6L, Name = "Fibre", ShortCode = "FIBRE", Subsidiary = false },
+                        new { Id = 7L, Name = "Protein", ShortCode = "PROTEIN", Subsidiary = false },
+                        new { Id = 8L, Name = "Salt", ShortCode = "SALT", Subsidiary = false },
+                        new { Id = 9L, Name = "Thiamin (B1)", ShortCode = "B1", Subsidiary = false },
+                        new { Id = 10L, Name = "Riboflavin (B2)", ShortCode = "B2", Subsidiary = false },
+                        new { Id = 11L, Name = "Niacin", ShortCode = "NIACIN", Subsidiary = false },
+                        new { Id = 12L, Name = "Vitamin B6", ShortCode = "B6", Subsidiary = false },
+                        new { Id = 13L, Name = "Folic Acid (B9)", ShortCode = "B9", Subsidiary = false },
+                        new { Id = 14L, Name = "Vitamin B12", ShortCode = "B12", Subsidiary = false },
+                        new { Id = 15L, Name = "Iron", ShortCode = "IRON", Subsidiary = false }
                     );
                 });
 
@@ -168,7 +185,7 @@ namespace Nute.Migrations
 
                     b.HasData(
                         new { Id = 1L, Abbrev = "g", Name = "gram" },
-                        new { Id = 2L, Abbrev = "ea", Name = "each" },
+                        new { Id = 2L, Abbrev = "each", Name = "each" },
                         new { Id = 3L, Abbrev = "lge", Name = "large" },
                         new { Id = 4L, Abbrev = "kcal", Name = "calorie" },
                         new { Id = 5L, Abbrev = "mg", Name = "milligram" },
@@ -216,7 +233,7 @@ namespace Nute.Migrations
                     b.ToTable("Version");
 
                     b.HasData(
-                        new { Id = 1L, SequenceNumber = 1, StartDate = new DateTime(2018, 12, 8, 0, 0, 0, 0, DateTimeKind.Local) }
+                        new { Id = 1L, SequenceNumber = 1, StartDate = new DateTime(2018, 12, 9, 0, 0, 0, 0, DateTimeKind.Local) }
                     );
                 });
 

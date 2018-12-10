@@ -24,7 +24,7 @@ namespace Nute
         [Fact]
         public void Write_Nutrient()
         {
-            dbContext.Nutrient.Add(new Nutrient(id: 0, name: "Test Nutrient"));
+            dbContext.Nutrient.Add(new Nutrient(id: 0, shortCode: "TEST", name: "Test Nutrient"));
             dbContext.SaveChanges();
             Assert.NotNull(dbContext.Nutrient.ToList().FirstOrDefault(n => n.Name == "Test Nutrient"));
         }
@@ -36,7 +36,8 @@ namespace Nute
             var nutrients = ndh.LoadNutrients();
             var units = ndh.LoadUnits();
             var branFlakes = new Ingredient(
-                name: "Bran Flakes (M&S)"
+                shortCode: "BFMS"
+                ,name: "Bran Flakes (M&S)"
                 , servingSize: new Quantity(125, units[Unit.GRAM])
                 ,constituents: new List<Constituent>
                 {
@@ -114,35 +115,6 @@ namespace Nute
             ndh.DeleteIngredient(ingredient);
             dbContext.Database.CommitTransaction();
         }
-/*
-        [Fact]
-        public void Write_NutrientProfile()
-        {
-            Unit grams = dbContext.Unit.FirstOrDefault(u => u.Name == "Gram");
-            if (grams == null)
-            {
-                throw new Exception("The database has been corrupted - there is no unit Gram available");
-            }
-
-            var fat = dbContext.Nutrient.FirstOrDefault(n => n.Name == "Fat");
-            if (fat == null)
-            {
-                throw new Exception("The database has been corrupted - there is no nutrient Fat available");
-            }
-            var bodyType = dbContext.BodyType.FirstOrDefault(n => n.Name == "Male");
-            if (bodyType == null)
-            {
-                throw new Exception("The database has been corrupted - there is no body type Male available");
-            }
-            var np = new NutrientProfile(
-                nutrient: fat, bodyType: bodyType, dailyRecommendedMax: new Quantity(1000, grams)
-                );
-            var ndh = new NutrientDataHandler(dbContext);
-            ndh.SaveNutrientProfile(np);
-            var list = dbContext.NutrientProfile.ToList();
-            dbContext.Database.CommitTransaction();
-        }
-*/
     }
 
     public static class TestConstants
@@ -162,5 +134,21 @@ namespace Nute
         public const string FolicAcid = "Folic Acid (B9)";
         public const string VitaminB12 = "Vitamin B12";
         public const string Iron = "Iron";
+        
+        public const string EnergySC = "ENERGY";
+        public const string FatSC = "FAT";
+        public const string SaturatedFatSC = "SATFAT";
+        public const string CarbohydrateSC = "CARB";
+        public const string SugarsSC = "SUGAR";
+        public const string FibreSC = "FIBRE";
+        public const string ProteinSC = "PROTEIN";
+        public const string SaltSC = "SALT";
+        public const string ThiaminSC = "B1";
+        public const string RiboflavinSC = "B2";
+        public const string NiacinSC = "NIACIN";
+        public const string VitaminB6SC = "B6";
+        public const string FolicAcidSC = "B9";
+        public const string VitaminB12SC = "B12";
+        public const string IronSC = "IRON";
     }
 }

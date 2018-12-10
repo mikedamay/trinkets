@@ -44,6 +44,9 @@ namespace Nute
                 .HasOne<Unit>("_servingSizeUnit")
                 .WithMany();
             mb.Entity<Ingredient>()
+                .HasAlternateKey(i => i.ShortCode)
+                .HasName("AK_Ingredient_ShortCode");
+            mb.Entity<Ingredient>()
                 .HasAlternateKey(i => i.Name)
                 .HasName("AK_Ingredient_Name")
                   ;
@@ -96,24 +99,27 @@ namespace Nute
         private void CreateNutrient(ModelBuilder mb)
         {
             mb.Entity<Nutrient>()
+                .HasAlternateKey(n => n.ShortCode)
+                .HasName("AK_Nutrient_ShortCode");
+            mb.Entity<Nutrient>()
                 .HasAlternateKey(n => n.Name)
                 .HasName("AK_Nutrient_Name");
             mb.Entity<Nutrient>().HasData(
-                new Nutrient (id : 1, name : TestConstants.Energy)
-                , new Nutrient (id : 2, name : TestConstants.Fat)
-                , new Nutrient (id : 3, name : TestConstants.SaturatedFat, subsidiary: true)
-                , new Nutrient (id : 4, name : TestConstants.Carbohydrate)
-                , new Nutrient (id : 5, name : TestConstants.Sugars, subsidiary: true)
-                , new Nutrient (id : 6, name : TestConstants.Fibre)
-                , new Nutrient (id : 7, name : TestConstants.Protein)
-                , new Nutrient (id : 8, name : TestConstants.Salt)
-                , new Nutrient (id : 9, name : TestConstants.Thiamin)
-                , new Nutrient (id : 10, name : TestConstants.Riboflavin)
-                , new Nutrient (id : 11, name : TestConstants.Niacin)
-                , new Nutrient (id : 12, name : TestConstants.VitaminB6)
-                , new Nutrient (id : 13, name : TestConstants.FolicAcid)
-                , new Nutrient (id : 14, name : TestConstants.VitaminB12)
-                , new Nutrient (id : 15, name : TestConstants.Iron)
+                new Nutrient (id : 1, shortCode : TestConstants.EnergySC, name : TestConstants.Energy)
+                , new Nutrient (id : 2, shortCode : TestConstants.FatSC, name : TestConstants.Fat)
+                , new Nutrient (id : 3, shortCode : TestConstants.SaturatedFatSC, name : TestConstants.SaturatedFat, subsidiary: true)
+                , new Nutrient (id : 4, shortCode : TestConstants.CarbohydrateSC, name : TestConstants.Carbohydrate)
+                , new Nutrient (id : 5, shortCode : TestConstants.SugarsSC, name : TestConstants.Sugars, subsidiary: true)
+                , new Nutrient (id : 6, shortCode : TestConstants.FibreSC, name : TestConstants.Fibre)
+                , new Nutrient (id : 7, shortCode : TestConstants.ProteinSC, name : TestConstants.Protein)
+                , new Nutrient (id : 8, shortCode : TestConstants.SaltSC, name : TestConstants.Salt)
+                , new Nutrient (id : 9, shortCode : TestConstants.ThiaminSC, name : TestConstants.Thiamin)
+                , new Nutrient (id : 10, shortCode : TestConstants.RiboflavinSC, name : TestConstants.Riboflavin)
+                , new Nutrient (id : 11, shortCode : TestConstants.NiacinSC, name : TestConstants.Niacin)
+                , new Nutrient (id : 12, shortCode : TestConstants.VitaminB6SC, name : TestConstants.VitaminB6)
+                , new Nutrient (id : 13, shortCode : TestConstants.FolicAcidSC, name : TestConstants.FolicAcid)
+                , new Nutrient (id : 14, shortCode : TestConstants.VitaminB12SC, name : TestConstants.VitaminB12)
+                , new Nutrient (id : 15, shortCode : TestConstants.IronSC, name : TestConstants.Iron)
             );
         }
 

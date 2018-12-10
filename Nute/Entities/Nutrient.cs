@@ -10,13 +10,18 @@ namespace Nute.Entities
         {
             
         }
-        public Nutrient( string name, bool subsidiary = false, int id = 0)
+        public Nutrient( string shortCode
+            , string name, bool subsidiary = false, int id = 0)
         {
             Id = id;
+            ShortCode = shortCode;
             Name = name;
             Subsidiary = subsidiary;
         }
         public long Id { get; private set; }
+        [Required]
+        [MaxLength(10)]
+        public string ShortCode { get; private set; }
         [Required]
         [MaxLength(50)]
         public string Name { get; private set; }

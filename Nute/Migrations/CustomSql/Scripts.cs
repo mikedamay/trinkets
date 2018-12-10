@@ -24,8 +24,10 @@ EXEC sp_addextendedproperty
 go
 
 create view Ingredient_v as
-  select ingredient.Name as                                                     Name,
-         Nutrient.Name   as                                                     Nutrient,
+  select Ingredient.ShortCode as [Short Code],
+         ingredient.Name as                                                     Name,
+         Nutrient.ShortCode as [Nutrient],
+         Nutrient.Name   as                                                     [Nutrient-Name],
          concat(format(Constituent.QuantityCount, '###0.##'), QtyUnit.Abbrev)   [Qty per Serving],
          concat(format(Constituent.ServingSizeCount, '###0.##'), SsUnit.Abbrev) [Serving Size]
   from Constituent
