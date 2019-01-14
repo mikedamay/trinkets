@@ -68,4 +68,4 @@ obj/
 /TimeSheet/TimeSheet/obj/Debug
 
 # Nute - EF
-Nute/Migrations/201*.cs
+Nute/Migrations/20*.cs
