@@ -34,10 +34,9 @@ public class McCanceReader {
         CSVParser headerParser = CSVFormat.EXCEL.parse(rdr);
         List<CSVRecord> headerLines = getHeaderLines(headerParser);
         String[] headers = makeHeaders(headerLines);
-        ingredientsParser = CSVFormat.EXCEL/*.withHeader(headers)*/.parse(rdr);
-        var aaa = ingredientsParser.getRecords().get(0);
+        ingredientsParser = headerParser;
         nutrients = makeNutrientMap(headerLines);
-        fieldNames = makeFieldNames(headerLines);
+        fieldNames = headers;
         return this;
     }
 
@@ -51,20 +50,6 @@ public class McCanceReader {
                     , headerLines.get(GENERAL_HEADER_LINE).get(ii));
         }
         return map;
-    }
-
-    private String[] makeFieldNames(List<CSVRecord> headerLines) {
-        assert (headerLines.size() == NUM_HEADERS);
-        assert (headerLines.get(GENERAL_HEADER_LINE).size() > NUM_GENERAL_HEADINGS);
-        assert (headerLines.get(GENERAL_HEADER_LINE).size() == headerLines.get(ABBREVIATION_HEADER_LINE).size());
-        String[] fieldNames = new String[headerLines.get(GENERAL_HEADER_LINE).size()];
-        for (int ii = 0; ii < NUM_GENERAL_HEADINGS; ii++) {
-            fieldNames[ii] = headerLines.get(GENERAL_HEADER_LINE).get(ii);
-        }
-        for (int ii = NUM_GENERAL_HEADINGS; ii < headerLines.get(ABBREVIATION_HEADER_LINE).size(); ii++) {
-            fieldNames[ii] = headerLines.get(ABBREVIATION_HEADER_LINE).get(ii);
-        }
-        return fieldNames;
     }
 
     /**
