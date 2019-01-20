@@ -1,15 +1,43 @@
 package com.TheDisappointedProgrammer.hello;
 
 import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+
 @Component
-public class IngredientNutrientTable extends McCanceTable<IngredientNutrientTable.ValuesAndFieldNames> {
+public class IngredientNutrientTable extends McCanceBaseTable<List<String[]>> {
 
     @Override
-    ValuesAndFieldNames getData() {
-        return new ValuesAndFieldNames(mcCanceReader.getFieldNames(), mcCanceReader.getIngredientsParser());
+    List<String[]> getData() throws IOException {
+//        return new ValuesAndFieldNames(mcCanceReader.getFieldNames(), mcCanceReader.getIngredientsParser());
+        return makeIngredientNutrientRecords(mcCanceReader);
+    }
+    private static List<String[]> makeIngredientNutrientRecords(McCanceReader mcCanceReader) throws IOException {
+        var s = mcCanceReader.getIngredientsParser().getRecords().stream();
+        List<String[]> fs = s.map(s2 -> includeNutrientNames(s2, mcCanceReader.getFieldNames())).flatMap(
+                r -> StreamSupport.stream(
+                        Spliterators.spliteratorUnknownSize(
+                                r.iterator(), Spliterator.ORDERED), false)
+                        .map(ss -> new String[] { r.get(0)[1], ss[0], ss[1]}))
+                .skip(McCanceReader.NUM_GENERAL_HEADINGS)
+                .collect(Collectors.toList());
+        return fs;
+    }
+
+    private static List<String[]> includeNutrientNames(Iterable<String> ingredientParts, String[] fieldNames) {
+        List<String[]> list = new ArrayList<>();
+        int ii = 0;
+        for (var p : ingredientParts) {
+            String[] nameAndValue = {fieldNames[ii], p};
+            list.add(nameAndValue);
+            ii++;
+        }
+        return list;
     }
     public class ValuesAndFieldNames {
         private String[] fieldNames;

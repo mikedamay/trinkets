@@ -22,7 +22,7 @@ public class Application {
             String[] beanNames = ctx.getBeanDefinitionNames();
             Arrays.sort(beanNames);
             var o = ctx.getBean(Runner.class);
-            System.out.println(String.format("An instance of Runner was %s found", o == null ? "not" : ""));
+//            System.out.println(String.format("An instance of Runner was %s found", o == null ? "not" : ""));
             o.run();
 /*
             for (String bn : beanNames) {

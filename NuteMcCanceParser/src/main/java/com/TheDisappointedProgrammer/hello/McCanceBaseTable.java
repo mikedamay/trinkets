@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.IOException;
 import java.io.Reader;
 
-public abstract class McCanceTable<T> {
+public abstract class McCanceBaseTable<T> {
     @Autowired
     protected McCanceReader mcCanceReader;
 
@@ -17,5 +17,5 @@ public abstract class McCanceTable<T> {
      * processMcCanceCSVFile must be processed before this is called
      * @return some sort of collection of data from the CSV file
      */
-    abstract T getData();
+    abstract T getData() throws IOException;
 }

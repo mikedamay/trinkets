@@ -8,7 +8,7 @@ import java.util.List;
 
 
 @Component
-public class IngredientTable extends McCanceTable<List<String[]>> {
+public class IngredientTable extends McCanceBaseTable<List<String[]>> {
     @Override
     List<String[]> getData() {
         return buildOutput(this.mcCanceReader);

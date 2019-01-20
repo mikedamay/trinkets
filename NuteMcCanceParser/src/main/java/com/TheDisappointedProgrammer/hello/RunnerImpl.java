@@ -48,6 +48,7 @@ public class RunnerImpl implements Runner {
             }
 
         }
+        logger.info("and we're off");
         FileInputStream fsi = null;
         FileInputStream fsi2 = null;
         FileInputStream fsi3 = null;
@@ -58,26 +59,19 @@ public class RunnerImpl implements Runner {
             Reader rdr = new InputStreamReader(fsi, Charset.forName("ISO8859-1"));
             nutrientTable.processCSVData(rdr);
             for (var entry : nutrientTable.getData().entrySet()) {
-                System.out.println(entry.getKey());
+//                System.out.println(entry.getKey());
             }
 
             fsi2 = new FileInputStream(fi);
             Reader rdr2 = new InputStreamReader(fsi2, Charset.forName("ISO8859-1"));
             ingredientNutrientTable.processCSVData(rdr2);
-            String[] fieldNames = ingredientNutrientTable.getData().getFieldNames();
-            List<Tuple> list = new ArrayList<Tuple>();
-            for ( var ingredient : ingredientNutrientTable.getData().getIngredientParser().getRecords()) {
-                String foodCode = ingredient.get(FOOD_CODE_POS);
-                for (int ii = McCanceReader.NUM_GENERAL_HEADINGS; ii < ingredient.size(); ii++) {
-                    list.add(new Tuple(foodCode, fieldNames[ii], ingredient.get(ii)));
-                }
-            }
+            List<String[]> ingredientNutrients = ingredientNutrientTable.getData();
 
             fsi3 = new FileInputStream(fi);
             Reader rdr3 = new InputStreamReader(fsi3, Charset.forName("ISO8859-1"));
             ingredientTable.processCSVData(rdr3);
             for ( var rec : ingredientTable.getData()) {
-                System.out.println(String.format("%s, %s", rec[0], rec[1]));
+//                System.out.println(String.format("%s, %s", rec[0], rec[1]));
             }
 
         }
