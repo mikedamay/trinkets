@@ -3,6 +3,7 @@ package com.TheDisappointedProgrammer.hello;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
+@Scope(value="prototype")
 public class McCanceReader {
     private final static int NUM_HEADERS = 3;
     public final static int NUM_GENERAL_HEADINGS = 7;
@@ -24,6 +26,9 @@ public class McCanceReader {
     private CSVParser ingredientsParser;
     private Map<String, String> nutrients;
     private String[] fieldNames;
+
+    public McCanceReader() {
+    }
 
     /**
      * @param rdr e.g. an InputStreamReader pointing at Mccance data

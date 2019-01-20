@@ -1,24 +1,26 @@
 package com.TheDisappointedProgrammer.hello;
-
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 @Component
 public class RunnerImpl implements Runner {
     private static final int FOOD_CODE_POS = 0;
     @Autowired
-    McCanceReader mcReader;
+    private NutrientTable nutrientTable;
+    @Autowired
+    private IngredientNutrientTable ingredientNutrientTable;
+    @Autowired
+    private IngredientTable ingredientTable;
+
+    Logger logger = LoggerFactory.getLogger(RunnerImpl.class);
+
     @Override
     public void run() {
         System.out.println("hello from runner");
@@ -46,29 +48,55 @@ public class RunnerImpl implements Runner {
             }
 
         }
+        FileInputStream fsi = null;
+        FileInputStream fsi2 = null;
+        FileInputStream fsi3 = null;
         try {
             File fi = new File("C:/projects/trinkets/NuteMcCanceParser/src/main/resources/proximates.csv");
-            FileInputStream fsi = new FileInputStream(fi);
-            try(fsi) {
-                Reader rdr = new InputStreamReader(fsi, Charset.forName("ISO8859-1"));
-                var parser = mcReader.processMcCanceCSVFile(rdr);
-                String[] fieldNames = parser.getFieldNames();
-                List<Tuple> list = new ArrayList<Tuple>();
-                for ( var ingredient : parser.getIngredientsParser().getRecords()) {
-                    String foodCode = ingredient.get(FOOD_CODE_POS);
-                    for (int ii = McCanceReader.NUM_GENERAL_HEADINGS; ii < ingredient.size(); ii++) {
-                        list.add(new Tuple(foodCode, fieldNames[ii], ingredient.get(ii)));
-                    }
-                }
-                System.out.println(list.get(0).foodCode);
+
+            fsi = new FileInputStream(fi);
+            Reader rdr = new InputStreamReader(fsi, Charset.forName("ISO8859-1"));
+            nutrientTable.processCSVData(rdr);
+            for (var entry : nutrientTable.getData().entrySet()) {
+                System.out.println(entry.getKey());
             }
-            catch (Exception ex) {
-                throw new RuntimeException(ex);
+
+            fsi2 = new FileInputStream(fi);
+            Reader rdr2 = new InputStreamReader(fsi2, Charset.forName("ISO8859-1"));
+            ingredientNutrientTable.processCSVData(rdr2);
+            String[] fieldNames = ingredientNutrientTable.getData().getFieldNames();
+            List<Tuple> list = new ArrayList<Tuple>();
+            for ( var ingredient : ingredientNutrientTable.getData().getIngredientParser().getRecords()) {
+                String foodCode = ingredient.get(FOOD_CODE_POS);
+                for (int ii = McCanceReader.NUM_GENERAL_HEADINGS; ii < ingredient.size(); ii++) {
+                    list.add(new Tuple(foodCode, fieldNames[ii], ingredient.get(ii)));
+                }
+            }
+
+            fsi3 = new FileInputStream(fi);
+            Reader rdr3 = new InputStreamReader(fsi3, Charset.forName("ISO8859-1"));
+            ingredientTable.processCSVData(rdr3);
+            for ( var rec : ingredientTable.getData()) {
+                System.out.println(String.format("%s, %s", rec[0], rec[1]));
             }
 
         }
         catch (Exception ex2) {
             throw new RuntimeException(ex2);
+        }
+        finally {
+            try {
+                if (fsi != null)
+                    fsi.close();
+                if (fsi2 != null)
+                    fsi2.close();
+                if (fsi3 != null)
+                    fsi3.close();
+            }
+            catch (IOException ex3) {
+                logger.error("failed to close input stream");
+            }
+
         }
 
     }
