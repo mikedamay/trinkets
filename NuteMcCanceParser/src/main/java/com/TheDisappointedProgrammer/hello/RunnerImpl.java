@@ -71,7 +71,7 @@ public class RunnerImpl implements Runner {
             Reader rdr3 = new InputStreamReader(fsi3, Charset.forName("ISO8859-1"));
             ingredientTable.processCSVData(rdr3);
             for ( var rec : ingredientTable.getData()) {
-//                System.out.println(String.format("%s, %s", rec[0], rec[1]));
+                System.out.println(String.format("%s, %s", rec[0], rec[1]));
             }
 
         }
