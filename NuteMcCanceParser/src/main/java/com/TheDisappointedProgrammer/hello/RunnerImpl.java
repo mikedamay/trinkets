@@ -8,6 +8,7 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class RunnerImpl implements Runner {
@@ -58,21 +59,17 @@ public class RunnerImpl implements Runner {
             fsi = new FileInputStream(fi);
             Reader rdr = new InputStreamReader(fsi, Charset.forName("ISO8859-1"));
             nutrientTable.processCSVData(rdr);
-            for (var entry : nutrientTable.getData().entrySet()) {
-//                System.out.println(entry.getKey());
-            }
+            nutrientTable.getData().forEach(n -> System.out.println(String.format("%s %s", n[0], n[1])));
 
             fsi2 = new FileInputStream(fi);
             Reader rdr2 = new InputStreamReader(fsi2, Charset.forName("ISO8859-1"));
             ingredientNutrientTable.processCSVData(rdr2);
-            List<String[]> ingredientNutrients = ingredientNutrientTable.getData();
+            List<String[]> ingredientNutrients = ingredientNutrientTable.getData().collect(Collectors.toList());
 
             fsi3 = new FileInputStream(fi);
             Reader rdr3 = new InputStreamReader(fsi3, Charset.forName("ISO8859-1"));
             ingredientTable.processCSVData(rdr3);
-            for ( var rec : ingredientTable.getData()) {
-                System.out.println(String.format("%s, %s", rec[0], rec[1]));
-            }
+            ingredientTable.getData().forEach(rec -> System.out.println(String.format("%s, %s", rec[0], rec[1])));
 
         }
         catch (Exception ex2) {
