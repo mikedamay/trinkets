@@ -9,28 +9,21 @@ import java.util.List;
 import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 
 @Component
-public class IngredientTable extends McCanceBaseTable<List<String[]>> {
+public class IngredientTable extends McCanceBaseTable<Stream<String[]>> {
     @Override
-    List<String[]> getData() throws IOException {
+    Stream<String[]> getData() throws IOException {
         return buildOutput(this.mcCanceReader);
     }
 
-    private static List<String[]> buildOutput(McCanceReader mcCanceReader) throws IOException {
+    private static Stream<String[]> buildOutput(McCanceReader mcCanceReader) throws IOException {
         List<String[]> list = new ArrayList<>();
-        List<String[]> fs =
-            mcCanceReader.getIngredientsParser().getRecords().stream().map(IngredientTable::map).collect(Collectors.toList());
- /*       for (var rec : mcCanceReader.getIngredientsParser()) {
-            var output = new String[McCanceReader.NUM_GENERAL_HEADINGS];
-            for (int ii = 0; ii < McCanceReader.NUM_GENERAL_HEADINGS; ii++) {
-                output[ii] = rec.get(ii);
-            }
-            list.add(output);
-        }
-*/        return fs;
+        return
+            mcCanceReader.getIngredientsParser().getRecords().stream().map(IngredientTable::map);
     }
 
     private static  String[] map(CSVRecord strings) {
