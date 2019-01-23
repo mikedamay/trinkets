@@ -53,7 +53,8 @@ public class RunnerImpl implements Runner {
         FileInputStream fsi2 = null;
         FileInputStream fsi3 = null;
         try {
-            File fi = new File("C:/projects/trinkets/NuteMcCanceParser/src/main/resources/proximates.csv");
+            File fi = new File("/Users/mikedamay/projects/trinkets/NuteMcCanceParser/src/main/resources/proximates.csv");
+//            File fi = new File("C:/projects/trinkets/NuteMcCanceParser/src/main/resources/proximates.csv");
 
             fsi = new FileInputStream(fi);
             Reader rdr = new InputStreamReader(fsi, Charset.forName("ISO8859-1"));
