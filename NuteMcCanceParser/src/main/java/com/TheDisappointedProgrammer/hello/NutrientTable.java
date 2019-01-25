@@ -2,16 +2,15 @@ package com.TheDisappointedProgrammer.hello;
 
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
 import java.util.stream.Stream;
 
 @Component
-public class NutrientTable extends McCanceBaseTable<Stream<String[]>> {
+public class NutrientTable extends McCanceBaseTable<Stream<McNutrient>> {
     @Override
-    Stream<String[]> getData() {
+    Stream<McNutrient> getData() {
         return mapToStream(mcCanceReader);
     }
-    Stream<String[]> mapToStream(McCanceReader mcCanceReader) {
-        return mcCanceReader.getNutrients().entrySet().stream().map(es -> new String[] {es.getKey(), es.getValue()});
+    Stream<McNutrient> mapToStream(McCanceReader mcCanceReader) {
+        return mcCanceReader.getNutrients().entrySet().stream().map(es -> new McNutrient(es.getKey(), es.getValue()));
     }
 }

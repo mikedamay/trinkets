@@ -54,23 +54,23 @@ public class RunnerImpl implements Runner {
         FileInputStream fsi2 = null;
         FileInputStream fsi3 = null;
         try {
-            File fi = new File("/Users/mikedamay/projects/trinkets/NuteMcCanceParser/src/main/resources/proximates.csv");
-//            File fi = new File("C:/projects/trinkets/NuteMcCanceParser/src/main/resources/proximates.csv");
+//            File fi = new File("/Users/mikedamay/projects/trinkets/NuteMcCanceParser/src/main/resources/proximates.csv");
+            File fi = new File("C:/projects/trinkets/NuteMcCanceParser/src/main/resources/proximates.csv");
 
             fsi = new FileInputStream(fi);
             Reader rdr = new InputStreamReader(fsi, Charset.forName("ISO8859-1"));
             nutrientTable.processCSVData(rdr);
-            nutrientTable.getData().forEach(n -> System.out.println(String.format("%s %s", n[0], n[1])));
+            nutrientTable.getData().forEach(n -> System.out.println(String.format("%s %s", n.getShortCode(), n.getDescription())));
 
             fsi2 = new FileInputStream(fi);
             Reader rdr2 = new InputStreamReader(fsi2, Charset.forName("ISO8859-1"));
             ingredientNutrientTable.processCSVData(rdr2);
-            List<String[]> ingredientNutrients = ingredientNutrientTable.getData().collect(Collectors.toList());
+            var ingredientNutrients = ingredientNutrientTable.getData().collect(Collectors.toList());
 
             fsi3 = new FileInputStream(fi);
             Reader rdr3 = new InputStreamReader(fsi3, Charset.forName("ISO8859-1"));
             ingredientTable.processCSVData(rdr3);
-            ingredientTable.getData().forEach(rec -> System.out.println(String.format("%s, %s", rec[0], rec[1])));
+            ingredientTable.getData().forEach(rec -> System.out.println(String.format("%s, %s", rec.getShortCode(), rec.getName())));
 
         }
         catch (Exception ex2) {

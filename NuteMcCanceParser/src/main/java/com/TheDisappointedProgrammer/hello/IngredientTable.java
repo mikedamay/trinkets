@@ -6,30 +6,31 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Spliterator;
-import java.util.Spliterators;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 
 @Component
-public class IngredientTable extends McCanceBaseTable<Stream<String[]>> {
+public class IngredientTable extends McCanceBaseTable<Stream<McIngredient>> {
     @Override
-    Stream<String[]> getData() throws IOException {
+    Stream<McIngredient> getData() throws IOException {
         return buildOutput(this.mcCanceReader);
     }
 
-    private static Stream<String[]> buildOutput(McCanceReader mcCanceReader) throws IOException {
-        List<String[]> list = new ArrayList<>();
+    private static Stream<McIngredient> buildOutput(McCanceReader mcCanceReader) throws IOException {
+        List<McIngredient> list = new ArrayList<>();
         return
             mcCanceReader.getIngredientsParser().getRecords().stream().map(IngredientTable::map);
     }
 
-    private static  String[] map(CSVRecord strings) {
-        return StreamSupport
-                .stream(Spliterators.spliteratorUnknownSize(
-                        strings.iterator(), Spliterator.ORDERED), false)
-                .limit(McCanceReader.NUM_GENERAL_HEADINGS).toArray(String[]::new);
+    private static  McIngredient map(CSVRecord csvRecord) {
+        return new McIngredient(
+                csvRecord.get(0),
+                csvRecord.get(1),
+                csvRecord.get(2),
+                csvRecord.get(3),
+                csvRecord.get(4),
+                csvRecord.get(5),
+                csvRecord.get(6)
+        );
     }
 }
