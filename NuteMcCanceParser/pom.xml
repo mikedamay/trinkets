@@ -23,6 +23,17 @@
             <artifactId>commons-csv</artifactId>
             <version>1.6</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jpa</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>7.1.4.jre11-preview</version>
+            <!--<scope>test</scope>-->
+        </dependency>
     </dependencies>
 
     <properties>
