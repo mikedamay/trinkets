@@ -18,7 +18,7 @@ namespace com.TheDisappointedProgrammer.Drive
 
         public void Process()
         {
-            byte[] sheetBytes = googleSheetLoader.LoadSheet("MDAM-EXES-2018");
+            byte[] sheetBytes = googleSheetLoader.LoadSheet("MDAM-EXES-2020");    // **** change year ****
             var msin = new MemoryStream(sheetBytes);
             var accountGroups = transformer.Transform(msin, accountingYear);
             (var months, var totals) = pivoter.Pivot(accountGroups);
@@ -30,7 +30,7 @@ namespace com.TheDisappointedProgrammer.Drive
                 sw.WriteLine(line);
             }
             sw.Close();
-            googleSheetLoader.SaveSheet("Finance", "ExesSummary2018", new MemoryStream(msout.GetBuffer()));
+            googleSheetLoader.SaveSheet("Finance", "ExesSummary2020", new MemoryStream(msout.GetBuffer()));    // **** change year ****
         }
     }
 
@@ -39,7 +39,7 @@ namespace com.TheDisappointedProgrammer.Drive
     {
         public object Execute(BeanFactoryArgs args)
         {
-            return 2018;
+            return 2020; // **** change year ****
         }
     }
 
