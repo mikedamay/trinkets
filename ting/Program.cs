@@ -1,5 +1,6 @@
 ﻿using System;
 using PureDI;
+using PureDI.Attributes;
 using System.IO;
 
 namespace ting
@@ -23,7 +24,7 @@ namespace ting
         }
 		private static void RunGetter()
 		{
-			PDependencyInjector pdi = new PDependencyInjector();
+			DependencyInjector pdi = new DependencyInjector();
 			(Program prog, InjectionState @is) = pdi.CreateAndInjectDependencies<Program>();
 			Console.WriteLine(@is.Diagnostics.ToString());
 			prog._getter.Get();

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using PureDI;
+using PureDI.Attributes;
 
 namespace ting
 {

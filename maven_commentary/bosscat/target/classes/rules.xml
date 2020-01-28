@@ -1,8 +1,0 @@
-<rules>
-    <if condition="equals" arg1="somevar" arg2="1"/>
-    <elseif condition="equals" arg1="somevar" arg2="2"/>
-    <elseif condition="equals" arg1="somevar" arg2="3"/>
-    <else/>
-    <if condition="equals" arg1="somevar" arg2="4"/>
-    <else/>
-</rules>

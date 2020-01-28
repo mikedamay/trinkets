@@ -1,5 +1,9 @@
 namespace Aa
 {
+/*
+	Find the longest ascending sequence of numbers within
+	an array
+*/
 	using System;
 	using System.Collections.Generic;
 	internal class Node
